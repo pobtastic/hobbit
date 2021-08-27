@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 8D33</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36006.html">8CA6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36147">Map</a></td>
+<td class="next">
+Next: <a href="36206.html">8D6E</a>
+</td>
+</tr>
+</table>
+<div class="description">8D33: Action Pickup</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="41544.html">ActionTie</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Pickup</td>
+<td class="address-2"><span id="36147"></span>8D33</td>
+<td class="instruction">CALL <a href="39900.html#40056">$9C78</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36150"></span>8D36</td>
+<td class="instruction">LD HL,$AE11</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#44561">"You are already carrying[0x07][0x15]"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36153"></span>8D39</td>
+<td class="instruction">JP C,<a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36156"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="36006.html">Action_Putdown</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Pickup_0</td>
+<td class="address-2"><span id="36156"></span>8D3C</td>
+<td class="instruction">CALL <a href="36006.html#36081">Action_Putdown_1</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36159"></span>8D3F</td>
+<td class="instruction">LD A,($B6EA)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">Action_Pickup_1</td>
+<td class="address-2"><span id="36162"></span>8D42</td>
+<td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36165"></span>8D45</td>
+<td class="instruction">LD A,($B6E8)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36168"></span>8D48</td>
+<td class="instruction">CP (IX+$01)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36171"></span>8D4B</td>
+<td class="instruction">JP Z,<a href="40409.html#40822">$9F76</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36174"></span>8D4E</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36177"></span>8D51</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36179"></span>8D53</td>
+<td class="instruction">JR NZ,<a href="36147.html#36162">Action_Pickup_1</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36181"></span>8D55</td>
+<td class="instruction">LD IX,($B708)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36185"></span>8D59</td>
+<td class="instruction">CALL <a href="40247.html#40260">GetObjectLocationInIX_0</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36188"></span>8D5C</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36191"></span>8D5F</td>
+<td class="instruction">CP $12</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36193"></span>8D61</td>
+<td class="instruction">LD A,($B6EA)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36196"></span>8D64</td>
+<td class="instruction">JR Z,<a href="36147.html#36202">Action_Pickup_2</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36198"></span>8D66</td>
+<td class="instruction">LD (IX+$01),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36201"></span>8D69</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">Action_Pickup_2</td>
+<td class="address-2"><span id="36202"></span>8D6A</td>
+<td class="instruction">LD ($C367),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36205"></span>8D6D</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36006.html">8CA6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36147">Map</a></td>
+<td class="next">
+Next: <a href="36206.html">8D6E</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at A248</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41272.html">A138</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41544">Map</a></td>
+<td class="next">
+Next: <a href="41652.html">A2B4</a>
+</td>
+</tr>
+</table>
+<div class="description">A248: Action: Tie</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">ActionTie</td>
+<td class="address-2"><span id="41544"></span>A248</td>
+<td class="instruction">LD A,($B6E8)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41547"></span>A24B</td>
+<td class="instruction">CP $12</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41549"></span>A24D</td>
+<td class="instruction">JR Z,<a href="41544.html#41646">ActionTie_3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41551"></span>A24F</td>
+<td class="instruction">LD A,($B6E9)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41554"></span>A252</td>
+<td class="instruction">CP $12</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41556"></span>A254</td>
+<td class="instruction">JP NZ,<a href="40409.html#40822">$9F76</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41559"></span>A257</td>
+<td class="instruction">LD IX,($B708)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41563"></span>A25B</td>
+<td class="instruction">BIT 1,(IX+$07)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41567"></span>A25F</td>
+<td class="instruction">JP NZ,<a href="40409.html#40822">$9F76</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41570"></span>A262</td>
+<td class="instruction">CALL <a href="40247.html#40343">GetObjectLocationInIX_6</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41573"></span>A265</td>
+<td class="instruction">CP $00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41575"></span>A267</td>
+<td class="instruction">LD HL,$B07D</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45181">"[0x09] is already tied[0x15]"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41578"></span>A26A</td>
+<td class="instruction">JP NZ,<a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41581"></span>A26D</td>
+<td class="instruction">BIT 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41585"></span>A271</td>
+<td class="instruction">JR NZ,<a href="41544.html#41594">ActionTie_0</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41587"></span>A273</td>
+<td class="instruction">BIT 6,(IX+$07)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41591"></span>A277</td>
+<td class="instruction">JP NZ,<a href="40409.html#40822">$9F76</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">ActionTie_0</td>
+<td class="address-2"><span id="41594"></span>A27A</td>
+<td class="instruction">CALL <a href="40247.html#40260">GetObjectLocationInIX_0</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41597"></span>A27D</td>
+<td class="instruction">LD IY,($B70A)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41601"></span>A281</td>
+<td class="instruction">CALL <a href="39900.html#40056">$9C78</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41604"></span>A284</td>
+<td class="instruction">LD A,($B6E9)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41607"></span>A287</td>
+<td class="instruction">LD (IX+$01),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41610"></span>A28A</td>
+<td class="instruction">JR C,<a href="41544.html#41634">ActionTie_1</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41612"></span>A28C</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41613"></span>A28D</td>
+<td class="instruction">LD ($B6FA),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41616"></span>A290</td>
+<td class="instruction">CALL <a href="36147.html">Action_Pickup</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41619"></span>A293</td>
+<td class="instruction">LD A,($B6FB)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41622"></span>A296</td>
+<td class="instruction">CP $00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41624"></span>A298</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41626"></span>A29A</td>
+<td class="instruction">LD ($B6FA),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41629"></span>A29D</td>
+<td class="instruction">LD ($B6FB),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41632"></span>A2A0</td>
+<td class="instruction">JR Z,<a href="41544.html#41641">ActionTie_2</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">ActionTie_1</td>
+<td class="address-2"><span id="41634"></span>A2A2</td>
+<td class="instruction">LD A,($B6EA)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41637"></span>A2A5</td>
+<td class="instruction">LD (IY+$01),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41640"></span>A2A8</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">ActionTie_2</td>
+<td class="address-2"><span id="41641"></span>A2A9</td>
+<td class="instruction">LD (IY+$01),$FF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41645"></span>A2AD</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">ActionTie_3</td>
+<td class="address-2"><span id="41646"></span>A2AE</td>
+<td class="instruction">LD HL,$A248</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="41649"></span>A2B1</td>
+<td class="instruction">JP <a href="40409.html#40778">$9F4A</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41272.html">A138</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41544">Map</a></td>
+<td class="next">
+Next: <a href="41652.html">A2B4</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

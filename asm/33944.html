@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 8498</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33873.html">8451</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33944">Map</a></td>
+<td class="next">
+Next: <a href="33971.html">84B3</a>
+</td>
+</tr>
+</table>
+<div class="description">8498: Load Block</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="33873.html">LoadGame</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">LoadBlock</td>
+<td class="address-2"><span id="33944"></span>8498</td>
+<td class="instruction">CALL $0556</td>
+<td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/0556.html">LD_BYTES</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33947"></span>849B</td>
+<td class="instruction">RET C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33948"></span>849C</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33950"></span>849E</td>
+<td class="instruction">LD ($B701),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33953"></span>84A1</td>
+<td class="instruction">LD HL,$B357</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45911">"tape error - hit any key to restart program[0x15]"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33956"></span>84A4</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">LoadBlock_Loop</td>
+<td class="address-2"><span id="33959"></span>84A7</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33960"></span>84A8</td>
+<td class="instruction">IN A,($FE)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33962"></span>84AA</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33964"></span>84AC</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33966"></span>84AE</td>
+<td class="instruction">JR Z,<a href="33944.html#33959">LoadBlock_Loop</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33968"></span>84B0</td>
+<td class="instruction">JP <a href="27648.html#27687">ReStart</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="27648.html#27687">ReStart</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33873.html">8451</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33944">Map</a></td>
+<td class="next">
+Next: <a href="33971.html">84B3</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

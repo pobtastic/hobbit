@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 83EF</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33741.html">83CD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33775">Map</a></td>
+<td class="next">
+Next: <a href="33857.html">8441</a>
+</td>
+</tr>
+</table>
+<div class="description">83EF: Routine at 83EF</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-2"><span id="33775"></span>83EF</td>
+<td class="instruction">CALL $83F5</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33778"></span>83F2</td>
+<td class="instruction">JP <a href="30068.html#33459">$82B3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="33781"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="30068.html">7574</a> and <a href="36982.html">Action_Shoot</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-2"><span id="33781"></span>83F5</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33782"></span>83F6</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33783"></span>83F7</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write $00 to <a href="46810.html#46849">B701</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33784"></span>83F8</td>
+<td class="instruction">LD ($B701),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33787"></span>83FB</td>
+<td class="instruction">LD HL,$B454</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#46164">"you have mastered [0x16]"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33790"></span>83FE</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33793"></span>8401</td>
+<td class="instruction">LD HL,($B6F7)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33796"></span>8404</td>
+<td class="instruction">LD DE,$0064</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33799"></span>8407</td>
+<td class="instruction">CALL <a href="33775.html#33838">WUT</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33775.html#33838">WUT</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33802"></span>840A</td>
+<td class="instruction">CALL NZ,<a href="34166.html#34187">$858B</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33805"></span>840D</td>
+<td class="instruction">LD DE,$000A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33808"></span>8410</td>
+<td class="instruction">CALL <a href="33775.html#33838">WUT</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33775.html#33838">WUT</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33811"></span>8413</td>
+<td class="instruction">CALL <a href="34166.html#34187">$858B</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33814"></span>8416</td>
+<td class="instruction">LD A,$2E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33816"></span>8418</td>
+<td class="instruction">CALL <a href="34166.html#34187">$858B</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33819"></span>841B</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33820"></span>841C</td>
+<td class="instruction">ADD A,$30</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33822"></span>841E</td>
+<td class="instruction">CALL <a href="34166.html#34187">$858B</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33825"></span>8421</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write $00 to <a href="46810.html#46852">B704</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33826"></span>8422</td>
+<td class="instruction">LD ($B704),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33829"></span>8425</td>
+<td class="instruction">LD HL,$B462</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#46178">"% of this adventure"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33832"></span>8428</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33835"></span>842B</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">HL</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33836"></span>842C</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33837"></span>842D</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="asm-label">WUT</td>
+<td class="address-2"><span id="33838"></span>842E</td>
+<td class="instruction">LD A,$2F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-2"><span id="33840"></span>8430</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33841"></span>8431</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33842"></span>8432</td>
+<td class="instruction">SBC HL,DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33844"></span>8434</td>
+<td class="instruction">JR NC,$8430</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33846"></span>8436</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33847"></span>8437</td>
+<td class="instruction">CP $30</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33849"></span>8439</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33850"></span>843A</td>
+<td class="instruction">LD A,$04</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33852"></span>843C</td>
+<td class="instruction">OUT ($FE),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33854"></span>843E</td>
+<td class="instruction">CALL <a href="33977.html">$84B9</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33741.html">83CD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33775">Map</a></td>
+<td class="next">
+Next: <a href="33857.html">8441</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

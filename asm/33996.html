@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 84CC</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33977.html">84B9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33996">Map</a></td>
+<td class="next">
+Next: <a href="34166.html">8576</a>
+</td>
+</tr>
+</table>
+<div class="description">84CC: Save Game</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">SaveGame</td>
+<td class="address-2"><span id="33996"></span>84CC</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33998"></span>84CE</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33999"></span>84CF</td>
+<td class="instruction">LD DE,$B6EB</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34002"></span>84D2</td>
+<td class="instruction">LD HL,$C9E2</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34005"></span>84D5</td>
+<td class="instruction">CALL <a href="33971.html">$84B3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34008"></span>84D8</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34010"></span>84DA</td>
+<td class="instruction">LD ($B701),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34013"></span>84DD</td>
+<td class="instruction">LD HL,$B342</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45890">"start tape then press any key"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34016"></span>84E0</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34019"></span>84E3</td>
+<td class="instruction">CALL <a href="33977.html">$84B9</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34022"></span>84E6</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">Set the save as a "data block".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34024"></span>84E8</td>
+<td class="instruction">LD IX,$B6EB</td>
+<td class="comment-1" rowspan="1">Set the start address to; <a href="46810.html#46827">B6EB</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34028"></span>84EC</td>
+<td class="instruction">LD DE,$001D</td>
+<td class="comment-1" rowspan="1">Set the block length to; $001D bytes.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34031"></span>84EF</td>
+<td class="instruction">CALL $04C2</td>
+<td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34034"></span>84F2</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">Set the save as a "data block".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34036"></span>84F4</td>
+<td class="instruction">LD IX,$C11B</td>
+<td class="comment-1" rowspan="1">Set the start address to; <a href="49435.html">Objects</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34040"></span>84F8</td>
+<td class="instruction">LD DE,$0615</td>
+<td class="comment-1" rowspan="1">Set the block length to; $0615 bytes.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34043"></span>84FB</td>
+<td class="instruction">CALL $04C2</td>
+<td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34046"></span>84FE</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">Set the save as a "data block".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34048"></span>8500</td>
+<td class="instruction">LD IX,$CA84</td>
+<td class="comment-1" rowspan="1">Set the start address to; $CA84.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34052"></span>8504</td>
+<td class="instruction">LD DE,$00BF</td>
+<td class="comment-1" rowspan="1">Set the block length to; $00BF bytes.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34055"></span>8507</td>
+<td class="instruction">CALL $04C2</td>
+<td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34058"></span>850A</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">Set the save as a "data block".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34060"></span>850C</td>
+<td class="instruction">LD IX,$BA8A</td>
+<td class="comment-1" rowspan="1">Set the start address to; <a href="47754.html">Locations</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34064"></span>8510</td>
+<td class="instruction">LD DE,$05D9</td>
+<td class="comment-1" rowspan="1">Set the block length to; $05D9 bytes.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34067"></span>8513</td>
+<td class="instruction">CALL $04C2</td>
+<td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34070"></span>8516</td>
+<td class="instruction">LD HL,$B3A4</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45988">"rewind and prepare tape for verification -- then hit any key"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34073"></span>8519</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34076"></span>851C</td>
+<td class="instruction">CALL <a href="33977.html">$84B9</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34079"></span>851F</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34081"></span>8521</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34082"></span>8522</td>
+<td class="instruction">LD IX,$B6EB</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34086"></span>8526</td>
+<td class="instruction">LD DE,$001D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34089"></span>8529</td>
+<td class="instruction">CALL <a href="33996.html#34138">SaveGame_1</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34092"></span>852C</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34094"></span>852E</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34095"></span>852F</td>
+<td class="instruction">LD IX,$C11B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34099"></span>8533</td>
+<td class="instruction">LD DE,$0615</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34102"></span>8536</td>
+<td class="instruction">CALL <a href="33996.html#34138">SaveGame_1</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34105"></span>8539</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34107"></span>853B</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34108"></span>853C</td>
+<td class="instruction">LD IX,$CA84</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34112"></span>8540</td>
+<td class="instruction">LD DE,$00BF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34115"></span>8543</td>
+<td class="instruction">CALL <a href="33996.html#34138">SaveGame_1</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34118"></span>8546</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34120"></span>8548</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34121"></span>8549</td>
+<td class="instruction">LD IX,$BA8A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34125"></span>854D</td>
+<td class="instruction">LD DE,$05D9</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34128"></span>8550</td>
+<td class="instruction">CALL <a href="33996.html#34138">SaveGame_1</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">SaveGame_0</td>
+<td class="address-2"><span id="34131"></span>8553</td>
+<td class="instruction">DI</td>
+<td class="comment-1" rowspan="1">Disable interrupts.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34132"></span>8554</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34133"></span>8555</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34135"></span>8557</td>
+<td class="instruction">JP <a href="30068.html#33459">$82B3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">SaveGame_1</td>
+<td class="address-2"><span id="34138"></span>855A</td>
+<td class="instruction">CALL $0556</td>
+<td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/0556.html">LD_BYTES</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34141"></span>855D</td>
+<td class="instruction">RET C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34142"></span>855E</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34144"></span>8560</td>
+<td class="instruction">LD ($B701),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34147"></span>8563</td>
+<td class="instruction">LD HL,$B381</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45953">"tape error - hit any key to continue[0x15]"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34150"></span>8566</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">SaveGame_2</td>
+<td class="address-2"><span id="34153"></span>8569</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34154"></span>856A</td>
+<td class="instruction">IN A,($FE)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34156"></span>856C</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34158"></span>856E</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34160"></span>8570</td>
+<td class="instruction">JR Z,<a href="33996.html#34153">SaveGame_2</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34162"></span>8572</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="34163"></span>8573</td>
+<td class="instruction">JP <a href="33996.html#34131">SaveGame_0</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33977.html">84B9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33996">Map</a></td>
+<td class="next">
+Next: <a href="34166.html">8576</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

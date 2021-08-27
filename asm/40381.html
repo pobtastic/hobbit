@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 9DBD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40247.html">9D37</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40381">Map</a></td>
+<td class="next">
+Next: <a href="40409.html">9DD9</a>
+</td>
+</tr>
+</table>
+<div class="description">9DBD: Index ID Table</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="27648.html">Start</a>, <a href="30068.html">7574</a>, <a href="33696.html">DisplayLocHlpMsg</a>, <a href="36253.html">Action_Dir</a>, <a href="37850.html">Action_Examine</a>, <a href="38554.html">969A</a>, <a href="39682.html">Action_None</a>, <a href="39882.html">LocateObject</a> and <a href="42305.html">ActionClimbOut</a>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Key ID</td>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Address of table data</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">The address in the table which matches the key ID</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40381"></span>
+<div class="comments">
+<div class="paragraph">
+Searches through what is essentially key value data to find a key match.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">IndexIdTable</td>
+<td class="address-2"><span id="40381"></span>9DBD</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="1">Exchange registers.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40382"></span>9DBE</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>=<span class="register">IX</span> (using the stack to do so).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40384"></span>9DC0</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40385"></span>9DC1</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=key ID</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40386"></span>9DC2</td>
+<td class="instruction">LD E,$03</td>
+<td class="comment-1" rowspan="2"><span class="register">DE</span>=$0003 as each record is 3 bytes of data.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40388"></span>9DC4</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40390"></span>
+<div class="comments">
+<div class="paragraph">
+Begin searching the table.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">IndexIdTable_Loop</td>
+<td class="address-2"><span id="40390"></span>9DC6</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">Grab the next ID.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40391"></span>9DC7</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="2">If the key ID is the one we want, jump to <a href="40381.html#40402">IndexIdTable_Found</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40392"></span>9DC8</td>
+<td class="instruction">JR Z,<a href="40381.html#40402">IndexIdTable_Found</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40394"></span>9DCA</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="2">If we've reached the termination character (key ID not found), jump to <a href="40381.html#40402">IndexIdTable_Found</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40396"></span>9DCC</td>
+<td class="instruction">JR Z,<a href="40381.html#40402">IndexIdTable_Found</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40398"></span>9DCE</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="2">Add <span class="register">DE</span> to <span class="register">HL</span> to check the next row, and jump back to <a href="40381.html#40390">IndexIdTable_Loop</a> to continue checking.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40399"></span>9DCF</td>
+<td class="instruction">JP <a href="40381.html#40390">IndexIdTable_Loop</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40402"></span>
+<div class="comments">
+<div class="paragraph">
+Handle the output.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">IndexIdTable_Found</td>
+<td class="address-2"><span id="40402"></span>9DD2</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>=<span class="register">HL</span> (using the stack to do so).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40403"></span>9DD3</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40405"></span>9DD5</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Set flags (checking if the key ID was not found).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40407"></span>9DD7</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="1">Exchange registers.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40408"></span>9DD8</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40247.html">9D37</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40381">Map</a></td>
+<td class="next">
+Next: <a href="40409.html">9DD9</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

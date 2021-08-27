@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 9D37</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39900.html">9BDC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40247">Map</a></td>
+<td class="next">
+Next: <a href="40381.html">9DBD</a>
+</td>
+</tr>
+</table>
+<div class="description">9D37: Get Object Location In IX</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="37850.html">Action_Examine</a> and <a href="40409.html">9DD9</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GetObjectLocationInIX</td>
+<td class="address-2"><span id="40247"></span>9D37</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40248"></span>9D38</td>
+<td class="instruction">LD IX,($B70C)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40252"></span>9D3C</td>
+<td class="instruction">LD A,(IX+$10)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40255"></span>9D3F</td>
+<td class="instruction">CALL <a href="39857.html">LocateLocation</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40258"></span>9D42</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40259"></span>9D43</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40260"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="35915.html">Action_Look</a>, <a href="36006.html">Action_Putdown</a>, <a href="36147.html">Action_Pickup</a>, <a href="36253.html">Action_Dir</a>, <a href="36916.html">Action_Talkto</a>, <a href="36982.html">Action_Shoot</a>, <a href="37099.html">Action_Inventory</a>, <a href="37233.html">Action_Attack</a>, <a href="37790.html">Action_Give</a>, <a href="37850.html">Action_Examine</a>, <a href="41272.html">DisplayExits</a>, <a href="41544.html">ActionTie</a>, <a href="41652.html">ActionUntie</a>, <a href="41730.html">ActionBurn</a>, <a href="41958.html">ActionCapture</a> and <a href="42305.html">ActionClimbOut</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GetObjectLocationInIX_0</td>
+<td class="address-2"><span id="40260"></span>9D44</td>
+<td class="instruction">LD A,($B6FA)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40263"></span>9D47</td>
+<td class="instruction">CP $01</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40265"></span>9D49</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40266"></span>9D4A</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40267"></span>9D4B</td>
+<td class="instruction">LD ($B6FB),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40270"></span>9D4E</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40271"></span>9D4F</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40272"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="37233.html">Action_Attack</a> and <a href="37850.html">Action_Examine</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GetObjectLocationInIX_1</td>
+<td class="address-2"><span id="40272"></span>9D50</td>
+<td class="instruction">LD A,($B6E8)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40275"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="38554.html">969A</a> and <a href="42305.html">ActionClimbOut</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GetObjectLocationInIX_2</td>
+<td class="address-2"><span id="40275"></span>9D53</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40277"></span>9D55</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40279"></span>9D57</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40280"></span>9D58</td>
+<td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40283"></span>9D5B</td>
+<td class="instruction">LD B,(IX+$01)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40286"></span>9D5E</td>
+<td class="instruction">LD IX,$C060</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">GetObjectLocationInIX_3</td>
+<td class="address-2"><span id="40290"></span>9D62</td>
+<td class="instruction">CALL <a href="39849.html">$9BA9</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40293"></span>9D65</td>
+<td class="instruction">JR Z,<a href="40247.html#40337">GetObjectLocationInIX_5</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40295"></span>9D67</td>
+<td class="instruction">CP (IY+$01)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40298"></span>9D6A</td>
+<td class="instruction">JR NZ,<a href="40247.html#40290">GetObjectLocationInIX_3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40300"></span>9D6C</td>
+<td class="instruction">BIT 1,(IY+$07)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40304"></span>9D70</td>
+<td class="instruction">JR Z,<a href="40247.html#40331">GetObjectLocationInIX_4</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40306"></span>9D72</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40307"></span>9D73</td>
+<td class="instruction">LD (IY+$10),$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40311"></span>9D77</td>
+<td class="instruction">LD (IY+$01),$FF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40315"></span>9D7B</td>
+<td class="instruction">RES 7,(IY+$07)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40319"></span>9D7F</td>
+<td class="instruction">CALL <a href="40409.html#40647">$9EC7</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40322"></span>9D82</td>
+<td class="instruction">LD HL,$B143</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40325"></span>9D85</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40328"></span>9D88</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40329"></span>9D89</td>
+<td class="instruction">JR <a href="40247.html#40290">GetObjectLocationInIX_3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">GetObjectLocationInIX_4</td>
+<td class="address-2"><span id="40331"></span>9D8B</td>
+<td class="instruction">LD (IY+$01),B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40334"></span>9D8E</td>
+<td class="instruction">JP <a href="40247.html#40290">GetObjectLocationInIX_3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">GetObjectLocationInIX_5</td>
+<td class="address-2"><span id="40337"></span>9D91</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40338"></span>9D92</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40340"></span>9D94</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40342"></span>9D96</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40343"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="37099.html">Action_Inventory</a>, <a href="37850.html">Action_Examine</a>, <a href="40409.html">9DD9</a> and <a href="41544.html">ActionTie</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GetObjectLocationInIX_6</td>
+<td class="address-2"><span id="40343"></span>9D97</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40345"></span>9D99</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40347"></span>9D9B</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40348"></span>9D9C</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40350"></span>9D9E</td>
+<td class="instruction">LD IX,$C060</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">GetObjectLocationInIX_7</td>
+<td class="address-2"><span id="40354"></span>9DA2</td>
+<td class="instruction">CALL <a href="39849.html">$9BA9</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40357"></span>9DA5</td>
+<td class="instruction">JR Z,<a href="40247.html#40374">GetObjectLocationInIX_8</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40359"></span>9DA7</td>
+<td class="instruction">CP (IY+$01)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40362"></span>9DAA</td>
+<td class="instruction">JR NZ,<a href="40247.html#40354">GetObjectLocationInIX_7</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40364"></span>9DAC</td>
+<td class="instruction">BIT 7,(IY+$07)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40368"></span>9DB0</td>
+<td class="instruction">JR Z,<a href="40247.html#40354">GetObjectLocationInIX_7</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40370"></span>9DB2</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40371"></span>9DB3</td>
+<td class="instruction">JP <a href="40247.html#40354">GetObjectLocationInIX_7</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">GetObjectLocationInIX_8</td>
+<td class="address-2"><span id="40374"></span>9DB6</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40375"></span>9DB7</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40376"></span>9DB8</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40378"></span>9DBA</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="40380"></span>9DBC</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39900.html">9BDC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40247">Map</a></td>
+<td class="next">
+Next: <a href="40381.html">9DBD</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

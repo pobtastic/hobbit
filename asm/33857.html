@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 8441</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33775.html">83EF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33857">Map</a></td>
+<td class="next">
+Next: <a href="33873.html">8451</a>
+</td>
+</tr>
+</table>
+<div class="description">8441: Wait For Key</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">WaitForKey</td>
+<td class="address-2"><span id="33857"></span>8441</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Read from the keyboard port.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33858"></span>8442</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33860"></span>8444</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33862"></span>8446</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="33857.html">WaitForKey</a> until any key has been pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33864"></span>8448</td>
+<td class="instruction">JR NZ,<a href="33857.html#33857">WaitForKey</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33866"></span>844A</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="2">Set the border to white.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33868"></span>844C</td>
+<td class="instruction">OUT ($FE),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="33870"></span>844E</td>
+<td class="instruction">JP <a href="30068.html#33459">$82B3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="30068.html#33459">82B3</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33775.html">83EF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33857">Map</a></td>
+<td class="next">
+Next: <a href="33873.html">8451</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

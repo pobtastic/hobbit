@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 9076</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36916.html">9034</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36982">Map</a></td>
+<td class="next">
+Next: <a href="37099.html">90EB</a>
+</td>
+</tr>
+</table>
+<div class="description">9076: Action Shoot</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Shoot</td>
+<td class="address-2"><span id="36982"></span>9076</td>
+<td class="instruction">LD A,$19</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36984"></span>9078</td>
+<td class="instruction">CALL <a href="39900.html#40059">$9C7B</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36987"></span>907B</td>
+<td class="instruction">LD HL,$B121</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45345">"You are not carrying the bow"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36990"></span>907E</td>
+<td class="instruction">JP NC,<a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36993"></span>9081</td>
+<td class="instruction">CALL <a href="37099.html#37194">Action_Inventory_4</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36996"></span>9084</td>
+<td class="instruction">CALL <a href="40247.html#40260">GetObjectLocationInIX_0</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36999"></span>9087</td>
+<td class="instruction">LD A,$0F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37001"></span>9089</td>
+<td class="instruction">LD ($B6E7),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37004"></span>908C</td>
+<td class="instruction">LD A,($B6EA)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37007"></span>908F</td>
+<td class="instruction">CP $46</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37009"></span>9091</td>
+<td class="instruction">JR Z,<a href="36982.html#37032">Action_Shoot_0</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37011"></span>9093</td>
+<td class="instruction">LD A,($B6E8)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37014"></span>9096</td>
+<td class="instruction">CP $3C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37016"></span>9098</td>
+<td class="instruction">LD HL,$B127</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45351">"the arrow misses[0x09] by a wide margin"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37019"></span>909B</td>
+<td class="instruction">JP Z,<a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37022"></span>909E</td>
+<td class="instruction">LD A,$08</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37024"></span>90A0</td>
+<td class="instruction">CALL <a href="39900.html#40095">$9C9F</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37027"></span>90A3</td>
+<td class="instruction">CP $03</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37029"></span>90A5</td>
+<td class="instruction">JP C,<a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">Action_Shoot_0</td>
+<td class="address-2"><span id="37032"></span>90A8</td>
+<td class="instruction">LD IX,$C4EA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37036"></span>90AC</td>
+<td class="instruction">LD A,($B6E8)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37039"></span>90AF</td>
+<td class="instruction">CP $1A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37041"></span>90B1</td>
+<td class="instruction">JR Z,<a href="36982.html#37047">Action_Shoot_1</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37043"></span>90B3</td>
+<td class="instruction">LD (IX+$01),$FF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">Action_Shoot_1</td>
+<td class="address-2"><span id="37047"></span>90B7</td>
+<td class="instruction">LD HL,$B136</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45366">"the arrow{5} hits[0x07][0x15]"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37050"></span>90BA</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37053"></span>90BD</td>
+<td class="instruction">LD IX,($B708)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37057"></span>90C1</td>
+<td class="instruction">CALL <a href="41272.html#41416">DisplayExits_10</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37060"></span>90C4</td>
+<td class="instruction">JP NZ,<a href="37233.html#37613">Action_Attack_17</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37063"></span>90C7</td>
+<td class="instruction">LD A,($B6E8)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37066"></span>90CA</td>
+<td class="instruction">CALL <a href="38554.html#38783">$977F</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37069"></span>90CD</td>
+<td class="instruction">LD A,$06</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37071"></span>90CF</td>
+<td class="instruction">JP <a href="41272.html#41324">DisplayExits_3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37074"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="36253.html">Action_Dir</a>, <a href="37850.html">Action_Examine</a>, <a href="38554.html">969A</a>, <a href="42305.html">ActionClimbOut</a> and <a href="51178.html">C7EA</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Shoot_2</td>
+<td class="address-2"><span id="37074"></span>90D2</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37075"></span>90D3</td>
+<td class="instruction">LD ($B6EA),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37078"></span>90D6</td>
+<td class="instruction">LD HL,$AFF1</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45041">"You are dead"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37081"></span>90D9</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37084"></span>90DC</td>
+<td class="instruction">CALL <a href="33775.html#33781">$83F5</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37087"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="42305.html">ActionClimbOut</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Shoot_3</td>
+<td class="address-2"><span id="37087"></span>90DF</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37088"></span>90E0</td>
+<td class="instruction">IN A,($FE)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37090"></span>90E2</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37092"></span>90E4</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37094"></span>90E6</td>
+<td class="instruction">JR Z,<a href="36982.html#37087">Action_Shoot_3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37096"></span>90E8</td>
+<td class="instruction">JP <a href="27648.html#27687">ReStart</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36916.html">9034</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36982">Map</a></td>
+<td class="next">
+Next: <a href="37099.html">90EB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

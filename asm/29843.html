@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 7493</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29741.html">742D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29843">Map</a></td>
+<td class="next">
+Next: <a href="29862.html">74A6</a>
+</td>
+</tr>
+</table>
+<div class="description">7493: Get Common Word</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="29405.html">PrintMsg</a>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Letter reference</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">Common word address</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GetCommonWord</td>
+<td class="address-2"><span id="29843"></span>7493</td>
+<td class="instruction">SUB $60</td>
+<td class="comment-1" rowspan="1">Subtract $60 from the letter byte - anything higher than $60 signfies the letter is a "common word".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29845"></span>7495</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="2">Create offset for the word look-up.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29846"></span>7496</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29848"></span>7498</td>
+<td class="instruction">LD HL,$AD3D</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44349.html">CommonWords</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29851"></span>749B</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="2">Add to base address at <a href="44349.html">CommonWords</a> so that pointer is at the referenced word.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29852"></span>749C</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29853"></span>749D</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-1" rowspan="1"><span class="register">E</span>=LSB of word address.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29854"></span>749E</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2"><span class="register">A</span>=MSB of word address.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29855"></span>749F</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29856"></span>74A0</td>
+<td class="instruction">ADD A,$50</td>
+<td class="comment-1" rowspan="1">Add $50 to <span class="register">A</span> and store the result in <span class="register">D</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29858"></span>74A2</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29859"></span>74A3</td>
+<td class="instruction">JP <a href="29405.html#29457">PrintMsg_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29405.html#29457">PrintMsg_1</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29741.html">742D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29843">Map</a></td>
+<td class="next">
+Next: <a href="29862.html">74A6</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

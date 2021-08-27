@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 6FD3</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28118.html">6DD6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28627">Map</a></td>
+<td class="next">
+Next: <a href="28658.html">6FF2</a>
+</td>
+</tr>
+</table>
+<div class="description">6FD3: Clear Screen</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="27648.html">Start</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">ClearScreen</td>
+<td class="address-2"><span id="28627"></span>6FD3</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="3">Push <span class="register">HL</span>, <span class="register">DE</span> and <span class="register">BC</span> onto the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28628"></span>6FD4</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28629"></span>6FD5</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28630"></span>6FD6</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="2">Set the border colour to white.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28632"></span>6FD8</td>
+<td class="instruction">OUT ($FE),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28634"></span>6FDA</td>
+<td class="instruction">LD HL,$4000</td>
+<td class="comment-1" rowspan="5">Write $00 to $1800 memory locations (clearing the screen buffer).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28637"></span>6FDD</td>
+<td class="instruction">LD DE,$4001</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28640"></span>6FE0</td>
+<td class="instruction">LD BC,$1800</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28643"></span>6FE3</td>
+<td class="instruction">LD (HL),$00</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28645"></span>6FE5</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28647"></span>6FE7</td>
+<td class="instruction">LD BC,$0300</td>
+<td class="comment-1" rowspan="3">Write $38 to the following $300 memory locations (the attribute buffer).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28650"></span>6FEA</td>
+<td class="instruction">LD (HL),$38</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28652"></span>6FEC</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28654"></span>6FEE</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="3">Pop <span class="register">HL</span>, <span class="register">DE</span> and <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28655"></span>6FEF</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28656"></span>6FF0</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28657"></span>6FF1</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28118.html">6DD6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28627">Map</a></td>
+<td class="next">
+Next: <a href="28658.html">6FF2</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>
