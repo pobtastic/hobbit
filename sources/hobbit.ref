@@ -1,0 +1,18 @@
+;
+; SkoolKit ref file for The Hobbit
+;
+; To build the HTML disassembly, run these commands:
+;   tap2sna.py @hobbit.t2s
+;   sna2skool.py -H -c hobbit.ctl HobbitThe.z80 > hobbit.skool
+;   skool2html.py -H hobbit.skool -T dark
+
+[Config]
+RefFiles=changelog.ref
+HtmlWriterClass=:hobbit.HobbitHtmlWriter
+GameDir=hobbit
+
+[Game]
+Game=The Hobbit
+Logo=#SCR2,6,0,19,9,$4000,$5800(/images/logo)
+Copyright=&copy; 1982 Melbourne House
+StyleSheet=skoolkit.css;skoolkit-dark.css

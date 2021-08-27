@@ -1,0 +1,19 @@
+; tap2sna.py file for The Hobbit. Run
+;
+;   $ tap2sna.py @hobbit.t2s
+;
+; to create a Z80 snapshot.
+
+https://www.worldofspectrum.org//pub/sinclair/games/h/HobbitTheV1.2.tzx.zip
+HobbitThe.z80
+
+; from tape block #5 to address 16384.
+--ram load=5,$4000   ;  6914 bytes ; Loading SCREEN$
+; from tape block #7 to address 24576.
+--ram load=7,$6000   ;  40002 bytes ; Game
+--ram move=$C11B,$0615,$F400
+--ram move=$BA8A,$05D9,$FA15
+--ram move=$B6EB,$001D,$5F00
+--ram move=$CA84,$00BF,$5F1D
+--stack 24319
+--start 27648
