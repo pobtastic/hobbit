@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 95ED</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37850.html">93DA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38381">Map</a></td>
+<td class="next">
+Next: <a href="38443.html">962B</a>
+</td>
+</tr>
+</table>
+<div class="description">95ED: Routine at 95ED</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="28904.html">IndexAction</a>, <a href="30068.html">7574</a>, <a href="36253.html">Action_Dir</a>, <a href="37850.html">Action_Examine</a>, <a href="39682.html">Action_None</a> and <a href="41958.html">ActionCapture</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38381"></span>95ED</td>
+<td class="instruction">LD A,($B6EA)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38384"></span>95F0</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38385"></span>95F1</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38386"></span>95F2</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38388"></span>95F4</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38389"></span>95F5</td>
+<td class="instruction">LD IX,$C11B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38393"></span>95F9</td>
+<td class="instruction">CALL <a href="40409.html#40570">$9E7A</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38396"></span>95FC</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38397"></span>95FD</td>
+<td class="instruction">JR NZ,$9608</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38399"></span>95FF</td>
+<td class="instruction">CALL <a href="40247.html">GetObjectLocationInIX</a></td>
+<td class="comment-1" rowspan="1">Call <a href="40247.html">GetObjectLocationInIX</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38402"></span>9602</td>
+<td class="instruction">BIT 7,(IX+$00)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38406"></span>9606</td>
+<td class="instruction">JR NZ,$9624</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="38408"></span>9608</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38410"></span>960A</td>
+<td class="instruction">LD A,$0E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38412"></span>960C</td>
+<td class="instruction">LD IY,$C305</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38416"></span>9610</td>
+<td class="instruction">CALL <a href="40409.html#40500">$9E34</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38419"></span>9613</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38421"></span>9615</td>
+<td class="instruction">JR Z,$9620</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38423"></span>9617</td>
+<td class="instruction">LD A,($C30C)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38426"></span>961A</td>
+<td class="instruction">XOR $F7</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38428"></span>961C</td>
+<td class="instruction">AND $1C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38430"></span>961E</td>
+<td class="instruction">JR Z,$9628</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="38432"></span>9620</td>
+<td class="instruction">LD HL,$AE1F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38435"></span>9623</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="38436"></span>9624</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38437"></span>9625</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38439"></span>9627</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38440"></span>9628</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38441"></span>9629</td>
+<td class="instruction">JR $9624</td>
+<td class="comment-1" rowspan="1">Jump to <a href="38381.html#38436">9624</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37850.html">93DA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38381">Map</a></td>
+<td class="next">
+Next: <a href="38443.html">962B</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

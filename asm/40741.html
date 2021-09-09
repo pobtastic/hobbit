@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 9F25</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40712.html">9F08</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40741">Map</a></td>
+<td class="next">
+Next: <a href="40778.html">9F4A</a>
+</td>
+</tr>
+</table>
+<div class="description">9F25: Routine at 9F25</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="36253.html">Action_Dir</a>, <a href="41652.html">ActionUntie</a> and <a href="42305.html">ActionClimbOut</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40741"></span>9F25</td>
+<td class="instruction">LD A,($B6E8)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40744"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="37850.html">Action_Examine</a> and <a href="42305.html">ActionClimbOut</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40744"></span>9F28</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40745"></span>9F29</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40747"></span>9F2B</td>
+<td class="instruction">JR $9F30</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40749"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="36813.html">Action_Enter</a>, <a href="36822.html">Action_Follow</a> and <a href="42305.html">ActionClimbOut</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40749"></span>9F2D</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40750"></span>9F2E</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="40752"></span>9F30</td>
+<td class="instruction">LD ($9F42),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40755"></span>9F33</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40756"></span>9F34</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40757"></span>9F35</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40759"></span>9F37</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40760"></span>9F38</td>
+<td class="instruction">CALL <a href="40409.html#40597">$9E95</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="40763"></span>9F3B</td>
+<td class="instruction">CALL <a href="39827.html">Step3ByteTable</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40766"></span>9F3E</td>
+<td class="instruction">JR Z,$9F46</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40768"></span>9F40</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40771"></span>9F43</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40772"></span>9F44</td>
+<td class="instruction">JR NZ,$9F3B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="40774"></span>9F46</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40776"></span>9F48</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40777"></span>9F49</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40712.html">9F08</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40741">Map</a></td>
+<td class="next">
+Next: <a href="40778.html">9F4A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

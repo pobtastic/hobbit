@@ -25,7 +25,7 @@ Next: <a href="33857.html">8441</a>
 </td>
 </tr>
 </table>
-<div class="description">83EF: Routine at 83EF</div>
+<div class="description">83EF: Game Over</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -34,29 +34,29 @@ Next: <a href="33857.html">8441</a>
 </td>
 </tr>
 <tr>
-<td class="asm-label"></td>
+<td class="asm-label">GameOver</td>
 <td class="address-2"><span id="33775"></span>83EF</td>
-<td class="instruction">CALL $83F5</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">CALL <a href="33775.html#33781">GameOver_Start</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33775.html#33781">GameOver_Start</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="33778"></span>83F2</td>
 <td class="instruction">JP <a href="30068.html#33459">$82B3</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="30068.html#33459">82B3</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="33781"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="30068.html">7574</a> and <a href="36982.html">Action_Shoot</a>.
+Actions "game over".
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label"></td>
+<td class="asm-label">GameOver_Start</td>
 <td class="address-2"><span id="33781"></span>83F5</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">DE</span> on the stack.</td>
@@ -70,7 +70,7 @@ This entry point is used by the routines at <a href="30068.html">7574</a> and <a
 <td class="asm-label"></td>
 <td class="address-1"><span id="33783"></span>83F7</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="2">Write $00 to <a href="46810.html#46849">B701</a>.</td>
+<td class="comment-1" rowspan="2">Write $00 to <a href="46810.html#46849">WAIT_COUNTDOWN</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -202,13 +202,23 @@ This entry point is used by the routines at <a href="30068.html">7574</a> and <a
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="33838"></span>
+<div class="comments">
+<div class="paragraph">
+Not sure yet...
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">WUT</td>
 <td class="address-2"><span id="33838"></span>842E</td>
 <td class="instruction">LD A,$2F</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
+<td class="asm-label">GameOver_0</td>
 <td class="address-2"><span id="33840"></span>8430</td>
 <td class="instruction">INC A</td>
 <td class="comment-1" rowspan="1"></td>
@@ -228,7 +238,7 @@ This entry point is used by the routines at <a href="30068.html">7574</a> and <a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="33844"></span>8434</td>
-<td class="instruction">JR NC,$8430</td>
+<td class="instruction">JR NC,<a href="33775.html#33840">GameOver_0</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>

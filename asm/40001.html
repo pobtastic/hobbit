@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 9C41</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39900.html">9BDC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40001">Map</a></td>
+<td class="next">
+Next: <a href="40056.html">9C78</a>
+</td>
+</tr>
+</table>
+<div class="description">9C41: Routine at 9C41</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="36253.html">Action_Dir</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40001"></span>9C41</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="3">Stash <span class="register">IX</span>, <span class="register">IY</span> and <span class="register">BC</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40003"></span>9C43</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40005"></span>9C45</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40006"></span>9C46</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">A</span> in the <span class="register">B</span> register temporarily so it doesn't get overwritten.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40007"></span>9C47</td>
+<td class="instruction">CALL <a href="39857.html">LocateLocation</a></td>
+<td class="comment-1" rowspan="1">Call <a href="39857.html">LocateLocation</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40010"></span>9C4A</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40013"></span>9C4D</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">A</span> in the <span class="register">C</span> register temporarily so it doesn't get overwritten.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40014"></span>9C4E</td>
+<td class="instruction">LD IX,$C060</td>
+<td class="comment-1" rowspan="1">Set <span class="register">IX</span> to $C060 which is 3 bytes less than the start of the <a href="49251.html">object table</a> due to the following line adding $0003 and moving us on to the first record.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40018"></span>9C52</td>
+<td class="instruction">CALL <a href="39827.html">Step3ByteTable</a></td>
+<td class="comment-1" rowspan="1">Call <a href="39827.html">Step3ByteTable</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40021"></span>9C55</td>
+<td class="instruction">JR Z,$9C6D</td>
+<td class="comment-1" rowspan="1">Jump to <a href="40001.html#40045">9C6D</a> if we've reached the end of the object data.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40023"></span>9C57</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="3">If the TODO is not $01 (TODO), then loop back round to <a href="40001.html#40018">9C52</a> to move onto the next record.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40026"></span>9C5A</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40028"></span>9C5C</td>
+<td class="instruction">JR NZ,$9C52</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40030"></span>
+<div class="comments">
+<div class="paragraph">
+Success! We've found a record which matches $01 (TODO).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40030"></span>9C5E</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1">Restore the previous value of <span class="register">A</span> from the <span class="register">B</span> register.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40031"></span>9C5F</td>
+<td class="instruction">CP (IY+$10)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40034"></span>9C62</td>
+<td class="instruction">JR NZ,$9C52</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40036"></span>9C64</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40037"></span>9C65</td>
+<td class="instruction">SUB (IY+$02)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40040"></span>9C68</td>
+<td class="instruction">JR C,$9C74</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40042"></span>9C6A</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40043"></span>9C6B</td>
+<td class="instruction">JR $9C52</td>
+<td class="comment-1" rowspan="1">Jump to <a href="40001.html#40018">9C52</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40045"></span>9C6D</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1">Restore the previous value of <span class="register">A</span> from the <span class="register">C</span> register.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40046"></span>9C6E</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="3">Restore <span class="register">BC</span>, <span class="register">IY</span> and <span class="register">IX</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40047"></span>9C6F</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40049"></span>9C71</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40051"></span>9C73</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40052"></span>9C74</td>
+<td class="instruction">LD C,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40054"></span>9C76</td>
+<td class="instruction">JR $9C6D</td>
+<td class="comment-1" rowspan="1">Jump to <a href="40001.html#40045">9C6D</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39900.html">9BDC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40001">Map</a></td>
+<td class="next">
+Next: <a href="40056.html">9C78</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

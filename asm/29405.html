@@ -17,7 +17,7 @@
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="29379.html">72C3</a>
+Prev: <a href="29395.html">72D3</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#29405">Map</a></td>
 <td class="next">
@@ -31,7 +31,7 @@ Next: <a href="29504.html">7340</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="27648.html">Start</a>, <a href="29379.html">72C3</a>, <a href="30068.html">7574</a>, <a href="33696.html">DisplayLocHlpMsg</a>, <a href="33775.html">83EF</a>, <a href="33944.html">LoadBlock</a>, <a href="33996.html">SaveGame</a>, <a href="35915.html">Action_Look</a>, <a href="36006.html">Action_Putdown</a>, <a href="36147.html">Action_Pickup</a>, <a href="36253.html">Action_Dir</a>, <a href="36822.html">Action_Follow</a>, <a href="36916.html">Action_Talkto</a>, <a href="36982.html">Action_Shoot</a>, <a href="37099.html">Action_Inventory</a>, <a href="37233.html">Action_Attack</a>, <a href="37790.html">Action_Give</a>, <a href="37850.html">Action_Examine</a>, <a href="38554.html">969A</a>, <a href="40247.html">GetObjectLocationInIX</a>, <a href="40409.html">9DD9</a>, <a href="41272.html">DisplayExits</a>, <a href="41544.html">ActionTie</a>, <a href="41652.html">ActionUntie</a>, <a href="41730.html">ActionBurn</a>, <a href="41958.html">ActionCapture</a>, <a href="42305.html">ActionClimbOut</a> and <a href="51178.html">C7EA</a>.
+Used by the routines at <a href="27648.html">Start</a>, <a href="29390.html">ICannotDoThat</a>, <a href="29395.html">72D3</a>, <a href="30068.html">7574</a>, <a href="33696.html">DisplayLocHlpMsg</a>, <a href="33775.html">GameOver</a>, <a href="33944.html">LoadBlock</a>, <a href="33996.html">SaveGame</a>, <a href="35915.html">Action_Look</a>, <a href="36006.html">Action_Putdown</a>, <a href="36147.html">Action_Pickup</a>, <a href="36253.html">Action_Dir</a>, <a href="36822.html">Action_Follow</a>, <a href="36916.html">Action_Talkto</a>, <a href="36982.html">Action_Shoot</a>, <a href="37099.html">Action_Inventory</a>, <a href="37233.html">Action_Attack</a>, <a href="37790.html">Action_Give</a>, <a href="37850.html">Action_Examine</a>, <a href="38443.html">962B</a>, <a href="38554.html">969A</a>, <a href="40260.html">9D44</a>, <a href="40852.html">9F94</a>, <a href="41040.html">A050</a>, <a href="41160.html">A0C8</a>, <a href="41272.html">DisplayExits</a>, <a href="41544.html">ActionTie</a>, <a href="41652.html">ActionUntie</a>, <a href="41730.html">ActionBurn</a>, <a href="41958.html">ActionCapture</a>, <a href="42305.html">ActionClimbOut</a> and <a href="51178.html">C7EA</a>.
 </div>
 </div>
 <table class="input">
@@ -138,12 +138,12 @@ This entry point is used by the routine at <a href="29664.html">73E0</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="29431"></span>72F7</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-1" rowspan="2">Is this blah? Jump to <a href="29405.html#29464">PrintMsg_3</a> if not.</td>
+<td class="comment-1" rowspan="2">Is this blah? Jump to <a href="29405.html#29464">PrintMsg_1</a> if not.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29433"></span>72F9</td>
-<td class="instruction">JR Z,<a href="29405.html#29464">PrintMsg_3</a></td>
+<td class="instruction">JR Z,<a href="29405.html#29464">PrintMsg_1</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -222,13 +222,13 @@ This entry point is used by the routine at <a href="29843.html">GetCommonWord</a
 </td>
 </tr>
 <tr>
-<td class="asm-label">PrintMsg_1</td>
+<td class="asm-label">PrintMsg_Token</td>
 <td class="address-2"><span id="29457"></span>7311</td>
 <td class="instruction">CALL <a href="29889.html">PrintToken</a></td>
 <td class="comment-1" rowspan="1">Call <a href="29889.html">PrintToken</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintMsg_2</td>
+<td class="asm-label">PrintMsg_Next</td>
 <td class="address-2"><span id="29460"></span>7314</td>
 <td class="instruction">INC IX</td>
 <td class="comment-1" rowspan="1">Increase <span class="register">IX</span> by one to move onto the next character of the message.</td>
@@ -250,15 +250,15 @@ Check.
 </td>
 </tr>
 <tr>
-<td class="asm-label">PrintMsg_3</td>
+<td class="asm-label">PrintMsg_1</td>
 <td class="address-2"><span id="29464"></span>7318</td>
 <td class="instruction">CP $20</td>
-<td class="comment-1" rowspan="2">If the character is less than $20 jump to <a href="29405.html#29478">PrintMsg_4</a>.</td>
+<td class="comment-1" rowspan="2">If the character is less than $20 jump to <a href="29405.html#29478">PrintMsg_PrintTable</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29466"></span>731A</td>
-<td class="instruction">JR C,<a href="29405.html#29478">PrintMsg_4</a></td>
+<td class="instruction">JR C,<a href="29405.html#29478">PrintMsg_PrintTable</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -280,8 +280,8 @@ Check.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29476"></span>7324</td>
-<td class="instruction">JR <a href="29405.html#29460">PrintMsg_2</a></td>
-<td class="comment-1" rowspan="1">Jump back to <a href="29405.html#29460">PrintMsg_2</a> to move onto the next character.</td>
+<td class="instruction">JR <a href="29405.html#29460">PrintMsg_Next</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="29405.html#29460">PrintMsg_Next</a> to move onto the next character.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -294,7 +294,7 @@ X
 </td>
 </tr>
 <tr>
-<td class="asm-label">PrintMsg_4</td>
+<td class="asm-label">PrintMsg_PrintTable</td>
 <td class="address-2"><span id="29478"></span>7326</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack for later.</td>
@@ -359,33 +359,33 @@ X
 <td class="asm-label"></td>
 <td class="address-1"><span id="29492"></span>7334</td>
 <td class="instruction">CP $14</td>
-<td class="comment-1" rowspan="2">If the character is more than $14 jump to <a href="29405.html#29503">PrintMsg_5</a>.</td>
+<td class="comment-1" rowspan="2">If the character is more than $14 jump to <a href="29405.html#29503">PrintMsg_Indirect_Jump</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29494"></span>7336</td>
-<td class="instruction">JR NC,<a href="29405.html#29503">PrintMsg_5</a></td>
+<td class="instruction">JR NC,<a href="29405.html#29503">PrintMsg_Indirect_Jump</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29496"></span>7338</td>
-<td class="instruction">CALL <a href="29405.html#29503">PrintMsg_5</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29405.html#29503">PrintMsg_5</a>.</td>
+<td class="instruction">CALL <a href="29405.html#29503">PrintMsg_Indirect_Jump</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html#29503">PrintMsg_Indirect_Jump</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29499"></span>733B</td>
-<td class="instruction">JR Z,<a href="29405.html#29460">PrintMsg_2</a></td>
-<td class="comment-1" rowspan="1">If xxxx jump back to <a href="29405.html#29460">PrintMsg_2</a> to move onto the next character.</td>
+<td class="instruction">JR Z,<a href="29405.html#29460">PrintMsg_Next</a></td>
+<td class="comment-1" rowspan="1">If xxxx jump back to <a href="29405.html#29460">PrintMsg_Next</a> to move onto the next character.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29501"></span>733D</td>
-<td class="instruction">JR <a href="29405.html#29457">PrintMsg_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="29405.html#29457">PrintMsg_1</a>.</td>
+<td class="instruction">JR <a href="29405.html#29457">PrintMsg_Token</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29405.html#29457">PrintMsg_Token</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintMsg_5</td>
+<td class="asm-label">PrintMsg_Indirect_Jump</td>
 <td class="address-2"><span id="29503"></span>733F</td>
 <td class="instruction">JP (HL)</td>
 <td class="comment-1" rowspan="1">Indirect jump to the address held in <span class="register">HL</span>.</td>
@@ -394,7 +394,7 @@ X
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="29379.html">72C3</a>
+Prev: <a href="29395.html">72D3</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#29405">Map</a></td>
 <td class="next">

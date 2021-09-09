@@ -17,7 +17,7 @@
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="39682.html">9B02</a>
+Prev: <a href="39702.html">9B16</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#39827">Map</a></td>
 <td class="next">
@@ -25,15 +25,37 @@ Next: <a href="39849.html">9BA9</a>
 </td>
 </tr>
 </table>
-<div class="description">9B93: Routine at 9B93</div>
+<div class="description">9B93: Step Into 3ByteTable</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="39849.html">9BA9</a>, <a href="39900.html">9BDC</a> and <a href="40409.html">9DD9</a>.
+Used by the routines at <a href="39849.html">Step3ByteTable_Next</a>, <a href="40001.html">9C41</a>, <a href="40409.html">9DD9</a>, <a href="40608.html">9EA0</a>, <a href="40712.html">9F08</a> and <a href="40741.html">9F25</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Pointer to the record data</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">The record ID</td>
+</tr>
+<tr>
+<td class="register">IY</td>
+<td class="register-desc">The record data</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
@@ -46,19 +68,18 @@ Used by the routines at <a href="39849.html">9BA9</a>, <a href="39900.html">9BDC
 <td class="asm-label"></td>
 <td class="address-1"><span id="39828"></span>9B94</td>
 <td class="instruction">LD DE,$0003</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=$0003</td>
+<td class="comment-1" rowspan="2">Move onto the next record <span class="register">IX</span>=<span class="register">IX</span>+$0003.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="39831"></span>9B97</td>
 <td class="instruction">ADD IX,DE</td>
-<td class="comment-1" rowspan="1">Adds <span class="register">DE</span> to <span class="register">IX</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="39833"></span>9B99</td>
 <td class="instruction">LD D,(IX+$02)</td>
-<td class="comment-1" rowspan="4"><span class="register">IY</span>=load the</td>
+<td class="comment-1" rowspan="4"><span class="register">IY</span>=load the record.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -79,12 +100,13 @@ Used by the routines at <a href="39849.html">9BA9</a>, <a href="39900.html">9BDC
 <td class="asm-label"></td>
 <td class="address-1"><span id="39842"></span>9BA2</td>
 <td class="instruction">LD A,(IX+$00)</td>
-<td class="comment-1" rowspan="2">Set flag if this is the termination character ($FF).</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the record ID.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="39845"></span>9BA5</td>
 <td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Set flag if this is the termination character ($FF).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -102,7 +124,7 @@ Used by the routines at <a href="39849.html">9BA9</a>, <a href="39900.html">9BDC
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="39682.html">9B02</a>
+Prev: <a href="39702.html">9B16</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#39827">Map</a></td>
 <td class="next">
