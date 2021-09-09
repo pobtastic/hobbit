@@ -6,7 +6,7 @@ B $4000,6144,32 Pixels
 B $5800,768,32 Attributes
 
 b $5B00
-@ $5B00 replace=/#MOVEMENT/#MAP(#PEEK(#PC))(?,$01:N,$02:S,$03:E,$04:W,$05:NE,$06:NW,$07:SE,$08:SW,$09:UP,$0A:DN)  --#N(#PEEK(#PC+1), 2, 2, 1, 1)($)--> #N(#PEEK(#PC+2), 2, 2, 1, 1)($)
+@ $5B00 replace=/#MOVEMENT/#TABLE(default,centre,centre,centre) { =h Direction | =h Via | =h Destination } { #MAP(#PEEK(#PC))(?,$01:N,$02:S,$03:E,$04:W,$05:NE,$06:NW,$07:SE,$08:SW,$09:UP,$0A:DN) | #IF(#PEEK(#PC + 1) > $00)(#OBJECT(#PEEK(#PC + $01), 1, 1)($),---) | #LOCATION(#PEEK(#PC + $02), 1, 1)($) - "#LOCATIONNAME(#PEEK(#PC + $02))" } TABLE#
 @ $5B00 replace=/#WORDINDEX/#R#(#EVAL(#PEEK(#PC + 1) * $100 + #PEEK(#PC) + $6000))
 
 b $5EFF Stack
@@ -43,44 +43,35 @@ w $6000 Word Index
 b $6040 "A"
 @ $6040 label=A
 N $6040 A
-  $6040,$01 A (ARTICLE_MISC)
-  $6041,$01 @
-  $6042,$01 @
+  $6040,$01 #FIRSTLETTER(#PC)
+  $6041,$01 #LETTER(#PC)
+L $6041,$01,$02
 N $6043 ACROSS
-  $6043,$01 A (PREPOSITION)
-  $6044,$01 C
-  $6045,$01 R
-  $6046,$01 O
-  $6047,$01 S
-  $6048,$01 S
+  $6043,$01 #FIRSTLETTER(#PC) A (PREPOSITION)
+  $6044,$01 #LETTER(#PC)
+L $6044,$01,$05
 N $6049 AFTER
-  $6049,$01 A (PREPOSITION)
-  $604A,$01 F
-  $604B,$01 T
-  $604C,$01 E
-  $604D,$01 R
+  $6049,$01 #FIRSTLETTER(#PC) A (PREPOSITION)
+  $604A,$01 #LETTER(#PC)
+L $604A,$01,$04
 N $604E ALL
-  $604E,$01 A (SYSTEM_PRONOUN)
-  $604F,$01 L
-  $6050,$01 L
+  $604E,$01 #FIRSTLETTER(#PC) A (SYSTEM_PRONOUN)
+  $604F,$01 #LETTER(#PC)
+L $604F,$01,$02
 N $6051 ALREADY
-  $6051,$01 A (ARTICLE_MISC)
-  $6052,$01 L
-  $6053,$01 R
-  $6054,$01 E
-  $6055,$01 A
-  $6056,$01 D
-  $6057,$01 Y
+  $6051,$01 #FIRSTLETTER(#PC) A (ARTICLE_MISC)
+  $6052,$01 #LETTER(#PC)
+L $6052,$01,$06
 N $6058 AN
-  $6058,$01 A (ARTICLE_MISC)
+  $6058,$01 #FIRSTLETTER(#PC) A (ARTICLE_MISC)
   $6059,$01 N
   $605A,$01 @
 N $605B AND
-  $605B,$01 A (AND)
+  $605B,$01 #FIRSTLETTER(#PC) A (AND)
   $605C,$01 N
   $605D,$01 D
 N $605E ANOTHER
-  $605E,$01 A (ARTICLE_MISC)
+  $605E,$01 #FIRSTLETTER(#PC) A (ARTICLE_MISC)
   $605F,$01 N
   $6060,$01 O
   $6061,$01 T
@@ -88,32 +79,32 @@ N $605E ANOTHER
   $6063,$01 E
   $6064,$01 R
 N $6065 ARE
-  $6065,$01 A (ARTICLE_MISC)
+  $6065,$01 #FIRSTLETTER(#PC) A (ARTICLE_MISC)
   $6066,$01 R
   $6067,$01 E
 N $6068 ARM
-  $6068,$01 A (NOUN)
+  $6068,$01 #FIRSTLETTER(#PC) A (NOUN)
   $6069,$01 R
   $606A,$01 M
 N $606B ARROW
-  $606B,$01 A (NOUN)
+  $606B,$01 #FIRSTLETTER(#PC) A (NOUN)
   $606C,$01 R
   $606D,$01 R
   $606E,$01 O
   $606F,$01 W
 N $6070 AT
-  $6070,$01 A (PREPOSITION)
+  $6070,$01 #FIRSTLETTER(#PC) A (PREPOSITION)
   $6071,$01 T
   $6072,$01 @
 N $6073 ATTACK
-  $6073,$01 A (VERB)
+  $6073,$01 #FIRSTLETTER(#PC) A (VERB)
   $6074,$01 T (Beugung: S)
   $6075,$01 T
-  $6076,$01 A
+  $6076,$01 #FIRSTLETTER(#PC) A
   $6077,$01 C
   $6078,$01 K
 N $6079 AXE
-  $6079,$01 A (NOUN)
+  $6079,$01 #FIRSTLETTER(#PC) A (NOUN)
   $607A,$01 X
   $607B,$01 E
 
@@ -121,7 +112,7 @@ b $607C "B"
 @ $607C label=B
 N $607C BACK
   $607C,$01 B (ADJECTIVE)
-  $607D,$01 A
+  $607D,$01 #FIRSTLETTER(#PC) A
   $607E,$01 C
   $607F,$01 K
 N $6080 BARD
@@ -3646,8 +3637,8 @@ c $6C00 Game Entry Point
   $6C27,$01 Disable interrupts.
   $6C28,$03 Set the stack pointer to #R$5EFF.
   $6C2B,$04 #REGix=#R$CC00
-  $6C2F,$05 Call #R$9DBD with room ID $05 ("trolls clearing").
-  $6C34,$06 #REGhl=#R$E142 (#REGhl=room graphics data for "trolls clearing").
+  $6C2F,$05 Call #R$9DBD with location #LOCATION($05, 1, 1)($) - "#LOCATIONNAME($05)".
+  $6C34,$06 #REGhl=#R$E142 (#REGhl=location graphics data for "#LOCATIONNAME($05)").
   $6C3A,$05 Write $00 to the first and second addresses.
   $6C3F,$0B Copies #R$F400 to #R$C11B ($615 bytes).
   $6C4A,$08 Copies #R$FA15 to #R$BA8A ($5D9 bytes).
@@ -3667,7 +3658,7 @@ c $6C00 Game Entry Point
   $6D06,$0B Copies $6FF4 to $6FF9 ($05 bytes).
 
   $6DA2,$03 #REGhl=#R$AD93("i do not know the word "[0x16]"")
-  $6DA5,$02 #REGa=$01
+  $6DA5,$05 Write $01 to #R$B701.
   $6DAA,$03 Call #R$72DD.
 
 b $6DCC Squiggle Graphics
@@ -3711,20 +3702,34 @@ B $7291,$04
 W $7295,$2E
 
 c $72C3
+  $72C3,$03 Call #R$858B.
+  $72C9,$04 Write $00 to #R$B704.
+  $72CD,$01 Return.
 
+c $72CE "i cannot do that"
+@ $72CE label=ICannotDoThat
   $72CE,$03 #REGhl=#R$AFBF("i cannot do that")
   $72D1,$02 Jump to #R$72DD.
+
+c $72D3
 
 c $72DD Print Message
 @ $72DD label=PrintMsg
 R $72DD HL Text message address
+N $72DD Store #REGa, #REGde and #REGix for later (see #R$735B).
+  $72DD,$04 Stash #REGde at #R$70DD.
+  $72E1,$04 Stash #REGix at #R$70E0.
+  $72E5,$03 Stash #REGa at #R$70DC.
+N $72E8 Important.
   $72F1,$03 #REGix=#REGhl (the text message address).
 @ $72F4 label=PrintMsg_Loop
   $72F4,$03 Fetch the next character of the text message.
   $72F7,$04 Is this blah? Jump to #R$7318 if not.
   $72FB,$02 Reset bit 7.
   $7301,$02 Increase #REGix by one to move onto the next character of the message.
+@ $7311 label=PrintMsg_Token
   $7311,$03 Call #R$74C1.
+@ $7314 label=PrintMsg_Next
   $7314,$02 Increase #REGix by one to move onto the next character of the message.
   $7316,$02 Jump back to #R$72F4.
 N $7318 Check.
@@ -3733,6 +3738,7 @@ N $7318 Check.
   $7321,$03 Else, call #R$72C3.
   $7324,$03 Jump back to #R$7314 to move onto the next character.
 N $7326 X
+@ $7326 label=PrintMsg_PrintTable
   $7326,$01 Stash #REGde on the stack for later.
   $7327,$03 #REGe=#REGa - #REGde now holds the current character as the LSB.
   $732A,$03 #REGhl=#R$7295
@@ -3744,8 +3750,16 @@ N $7326 X
   $7338,$03 Call #R$733F.
   $733B,$02 If xxxx jump back to #R$7314 to move onto the next character.
   $733D,$02 Jump to #R$7311.
+@ $733F label=PrintMsg_Indirect_Jump
   $733F,$01 Indirect jump to the address held in #REGhl.
 
+c $7340
+c $7344
+c $735B
+  $735B,$04 Restore #REGde from #R$70DD.
+  $735F,$04 Restore #REGix from #R$70E0.
+  $7363,$03 Restore #REGa from #R$70DC.
+  $7366,$01 Return.
 c $7367
 c $7376
 c $737E
@@ -3758,22 +3772,16 @@ c $73BD
 c $73C2
 c $73E0
 c $73F9
-
 c $7407
-c $738B
 c $740C
 c $7425
-c $738B
 c $742D
-c $7340
-c $7344
-c $735B
 
 c $7493 Get Common Word
 R $7493 A Letter reference
 R $7493 O:DE Common word address
 @ $7493 label=GetCommonWord
-  $7493,$02 Subtract $60 from the letter byte - anything higher than $60 signfies the letter is a "common word".
+  $7493,$02 Subtract $60 from the letter byte - anything higher than $60 signifies the letter is a "common word".
   $7495,$03 Create offset for the word look-up.
   $7498,$03 #REGhl=#R$AD3D
   $749B,$02 Add to base address at #R$AD3D so that pointer is at the referenced word.
@@ -3782,7 +3790,7 @@ R $7493 O:DE Common word address
   $74A0,$02 Add $50 to #REGa and store the result in #REGd.
   $74A3,$03 Jump to #R$7311.
 
-b $74A6 Output Buffer
+g $74A6 Output Buffer
 @ $74A6 label=OutputBuffer
   $74A6,$14
 
@@ -3790,6 +3798,52 @@ c $74BA
 
 c $74C1 Print Token
 @ $74C1 label=PrintToken
+R $74C1 DE e.g. $56D1 token?
+  $74C1,$01 #REGa=#REGd
+  $74C2,$02 Keep only bits 0-3.
+  $74C4,$01 Combine with #REGe.
+  $74C5,$01 Return the result is zero.
+  $74C6,$03 Store #REGhl, #REGbc and #REGde on the stack for later.
+  $74CE,$04 #REGhl=$6000+#REGde
+  $74D2,$03 #REGde=#R$74A6(output buffer).
+  $74D5,$01 Store #REGhl on the stack.
+  $74D6,$02 Intialise #REGb to $00 to count the number of letters.
+@ $74D8 label=PrintToken_Loop
+  $74D8,$01 Fetch the next character from #REGhl.
+  $74D9,$02 Keep only bits 0-4.
+  $74DB,$02 Jump to #R$74F9 if this is zero.
+  $74DD,$01 Increase #REGb by one.
+  $74DE,$02 Add $60 to #REGa to convert to ASCII.
+  $74E0,$01 Store the result in the #R$74A6(output buffer).
+  $74E1,$01 Increase the #R$74A6(output buffer) pointer by one.
+  $74E2,$02 Check if this is the last character in the word.
+  $74E4,$01 Increase the character pointer reference by one.
+  $74E5,$02 If this is not the last character in the word, loop back to #R$74D8 to continue processing.
+N $74E7 Check minimum length.
+  $74E7,$01 #REGa=the number of characters.
+  $74E8,$04 If the number of characters is only $02 then jump back to #R$74D8 to continue processing.
+  $74EC,$04 If it is not $03, then jump to #R$74F9.
+  $74F0,$07 Else, fetch the first character again and check if it is the last character in the word.
+  $74F7,$02 If it is not, loop back to #R$74D8 to continue processing.
+@ $74F9 label=PrintToken_
+  $74F9,$01 Restore #REGhl off the stack.
+@ $750F label=PrintToken__
+@ $7512 label=PrintToken___
+  $7519,$02 E0?
+@ $7527 label=PrintToken____
+@ $7530 label=PrintToken_____
+@ $7543 label=PrintToken______
+@ $7551 label=PrintToken_______
+@ $755C label=PrintToken________
+@ $7567 label=PrintToken_Print
+  $7567,$03 #REGhl=#R$74A6(output buffer).
+@ $756A label=PrintToken_Print_Loop
+  $756A,$01 Fetch the next character from the output buffer.
+  $756B,$03 Call #R$858B.
+  $756E,$01 Increase the output buffer pointer by one.
+  $756F,$02 Decrease counter by one and loop back to #R$756A until counter is zero.
+  $7571,$02 Restore #REGbc and #REGhl off the stack.
+  $7573,$01 Return.
 
 c $7574
 B $7574,$11
@@ -3799,6 +3853,21 @@ B $7574,$11
 
 c $83A0 Display Locate Help Message
 @ $83A0 label=DisplayLocHlpMsg
+  $83A7,$03 Store #REGhl and #REGix on the stack for later.
+N $83AA Default message response should there be no match for the current location.
+  $83AA,$03 #REGhl=#R$B467("you're doing fine[0x15]")
+N $83AD Use the current location ID to look-up if there is a specific help message.
+  $83AD,$0A Using the #R$C12B(current location number), see if there is a help message available for display.
+.           This is achieved by passing #R$83CD to the #R$9DBD(Index ID Table) routine.
+  $83B7,$02 If there is no message, jump directly to #R$83BF to display the default message.
+N $83B9 Point to the specific help for the current location.
+  $83B9,$06 #REGhl=The address of the help message
+@ $83BF label=DisplayLocHlpMsg_Print
+N $83BF Print the message.
+  $83BF,$05 Write $01 to #R$B701.
+  $83C4,$03 Call #R$72DD.
+  $83C7,$03 Restore #REGix and #REGhl from the stack.
+  $83CA,$03 Jump to #R$82B3.
 
 b $83CD Locate Help Message
 @ $83CD label=LocHlpMsg
@@ -3826,7 +3895,12 @@ W $83E9,$02
 W $83EC,$02
   $83EE,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
-c $83EF
+c $83EF Game Over
+@ $83EF label=GameOver
+  $83EF,$03 Call #R$83F5.
+  $83F2,$03 Jump to #R$82B3.
+N $83F5 Actions "game over".
+@ $83F5 label=GameOver_Start
   $83F5,$02 Stash #REGhl and #REGde on the stack.
   $83F7,$04 Write $00 to #R$B701.
   $83FB,$03 #REGhl=#R$B454("you have mastered [0x16]")
@@ -3838,6 +3912,7 @@ c $83EF
   $8428,$03 Call #R$72DD.
   $842B,$02 Restore #REGde and #REGhl from the stack.
   $842D,$01 Return.
+N $842E Not sure yet...
 @ $842E label=WUT
   $8439,$01 Return.
 
@@ -3914,6 +3989,8 @@ c $876B Scroll Line
 
 c $87C9 Print Proper Character
 @ $87C9 label=PrintPropChar
+  $87D3,$03 #REGde=#R$8722
+  $8821,$01 Return.
 
 b $8822 Main Font
 @ $8822 label=MainFont
@@ -3928,8 +4005,12 @@ c $8C4B Action Look
   $8C5F,$03 #REGhl=#R$AFFC("You are in[0x16]")
   $8C62,$03 Call #R$72DD.
 
+  $8C65,$02 Stash #REGix on the stack.
+
   $8C84,$03 #REGhl=#R$B003("You see :[0x14]")
   $8C87,$03 Call #R$72DD.
+  $8C8A,$02 Restore #REGix off the stack.
+  $8C92,$03 Jump to #R$9FAF.
 
   $8CA0,$03 #REGhl=#R$ADF1("You are not carrying it[0x15]")
   $8CA3,$03 Jump to #R$72DD.
@@ -3997,9 +4078,22 @@ c $9076 Action Shoot
 
 c $90EB Action Inventory
 @ $90EB label=Action_Inventory
+  $90EB,$03 Call #R$9D44.
   $90EE,$03 #REGhl=#R$ADF6("You are carrying[0x15]")
+  $90F1,$03 Call #R$72DD.
   $90FB,$03 #REGhl=#R$B33B("{6} nothing")
+  $90FE,$03 Display this message using #R$72DD if zero.
+  $9101,$03 #REGa=#R$B6EA
+  $9104,$04 #REGix=#R$B70C
+  $9108,$03 #REGb=
   $910B,$03 Jump to #R$9FAF.
+
+c $910E
+  $9135,$03 Jump to #R$9FAF.
+
+  $9149,$01 Return.
+
+  $9170,$01 Return.
 
 c $9171 Action Attack
 @ $9171 label=Action_Attack
@@ -4014,18 +4108,38 @@ W $9226,$20
 c $939E Action Give
 @ $939E label=Action_Give
   $93A5,$03 #REGhl=#R$ADF1("You are not carrying it[0x15]")
+  $93AE,$03 Call #R$9CED.
   $93BE,$03 #REGhl=#R$AE0C("You are carrying too much")
+  $93C4,$03 Call #R$9D44.
+  $93D7,$03 Jump to #R$9BDD.
 
 c $93DA Action Examine
 @ $93DA label=Action_Examine
+  $93DA,$03 Call #R$9D44.
+  $93DD,$03 #REGa=#R$B6E8
+  $93E0,$03 Call #R$9BCA.
+  $93E3,$06 #REGhl=offset for object help text.
+  $93E9,$05 If this value is not $0000 then jump to #R$72DD.
   $93EE,$03 #REGhl=#R$B000("You see[0x16]")
   $93F1,$03 Call #R$72DD.
+  $93F4,$04 #REGiy=#REGix
+  $93F8,$03 Call #R$9EC7.
+  $93FD,$03 Call #R$858B.
+  $9400,$03 Call #R$8583.
+  $9403,$01 Return.
 
   $944C,$03 #REGhl=#R$ADFC("and it get(s|d|ing|es) swept away")
   $944F,$03 Call #R$72DD.
 
   $9531,$03 #REGhl=#R$AFC4("i see nothing here")
   $9534,$03 Call #R$72DD.
+
+c $95ED
+  $95FF,$03 Call #R$9D37.
+  $9627,$01 Return.
+  $9629,$02 Jump to #R$9624.
+
+c $962B
 
   $96A7,$01 Return.
   $969A,$01 Return.
@@ -4035,27 +4149,68 @@ c $969A
 
 c $9B02 Action None
 @ $9B02 label=Action_None
+  $9B02,$05 Call #R$9F82 using #REGa=$00.
+  $9B0A,$03 Call #R$95ED.
+  $9B0D,$02 #REGa=$00.
+  $9B15,$01 Return.
 
-c $9B93
+c $9B16
+
+c $9B93 Step Into 3ByteTable
+R $9B93 IX Pointer to the record data
+R $9B93 O:A The record ID
+R $9B93 O:IY The record data
 @ $9B93 label=Step3ByteTable
   $9B93,$01 Exchange registers.
-  $9B94,$03 #REGde=$0003
-  $9B97,$02 Adds #REGde to #REGix.
-  $9B99,$09 #REGiy=load the
-  $9BA2,$05 Set flag if this is the termination character ($FF).
+  $9B94,$05 Move onto the next record #REGix=#REGix+$0003.
+  $9B99,$09 #REGiy=load the record.
+  $9BA2,$03 #REGa=the record ID.
+  $9BA5,$02 Set flag if this is the termination character ($FF).
   $9BA7,$01 Exchange registers.
   $9BA8,$01 Return.
 
-c $9BA9
+c $9BA9 Wrapper Around Step3ByteTable.
+R $9BA9 IX Pointer to 3 byte table data
+R $9BA9 O:IX Pointer moved to the next record
+R $9BA9 O:IY Contents of the record
+@ $9BA9 label=Step3ByteTable_Next
+  $9BA9,$01 Store #REGbc on the stack.
+  $9BAA,$01 Store #REGa in register #REGb so it's not overwritten by the following CALL instruction.
+  $9BAB,$03 Call #R$9B93.
+  $9BAE,$01 Restore the previous value of #REGa.
+  $9BAF,$01 Restore #REGbc off the stack.
   $9BB0,$01 Return.
 
 c $9BB1 Locate Location
+R $9BB1 A Location ID
+R $9BB1 O:IX Pointer to #R$BA8A(location data)
 @ $9BB1 label=LocateLocation
+  $9BB1,$04 If the location ID is less than $50 jump to #R$9BB7 to process it.
+  $9BB5,$01 Reset #REGa to $00.
   $9BB6,$01 Return.
+N $9BB7 Work out the location now #REGa is validated as a legitimate location ID.
+@ $9BB7 label=LocateLocation_Action
+  $9BB7,$01 Stash #REGde on the stack.
+  $9BB8,$03 #REGde=#R$B9E0
+  $9BBB,$01 Stash #REGhl on the stack.
+  $9BBC,$03 Store offset in the #REGhl register pair.
+N $9BBF Calculate Location address, some examples would be;
+. #TABLE(default,centre,centre,centre,centre)
+. { =h Location ID | =h Sum | =h Location Table Entry | =h Location Data }
+. { #LET(id=$05) $#EVAL({id},16,2) | $B9E0+($#EVAL({id},16,2)*2) | #R(#EVAL($B9E0 + {id} * 2)) | #R(#EVAL(#PEEK(#EVAL($B9E0 + {id} * 2)) + #EVAL(#PEEK(#EVAL($B9E1 + {id} * 2)) * 256))) }
+. { #LET(id=$20) $#EVAL({id},16,2) | $B9E0+($#EVAL({id},16,2)*2) | #R(#EVAL($B9E0 + {id} * 2)) | #R(#EVAL(#PEEK(#EVAL($B9E0 + {id} * 2)) + #EVAL(#PEEK(#EVAL($B9E1 + {id} * 2)) * 256))) }
+. { #LET(id=$33) $#EVAL({id},16,2) | $B9E0+($#EVAL({id},16,2)*2) | #R(#EVAL($B9E0 + {id} * 2)) | #R(#EVAL(#PEEK(#EVAL($B9E0 + {id} * 2)) + #EVAL(#PEEK(#EVAL($B9E1 + {id} * 2)) * 256))) }
+. TABLE#
+  $9BBF,$02 #REGhl=(#REGhl*2)+#REGde
+  $9BC1,$03 #REGde=the location from the pointer in #REGhl.
+  $9BC4,$03 #REGix=#REGde using the stack.
+  $9BC7,$02 Restore #REGhl and #REGde off the stack.
+  $9BC9,$01 Return.
 
 c $9BCA Locate Object
 N $9BCA Locates an object from a given object ID.
 R $9BCA A Object ID
+R $9BCA O:IX The object data address from #R$C11B
 @ $9BCA label=LocateObject
   $9BCA,$04 #REGix=#R$C063(the start address of the object table).
   $9BCE,$03 Call #R$9DBD to locate the object.
@@ -4067,9 +4222,59 @@ R $9BCA A Object ID
 c $9BDC
 B $9BDC,$01
 
+c $9C41
+  $9C41,$05 Stash #REGix, #REGiy and #REGbc on the stack.
+  $9C46,$01 Stash #REGa in the #REGb register temporarily so it doesn't get overwritten.
+  $9C47,$03 Call #R$9BB1.
+  $9C4D,$01 Stash #REGa in the #REGc register temporarily so it doesn't get overwritten.
+  $9C4E,$04 Set #REGix to $C060 which is 3 bytes less than the start of the #R$C063(object table) due to the following
+.           line adding $0003 and moving us on to the first record.
+  $9C52,$03 Call #R$9B93.
+  $9C55,$02 Jump to #R$9C6D if we've reached the end of the object data.
+  $9C57,$07 If the TODO is not $01 (TODO), then loop back round to #R$9C52 to move onto the next record.
+N $9C5E Success! We've found a record which matches $01 (TODO).
+  $9C5E,$01 Restore the previous value of #REGa from the #REGb register.
+  $9C6B,$02 Jump to #R$9C52.
+  $9C6D,$01 Restore the previous value of #REGa from the #REGc register.
+  $9C6E,$05 Restore #REGbc, #REGiy and #REGix from the stack.
+  $9C73,$01 Return.
+  $9C76,$02 Jump to #R$9C6D.
+
+c $9C78
+
+c $9C9F
+
+c $9CE8
+
 c $9D37 Get Object Location In IX
 @ $9D37 label=GetObjectLocationInIX
+R $9D37 O:IX The object location
+  $9D37,$01 Stash #REGaf on the stack.
+  $9D38,$07 #R$B70C.
+  $9D3F,$03 Call #R$9BB1.
+  $9D42,$01 Restore #REGaf off the stack.
   $9D43,$01 Return.
+
+c $9D44
+
+c $9D97
+R $9D97 O:A The number of objects
+@ $9D97 label=ObjectCount
+  $9D97,$05 Stash #REGix, #REGiy and #REGbc on the stack.
+  $9DB7,$05 Restore #REGbc, #REGiy and #REGix from the stack.
+  $9D9C,$02 Initialise the count of the number of objects.
+  $9D9E,$04 Set #REGix to $C060 which is 3 bytes less than the start of the #R$C063(object table) due to the following
+.           line adding $0003 and moving us on to the first record.
+@ $9DA2 label=ObjectCount_Loop
+  $9DA2,$03 Call #R$9BA9 to fetch the next record in #REGiy.
+  $9DA5,$02 Jump to #R$9DB6 if we've reached the end of the table data.
+  $9DA7,$05 Don't count this record if it's a "Mother Object", if it is then loop back to #R$9DA2 to continue.
+  $9DAC,$06 Don't count this record if it's not "visible", if not then loop back to #R$9DA2 to continue.
+  $9DB2,$01 Increase #REGb, the object counter, by one.
+  $9DB3,$03 Jump to #R$9DA2.
+@ $9DB6 label=ObjectCount_End
+  $9DB6,$01 Store the object count in #REGa.
+  $9DBC,$01 Return.
 
 c $9DBD Index ID Table
 N $9DBD Searches through what is essentially key value data to find a key match.
@@ -4095,6 +4300,117 @@ N $9DD2 Handle the output.
   $9DD8,$01 Return.
 
 c $9DD9
+  $9DD9,$04 Stash #REGbc, #REGde and #REGiy on the stack.
+  $9DE8,$03 Call #R$9B93.
+  $9E08,$03 Call #R$71F3.
+  $9E18,$03 Call #R$9E34.
+  $9E20,$04 Restore #REGiy, #REGde and #REGbc off the stack.
+  $9E24,$01 Return.
+
+  $9E25,$03 Call #R$9E2B.
+  $9E40,$05 Return if the object is not "visible".
+  $9E45,$05 Stash #REGiy, #REGix and #REGbc on the stack.
+  $9E4A,$01 #REGb=the object ID.
+  $9E4B,$03 #REGc=your current location ID.
+  $9E74,$05 Restore #REGbc, #REGix and #REGiy off the stack.
+  $9E79,$01 Return.
+
+c $9EA0
+  $9EA0,$03 Stash #REGiy and #REGde on the stack.
+  $9EC3,$03 Restore #REGde and #REGiy off the stack.
+  $9EC6,$01 Return.
+
+c $9EC7
+  $9EC7,$03 Stash #REGiy and #REGde on the stack.
+  $9ECA,$05 #REGiy=#REGiy+$0008
+  $9ECF,$03 Call #R$9ED6.
+  $9ED2,$03 Restore #REGde and #REGiy off the stack.
+  $9ED5,$01 Return.
+
+  $9ED6,$02 Stash #REGaf and #REGde on the stack.
+  $9EE5,$03 Call #R$743F.
+  $9EEE,$03 Call #R$74C1.
+  $9EF7,$03 Call #R$74C1.
+  $9F05,$02 Restore #REGde and #REGaf off the stack.
+  $9F07,$01 Return.
+
+c $9F08
+  $9F08,$03 Stash #REGbc and #REGiy on the stack.
+  $9F0C,$03 Call #R$9E95.
+  $9F0F,$03 Call #R$9B93.
+  $9F21,$03 Restore #REGiy and #REGbc off the stack.
+  $9F24,$01 Return.
+
+c $9F25
+  $9F49,$01 Return.
+
+c $9F4A
+  $9F75,$01 Return.
+
+c $9F76
+  $9F81,$01 Return.
+
+c $9F82
+  $9F85,$03 Call #R$9BCA.
+  $9F93,$01 Return.
+
+c $9F94
+  $9F94,$04 Stash #REGiy, #REGaf and #REGbc on the stack.
+  $9F98,$03 #REGhl=#R$B003("You see :[0x14]")
+  $9F9B,$03 Call #R$72DD.
+  $9F9E,$02 #REGa=$FF
+  $9FA7,$03 Call #R$9FAF.
+  $9FAA,$04 Restore #REGbc, #REGaf and #REGiy off the stack.
+  $9FAE,$01 Return.
+
+  $9FAF,$04 Stash #REGiy, #REGde and #REGbc on the stack.
+  $9FB7,$03 Call #R$9FC7.
+  $9FBC,$03 #REGhl=#R$B33B(" {6} nothing")
+  $9FBF,$03 Call #R$9FAF if zero.
+  $9FC2,$04 Restore #REGbc, #REGde and #REGiy off the stack.
+  $9FC6,$01 Return.
+  $9FD9,$03 Call #R$9BA9.
+  $A00E,$03 Call #R$9E34.
+  $A01B,$03 Call #R$9EC7.
+  $A028,$03 Call #R$858B.
+  $A02E,$03 Call #R$A050.
+  $A039,$03 Call #R$9FC7.
+  $A041,$03 Call #R$8583.
+  $A04F,$01 Return.
+
+c $A050
+  $A050,$04 Stash #REGix, #REGbc and #REGde on the stack.
+  $A092,$04 Restore #REGde, #REGbc and #REGix off the stack.
+  $A088,$03 Call #R$A09D.
+  $A08B,$03 #REGhl=#R$AFE0("[0x01] there[0x01][0x14]")
+  $A08E,$03 Call #R$72DD.
+  $A096,$01 Return.
+  $A097,$03 Call #R$8583.
+  $A09B,$02 Jump back to #R$A092.
+
+  $A09D,$03 #REGhl=#R$AFCA
+  $A0AB,$03 Jump to #R$72DD.
+
+c $A0AE
+
+c $A0BA
+  $A0C7,$01 Return.
+
+c $A0C8
+  $A0C8,$06 Stash #REGbc, #REGde, #REGiy and #REGix on the stack.
+  $A0CE,$03 Call #R$A0AE.
+  $A0E0,$03 Call #R$9BCA.
+  $A0F3,$03 Call #R$A0BA.
+  $A104,$03 #REGhl=#R$AE17("to the[0x16]")
+  $A107,$03 Call #R$72DD.
+  $A10A,$03 Call #R$74C1.
+  $A10D,$03 #REGhl=#R$B013("there is[0x00][0x14]")
+  $A110,$03 Call #R$72DD.
+  $A11D,$06 Restore #REGix, #REGiy, #REGde and #REGbc off the stack.
+  $A123,$01 Return.
+
+c $A124
+  $A137,$01 Return.
 
 c $A138 Display Exits
 @ $A138 label=DisplayExits
@@ -4110,6 +4426,21 @@ c $A138 Display Exits
   $A15A,$03 Call #R$8583.
   $A15D,$06 Restore #REGbc, #REGde, #REGiy and #REGix from the stack.
   $A163,$01 Return.
+
+  $A184,$03 #REGhl=#R$AFBB("[0x04] is[0x01][0x15]")
+  $A187,$03 Call #R$72DD.
+  $A18B,$01 Return.
+  $A1AD,$01 Return.
+  $A1C7,$01 Return.
+  $A1CF,$01 Return.
+  $A1E2,$01 Return.
+  $A1E4,$03 #REGhl=#R$B009("You say "[0x16]")
+  $A1E7,$03 Call #R$72DD.
+  $A1F0,$03 Call #R$72DD.
+  $A1F3,$03 #REGhl=#R$B00F(" ".[0x14]")
+  $A1F6,$03 Jump to #R$72DD.
+  $A20A,$01 Return.
+B $A20B,$3D,$08
 
 c $A248 Action: Tie
 @ $A248 label=ActionTie
@@ -4201,38 +4532,38 @@ w $AB53 Actions
 
 w $AD3D Common Words
 @ $AD3D label=CommonWords
-  $AD3D,$02 "A"
-  $AD3F,$02 "AND"
-  $AD41,$02 "ARE"
-  $AD43,$02 "AT"
-  $AD45,$08 "BE"
-  $AD47,$02 "BLOW"
-  $AD49,$02 "BUT"
-  $AD4B,$02 "CANNOT"
-  $AD4D,$02 "CARRYING"
-  $AD4F,$02 "DO"
-  $AD51,$02 "DOOR"
-  $AD53,$02 "DRAGON"
-  $AD55,$02 "FALL"
-  $AD57,$02 "FROM"
-  $AD59,$02 "HERE"
-  $AD5B,$02 "I"
-  $AD5D,$02 "IN"
-  $AD5F,$02 "IS"
-  $AD61,$02 "IT"
-  $AD63,$02 "NOT"
-  $AD65,$02 "OF"
-  $AD67,$02 "ON"
-  $AD69,$02 "SEE"
-  $AD6B,$02 "SOME"
-  $AD6D,$02 "THE"
-  $AD6F,$02 "THERE"
-  $AD71,$02 "THIS"
-  $AD73,$02 "TO"
-  $AD75,$02 "TOO"
-  $AD77,$02 "WHAT"
-  $AD79,$02 "WITH"
-  $AD7B,$02 "YOU"
+  $AD3D,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("A")
+  $AD3F,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("AND")
+  $AD41,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("ARE")
+  $AD43,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("AT")
+  $AD45,$08 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("BE")
+  $AD47,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("BLOW")
+  $AD49,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("BUT")
+  $AD4B,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("CANNOT")
+  $AD4D,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("CARRYING")
+  $AD4F,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("DO")
+  $AD51,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("DOOR")
+  $AD53,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("DRAGON")
+  $AD55,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("FALL")
+  $AD57,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("FROM")
+  $AD59,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("HERE")
+  $AD5B,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("I")
+  $AD5D,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("IN")
+  $AD5F,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("IS")
+  $AD61,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("IT")
+  $AD63,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("NOT")
+  $AD65,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("OF")
+  $AD67,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("ON")
+  $AD69,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("SEE")
+  $AD6B,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("SOME")
+  $AD6D,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("THE")
+  $AD6F,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("THERE")
+  $AD71,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("THIS")
+  $AD73,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("TO")
+  $AD75,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("TOO")
+  $AD77,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("WHAT")
+  $AD79,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("WITH")
+  $AD7B,$02 #R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256+$6000))("YOU")
 
 b $AD7D Text Messages
 @ $AD7D label=TextMessages
@@ -4429,6 +4760,7 @@ W $B6DC,$02
   $B6E6,$01
 @ $B6E7 label=CurrentAction
   $B6E7,$01
+@ $B6E8 label=CurrentObject
   $B6E8,$01
   $B6E9,$01
   $B6EA,$01
@@ -4448,7 +4780,8 @@ W $B6FC,$02
   $B6FE,$01
   $B6FF,$01
   $B700,$01
-  $B701,$01
+@ $B701 label=WAIT_COUNTDOWN
+  $B701,$01 1=action countdown, 0=countdown finished
   $B702,$01
   $B703,$01
   $B704,$01
@@ -4477,784 +4810,631 @@ W $B71E,$1A
 
 w $B9E0 Location Table
 @ $B9E0 label=LocationTable
+  $B9E0,$02 #N(#EVAL((#PC - $B9E0) / 2), 2, 3, 1, 1)($) - "#LOCATIONNAME(#EVAL((#PC - $B9E0) / 2))".
+L $B9E0,$02,$50
+
+w $BA80
+  $BA80,$0A,$02
 
 b $BA8A Locations
 @ $BA8A label=Locations
   $BA8A,$0D 00:  : ''
-N $BA97 Room $01
+N $BA97 Location $01 - "#TEXTTOKEN(#PC + $02, $01)"
   $BA97,$01 light, IN
-  $BA98,$01 ROOM_PROP_VOLUME
-W $BA99,$02 hall
-W $BA9B,$02 tunnel
-W $BA9D,$02 like
+  $BA98,$01 LOCATION_PROP_VOLUME
+  $BA99,$06,$02 #TEXTTOKEN(#PC)
 W $BA9F,$02 comfortable tunnel like hall
   $BAA1,$03 #MOVEMENT
   $BAA4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BAA5 Room $04
+N $BAA5 Location $04 - "#TEXTTOKEN(#PC + $02, $01)"
   $BAA5,$01 light, IN
-  $BAA6,$01 ROOM_PROP_VOLUME
-W $BAA7,$02 lonelands
-W $BAA9,$02 ---
-W $BAAB,$02 ---
+  $BAA6,$01 LOCATION_PROP_VOLUME
+  $BAA7,$06,$02 #TEXTTOKEN(#PC)
 W $BAAD,$02 gloomy empty land dreary hills ahead
   $BAAF,$03 #MOVEMENT
 L $BAAF,$03,$04
   $BABB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BABC Room $05
+N $BABC Location $05 - "#TEXTTOKEN(#PC + $02, $01)"
   $BABC,$01 light, IN
-  $BABD,$01 ROOM_PROP_VOLUME
-W $BABE,$02 clearing
-W $BAC0,$02 trolls
-W $BAC2,$02 ---
+  $BABD,$01 LOCATION_PROP_VOLUME
+  $BABE,$06,$02 #TEXTTOKEN(#PC)
 W $BAC4,$02 ---
   $BAC6,$03 #MOVEMENT
 L $BAC6,$03,$03
   $BACF,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BAD0 Room $06
+N $BAD0 Location $06 - "#TEXTTOKEN(#PC + $02, $01)"
   $BAD0,$01 light, IN
-  $BAD1,$01 ROOM_PROP_VOLUME
-W $BAD2,$02 path
-W $BAD4,$02 trolls
-W $BAD6,$02 ---
+  $BAD1,$01 LOCATION_PROP_VOLUME
+  $BAD2,$06,$02 #TEXTTOKEN(#PC)
 W $BAD8,$02 hidden path trolls foot print S [16]
   $BADA,$03 #MOVEMENT
 L $BADA,$03,$02
   $BAE0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BAE1 Room $07
+N $BAE1 Location $07 - "#TEXTTOKEN(#PC + $02, $01)"
   $BAE1,$01 dark, IN
-  $BAE2,$01 ROOM_PROP_VOLUME
-W $BAE3,$02 cave
-W $BAE5,$02 trolls
-W $BAE7,$02 ---
+  $BAE2,$01 LOCATION_PROP_VOLUME
+  $BAE3,$06,$02 #TEXTTOKEN(#PC)
 W $BAE9,$02 trolls cave
   $BAEB,$03 #MOVEMENT
   $BAEE,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BAEF Room $09
+N $BAEF Location $09 - "#TEXTTOKEN(#PC + $02, $01)"
   $BAEF,$01 light, IN
-  $BAF0,$01 ROOM_PROP_VOLUME
-W $BAF1,$02 rivendell
-W $BAF3,$02 ---
-W $BAF5,$02 ---
+  $BAF0,$01 LOCATION_PROP_VOLUME
+  $BAF1,$06,$02 #TEXTTOKEN(#PC)
 W $BAF7,$02 ---
   $BAF9,$03 #MOVEMENT
 L $BAF9,$03,$02
   $BAFF,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BB00 Room $0A
+N $BB00 Location $0A - "#TEXTTOKEN(#PC + $02, $01)"
   $BB00,$01 light, ON
-  $BB01,$01 ROOM_PROP_VOLUME
-W $BB02,$02 mountain
-W $BB04,$02 misty
-W $BB06,$02 ---
+  $BB01,$01 LOCATION_PROP_VOLUME
+  $BB02,$06,$02 #TEXTTOKEN(#PC)
 W $BB08,$02 hard dangerous path misty mountains
   $BB0A,$03 #MOVEMENT
 L $BB0A,$03,$04
   $BB16,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BB17 Room $0B
+N $BB17 Location $0B - "#TEXTTOKEN(#PC + $02, $01)"
   $BB17,$01 light, IN
-  $BB18,$01 ROOM_PROP_VOLUME
-W $BB19,$02 place
-W $BB1B,$02 narrow
-W $BB1D,$02 ---
+  $BB18,$01 LOCATION_PROP_VOLUME
+  $BB19,$06,$02 #TEXTTOKEN(#PC)
 W $BB1F,$02 narrow place dreadful drop into dim valley
   $BB21,$03 #MOVEMENT
 L $BB21,$03,$03
   $BB2A,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BB2B Room $0C
+N $BB2B Location $0C - "#TEXTTOKEN(#PC + $02, $01)"
   $BB2B,$01 light, ON
-  $BB2C,$01 ROOM_PROP_VOLUME
-W $BB2D,$02 path
-W $BB2F,$02 dangerous
-W $BB31,$02 narrow
+  $BB2C,$01 LOCATION_PROP_VOLUME
+  $BB2D,$06,$02 #TEXTTOKEN(#PC)
 W $BB33,$02 narrow dangerous path
   $BB35,$03 #MOVEMENT
 L $BB35,$03,$02
   $BB3B,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BB3C Room $0E
+N $BB3C Location $0E - "#TEXTTOKEN(#PC + $02, $01)"
   $BB3C,$01 dark, IN
-  $BB3D,$01 ROOM_PROP_VOLUME
-W $BB3E,$02 cave
-W $BB40,$02 large
-W $BB42,$02 dry
+  $BB3D,$01 LOCATION_PROP_VOLUME
+  $BB3E,$06,$02 #TEXTTOKEN(#PC)
 W $BB44,$02 large dry cave which climb quite comfortable
   $BB46,$03 #MOVEMENT
 L $BB46,$03,$02
   $BB4C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BB4D Room $0F
+N $BB4D Location $0F - "#TEXTTOKEN(#PC + $02, $01)"
   $BB4D,$01 dark, IN
-  $BB4E,$01 ROOM_PROP_VOLUME
-W $BB4F,$02 passage
-W $BB51,$02 dark
-W $BB53,$02 stuffy
+  $BB4E,$01 LOCATION_PROP_VOLUME
+  $BB4F,$06,$02 #TEXTTOKEN(#PC)
 W $BB55,$02 ---
   $BB57,$03 #MOVEMENT
 L $BB57,$03,$03
   $BB60,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BB61 Room $34
+N $BB61 Location $34 - "#TEXTTOKEN(#PC + $02, $01)"
   $BB61,$01 dark, IN
-  $BB62,$01 ROOM_PROP_VOLUME
-W $BB63,$02 passage
-W $BB65,$02 dark
-W $BB67,$02 stuffy
+  $BB62,$01 LOCATION_PROP_VOLUME
+  $BB63,$06,$02 #TEXTTOKEN(#PC)
 W $BB69,$02 ---
   $BB6B,$03 #MOVEMENT
 L $BB6B,$03,$03
   $BB74,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BB75 Room $35
+N $BB75 Location $35 - "#TEXTTOKEN(#PC + $02, $01)"
   $BB75,$01 dark, IN
-  $BB76,$01 ROOM_PROP_VOLUME
-W $BB77,$02 passage
-W $BB79,$02 dark
-W $BB7B,$02 stuffy
+  $BB76,$01 LOCATION_PROP_VOLUME
+  $BB77,$06,$02 #TEXTTOKEN(#PC)
 W $BB7D,$02 ---
   $BB7F,$03 #MOVEMENT
   $BB82,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BB83 Room $36
+N $BB83 Location $36 - "#TEXTTOKEN(#PC + $02, $01)"
   $BB83,$01 dark, IN
-  $BB84,$01 ROOM_PROP_VOLUME
-W $BB85,$02 passage
-W $BB87,$02 dark
-W $BB89,$02 stuffy
+  $BB84,$01 LOCATION_PROP_VOLUME
+  $BB85,$06,$02 #TEXTTOKEN(#PC)
 W $BB8B,$02 ---
   $BB8D,$03 #MOVEMENT
 L $BB8D,$03,$04
   $BB99,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BB9A Room $37
+N $BB9A Location $37 - "#TEXTTOKEN(#PC + $02, $01)"
   $BB9A,$01 dark, IN
-  $BB9B,$01 ROOM_PROP_VOLUME
-W $BB9C,$02 passage
-W $BB9E,$02 dark
-W $BBA0,$02 stuffy
+  $BB9B,$01 LOCATION_PROP_VOLUME
+  $BB9C,$06,$02 #TEXTTOKEN(#PC)
 W $BBA2,$02 ---
   $BBA4,$03 #MOVEMENT
 L $BBA4,$03,$04
   $BBB0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BBB1 Room $38
+N $BBB1 Location $38 - "#TEXTTOKEN(#PC + $02, $01)"
   $BBB1,$01 dark, IN
-  $BBB2,$01 ROOM_PROP_VOLUME
-W $BBB3,$02 passage
-W $BBB5,$02 dark
-W $BBB7,$02 stuffy
+  $BBB2,$01 LOCATION_PROP_VOLUME
+  $BBB3,$06,$02 #TEXTTOKEN(#PC)
 W $BBB9,$02 ---
   $BBBB,$03 #MOVEMENT
   $BBBE,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BBBF Room $39
+N $BBBF Location $39 - "#TEXTTOKEN(#PC + $02, $01)"
   $BBBF,$01 dark, IN
-  $BBC0,$01 ROOM_PROP_VOLUME
-W $BBC1,$02 passage
-W $BBC3,$02 dark
-W $BBC5,$02 stuffy
+  $BBC0,$01 LOCATION_PROP_VOLUME
+  $BBC1,$06,$02 #TEXTTOKEN(#PC)
 W $BBC7,$02 ---
   $BBC9,$03 #MOVEMENT
 L $BBC9,$03,$03
   $BBD2,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BBD3 Room $3A
+N $BBD3 Location $3A - "#TEXTTOKEN(#PC + $02, $01)"
   $BBD3,$01 dark, IN
-  $BBD4,$01 ROOM_PROP_VOLUME
-W $BBD5,$02 passage
-W $BBD7,$02 dark
-W $BBD9,$02 stuffy
+  $BBD4,$01 LOCATION_PROP_VOLUME
+  $BBD5,$06,$02 #TEXTTOKEN(#PC)
 W $BBDB,$02 ---
   $BBDD,$03 #MOVEMENT
 L $BBDD,$03,$04
   $BBE9,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BBEA Room $3B
+N $BBEA Location $3B - "#TEXTTOKEN(#PC + $02, $01)"
   $BBEA,$01 dark, IN
-  $BBEB,$01 ROOM_PROP_VOLUME
-W $BBEC,$02 passage
-W $BBEE,$02 dark
-W $BBF0,$02 stuffy
+  $BBEB,$01 LOCATION_PROP_VOLUME
+  $BBEC,$06,$02 #TEXTTOKEN(#PC)
 W $BBF2,$02 ---
   $BBF4,$03 #MOVEMENT
 L $BBF4,$03,$02
   $BBFA,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BBFB Room $3C
+N $BBFB Location $3C - "#TEXTTOKEN(#PC + $02, $01)"
   $BBFB,$01 dark, IN
-  $BBFC,$01 ROOM_PROP_VOLUME
-W $BBFD,$02 passage
-W $BBFF,$02 dark
-W $BC01,$02 stuffy
+  $BBFC,$01 LOCATION_PROP_VOLUME
+  $BBFD,$06,$02 #TEXTTOKEN(#PC)
 W $BC03,$02 ---
   $BC05,$03 #MOVEMENT
 L $BC05,$03,$03
   $BC0E,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BC0F Room $3D
+N $BC0F Location $3D - "#TEXTTOKEN(#PC + $02, $01)"
   $BC0F,$01 dark, IN
-  $BC10,$01 ROOM_PROP_VOLUME
-W $BC11,$02 passage
-W $BC13,$02 dark
-W $BC15,$02 stuffy
+  $BC10,$01 LOCATION_PROP_VOLUME
+  $BC11,$06,$02 #TEXTTOKEN(#PC)
 W $BC17,$02 ---
   $BC19,$03 #MOVEMENT
 L $BC19,$03,$02
   $BC1F,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BC20 Room $3E
+N $BC20 Location $3E - "#TEXTTOKEN(#PC + $02, $01)"
   $BC20,$01 dark, IN
-  $BC21,$01 ROOM_PROP_VOLUME
-W $BC22,$02 passage
-W $BC24,$02 dark
-W $BC26,$02 stuffy
+  $BC21,$01 LOCATION_PROP_VOLUME
+  $BC22,$06,$02 #TEXTTOKEN(#PC)
 W $BC28,$02 ---
   $BC2A,$03 #MOVEMENT
   $BC2D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BC2E Room $3F
+N $BC2E Location $3F - "#TEXTTOKEN(#PC + $02, $01)"
   $BC2E,$01 dark, IN
-  $BC2F,$01 ROOM_PROP_VOLUME
-W $BC30,$02 passage
-W $BC32,$02 dark
-W $BC34,$02 stuffy
+  $BC2F,$01 LOCATION_PROP_VOLUME
+  $BC30,$06,$02 #TEXTTOKEN(#PC)
 W $BC36,$02 ---
   $BC38,$03 #MOVEMENT
 L $BC38,$03,$03
   $BC41,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BC42 Room $40
+N $BC42 Location $40 - "#TEXTTOKEN(#PC + $02, $01)"
   $BC42,$01 dark, IN
-  $BC43,$01 ROOM_PROP_VOLUME
-W $BC44,$02 passage
-W $BC46,$02 dark
-W $BC48,$02 stuffy
+  $BC43,$01 LOCATION_PROP_VOLUME
+  $BC44,$06,$02 #TEXTTOKEN(#PC)
 W $BC4A,$02 ---
   $BC4C,$03 #MOVEMENT
 L $BC4C,$03,$03
   $BC55,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BC56 Room $41
+N $BC56 Location $41 - "#TEXTTOKEN(#PC + $02, $01)"
   $BC56,$01 dark, IN
-  $BC57,$01 ROOM_PROP_VOLUME
-W $BC58,$02 passage
-W $BC5A,$02 dark
-W $BC5C,$02 stuffy
+  $BC57,$01 LOCATION_PROP_VOLUME
+  $BC58,$06,$02 #TEXTTOKEN(#PC)
 W $BC5E,$02 ---
   $BC60,$03 #MOVEMENT
 L $BC60,$03,$03
   $BC69,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BC6A Room $10
+N $BC6A Location $10 - "#TEXTTOKEN(#PC + $02, $01)"
   $BC6A,$01 dark, IN
-  $BC6B,$01 ROOM_PROP_VOLUME
-W $BC6C,$02 cavern
-W $BC6E,$02 big
-W $BC70,$02 goblins
+  $BC6B,$01 LOCATION_PROP_VOLUME
+  $BC6C,$06,$02 #TEXTTOKEN(#PC)
 W $BC72,$02 big cavern torch ESalong wall S [16]
   $BC74,$03 #MOVEMENT
 L $BC74,$03,$03
   $BC7D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BC7E Room $11
+N $BC7E Location $11 - "#TEXTTOKEN(#PC + $02, $01)"
   $BC7E,$01 dark, AT
-  $BC7F,$01 ROOM_PROP_VOLUME
-W $BC80,$02 lake
-W $BC82,$02 deep
-W $BC84,$02 dark
+  $BC7F,$01 LOCATION_PROP_VOLUME
+  $BC80,$06,$02 #TEXTTOKEN(#PC)
 W $BC86,$02 brink deep dark under ground lake
   $BC88,$03 #MOVEMENT
   $BC8B,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BC8C Room $12
+N $BC8C Location $12 - "#TEXTTOKEN(#PC + $02, $01)"
   $BC8C,$01 dark, IN
-  $BC8D,$01 ROOM_PROP_VOLUME
-W $BC8E,$02 passage
-W $BC90,$02 dark
-W $BC92,$02 winding
+  $BC8D,$01 LOCATION_PROP_VOLUME
+  $BC8E,$06,$02 #TEXTTOKEN(#PC)
 W $BC94,$02 ---
   $BC96,$03 #MOVEMENT
 L $BC96,$03,$03
   $BC9F,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BCA0 Room $13
+N $BCA0 Location $13 - "#TEXTTOKEN(#PC + $02, $01)"
   $BCA0,$01 dark, INSIDE
-  $BCA1,$01 ROOM_PROP_VOLUME
-W $BCA2,$02 gate
-W $BCA4,$02 inside
-W $BCA6,$02 goblins
+  $BCA1,$01 LOCATION_PROP_VOLUME
+  $BCA2,$06,$02 #TEXTTOKEN(#PC)
 W $BCA8,$02 goblins gate
   $BCAA,$03 #MOVEMENT
 L $BCAA,$03,$0A
   $BCC8,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BCC9 Room $14
+N $BCC9 Location $14 - "#TEXTTOKEN(#PC + $02, $01)"
   $BCC9,$01 light, OUTSIDE
-  $BCCA,$01 ROOM_PROP_VOLUME
-W $BCCB,$02 gate
-W $BCCD,$02 outside
-W $BCCF,$02 goblins
+  $BCCA,$01 LOCATION_PROP_VOLUME
+  $BCCB,$06,$02 #TEXTTOKEN(#PC)
 W $BCD1,$02 goblins gate
   $BCD3,$03 #MOVEMENT
 L $BCD3,$03,$02
   $BCD9,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BCDA Room $0D
+N $BCDA Location $0D - "#TEXTTOKEN(#PC + $02, $01)"
   $BCDA,$01 dark, IN
-  $BCDB,$01 ROOM_PROP_VOLUME
-W $BCDC,$02 dungeon
-W $BCDE,$02 goblins
-W $BCE0,$02 ---
+  $BCDB,$01 LOCATION_PROP_VOLUME
+  $BCDC,$06,$02 #TEXTTOKEN(#PC)
 W $BCE2,$02 ---
   $BCE4,$03 #MOVEMENT
 L $BCE4,$03,$02
   $BCEA,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BCEB Room $15
+N $BCEB Location $15 - "#TEXTTOKEN(#PC + $02, $01)"
   $BCEB,$01 light, IN
-  $BCEC,$01 ROOM_PROP_VOLUME
-W $BCED,$02 opening
-W $BCEF,$02 treeless
-W $BCF1,$02 ---
+  $BCEC,$01 LOCATION_PROP_VOLUME
+  $BCED,$06,$02 #TEXTTOKEN(#PC)
 W $BCF3,$02 ---
   $BCF5,$03 #MOVEMENT
 L $BCF5,$03,$02
   $BCFB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BCFC Room $16
+N $BCFC Location $16 - "#TEXTTOKEN(#PC + $02, $01)"
   $BCFC,$01 light, IN
-  $BCFD,$01 ROOM_PROP_VOLUME
-W $BCFE,$02 house
-W $BD00,$02 beorns
-W $BD02,$02 ---
+  $BCFD,$01 LOCATION_PROP_VOLUME
+  $BCFE,$06,$02 #TEXTTOKEN(#PC)
 W $BD04,$02 ---
   $BD06,$03 #MOVEMENT
 L $BD06,$03,$05
   $BD15,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BD16 Room $18
+N $BD16 Location $18 - "#TEXTTOKEN(#PC + $02, $01)"
   $BD16,$01 light, AT
-  $BD17,$01 ROOM_PROP_VOLUME
-W $BD18,$02 gate
-W $BD1A,$02 forest
-W $BD1C,$02 ---
+  $BD17,$01 LOCATION_PROP_VOLUME
+  $BD18,$06,$02 #TEXTTOKEN(#PC)
 W $BD1E,$02 gate mirkwood
   $BD20,$03 #MOVEMENT
 L $BD20,$03,$03
   $BD29,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BD2A Room $19
+N $BD2A Location $19 - "#TEXTTOKEN(#PC + $02, $01)"
   $BD2A,$01 light, IN
-  $BD2B,$01 ROOM_PROP_VOLUME
-W $BD2C,$02 place
-W $BD2E,$02 bewitched
-W $BD30,$02 gloomy
+  $BD2B,$01 LOCATION_PROP_VOLUME
+  $BD2C,$06,$02 #TEXTTOKEN(#PC)
 W $BD32,$02 ---
   $BD34,$03 #MOVEMENT
 L $BD34,$03,$03
   $BD3D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BD3E Room $1A
+N $BD3E Location $1A - "#TEXTTOKEN(#PC + $02, $01)"
   $BD3E,$01 light, IN
-  $BD3F,$01 ROOM_PROP_VOLUME
-W $BD40,$02 place
-W $BD42,$02 spider
-W $BD44,$02 threads
+  $BD3F,$01 LOCATION_PROP_VOLUME
+  $BD40,$06,$02 #TEXTTOKEN(#PC)
 W $BD46,$02 place black spider S [16]
   $BD48,$03 #MOVEMENT
 L $BD48,$03,$04
   $BD54,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BD55 Room $1B
+N $BD55 Location $1B - "#TEXTTOKEN(#PC + $02, $01)"
   $BD55,$01 light, IN
-  $BD56,$01 ROOM_PROP_VOLUME
-W $BD57,$02 forest
-W $BD59,$02 smothering
-W $BD5B,$02 ---
+  $BD56,$01 LOCATION_PROP_VOLUME
+  $BD57,$06,$02 #TEXTTOKEN(#PC)
 W $BD5D,$02 forest tangled smothering /3.Person/trees  [16]
   $BD5F,$03 #MOVEMENT
 L $BD5F,$03,$02
   $BD65,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BD66 Room $1C
+N $BD66 Location $1C - "#TEXTTOKEN(#PC + $02, $01)"
   $BD66,$01 light, IN
-  $BD67,$01 ROOM_PROP_VOLUME
-W $BD68,$02 clearing
-W $BD6A,$02 levelled
-W $BD6C,$02 elvish
+  $BD67,$01 LOCATION_PROP_VOLUME
+  $BD68,$06,$02 #TEXTTOKEN(#PC)
 W $BD6E,$02 elvish clearing levelled ground untie logs
   $BD70,$03 #MOVEMENT
 L $BD70,$03,$03
   $BD79,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BD7A Room $1D
+N $BD7A Location $1D - "#TEXTTOKEN(#PC + $02, $01)"
   $BD7A,$01 light, IN
-  $BD7B,$01 ROOM_PROP_VOLUME
-W $BD7C,$02 bog
-W $BD7E,$02 deep
-W $BD80,$02 ---
+  $BD7B,$01 LOCATION_PROP_VOLUME
+  $BD7C,$06,$02 #TEXTTOKEN(#PC)
 W $BD82,$02 ---
   $BD84,$03 #MOVEMENT
   $BD87,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BD88 Room $1E
+N $BD88 Location $1E - "#TEXTTOKEN(#PC + $02, $01)"
   $BD88,$01 dark, IN
-  $BD89,$01 ROOM_PROP_VOLUME
-W $BD8A,$02 halls
-W $BD8C,$02 elvenkings
-W $BD8E,$02 great
+  $BD89,$01 LOCATION_PROP_VOLUME
+  $BD8A,$06,$02 #TEXTTOKEN(#PC)
 W $BD90,$02 ---
   $BD92,$03 #MOVEMENT
 L $BD92,$03,$03
   $BD9B,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BD9C Room $1F
+N $BD9C Location $1F - "#TEXTTOKEN(#PC + $02, $01)"
   $BD9C,$01 dark, IN
-  $BD9D,$01 ROOM_PROP_VOLUME
-W $BD9E,$02 dungeon
-W $BDA0,$02 dark
-W $BDA2,$02 ---
+  $BD9D,$01 LOCATION_PROP_VOLUME
+  $BD9E,$06,$02 #TEXTTOKEN(#PC)
 W $BDA4,$02 dark dungeon elvenkings halls
   $BDA6,$03 #MOVEMENT
 L $BDA6,$03,$02
   $BDAC,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BDAD Room $20
+N $BDAD Location $20 - "#TEXTTOKEN(#PC + $02, $01)"
   $BDAD,$01 dark, IN
-  $BDAE,$01 ROOM_PROP_VOLUME
-W $BDAF,$02 cellar
-W $BDB1,$02 elvenkings
-W $BDB3,$02 ---
+  $BDAE,$01 LOCATION_PROP_VOLUME
+  $BDAF,$06,$02 #TEXTTOKEN(#PC)
 W $BDB5,$02 cellar where king keeps his barrel Swine
   $BDB7,$03 #MOVEMENT
 L $BDB7,$03,$03
   $BDC0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BDC1 Room $21
+N $BDC1 Location $21 - "#TEXTTOKEN(#PC + $02, $01)"
   $BDC1,$01 light, AT
-  $BDC2,$01 ROOM_PROP_VOLUME
-W $BDC3,$02 forestriver
-W $BDC5,$02 ---
-W $BDC7,$02 ---
+  $BDC2,$01 LOCATION_PROP_VOLUME
+  $BDC3,$06,$02 #TEXTTOKEN(#PC)
 W $BDC9,$02 ---
   $BDCB,$03 #MOVEMENT
 L $BDCB,$03,$03
   $BDD4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BDD5 Room $22
+N $BDD5 Location $22 - "#TEXTTOKEN(#PC + $02, $01)"
   $BDD5,$01 light, AT
-  $BDD6,$01 ROOM_PROP_VOLUME
-W $BDD7,$02 lake
-W $BDD9,$02 long
-W $BDDB,$02 ---
+  $BDD6,$01 LOCATION_PROP_VOLUME
+  $BDD7,$06,$02 #TEXTTOKEN(#PC)
 W $BDDD,$02 ---
   $BDDF,$03 #MOVEMENT
 L $BDDF,$03,$04
   $BDEB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BDEC Room $23
+N $BDEC Location $23 - "#TEXTTOKEN(#PC + $02, $01)"
   $BDEC,$01 light, IN
-  $BDED,$01 ROOM_PROP_VOLUME
-W $BDEE,$02 town
-W $BDF0,$02 lake
-W $BDF2,$02 ---
+  $BDED,$01 LOCATION_PROP_VOLUME
+  $BDEE,$06,$02 #TEXTTOKEN(#PC)
 W $BDF4,$02 wooden town middle long lake
   $BDF6,$03 #MOVEMENT
 L $BDF6,$03,$04
   $BE02,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BE03 Room $24
+N $BE03 Location $24 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE03,$01 light, ON
-  $BE04,$01 ROOM_PROP_VOLUME
-W $BE05,$02 river
-W $BE07,$02 running
-W $BE09,$02 ---
+  $BE04,$01 LOCATION_PROP_VOLUME
+  $BE05,$06,$02 #TEXTTOKEN(#PC)
 W $BE0B,$02 strong river :current climb now strong move against
   $BE0D,$03 #MOVEMENT
 L $BE0D,$03,$02
   $BE13,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BE14 Room $25
+N $BE14 Location $25 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE14,$01 light, IN
-  $BE15,$01 ROOM_PROP_VOLUME
-W $BE16,$02 desolation
-W $BE18,$02 dragons
-W $BE1A,$02 ---
+  $BE15,$01 LOCATION_PROP_VOLUME
+  $BE16,$06,$02 #TEXTTOKEN(#PC)
 W $BE1C,$02 bleak barren land that was once green
   $BE1E,$03 #MOVEMENT
 L $BE1E,$03,$02
   $BE24,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BE25 Room $26
+N $BE25 Location $26 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE25,$01 light, IN
-  $BE26,$01 ROOM_PROP_VOLUME
-W $BE27,$02 valley
-W $BE29,$02 dale
-W $BE2B,$02 ---
+  $BE26,$01 LOCATION_PROP_VOLUME
+  $BE27,$06,$02 #TEXTTOKEN(#PC)
 W $BE2D,$02 ruins town dale
   $BE2F,$03 #MOVEMENT
 L $BE2F,$03,$03
   $BE38,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BE39 Room $27
+N $BE39 Location $27 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE39,$01 light, AT
-  $BE3A,$01 ROOM_PROP_VOLUME
-W $BE3B,$02 gate
-W $BE3D,$02 front
-W $BE3F,$02 ---
+  $BE3A,$01 LOCATION_PROP_VOLUME
+  $BE3B,$06,$02 #TEXTTOKEN(#PC)
 W $BE41,$02 front gate lonely mountain
   $BE43,$03 #MOVEMENT
 L $BE43,$03,$03
   $BE4C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BE4D Room $28
+N $BE4D Location $28 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE4D,$01 light, ON
-  $BE4E,$01 ROOM_PROP_VOLUME
-W $BE4F,$02 ravenhill
-W $BE51,$02 ---
-W $BE53,$02 ---
+  $BE4E,$01 LOCATION_PROP_VOLUME
+  $BE4F,$06,$02 #TEXTTOKEN(#PC)
 W $BE55,$02 west side ravenhill
   $BE57,$03 #MOVEMENT
 L $BE57,$03,$03
   $BE60,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BE61 Room $29
+N $BE61 Location $29 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE61,$01 light, IN
-  $BE62,$01 ROOM_PROP_VOLUME
-W $BE63,$02 halls
-W $BE65,$02 lower
-W $BE67,$02 ---
+  $BE62,$01 LOCATION_PROP_VOLUME
+  $BE63,$06,$02 #TEXTTOKEN(#PC)
 W $BE69,$02 halls where /3.Person/sleeps  [16]
   $BE6B,$03 #MOVEMENT
 L $BE6B,$03,$03
   $BE74,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BE75 Room $2A
+N $BE75 Location $2A - "#TEXTTOKEN(#PC + $02, $01)"
   $BE75,$01 light, IN
-  $BE76,$01 ROOM_PROP_VOLUME
-W $BE77,$02 sidedoor
-W $BE79,$02 ---
-W $BE7B,$02 ---
+  $BE76,$01 LOCATION_PROP_VOLUME
+  $BE77,$06,$02 #TEXTTOKEN(#PC)
 W $BE7D,$02 little steep bay ,still untie quiet ,an over hanging cliff
   $BE7F,$03 #MOVEMENT
 L $BE7F,$03,$03
   $BE88,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BE89 Room $2B
+N $BE89 Location $2B - "#TEXTTOKEN(#PC + $02, $01)"
   $BE89,$01 dark, IN
-  $BE8A,$01 ROOM_PROP_VOLUME
-W $BE8B,$02 passage
-W $BE8D,$02 smooth
-W $BE8F,$02 straight
+  $BE8A,$01 LOCATION_PROP_VOLUME
+  $BE8B,$06,$02 #TEXTTOKEN(#PC)
 W $BE91,$02 smooth straight passage
   $BE93,$03 #MOVEMENT
 L $BE93,$03,$02
   $BE99,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BE9A Room $2C
+N $BE9A Location $2C - "#TEXTTOKEN(#PC + $02, $01)"
   $BE9A,$01 light, ON
-  $BE9B,$01 ROOM_PROP_VOLUME
-W $BE9C,$02 mountain
-W $BE9E,$02 lonely
-W $BEA0,$02 ---
+  $BE9B,$01 LOCATION_PROP_VOLUME
+  $BE9C,$06,$02 #TEXTTOKEN(#PC)
 W $BEA2,$02 lonely mountain
   $BEA4,$03 #MOVEMENT
 L $BEA4,$03,$04
   $BEB0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BEB1 Room $2E
+N $BEB1 Location $2E - "#TEXTTOKEN(#PC + $02, $01)"
   $BEB1,$01 light, ON
-  $BEB2,$01 ROOM_PROP_VOLUME
-W $BEB3,$02 road
-W $BEB5,$02 forest
-W $BEB7,$02 ---
+  $BEB2,$01 LOCATION_PROP_VOLUME
+  $BEB3,$06,$02 #TEXTTOKEN(#PC)
 W $BEB9,$02 ---
   $BEBB,$03 #MOVEMENT
 L $BEBB,$03,$02
   $BEC1,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BEC2 Room $2D
+N $BEC2 Location $2D - "#TEXTTOKEN(#PC + $02, $01)"
   $BEC2,$01 light, AT
-  $BEC3,$01 ROOM_PROP_VOLUME
-W $BEC4,$02 waterfall
-W $BEC6,$02 ---
-W $BEC8,$02 ---
+  $BEC3,$01 LOCATION_PROP_VOLUME
+  $BEC4,$06,$02 #TEXTTOKEN(#PC)
 W $BECA,$02 ---
   $BECC,$03 #MOVEMENT
 L $BECC,$03,$02
   $BED2,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BED3 Room $02
+N $BED3 Location $02 - "#TEXTTOKEN(#PC + $02, $01)"
   $BED3,$01 light, ON
-  $BED4,$01 ROOM_PROP_VOLUME
-W $BED5,$02 road
-W $BED7,$02 forest
-W $BED9,$02 ---
+  $BED4,$01 LOCATION_PROP_VOLUME
+  $BED5,$06,$02 #TEXTTOKEN(#PC)
 W $BEDB,$02 ---
   $BEDD,$03 #MOVEMENT
 L $BEDD,$03,$02
   $BEE3,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BEE4 Room $03
+N $BEE4 Location $03 - "#TEXTTOKEN(#PC + $02, $01)"
   $BEE4,$01 light, IN
-  $BEE5,$01 ROOM_PROP_VOLUME
-W $BEE6,$02 forest
-W $BEE8,$02 ---
-W $BEEA,$02 ---
+  $BEE5,$01 LOCATION_PROP_VOLUME
+  $BEE6,$06,$02 #TEXTTOKEN(#PC)
 W $BEEC,$02 ---
   $BEEE,$03 #MOVEMENT
 L $BEEE,$03,$02
   $BEF4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BEF5 Room $08
+N $BEF5 Location $08 - "#TEXTTOKEN(#PC + $02, $01)"
   $BEF5,$01 light, AT
-  $BEF6,$01 ROOM_PROP_VOLUME
-W $BEF7,$02 river
-W $BEF9,$02 running
-W $BEFB,$02 ---
+  $BEF6,$01 LOCATION_PROP_VOLUME
+  $BEF7,$06,$02 #TEXTTOKEN(#PC)
 W $BEFD,$02 ---
   $BEFF,$03 #MOVEMENT
 L $BEFF,$03,$02
   $BF05,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BF06 Room $17
+N $BF06 Location $17 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF06,$01 light, AT
-  $BF07,$01 ROOM_PROP_VOLUME
-W $BF08,$02 forestriver
-W $BF0A,$02 ---
-W $BF0C,$02 ---
+  $BF07,$01 LOCATION_PROP_VOLUME
+  $BF08,$06,$02 #TEXTTOKEN(#PC)
 W $BF0E,$02 ---
   $BF10,$03 #MOVEMENT
 L $BF10,$03,$02
   $BF16,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BF17 Room $30
+N $BF17 Location $30 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF17,$01 light, ON
-  $BF18,$01 ROOM_PROP_VOLUME
-W $BF19,$02 mountains
-W $BF1B,$02 ---
-W $BF1D,$02 ---
+  $BF18,$01 LOCATION_PROP_VOLUME
+  $BF19,$06,$02 #TEXTTOKEN(#PC)
 W $BF1F,$02 ---
   $BF21,$03 #MOVEMENT
 L $BF21,$03,$03
   $BF2A,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BF2B Room $31
+N $BF2B Location $31 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF2B,$01 light, AT
-  $BF2C,$01 ROOM_PROP_VOLUME
-W $BF2D,$02 river
-W $BF2F,$02 great
-W $BF31,$02 ---
+  $BF2C,$01 LOCATION_PROP_VOLUME
+  $BF2D,$06,$02 #TEXTTOKEN(#PC)
 W $BF33,$02 ---
   $BF35,$03 #MOVEMENT
 L $BF35,$03,$04
   $BF41,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BF42 Room $2F
+N $BF42 Location $2F - "#TEXTTOKEN(#PC + $02, $01)"
   $BF42,$01 light, IN
-  $BF43,$01 ROOM_PROP_VOLUME
-W $BF44,$02 place
-W $BF46,$02 empty
-W $BF48,$02 ---
+  $BF43,$01 LOCATION_PROP_VOLUME
+  $BF44,$06,$02 #TEXTTOKEN(#PC)
 W $BF4A,$02 ---
   $BF4C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BF4D Room $32
+N $BF4D Location $32 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF4D,$01 light, IN
-  $BF4E,$01 ROOM_PROP_VOLUME
-W $BF4F,$02 forest
-W $BF51,$02 green
-W $BF53,$02 ---
+  $BF4E,$01 LOCATION_PROP_VOLUME
+  $BF4F,$06,$02 #TEXTTOKEN(#PC)
 W $BF55,$02 ---
   $BF57,$03 #MOVEMENT
 L $BF57,$03,$02
   $BF5D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BF5E Room $33
+N $BF5E Location $33 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF5E,$01 light, IN
-  $BF5F,$01 ROOM_PROP_VOLUME
-W $BF60,$02 place
-W $BF62,$02 empty
-W $BF64,$02 ---
+  $BF5F,$01 LOCATION_PROP_VOLUME
+  $BF60,$06,$02 #TEXTTOKEN(#PC)
 W $BF66,$02 ---
   $BF68,$03 #MOVEMENT
 L $BF68,$03,$03
   $BF71,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BF72 Room $42
+N $BF72 Location $42 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF72,$01 light, ON
-  $BF73,$01 ROOM_PROP_VOLUME
-W $BF74,$02 bank
-W $BF76,$02 west
-W $BF78,$02 ---
+  $BF73,$01 LOCATION_PROP_VOLUME
+  $BF74,$06,$02 #TEXTTOKEN(#PC)
 W $BF7A,$02 west  [02] [04]east bank black river
   $BF7C,$03 #MOVEMENT
 L $BF7C,$03,$02
   $BF82,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BF83 Room $43
+N $BF83 Location $43 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF83,$01 light, ON
-  $BF84,$01 ROOM_PROP_VOLUME
-W $BF85,$02 bank
-W $BF87,$02 east
-W $BF89,$02 ---
+  $BF84,$01 LOCATION_PROP_VOLUME
+  $BF85,$06,$02 #TEXTTOKEN(#PC)
 W $BF8B,$02 east bank black river
   $BF8D,$03 #MOVEMENT
 L $BF8D,$03,$02
   $BF93,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BF94 Room $44
+N $BF94 Location $44 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF94,$01 light, ON
-  $BF95,$01 ROOM_PROP_VOLUME
-W $BF96,$02 path
-W $BF98,$02 narrow
-W $BF9A,$02 ---
+  $BF95,$01 LOCATION_PROP_VOLUME
+  $BF96,$06,$02 #TEXTTOKEN(#PC)
 W $BF9C,$02 ---
   $BF9E,$03 #MOVEMENT
 L $BF9E,$03,$03
   $BFA7,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BFA8 Room $45
+N $BFA8 Location $45 - "#TEXTTOKEN(#PC + $02, $01)"
   $BFA8,$01 light, ON
-  $BFA9,$01 ROOM_PROP_VOLUME
-W $BFAA,$02 path
-W $BFAC,$02 narrow
-W $BFAE,$02 ---
+  $BFA9,$01 LOCATION_PROP_VOLUME
+  $BFAA,$06,$02 #TEXTTOKEN(#PC)
 W $BFB0,$02 ---
   $BFB2,$03 #MOVEMENT
 L $BFB2,$03,$03
   $BFBB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BFBC Room $46
+N $BFBC Location $46 - "#TEXTTOKEN(#PC + $02, $01)"
   $BFBC,$01 light, ON
-  $BFBD,$01 ROOM_PROP_VOLUME
-W $BFBE,$02 path
-W $BFC0,$02 narrow
-W $BFC2,$02 ---
+  $BFBD,$01 LOCATION_PROP_VOLUME
+  $BFBE,$06,$02 #TEXTTOKEN(#PC)
 W $BFC4,$02 ---
   $BFC6,$03 #MOVEMENT
 L $BFC6,$03,$02
   $BFCC,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BFCD Room $47
+N $BFCD Location $47 - "#TEXTTOKEN(#PC + $02, $01)"
   $BFCD,$01 light, ON
-  $BFCE,$01 ROOM_PROP_VOLUME
-W $BFCF,$02 path
-W $BFD1,$02 narrow
-W $BFD3,$02 ---
+  $BFCE,$01 LOCATION_PROP_VOLUME
+  $BFCF,$06,$02 #TEXTTOKEN(#PC)
 W $BFD5,$02 ---
   $BFD7,$03 #MOVEMENT
 L $BFD7,$03,$03
   $BFE0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BFE1 Room $48
+N $BFE1 Location $48 - "#TEXTTOKEN(#PC + $02, $01)"
   $BFE1,$01 light, ON
-  $BFE2,$01 ROOM_PROP_VOLUME
-W $BFE3,$02 path
-W $BFE5,$02 narrow
-W $BFE7,$02 ---
+  $BFE2,$01 LOCATION_PROP_VOLUME
+  $BFE3,$06,$02 #TEXTTOKEN(#PC)
 W $BFE9,$02 ---
   $BFEB,$03 #MOVEMENT
 L $BFEB,$03,$03
   $BFF4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $BFF5 Room $49
+N $BFF5 Location $49 - "#TEXTTOKEN(#PC + $02, $01)"
   $BFF5,$01 light, ON
-  $BFF6,$01 ROOM_PROP_VOLUME
-W $BFF7,$02 path
-W $BFF9,$02 narrow
-W $BFFB,$02 ---
+  $BFF6,$01 LOCATION_PROP_VOLUME
+  $BFF7,$06,$02 #TEXTTOKEN(#PC)
 W $BFFD,$02 ---
   $BFFF,$03 #MOVEMENT
 L $BFFF,$03,$02
   $C005,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $C006 Room $4A
+N $C006 Location $4A - "#TEXTTOKEN(#PC + $02, $01)"
   $C006,$01 light, ON
-  $C007,$01 ROOM_PROP_VOLUME
-W $C008,$02 path
-W $C00A,$02 narrow
-W $C00C,$02 ---
+  $C007,$01 LOCATION_PROP_VOLUME
+  $C008,$06,$02 #TEXTTOKEN(#PC)
 W $C00E,$02 ---
   $C010,$03 #MOVEMENT
 L $C010,$03,$02
   $C016,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $C017 Room $4B
+N $C017 Location $4B - "#TEXTTOKEN(#PC + $02, $01)"
   $C017,$01 light, ON
-  $C018,$01 ROOM_PROP_VOLUME
-W $C019,$02 path
-W $C01B,$02 steep
-W $C01D,$02 ---
+  $C018,$01 LOCATION_PROP_VOLUME
+  $C019,$06,$02 #TEXTTOKEN(#PC)
 W $C01F,$02 ---
   $C021,$03 #MOVEMENT
   $C024,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $C025 Room $4C
+N $C025 Location $4C - "#TEXTTOKEN(#PC + $02, $01)"
   $C025,$01 light, ON
-  $C026,$01 ROOM_PROP_VOLUME
-W $C027,$02 path
-W $C029,$02 steep
-W $C02B,$02 ---
+  $C026,$01 LOCATION_PROP_VOLUME
+  $C027,$06,$02 #TEXTTOKEN(#PC)
 W $C02D,$02 ---
   $C02F,$03 #MOVEMENT
   $C032,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $C033 Room $4D
+N $C033 Location $4D - "#TEXTTOKEN(#PC + $02, $01)"
   $C033,$01 light, ON
-  $C034,$01 ROOM_PROP_VOLUME
-W $C035,$02 path
-W $C037,$02 steep
-W $C039,$02 ---
+  $C034,$01 LOCATION_PROP_VOLUME
+  $C035,$06,$02 #TEXTTOKEN(#PC)
 W $C03B,$02 ---
   $C03D,$03 #MOVEMENT
   $C040,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $C041 Room $4E
+N $C041 Location $4E - "#TEXTTOKEN(#PC + $02, $01)"
   $C041,$01 light, IN
-  $C042,$01 ROOM_PROP_VOLUME
-W $C043,$02 valley
-W $C045,$02 deep
-W $C047,$02 misty
+  $C042,$01 LOCATION_PROP_VOLUME
+  $C043,$06,$02 #TEXTTOKEN(#PC)
 W $C049,$02 ---
   $C04B,$03 #MOVEMENT
 L $C04B,$03,$02
   $C051,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
-N $C052 Room $4F
+N $C052 Location $4F - "#TEXTTOKEN(#PC + $02, $01)"
   $C052,$01 light, IN
-  $C053,$01 ROOM_PROP_VOLUME
-W $C054,$02 valley
-W $C056,$02 deep
-W $C058,$02 misty
+  $C053,$01 LOCATION_PROP_VOLUME
+  $C054,$06,$02 #TEXTTOKEN(#PC)
 W $C05A,$02 ---
   $C05C,$03 #MOVEMENT
 L $C05C,$03,$02
@@ -5262,58 +5442,1085 @@ L $C05C,$03,$02
 
 b $C063 Object Table
 @ $C063 label=ObjectTable
+N $C063 Object ID #OBJECT(#PEEK(#PC), 1, 1)($).
   $C063,$01 Object ID.
 W $C064,$02 Object address.
 L $C063,$03,$3D
+N $C11A End of table.
   $C11A,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
 b $C11B Objects
 @ $C11B label=Objects
-B $C133
-B $C145
-B $C170
-B $C1AD
-B $C1BF
-B $C1D1
-B $C1E6
-B $C205
-B $C224
-B $C24D
-B $C26D
-B $C28D
-B $C2B5
-B $C2DD
-B $C305
-B $C31A
-B $C332
-B $C344
-B $C366
-B $C381
-B $C3EE
-B $C418
-B $C454
-B $C469
-B $C47E
-B $C49A
-B $C4D5
-B $C4EA
-B $C4FF
-B $C521
-B $C534
-B $C54C
-B $C567
-B $C57F
-B $C597
-B $C5B8
-B $C5CD
-B $C5DF
-B $C5F4
-B $C61B
-B $C663
-
-B $C678
-B $C68E
-
+N $C11B Object $00 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C11B,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C11C,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C11D,$01 Volume (?)
+  $C11E,$01 Mass (?)
+  $C11F,$01
+  $C120,$01 Strength (?)
+  $C121,$01
+  $C122,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C123,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C129,$02 Help Message (none).
+  $C12B,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C12C,$06
+  $C132,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C133 Object $3C - "#TEXTTOKEN(#PC + $08, 1)"
+  $C133,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C134,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C135,$01 Volume (?)
+  $C136,$01 Mass (?)
+  $C137,$01
+  $C138,$01 Strength (?)
+  $C139,$01
+  $C13A,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C13B,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C141,$02 Help Message (none).
+  $C143,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C144,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C145 Object $05 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C145,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C146,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C147,$01 Volume (?)
+  $C148,$01 Mass (?)
+  $C149,$01
+  $C14A,$01 Strength (?)
+  $C14B,$01
+  $C14C,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C14D,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C153,$02 Help Message (none).
+  $C155,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C156,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C157,$18,$06
+  $C16F,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C170 Object $01 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C170,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C171,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C172,$01 Volume (?)
+  $C173,$01 Mass (?)
+  $C174,$01
+  $C175,$01 Strength (?)
+  $C176,$01
+  $C177,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C178,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C17E,$02 Help Message (none).
+  $C180,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C181,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C182,$18,$06
+  $C19A,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C19B Object $2B - "#TEXTTOKEN(#PC + $08, 1)"
+  $C19B,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C19C,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C19D,$01 Volume (?)
+  $C19E,$01 Mass (?)
+  $C19F,$01
+  $C1A0,$01 Strength (?)
+  $C1A1,$01
+  $C1A2,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C1A3,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C1A9,$02 Help Message (none).
+  $C1AB,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C1AC,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C1AD Object $02 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C1AD,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C1AE,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C1AF,$01 Volume (?)
+  $C1B0,$01 Mass (?)
+  $C1B1,$01
+  $C1B2,$01 Strength (?)
+  $C1B3,$01
+  $C1B4,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C1B5,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C1BB,$02 Help Message (none).
+  $C1BD,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C1BE,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C1BF Object $04 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C1BF,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C1C0,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C1C1,$01 Volume (?)
+  $C1C2,$01 Mass (?)
+  $C1C3,$01
+  $C1C4,$01 Strength (?)
+  $C1C5,$01
+  $C1C6,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C1C7,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C1CD,$02 Help Message (none).
+  $C1CF,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C1D0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C1D1 Object $03 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C1D1,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C1D2,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C1D3,$01 Volume (?)
+  $C1D4,$01 Mass (?)
+  $C1D5,$01
+  $C1D6,$01 Strength (?)
+  $C1D7,$01
+  $C1D8,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C1D9,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C1DF,$02 Help Message (#R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256))).
+  $C1E1,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C1E5,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C1E6 Object $06 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C1E6,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C1E7,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C1E8,$01 Volume (?)
+  $C1E9,$01 Mass (?)
+  $C1EA,$01
+  $C1EB,$01 Strength (?)
+  $C1EC,$01
+  $C1ED,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C1EE,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C1F4,$02 Help Message (none).
+  $C1F6,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C1F7,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C204,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C205 Object $07 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C205,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C206,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C207,$01 Volume (?)
+  $C208,$01 Mass (?)
+  $C209,$01
+  $C20A,$01 Strength (?)
+  $C20B,$01
+  $C20C,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C20D,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C213,$02 Help Message (none).
+  $C215,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C216,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C217,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C218,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C219,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C223,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C224 Object $08 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C224,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C225,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C226,$01 Volume (?)
+  $C227,$01 Mass (?)
+  $C228,$01
+  $C229,$01 Strength (?)
+  $C22A,$01
+  $C22B,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C22C,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C232,$02 Help Message (none).
+  $C234,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C235,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C236,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C24C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C24D Object $09 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C24D,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C24E,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C24F,$01 Volume (?)
+  $C250,$01 Mass (?)
+  $C251,$01
+  $C252,$01 Strength (?)
+  $C253,$01
+  $C254,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C255,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C25B,$02 Help Message (#R(#EVAL(#PEEK(#PC) + #PEEK(#PC + 1) * 256))).
+  $C25D,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C25E,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C25F,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C26C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C26D Object $2A - "#TEXTTOKEN(#PC + $08, 1)"
+  $C26D,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C26E,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C26F,$01 Volume (?)
+  $C270,$01 Mass (?)
+  $C271,$01
+  $C272,$01 Strength (?)
+  $C273,$01
+  $C274,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C275,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C27B,$02 Help Message (none).
+  $C27D,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C27E,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C27F,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C28C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C28D Object $0A - "#TEXTTOKEN(#PC + $08, 1)"
+  $C28D,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C28E,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C28F,$01 Volume (?)
+  $C290,$01 Mass (?)
+  $C291,$01
+  $C292,$01 Strength (?)
+  $C293,$01
+  $C294,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C295,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C29B,$02 Help Message (none).
+  $C29D,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C29E,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C2B4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C2B5 Object $0B - "#TEXTTOKEN(#PC + $08, 1)"
+  $C2B5,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C2B6,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C2B7,$01 Volume (?)
+  $C2B8,$01 Mass (?)
+  $C2B9,$01
+  $C2BA,$01 Strength (?)
+  $C2BB,$01
+  $C2BC,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C2BD,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C2C3,$02 Help Message (none).
+  $C2C5,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C2C6,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C2DC,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C2DD Object $0C - "#TEXTTOKEN(#PC + $08, 1)"
+  $C2DD,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C2DE,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C2DF,$01 Volume (?)
+  $C2E0,$01 Mass (?)
+  $C2E1,$01
+  $C2E2,$01 Strength (?)
+  $C2E3,$01
+  $C2E4,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C2E5,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C2EB,$02 Help Message (none).
+  $C2ED,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C2EE,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C304,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C305 Object $0E - "#TEXTTOKEN(#PC + $08, 1)"
+  $C305,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C306,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C307,$01 Volume (?)
+  $C308,$01 Mass (?)
+  $C309,$01
+  $C30A,$01 Strength (?)
+  $C30B,$01
+  $C30C,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C30D,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C313,$02 Help Message (none).
+  $C315,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C319,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C31A Object $10 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C31A,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C31B,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C31C,$01 Volume (?)
+  $C31D,$01 Mass (?)
+  $C31E,$01
+  $C31F,$01 Strength (?)
+  $C320,$01
+  $C321,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C322,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C328,$02 Help Message (none).
+  $C32A,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C331,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C332 Object $0F - "#TEXTTOKEN(#PC + $08, 1)"
+  $C332,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C333,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C334,$01 Volume (?)
+  $C335,$01 Mass (?)
+  $C336,$01
+  $C337,$01 Strength (?)
+  $C338,$01
+  $C339,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C33A,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C340,$02 Help Message (none).
+  $C342,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C343,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C344 Object $11 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C344,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C345,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C346,$01 Volume (?)
+  $C347,$01 Mass (?)
+  $C348,$01
+  $C349,$01 Strength (?)
+  $C34A,$01
+  $C34B,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C34C,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C352,$02 Help Message (none).
+  $C354,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C355,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C365,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C366 Object $12 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C366,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C367,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C368,$01 Volume (?)
+  $C369,$01 Mass (?)
+  $C36A,$01
+  $C36B,$01 Strength (?)
+  $C36C,$01
+  $C36D,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C36E,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C374,$02 Help Message (none).
+  $C376,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C380,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C381 Object $0D - "#TEXTTOKEN(#PC + $08, 1)"
+  $C381,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C382,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C383,$01 Volume (?)
+  $C384,$01 Mass (?)
+  $C385,$01
+  $C386,$01 Strength (?)
+  $C387,$01
+  $C388,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C389,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C38F,$02 Help Message (none).
+  $C391,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C392,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C39F,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C3A0 Object $3E - "#TEXTTOKEN(#PC + $08, 1)"
+  $C3A0,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C3A1,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C3A2,$01 Volume (?)
+  $C3A3,$01 Mass (?)
+  $C3A4,$01
+  $C3A5,$01 Strength (?)
+  $C3A6,$01
+  $C3A7,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C3A8,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C3AE,$02 Help Message (none).
+  $C3B0,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C3B1,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C3B2 Object $3F - "#TEXTTOKEN(#PC + $08, 1)"
+  $C3B2,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C3B3,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C3B4,$01 Volume (?)
+  $C3B5,$01 Mass (?)
+  $C3B6,$01
+  $C3B7,$01 Strength (?)
+  $C3B8,$01
+  $C3B9,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C3BA,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C3C0,$02 Help Message (none).
+  $C3C2,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C3C9,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C3CA Object $40 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C3CA,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C3CB,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C3CC,$01 Volume (?)
+  $C3CD,$01 Mass (?)
+  $C3CE,$01
+  $C3CF,$01 Strength (?)
+  $C3D0,$01
+  $C3D1,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C3D2,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C3D8,$02 Help Message (none).
+  $C3DA,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C3DB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C3DC Object $41 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C3DC,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C3DD,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C3DE,$01 Volume (?)
+  $C3DF,$01 Mass (?)
+  $C3E0,$01
+  $C3E1,$01 Strength (?)
+  $C3E2,$01
+  $C3E3,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C3E4,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C3EA,$02 Help Message (none).
+  $C3EC,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C3ED,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C3EE Object $13 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C3EE,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C3EF,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C3F0,$01 Volume (?)
+  $C3F1,$01 Mass (?)
+  $C3F2,$01
+  $C3F3,$01 Strength (?)
+  $C3F4,$01
+  $C3F5,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C3F6,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C3FC,$02 Help Message (none).
+  $C3FE,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C417,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C418 Object $14 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C418,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C419,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C41A,$01 Volume (?)
+  $C41B,$01 Mass (?)
+  $C41C,$01
+  $C41D,$01 Strength (?)
+  $C41E,$01
+  $C41F,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C420,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C426,$02 Help Message (none).
+  $C428,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C42F,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C430 Object $42 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C430,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C431,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C432,$01 Volume (?)
+  $C433,$01 Mass (?)
+  $C434,$01
+  $C435,$01 Strength (?)
+  $C436,$01
+  $C437,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C438,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C43E,$02 Help Message (none).
+  $C440,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C441,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C442 Object $43 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C442,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C443,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C444,$01 Volume (?)
+  $C445,$01 Mass (?)
+  $C446,$01
+  $C447,$01 Strength (?)
+  $C448,$01
+  $C449,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C44A,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C450,$02 Help Message (none).
+  $C452,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C453,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C454 Object $15 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C454,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C455,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C456,$01 Volume (?)
+  $C457,$01 Mass (?)
+  $C458,$01
+  $C459,$01 Strength (?)
+  $C45A,$01
+  $C45B,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C45C,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C462,$02 Help Message (none).
+  $C464,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C468,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C469 Object $16 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C469,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C46A,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C46B,$01 Volume (?)
+  $C46C,$01 Mass (?)
+  $C46D,$01
+  $C46E,$01 Strength (?)
+  $C46F,$01
+  $C470,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C471,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C477,$02 Help Message (none).
+  $C479,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C47D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C47E Object $17 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C47E,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C47F,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C480,$01 Volume (?)
+  $C481,$01 Mass (?)
+  $C482,$01
+  $C483,$01 Strength (?)
+  $C484,$01
+  $C485,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C486,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C48C,$02 Help Message (none).
+  $C48E,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C48F,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C490,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C491,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C492,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C493,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C494,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C495,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C499,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C49A Object $18 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C49A,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C49B,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C49C,$01 Volume (?)
+  $C49D,$01 Mass (?)
+  $C49E,$01
+  $C49F,$01 Strength (?)
+  $C4A0,$01
+  $C4A1,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C4A2,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C4A8,$02 Help Message (none).
+  $C4AA,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C4AB,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C4AC,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C4B0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C4B1 Object $44 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C4B1,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C4B2,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C4B3,$01 Volume (?)
+  $C4B4,$01 Mass (?)
+  $C4B5,$01
+  $C4B6,$01 Strength (?)
+  $C4B7,$01
+  $C4B8,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C4B9,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C4BF,$02 Help Message (none).
+  $C4C1,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C4C2,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C4C3 Object $46 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C4C3,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C4C4,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C4C5,$01 Volume (?)
+  $C4C6,$01 Mass (?)
+  $C4C7,$01
+  $C4C8,$01 Strength (?)
+  $C4C9,$01
+  $C4CA,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C4CB,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C4D1,$02 Help Message (none).
+  $C4D3,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C4D4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C4D5 Object $19 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C4D5,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C4D6,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C4D7,$01 Volume (?)
+  $C4D8,$01 Mass (?)
+  $C4D9,$01
+  $C4DA,$01 Strength (?)
+  $C4DB,$01
+  $C4DC,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C4DD,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C4E3,$02 Help Message (none).
+  $C4E5,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C4E9,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C4EA Object $1A - "#TEXTTOKEN(#PC + $08, 1)"
+  $C4EA,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C4EB,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C4EC,$01 Volume (?)
+  $C4ED,$01 Mass (?)
+  $C4EE,$01
+  $C4EF,$01 Strength (?)
+  $C4F0,$01
+  $C4F1,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C4F2,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C4F8,$02 Help Message (none).
+  $C4FA,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C4FE,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C4FF Object $1B - "#TEXTTOKEN(#PC + $08, 1)"
+  $C4FF,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C500,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C501,$01 Volume (?)
+  $C502,$01 Mass (?)
+  $C503,$01
+  $C504,$01 Strength (?)
+  $C505,$01
+  $C506,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C507,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C50D,$02 Help Message (none).
+  $C50F,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C510,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C520,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C521 Object $1C - "#TEXTTOKEN(#PC + $08, 1)"
+  $C521,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C522,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C523,$01 Volume (?)
+  $C524,$01 Mass (?)
+  $C525,$01
+  $C526,$01 Strength (?)
+  $C527,$01
+  $C528,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C529,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C52F,$02 Help Message (none).
+  $C531,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C532,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C533,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C534 Object $1D - "#TEXTTOKEN(#PC + $08, 1)"
+  $C534,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C535,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C536,$01 Volume (?)
+  $C537,$01 Mass (?)
+  $C538,$01
+  $C539,$01 Strength (?)
+  $C53A,$01
+  $C53B,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C53C,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C542,$02 Help Message (none).
+  $C544,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C54B,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C54C Object $1E - "#TEXTTOKEN(#PC + $08, 1)"
+  $C54C,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C54D,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C54E,$01 Volume (?)
+  $C54F,$01 Mass (?)
+  $C550,$01
+  $C551,$01 Strength (?)
+  $C552,$01
+  $C553,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C554,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C55A,$02 Help Message (none).
+  $C55C,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C566,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C567 Object $1F - "#TEXTTOKEN(#PC + $08, 1)"
+  $C567,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C568,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C569,$01 Volume (?)
+  $C56A,$01 Mass (?)
+  $C56B,$01
+  $C56C,$01 Strength (?)
+  $C56D,$01
+  $C56E,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C56F,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C575,$02 Help Message (none).
+  $C577,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C57E,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C57F Object $20 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C57F,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C580,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C581,$01 Volume (?)
+  $C582,$01 Mass (?)
+  $C583,$01
+  $C584,$01 Strength (?)
+  $C585,$01
+  $C586,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C587,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C58D,$02 Help Message (none).
+  $C58F,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C596,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C597 Object $21 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C597,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C598,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C599,$01 Volume (?)
+  $C59A,$01 Mass (?)
+  $C59B,$01
+  $C59C,$01 Strength (?)
+  $C59D,$01
+  $C59E,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C59F,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C5A5,$02 Help Message (none).
+  $C5A7,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C5B7,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C5B8 Object $22 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C5B8,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C5B9,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C5BA,$01 Volume (?)
+  $C5BB,$01 Mass (?)
+  $C5BC,$01
+  $C5BD,$01 Strength (?)
+  $C5BE,$01
+  $C5BF,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C5C0,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C5C6,$02 Help Message (none).
+  $C5C8,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C5CC,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C5CD Object $23 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C5CD,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C5CE,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C5CF,$01 Volume (?)
+  $C5D0,$01 Mass (?)
+  $C5D1,$01
+  $C5D2,$01 Strength (?)
+  $C5D3,$01
+  $C5D4,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C5D5,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C5DB,$02 Help Message (none).
+  $C5DD,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C5DE,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C5DF Object $24 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C5DF,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C5E0,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C5E1,$01 Volume (?)
+  $C5E2,$01 Mass (?)
+  $C5E3,$01
+  $C5E4,$01 Strength (?)
+  $C5E5,$01
+  $C5E6,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C5E7,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C5ED,$02 Help Message (none).
+  $C5EF,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C5F3,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C5F4 Object $25 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C5F4,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C5F5,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C5F6,$01 Volume (?)
+  $C5F7,$01 Mass (?)
+  $C5F8,$01
+  $C5F9,$01 Strength (?)
+  $C5FA,$01
+  $C5FB,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C5FC,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C602,$02 Help Message (none).
+  $C604,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C61A,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C61B Object $29 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C61B,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C61C,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C61D,$01 Volume (?)
+  $C61E,$01 Mass (?)
+  $C61F,$01
+  $C620,$01 Strength (?)
+  $C621,$01
+  $C622,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C623,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C629,$02 Help Message (none).
+  $C62B,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C63E,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C63F Object $47 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C63F,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C640,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C641,$01 Volume (?)
+  $C642,$01 Mass (?)
+  $C643,$01
+  $C644,$01 Strength (?)
+  $C645,$01
+  $C646,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C647,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C64D,$02 Help Message (none).
+  $C64F,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C650,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C651 Object $48 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C651,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C652,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C653,$01 Volume (?)
+  $C654,$01 Mass (?)
+  $C655,$01
+  $C656,$01 Strength (?)
+  $C657,$01
+  $C658,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C659,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C65F,$02 Help Message (none).
+  $C661,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C662,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C663 Object $26 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C663,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C664,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C665,$01 Volume (?)
+  $C666,$01 Mass (?)
+  $C667,$01
+  $C668,$01 Strength (?)
+  $C669,$01
+  $C66A,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C66B,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C671,$02 Help Message (none).
+  $C673,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C677,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C678 Object $27 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C678,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C679,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C67A,$01 Volume (?)
+  $C67B,$01 Mass (?)
+  $C67C,$01
+  $C67D,$01 Strength (?)
+  $C67E,$01
+  $C67F,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C680,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C686,$02 Help Message (none).
+  $C688,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C689,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C68D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C68E Object $28 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C68E,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C68F,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C690,$01 Volume (?)
+  $C691,$01 Mass (?)
+  $C692,$01
+  $C693,$01 Strength (?)
+  $C694,$01
+  $C695,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C696,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C69C,$02 Help Message (none).
+  $C69E,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C69F,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C6A0 Object $3D - "#TEXTTOKEN(#PC + $08, 1)"
+  $C6A0,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C6A1,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C6A2,$01 Volume (?)
+  $C6A3,$01 Mass (?)
+  $C6A4,$01
+  $C6A5,$01 Strength (?)
+  $C6A6,$01
+  $C6A7,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C6A8,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C6AE,$02 Help Message (none).
+  $C6B0,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C6B7,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C6B8 Object $45 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C6B8,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C6B9,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C6BA,$01 Volume (?)
+  $C6BB,$01 Mass (?)
+  $C6BC,$01
+  $C6BD,$01 Strength (?)
+  $C6BE,$01
+  $C6BF,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C6C0,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C6C6,$02 Help Message (none).
+  $C6C8,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C6CF,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C6D0 Object $49 - "#TEXTTOKEN(#PC + $08, 1)"
+  $C6D0,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C6D1,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C6D2,$01 Volume (?)
+  $C6D3,$01 Mass (?)
+  $C6D4,$01
+  $C6D5,$01 Strength (?)
+  $C6D6,$01
+  $C6D7,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C6D8,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C6DE,$02 Help Message (none).
+  $C6E0,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C6E7,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C6E8 Object $4A - "#TEXTTOKEN(#PC + $08, 1)"
+  $C6E8,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C6E9,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C6EA,$01 Volume (?)
+  $C6EB,$01 Mass (?)
+  $C6EC,$01
+  $C6ED,$01 Strength (?)
+  $C6EE,$01
+  $C6EF,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C6F0,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C6F6,$02 Help Message (none).
+  $C6F8,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C6FF,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C700 Object $4B - "#TEXTTOKEN(#PC + $08, 1)"
+  $C700,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C701,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C702,$01 Volume (?)
+  $C703,$01 Mass (?)
+  $C704,$01
+  $C705,$01 Strength (?)
+  $C706,$01
+  $C707,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C708,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C70E,$02 Help Message (none).
+  $C710,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C717,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+N $C718 Object $4C - "#TEXTTOKEN(#PC + $08, 1)"
+  $C718,$01 Appears in the game #PEEK(#PC) #IF(#PEEK(#PC)>1)(times,time).
+  $C719,$01 Mother object (#OBJECT(#PEEK(#PC), 1, 1)($)).
+  $C71A,$01 Volume (?)
+  $C71B,$01 Mass (?)
+  $C71C,$01
+  $C71D,$01 Strength (?)
+  $C71E,$01
+  $C71F,b Attributes:
+. #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
+. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
+. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. TABLE#
+  $C720,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
+W $C726,$02 Help Message (none).
+  $C728,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+  $C72F,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
 b $C730 Action Table
 @ $C730 label=ActionTable
@@ -5431,98 +6638,35 @@ b $C7FC
 
 b $CC00 Location Graphics Table
 @ $CC00 label=LocGFXTable
-M $CC00,$03 "Tunnel like hall"
-  $CC00,$01
-W $CC01,$02
-M $CC03,$03 "great river"
-  $CC03,$01
-W $CC04,$02
-M $CC06,$03 "trolls path"
-  $CC06,$01
-W $CC07,$02
-M $CC09,$03 "narrow place"
-  $CC09,$01
-W $CC0A,$02
-M $CC0C,$03 "dragons desolation"
-  $CC0C,$01
-W $CC0D,$02
-M $CC0F,$03 "straight smooth passage"
-  $CC0F,$01
-W $CC10,$02
-M $CC12,$03 "dale valley"
-  $CC12,$01
-W $CC13,$02
-M $CC15,$03 "trolls cave"
-  $CC15,$01
-W $CC16,$02
-M $CC18,$03 "forest gate"
-  $CC18,$01
-W $CC19,$02
-M $CC1B,$03 "lake town"
-  $CC1B,$01
-W $CC1C,$02
-M $CC1E,$03 "goblins dungeon"
-  $CC1E,$01
-W $CC1F,$02
-M $CC21,$03 "dark dungeon"
-  $CC21,$01
-W $CC22,$02
-M $CC24,$03 "trolls clearing"
-  $CC24,$01
-W $CC25,$02
-M $CC27,$03 "elvish clearing"
-  $CC27,$01
-W $CC28,$02
-M $CC2A,$03 "lonelands"
-  $CC2A,$01
-W $CC2B,$02
-M $CC2D,$03 "elvenkings cellar"
-  $CC2D,$01
-W $CC2E,$02
-M $CC30,$03 "goblins big cavern"
-  $CC30,$01
-W $CC31,$02
-M $CC33,$03 "gloomy bewitched place"
-  $CC33,$01
-W $CC34,$02
-M $CC36,$03 "running river"
-  $CC36,$01
-W $CC37,$02
-M $CC39,$03 "lower halls"
-  $CC39,$01
-W $CC3A,$02
-M $CC3C,$03 "threads spider place"
-  $CC3C,$01
-W $CC3D,$02
-M $CC3F,$03 "front gate"
-  $CC3F,$01
-W $CC40,$02
+  $CC00,$01 Location #LOCATION(#PEEK(#PC), 1, 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+W $CC01,$02 Location graphics data address.
+L $CC00,$03,$16
   $CC42,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
 b $CC43 Start of location graphics
 @ $CC43 label=LocGFX
-N $CC43 "Tunnel like hall"
-N $CE77 "great river"
-N $CFB2 "trolls path"
-N $D24E "narrow place"
-N $D367 "dragons desolation"
-N $D5B5 "straight smooth passage"
-N $D713 "dale valley"
-N $D92A "trolls cave"
-N $DBA8 "forest gate"
-N $DD79 "lake town"
-N $E02C "goblins dungeon"
-N $E049 "dark dungeon"
-N $E142 "trolls clearing"
-N $E19F "elvish clearing"
-N $E3FE "lonelands"
-N $E47A "elvenkings cellar"
-N $E6E4 "goblins big cavern"
-N $E9EE "gloomy bewitched place"
-N $EC3E "running river"
-N $EE43 "lower halls"
-N $F001 "threads spider place"
-N $F1E6 "front gate"
+N $CC43 #LOCATION($01, 1, 1)($) - "#LOCATIONNAME$01".
+N $CE77 #LOCATION($31, 1, 1)($) - "#LOCATIONNAME$31".
+N $CFB2 #LOCATION($06, 1, 1)($) - "#LOCATIONNAME$06".
+N $D24E #LOCATION($0B, 1, 1)($) - "#LOCATIONNAME$0B".
+N $D367 #LOCATION($25, 1, 1)($) - "#LOCATIONNAME$25".
+N $D5B5 #LOCATION($2B, 1, 1)($) - "#LOCATIONNAME$2B".
+N $D713 #LOCATION($26, 1, 1)($) - "#LOCATIONNAME$26".
+N $D92A #LOCATION($07, 1, 1)($) - "#LOCATIONNAME$07".
+N $DBA8 #LOCATION($18, 1, 1)($) - "#LOCATIONNAME$18".
+N $DD79 #LOCATION($23, 1, 1)($) - "#LOCATIONNAME$23".
+N $E02C #LOCATION($0D, 1, 1)($) - "#LOCATIONNAME$0D".
+N $E049 #LOCATION($1F, 1, 1)($) - "#LOCATIONNAME$1F".
+N $E142 #LOCATION($05, 1, 1)($) - "#LOCATIONNAME$05".
+N $E19F #LOCATION($1C, 1, 1)($) - "#LOCATIONNAME$1C".
+N $E3FE #LOCATION($04, 1, 1)($) - "#LOCATIONNAME$04".
+N $E47A #LOCATION($20, 1, 1)($) - "#LOCATIONNAME$20".
+N $E6E4 #LOCATION($10, 1, 1)($) - "#LOCATIONNAME$10".
+N $E9EE #LOCATION($19, 1, 1)($) - "#LOCATIONNAME$19".
+N $EC3E #LOCATION($08, 1, 1)($) - "#LOCATIONNAME$08".
+N $EE43 #LOCATION($29, 1, 1)($) - "#LOCATIONNAME$29".
+N $F001 #LOCATION($1A, 1, 1)($) - "#LOCATIONNAME$1A".
+N $F1E6 #LOCATION($27, 1, 1)($) - "#LOCATIONNAME$27".
 
 b $F400 Copy of original objects
 @ $F400 label=CopyOfObjects

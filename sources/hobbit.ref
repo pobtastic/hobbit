@@ -7,7 +7,7 @@
 ;   skool2html.py -H hobbit.skool -T dark
 
 [Config]
-RefFiles=changelog.ref
+RefFiles=changelog.ref;links.ref
 HtmlWriterClass=:hobbit.HobbitHtmlWriter
 GameDir=hobbit
 
@@ -16,3 +16,6 @@ Game=The Hobbit
 Logo=#SCR2,6,0,19,9,$4000,$5800(/images/logo)
 Copyright=&copy; 1982 Melbourne House
 StyleSheet=skoolkit.css;skoolkit-dark.css
+
+[Links]
+Links=Links
