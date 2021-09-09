@@ -46,22 +46,42 @@ Used by the routines at <a href="27648.html">Start</a>, <a href="29379.html">72C
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="29405"></span>
+<div class="comments">
+<div class="paragraph">
+Store <span class="register">A</span>, <span class="register">DE</span> and <span class="register">IX</span> for later (see <a href="29531.html">735B</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">PrintMsg</td>
 <td class="address-2"><span id="29405"></span>72DD</td>
 <td class="instruction">LD ($70DD),DE</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> at <a href="28658.html#28893">70DD</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29409"></span>72E1</td>
 <td class="instruction">LD ($70E0),IX</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">IX</span> at <a href="28658.html#28896">70E0</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29413"></span>72E5</td>
 <td class="instruction">LD ($70DC),A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">A</span> at <a href="28658.html#28892">70DC</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29416"></span>
+<div class="comments">
+<div class="paragraph">
+Important.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
