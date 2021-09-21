@@ -88,7 +88,7 @@ Next: <a href="47584.html">B9E0</a>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
+<td class="asm-label">CurrentCharacter</td>
 <td class="address-1"><span id="46826"></span>B6EA</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-1" rowspan="1"></td>
@@ -148,7 +148,7 @@ Next: <a href="47584.html">B9E0</a>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
+<td class="asm-label">PercentageComplete</td>
 <td class="address-1"><span id="46839"></span>B6F7</td>
 <td class="instruction">DEFW $0000</td>
 <td class="comment-1" rowspan="1"></td>
@@ -162,7 +162,13 @@ Next: <a href="47584.html">B9E0</a>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="46842"></span>B6FA</td>
-<td class="instruction">DEFW $0000</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="46843"></span>B6FB</td>
+<td class="instruction">DEFB $00</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -190,16 +196,16 @@ Next: <a href="47584.html">B9E0</a>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">WAIT_COUNTDOWN</td>
+<td class="asm-label">WaitCoutdown</td>
 <td class="address-1"><span id="46849"></span>B701</td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-1" rowspan="1">1=action countdown, 0=countdown finished</td>
+<td class="comment-1" rowspan="1">1=action countdown, 0=countdown finished.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
+<td class="asm-label">NightDay</td>
 <td class="address-1"><span id="46850"></span>B702</td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">0=night, 1=day.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

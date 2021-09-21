@@ -31,7 +31,7 @@ Next: <a href="41040.html">A050</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="38443.html">962B</a>.
+Used by the routine at <a href="38443.html">YouSeeEntry</a>.
 </div>
 </div>
 </td>
@@ -62,17 +62,17 @@ Used by the routine at <a href="38443.html">962B</a>.
 <tr>
 <td class="address-1"><span id="40862"></span>9F9E</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=$FF</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=$FF.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40864"></span>9FA0</td>
 <td class="instruction">LD IY,($B70C)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">IY</span>=<a href="46810.html#46860">ptrCurObject</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40868"></span>9FA4</td>
 <td class="instruction">LD B,(IY+$10)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=location ID of the object.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40871"></span>9FA7</td>
@@ -216,12 +216,12 @@ This entry point is used by the routines at <a href="35915.html">Action_Look</a>
 <tr>
 <td class="address-1"><span id="40915"></span>9FD3</td>
 <td class="instruction">PUSH IX</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40917"></span>9FD5</td>
 <td class="instruction">LD IX,$C060</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set <span class="register">IX</span> to $C060 which is 3 bytes less than the start of the <a href="49251.html">object table</a> due to the following line adding $0003 and moving us on to the first record.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="40921"></span>9FD9</td>
@@ -355,8 +355,8 @@ This entry point is used by the routines at <a href="35915.html">Action_Look</a>
 </tr>
 <tr>
 <td class="address-1"><span id="40974"></span>A00E</td>
-<td class="instruction">CALL <a href="40409.html#40500">$9E34</a></td>
-<td class="comment-1" rowspan="1">Call <a href="40409.html#40500">9E34</a>.</td>
+<td class="instruction">CALL <a href="40500.html">$9E34</a></td>
+<td class="comment-1" rowspan="1">Call <a href="40500.html">9E34</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40977"></span>A011</td>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 90D2</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36982.html">9076</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37074">Map</a></td>
+<td class="next">
+Next: <a href="37099.html">90EB</a>
+</td>
+</tr>
+</table>
+<div class="description">90D2: "You are dead" controller.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="36253.html">Action_Dir</a>, <a href="37850.html">Action_Examine</a>, <a href="38579.html">96B3</a>, <a href="42305.html">ActionClimbOut</a> and <a href="51178.html">C7EA</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">YouAreDead</td>
+<td class="address-2"><span id="37074"></span>90D2</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37075"></span>90D3</td>
+<td class="instruction">LD ($B6EA),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37078"></span>90D6</td>
+<td class="instruction">LD HL,$AFF1</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45041">"You are dead"</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37081"></span>90D9</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37084"></span>90DC</td>
+<td class="instruction">CALL <a href="33775.html#33781">GameOver_Start</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33775.html#33781">GameOver_Start</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37087"></span>
+<div class="comments">
+<div class="paragraph">
+This is almost a carbon copy of <a href="33775.html#33857">WaitForKey</a> only differing in that it ends with a jump to <a href="27648.html#27687">ReStart</a> and doesn't set a border colour.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">YouAreDead_WaitForKey</td>
+<td class="address-2"><span id="37087"></span>90DF</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Read from the keyboard port.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37088"></span>90E0</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37090"></span>90E2</td>
+<td class="instruction">AND %00011111</td>
+<td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37092"></span>90E4</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="37074.html#37087">YouAreDead_WaitForKey</a> until any key has been pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37094"></span>90E6</td>
+<td class="instruction">JR Z,<a href="37074.html#37087">YouAreDead_WaitForKey</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37096"></span>90E8</td>
+<td class="instruction">JP <a href="27648.html#27687">ReStart</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="27648.html#27687">ReStart</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36982.html">9076</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37074">Map</a></td>
+<td class="next">
+Next: <a href="37099.html">90EB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.5.</div>
+</footer>
+</body>
+</html>

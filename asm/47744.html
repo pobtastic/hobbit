@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
 </head>
-<body class="Asm-w">
+<body class="Asm-b">
 <table class="header">
 <tr>
 <td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
@@ -25,38 +25,51 @@ Next: <a href="47754.html">BA8A</a>
 </td>
 </tr>
 </table>
-<div class="description">BA80: Data block at BA80</div>
+<div class="description">BA80: Location Prepositions</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+Used by the routine at <a href="38443.html">YouSeeEntry</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="47744"></span>
+<div class="comments">
+<div class="paragraph">
+These are written directly to <a href="44413.html#45052">$AFFD</a> which updates the copy for: "You are XXXX[0x16]".
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="address-1"><span id="47744"></span>BA80</td>
-<td class="instruction">DEFW <a href="33977.html#33986">$84C2</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $C2,$84</td>
+<td class="comment-1" rowspan="1">"OUTSIDE"</td>
 </tr>
 <tr>
 <td class="address-2"><span id="47746"></span>BA82</td>
-<td class="instruction">DEFW $837B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $7B,$83</td>
+<td class="comment-1" rowspan="1">"INSIDE"</td>
 </tr>
 <tr>
 <td class="address-1"><span id="47748"></span>BA84</td>
-<td class="instruction">DEFW <a href="30068.html#33656">$8378</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $78,$83</td>
+<td class="comment-1" rowspan="1">"IN"</td>
 </tr>
 <tr>
 <td class="address-1"><span id="47750"></span>BA86</td>
-<td class="instruction">DEFW <a href="33944.html#33962">$84AA</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $AA,$84</td>
+<td class="comment-1" rowspan="1">"ON"</td>
 </tr>
 <tr>
 <td class="address-1"><span id="47752"></span>BA88</td>
-<td class="instruction">DEFW <a href="30068.html#32880">$8070</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $70,$80</td>
+<td class="comment-1" rowspan="1">"AT"</td>
 </tr>
 </table>
 <table class="asm-navigation">

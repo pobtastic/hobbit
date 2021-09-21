@@ -21,11 +21,11 @@ Prev: <a href="38381.html">95ED</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#38443">Map</a></td>
 <td class="next">
-Next: <a href="38554.html">969A</a>
+Next: <a href="38579.html">96B3</a>
 </td>
 </tr>
 </table>
-<div class="description">962B: Routine at 962B</div>
+<div class="description">962B: "You see ..." Routines</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -37,14 +37,16 @@ Used by the routine at <a href="36253.html">Action_Dir</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">YouSeeEntry</td>
 <td class="address-2"><span id="38443"></span>962B</td>
 <td class="instruction">LD HL,$B000</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45056">"You see[0x16]"</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38446"></span>962E</td>
-<td class="instruction">JR $964D</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">JR <a href="38443.html#38477">YouSeeWrapper</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38443.html#38477">YouSeeWrapper</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -57,89 +59,98 @@ This entry point is used by the routines at <a href="35915.html">Action_Look</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label">YouSeePreposition</td>
 <td class="address-2"><span id="38448"></span>9630</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38449"></span>9631</td>
 <td class="instruction">CALL <a href="39857.html">LocateLocation</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="39857.html">LocateLocation</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38452"></span>9634</td>
 <td class="instruction">LD A,(IX+$00)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Fetch the location attribute, keep only bits 1-3 which signify the location preposition ("IN", "ON", "AT", etc).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38455"></span>9637</td>
-<td class="instruction">AND $0E</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">AND %00001110</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38457"></span>9639</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Create an offset for the preposition word look-up.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38458"></span>963A</td>
 <td class="instruction">LD D,$00</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38460"></span>963C</td>
 <td class="instruction">LD HL,$BA80</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Add the offset to <a href="47744.html">BA80</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38463"></span>963F</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38464"></span>9640</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Fetch the referenced text bytes which display the preposition word.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38465"></span>9641</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38466"></span>9642</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38467"></span>9643</td>
 <td class="instruction">LD HL,$AFFD</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="4">Write the text tokens to <a href="44413.html#45052">$AFFD</a> which updates the copy for "You are XXXX[0x16]".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38470"></span>9646</td>
 <td class="instruction">LD (HL),D</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38471"></span>9647</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38472"></span>9648</td>
 <td class="instruction">LD (HL),E</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38473"></span>9649</td>
 <td class="instruction">POP AF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38474"></span>964A</td>
 <td class="instruction">LD HL,$AFFC</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45052">"You are in[0x16]"</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -152,204 +163,316 @@ This entry point is used by the routine at <a href="41958.html">ActionCapture</a
 </td>
 </tr>
 <tr>
+<td class="asm-label">YouSeeWrapper</td>
 <td class="address-2"><span id="38477"></span>964D</td>
 <td class="instruction">PUSH IX</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Stash <span class="register">IX</span>, <span class="register">IY</span> and <span class="register">BC</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38479"></span>964F</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38481"></span>9651</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38482"></span>9652</td>
-<td class="instruction">CALL $965B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL <a href="38443.html#38491">YouSeeStart</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38443.html#38491">YouSeeStart</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38485"></span>9655</td>
 <td class="instruction">POP BC</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Restore <span class="register">BC</span>, <span class="register">IY</span> and <span class="register">IX</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38486"></span>9656</td>
 <td class="instruction">POP IY</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38488"></span>9658</td>
 <td class="instruction">POP IX</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38490"></span>965A</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38491"></span>
+<div class="comments">
+<div class="paragraph">
+From here starts the "intro" to a location; <ul class="">
+<li>Print the "You see[0x16]" text</li>
+<li>Handle printing the location data message for this location (if one exists)</li>
+<li>Handles initiating the location graphics/ drawing (if it exists)</li>
+<li>Handles waiting for a keypress (if something was drawn)</li>
+<li>Prints available exits</li>
+</ul>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">YouSeeStart</td>
 <td class="address-2"><span id="38491"></span>965B</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Store <span class="register">A</span> in <span class="register">B</span> temporarily.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38492"></span>965C</td>
 <td class="instruction">CALL <a href="39857.html">LocateLocation</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="39857.html">LocateLocation</a> to set <span class="register">IX</span> to point to the appropriate <a href="47754.html">location data</a> for the current location.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38495"></span>965F</td>
 <td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38498"></span>9662</td>
 <td class="instruction">LD L,(IX+$08)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Load the <a href="47754.html">location data</a> offset for the current location description.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38501"></span>9665</td>
 <td class="instruction">LD H,(IX+$09)</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38504"></span>9668</td>
 <td class="instruction">LD A,H</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Check that there is a value for the description, set zero flag if not.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38505"></span>9669</td>
 <td class="instruction">OR L</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38506"></span>966A</td>
-<td class="instruction">CALL $9686</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL <a href="38443.html#38534">YouSeePrint</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38443.html#38534">YouSeePrint</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38509"></span>966D</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Restore the previous value of <span class="register">A</span> (the location ID).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38510"></span>966E</td>
-<td class="instruction">CALL <a href="30068.html#32632">$7F78</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL <a href="32632.html">Drawing</a></td>
+<td class="comment-1" rowspan="1">Call <a href="32632.html">Drawing</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38513"></span>9671</td>
 <td class="instruction">LD A,($7F77)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Test if <a href="32631.html">LocationID</a> contains $FF, call <a href="38443.html#38554">WaitForKey2</a> if it does not (i.e. wait for a keypress only if something has been drawn).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38516"></span>9674</td>
 <td class="instruction">INC A</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38517"></span>9675</td>
-<td class="instruction">CALL NZ,<a href="38554.html">$969A</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL NZ,<a href="38443.html#38554">WaitForKey2</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38520"></span>9678</td>
 <td class="instruction">CALL <a href="34166.html#34179">$8583</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="34166.html#34179">8583</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38523"></span>967B</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Restore the previous value of <span class="register">A</span> (the location ID).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38524"></span>967C</td>
 <td class="instruction">CALL <a href="41160.html">$A0C8</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="41160.html">A0C8</a>.</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="5">
-<span id="38527"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="38554.html">969A</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
+<td class="asm-label">YouSeeExits</td>
 <td class="address-2"><span id="38527"></span>967F</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Restore the previous value of <span class="register">A</span> (the location ID).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38528"></span>9680</td>
 <td class="instruction">CALL <a href="41272.html">DisplayExits</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="41272.html">DisplayExits</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38531"></span>9683</td>
 <td class="instruction">JP <a href="40852.html">$9F94</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="40852.html">9F94</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">YouSeePrint</td>
 <td class="address-2"><span id="38534"></span>9686</td>
 <td class="instruction">JP NZ,<a href="29405.html">PrintMsg</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Print the location description if one is present.</td>
+</tr>
+<tr>
+<td class="asm-label">YouSeeNext</td>
+<td class="address-2"><span id="38537"></span>9689</td>
+<td class="instruction">LD DE,$0002</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=$0002.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38540"></span>968C</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">IY</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38542"></span>968E</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2"><span class="register">IY</span>=<span class="register">IX</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38544"></span>9690</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38546"></span>9692</td>
+<td class="instruction">ADD IY,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">IY</span>=<span class="register">IY</span> + $0002 (from <span class="register">DE</span>).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38548"></span>9694</td>
+<td class="instruction">CALL <a href="40647.html#40662">$9ED6</a></td>
+<td class="comment-1" rowspan="1">Call <a href="40647.html#40662">9ED6</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38551"></span>9697</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">IY</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38553"></span>9699</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="38537"></span>
+<span id="38554"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="38554.html">969A</a>.
+This is almost a carbon copy of <a href="33775.html#33857">WaitForKey</a> only differing in that it ends with a return.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="address-2"><span id="38537"></span>9689</td>
-<td class="instruction">LD DE,$0002</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="asm-label">WaitForKey2</td>
+<td class="address-2"><span id="38554"></span>969A</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Read from the keyboard port.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="38540"></span>968C</td>
-<td class="instruction">PUSH IY</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38555"></span>969B</td>
+<td class="instruction">IN A,($FE)</td>
 </tr>
 <tr>
-<td class="address-1"><span id="38542"></span>968E</td>
-<td class="instruction">PUSH IX</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38557"></span>969D</td>
+<td class="instruction">AND %00011111</td>
+<td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="38544"></span>9690</td>
-<td class="instruction">POP IY</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38559"></span>969F</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="38443.html#38554">WaitForKey2</a> until any key has been pressed.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="38546"></span>9692</td>
-<td class="instruction">ADD IY,DE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38561"></span>96A1</td>
+<td class="instruction">JR Z,<a href="38443.html#38554">WaitForKey2</a></td>
 </tr>
 <tr>
-<td class="address-1"><span id="38548"></span>9694</td>
-<td class="instruction">CALL <a href="40647.html#40662">$9ED6</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38563"></span>96A3</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="2">Set the border to white.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="38551"></span>9697</td>
-<td class="instruction">POP IY</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38565"></span>96A5</td>
+<td class="instruction">OUT ($FE),A</td>
 </tr>
 <tr>
-<td class="address-1"><span id="38553"></span>9699</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38567"></span>96A7</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="38568"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="36253.html">Action_Dir</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">YouSeeController</td>
+<td class="address-2"><span id="38568"></span>96A8</td>
+<td class="instruction">CALL <a href="39857.html">LocateLocation</a></td>
+<td class="comment-1" rowspan="1">Call <a href="39857.html">LocateLocation</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38571"></span>96AB</td>
+<td class="instruction">CALL <a href="38443.html#38537">YouSeeNext</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38443.html#38537">YouSeeNext</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38574"></span>96AE</td>
+<td class="instruction">CALL <a href="34166.html#34179">$8583</a></td>
+<td class="comment-1" rowspan="1">Call <a href="34166.html#34179">8583</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38577"></span>96B1</td>
+<td class="instruction">JR <a href="38443.html#38527">YouSeeExits</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38443.html#38527">YouSeeExits</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -359,7 +482,7 @@ Prev: <a href="38381.html">95ED</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#38443">Map</a></td>
 <td class="next">
-Next: <a href="38554.html">969A</a>
+Next: <a href="38579.html">96B3</a>
 </td>
 </tr>
 </table>

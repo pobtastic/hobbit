@@ -25,161 +25,241 @@ Next: <a href="38443.html">962B</a>
 </td>
 </tr>
 </table>
-<div class="description">95ED: Routine at 95ED</div>
+<div class="description">95ED: Is Location Lit?</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="28904.html">IndexAction</a>, <a href="30068.html">7574</a>, <a href="36253.html">Action_Dir</a>, <a href="37850.html">Action_Examine</a>, <a href="39682.html">Action_None</a> and <a href="41958.html">ActionCapture</a>.
+Used by the routines at <a href="28904.html">IndexAction</a>, <a href="32632.html">Drawing</a>, <a href="36253.html">Action_Dir</a>, <a href="37850.html">Action_Examine</a>, <a href="39682.html">Action_None</a> and <a href="41958.html">ActionCapture</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38381"></span>
+<div class="comments">
+<div class="paragraph">
+We're only interested if the currently processed charcter is the player. Return if not.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">LocationLit</td>
 <td class="address-2"><span id="38381"></span>95ED</td>
 <td class="instruction">LD A,($B6EA)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Return if <a href="46810.html#46826">CurrentCharacter</a> is not zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38384"></span>95F0</td>
 <td class="instruction">AND A</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38385"></span>95F1</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38386"></span>
+<div class="comments">
+<div class="paragraph">
+Begin...
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38386"></span>95F2</td>
 <td class="instruction">PUSH IX</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Store <span class="register">IX</span> and <span class="register">BC</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38388"></span>95F4</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38389"></span>
+<div class="comments">
+<div class="paragraph">
+Check if the player object is inside "something".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38389"></span>95F5</td>
 <td class="instruction">LD IX,$C11B</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="49435.html">"You"</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38393"></span>95F9</td>
-<td class="instruction">CALL <a href="40409.html#40570">$9E7A</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">CALL <a href="40570.html">ContainerLit</a></td>
+<td class="comment-1" rowspan="1">Call <a href="40570.html">ContainerLit</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38396"></span>95FC</td>
 <td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">If the player is inside of another object then jump to <a href="38381.html#38408">LocationLit_Sword</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38397"></span>95FD</td>
-<td class="instruction">JR NZ,$9608</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="38381.html#38408">LocationLit_Sword</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38399"></span>
+<div class="comments">
+<div class="paragraph">
+Check the location data to see if this location is light or dark.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38399"></span>95FF</td>
 <td class="instruction">CALL <a href="40247.html">GetObjectLocationInIX</a></td>
 <td class="comment-1" rowspan="1">Call <a href="40247.html">GetObjectLocationInIX</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38402"></span>9602</td>
 <td class="instruction">BIT 7,(IX+$00)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">If the location is marked as being "LIGHT" then jump to <a href="38381.html#38436">LocationLit_Return</a> to return.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38406"></span>9606</td>
-<td class="instruction">JR NZ,$9624</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="38381.html#38436">LocationLit_Return</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38408"></span>
+<div class="comments">
+<div class="paragraph">
+The "Short Strong Sword" is a light source, can it be used?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">LocationLit_Sword</td>
 <td class="address-2"><span id="38408"></span>9608</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">IY</span> on the stack briefly.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38410"></span>960A</td>
 <td class="instruction">LD A,$0E</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Using <span class="register">A</span>=$0E and <span class="register">HL</span>=<a href="49435.html#49925">C305</a> which are the object ID and object location for "Short Strong Sword", call <a href="40500.html">9E34</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38412"></span>960C</td>
 <td class="instruction">LD IY,$C305</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38416"></span>9610</td>
-<td class="instruction">CALL <a href="40409.html#40500">$9E34</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">CALL <a href="40500.html">$9E34</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38419"></span>9613</td>
 <td class="instruction">POP IY</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Restore <span class="register">IY</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38421"></span>9615</td>
-<td class="instruction">JR Z,$9620</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="38381.html#38432">LocationLit_IsDark</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38381.html#38432">LocationLit_IsDark</a> if it is dark.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38423"></span>9617</td>
 <td class="instruction">LD A,($C30C)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="49435.html#49932">the attributes for "Short Strong Sword"</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38426"></span>961A</td>
 <td class="instruction">XOR $F7</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">XOR 11110111.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38428"></span>961C</td>
 <td class="instruction">AND $1C</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">If the "Short Strong Sword" is not "Broken", "Gives Light" and is not "Full" (?) then jump to <a href="38381.html#38440">LocationLit_IsLight</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38430"></span>961E</td>
-<td class="instruction">JR Z,$9628</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="38381.html#38440">LocationLit_IsLight</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38432"></span>
+<div class="comments">
+<div class="paragraph">
+The below handle the two responses for "light" and "dark" using the carry flag to signify darkness when set, and light unset.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">LocationLit_IsDark</td>
 <td class="address-2"><span id="38432"></span>9620</td>
 <td class="instruction">LD HL,$AE1F</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#44575">"it is dark"</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38435"></span>9623</td>
 <td class="instruction">SCF</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set the carry flag.</td>
 </tr>
 <tr>
+<td class="asm-label">LocationLit_Return</td>
 <td class="address-2"><span id="38436"></span>9624</td>
 <td class="instruction">POP BC</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Restore <span class="register">BC</span> and <span class="register">IX</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38437"></span>9625</td>
 <td class="instruction">POP IX</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38439"></span>9627</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
+<td class="asm-label">LocationLit_IsLight</td>
 <td class="address-2"><span id="38440"></span>9628</td>
 <td class="instruction">AND A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Reset the carry flag.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38441"></span>9629</td>
-<td class="instruction">JR $9624</td>
-<td class="comment-1" rowspan="1">Jump to <a href="38381.html#38436">9624</a>.</td>
+<td class="instruction">JR <a href="38381.html#38436">LocationLit_Return</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38381.html#38436">LocationLit_Return</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -78,7 +78,7 @@ Used by the routines at <a href="37850.html">Action_Examine</a>, <a href="40260.
 <span id="40662"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="29741.html">742D</a> and <a href="38443.html">962B</a>.
+This entry point is used by the routines at <a href="29741.html">742D</a> and <a href="38443.html">YouSeeEntry</a>.
 </div>
 </div>
 </td>
@@ -95,27 +95,24 @@ This entry point is used by the routines at <a href="29741.html">742D</a> and <a
 <tr>
 <td class="address-1"><span id="40664"></span>9ED8</td>
 <td class="instruction">LD A,($B703)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="3">If <a href="46810.html#46851">B703</a> is not zero then jump to <a href="40647.html#40698">9EFA</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40667"></span>9EDB</td>
 <td class="instruction">CP $00</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40669"></span>9EDD</td>
 <td class="instruction">JR NZ,$9EFA</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40671"></span>9EDF</td>
 <td class="instruction">LD D,(IY+$01)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2"><span class="register">DE</span>=...</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40674"></span>9EE2</td>
 <td class="instruction">LD E,(IY+$00)</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40677"></span>9EE5</td>
@@ -125,12 +122,11 @@ This entry point is used by the routines at <a href="29741.html">742D</a> and <a
 <tr>
 <td class="address-1"><span id="40680"></span>9EE8</td>
 <td class="instruction">LD E,(IY+$02)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2"><span class="register">DE</span>=...</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40683"></span>9EEB</td>
 <td class="instruction">LD D,(IY+$03)</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40686"></span>9EEE</td>
@@ -140,12 +136,11 @@ This entry point is used by the routines at <a href="29741.html">742D</a> and <a
 <tr>
 <td class="address-1"><span id="40689"></span>9EF1</td>
 <td class="instruction">LD E,(IY+$04)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2"><span class="register">DE</span>=...</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40692"></span>9EF4</td>
 <td class="instruction">LD D,(IY+$05)</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40695"></span>9EF7</td>
@@ -155,27 +150,24 @@ This entry point is used by the routines at <a href="29741.html">742D</a> and <a
 <tr>
 <td class="address-2"><span id="40698"></span>9EFA</td>
 <td class="instruction">LD E,(IY+$00)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2"><span class="register">DE</span>=...</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40701"></span>9EFD</td>
 <td class="instruction">LD D,(IY+$01)</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40704"></span>9F00</td>
 <td class="instruction">LD A,D</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="3">If <span class="register">DE</span> is not zero call <a href="29741.html#29816">7478</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40705"></span>9F01</td>
 <td class="instruction">OR E</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40706"></span>9F02</td>
 <td class="instruction">CALL NZ,<a href="29741.html#29816">$7478</a></td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40709"></span>9F05</td>

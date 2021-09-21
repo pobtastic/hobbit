@@ -21,7 +21,7 @@ Prev: <a href="40381.html">9DBD</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#40409">Map</a></td>
 <td class="next">
-Next: <a href="40608.html">9EA0</a>
+Next: <a href="40500.html">9E34</a>
 </td>
 </tr>
 </table>
@@ -186,8 +186,8 @@ Used by the routine at <a href="30068.html">7574</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="40472"></span>9E18</td>
-<td class="instruction">CALL $9E34</td>
-<td class="comment-1" rowspan="1">Call <a href="40409.html#40500">9E34</a>.</td>
+<td class="instruction">CALL <a href="40500.html">$9E34</a></td>
+<td class="comment-1" rowspan="1">Call <a href="40500.html">9E34</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40475"></span>9E1B</td>
@@ -202,7 +202,7 @@ Used by the routine at <a href="30068.html">7574</a>.
 <tr>
 <td class="address-1"><span id="40480"></span>9E20</td>
 <td class="instruction">POP IY</td>
-<td class="comment-1" rowspan="3">Restore <span class="register">IY</span>, <span class="register">DE</span> and <span class="register">BC</span> off the stack.</td>
+<td class="comment-1" rowspan="3">Restore <span class="register">IY</span>, <span class="register">DE</span> and <span class="register">BC</span> from the stack.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40482"></span>9E22</td>
@@ -222,7 +222,7 @@ Used by the routine at <a href="30068.html">7574</a>.
 <span id="40485"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="38554.html">969A</a> and <a href="42305.html">ActionClimbOut</a>.
+This entry point is used by the routines at <a href="38579.html">96B3</a> and <a href="42305.html">ActionClimbOut</a>.
 </div>
 </div>
 </td>
@@ -234,7 +234,7 @@ This entry point is used by the routines at <a href="38554.html">969A</a> and <a
 </tr>
 <tr>
 <td class="address-1"><span id="40488"></span>9E28</td>
-<td class="instruction">CALL $9E40</td>
+<td class="instruction">CALL <a href="40500.html#40512">$9E40</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -260,307 +260,7 @@ This entry point is used by the routines at <a href="38554.html">969A</a> and <a
 <tr>
 <td class="address-1"><span id="40499"></span>9E33</td>
 <td class="instruction">RET</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="40500"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routines at <a href="38381.html">95ED</a>, <a href="40852.html">9F94</a> and <a href="42305.html">ActionClimbOut</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address-2"><span id="40500"></span>9E34</td>
-<td class="instruction">PUSH IX</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40502"></span>9E36</td>
-<td class="instruction">LD IX,($B70C)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40506"></span>9E3A</td>
-<td class="instruction">CALL $9E40</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40509"></span>9E3D</td>
-<td class="instruction">POP IX</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40511"></span>9E3F</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="40512"></span>9E40</td>
-<td class="instruction">BIT 7,(IY+$07)</td>
-<td class="comment-1" rowspan="2">Return if the object is not "visible".</td>
-</tr>
-<tr>
-<td class="address-1"><span id="40516"></span>9E44</td>
-<td class="instruction">RET Z</td>
-</tr>
-<tr>
-<td class="address-1"><span id="40517"></span>9E45</td>
-<td class="instruction">PUSH IY</td>
-<td class="comment-1" rowspan="3">Stash <span class="register">IY</span>, <span class="register">IX</span> and <span class="register">BC</span> on the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="40519"></span>9E47</td>
-<td class="instruction">PUSH IX</td>
-</tr>
-<tr>
-<td class="address-1"><span id="40521"></span>9E49</td>
-<td class="instruction">PUSH BC</td>
-</tr>
-<tr>
-<td class="address-1"><span id="40522"></span>9E4A</td>
-<td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=the object ID.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="40523"></span>9E4B</td>
-<td class="instruction">LD C,(IX+$10)</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=your current location ID.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="40526"></span>9E4E</td>
-<td class="instruction">PUSH IY</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40528"></span>9E50</td>
-<td class="instruction">CALL $9E7A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40531"></span>9E53</td>
-<td class="instruction">CP B</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40532"></span>9E54</td>
-<td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40533"></span>9E55</td>
-<td class="instruction">POP IX</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40535"></span>9E57</td>
-<td class="instruction">JR Z,$9E72</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40537"></span>9E59</td>
-<td class="instruction">CALL $9E7A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40540"></span>9E5C</td>
-<td class="instruction">CP B</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40541"></span>9E5D</td>
-<td class="instruction">JR NZ,$9E6F</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40543"></span>9E5F</td>
-<td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40544"></span>9E60</td>
-<td class="instruction">JR NZ,$9E72</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40546"></span>9E62</td>
-<td class="instruction">LD B,(IY+$00)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40549"></span>9E65</td>
-<td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="40550"></span>9E66</td>
-<td class="instruction">CP (IY+$10)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40553"></span>9E69</td>
-<td class="instruction">JR Z,$9E72</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40555"></span>9E6B</td>
-<td class="instruction">INC IY</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40557"></span>9E6D</td>
-<td class="instruction">DJNZ $9E66</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="40559"></span>9E6F</td>
-<td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40560"></span>9E70</td>
-<td class="instruction">JR $9E74</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="40562"></span>9E72</td>
-<td class="instruction">OR $01</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="40564"></span>9E74</td>
-<td class="instruction">POP BC</td>
-<td class="comment-1" rowspan="3">Restore <span class="register">BC</span>, <span class="register">IX</span> and <span class="register">IY</span> off the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="40565"></span>9E75</td>
-<td class="instruction">POP IX</td>
-</tr>
-<tr>
-<td class="address-1"><span id="40567"></span>9E77</td>
-<td class="instruction">POP IY</td>
-</tr>
-<tr>
-<td class="address-1"><span id="40569"></span>9E79</td>
-<td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="40570"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="38381.html">95ED</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address-2"><span id="40570"></span>9E7A</td>
-<td class="instruction">PUSH IX</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="40572"></span>9E7C</td>
-<td class="instruction">LD A,(IX+$01)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40575"></span>9E7F</td>
-<td class="instruction">CP $FF</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40577"></span>9E81</td>
-<td class="instruction">JR Z,$9E92</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40579"></span>9E83</td>
-<td class="instruction">EX AF,AF'</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40580"></span>9E84</td>
-<td class="instruction">LD A,(IX+$01)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40583"></span>9E87</td>
-<td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40586"></span>9E8A</td>
-<td class="instruction">LD A,(IX+$07)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40589"></span>9E8D</td>
-<td class="instruction">AND $28</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40591"></span>9E8F</td>
-<td class="instruction">JR NZ,$9E7C</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40593"></span>9E91</td>
-<td class="instruction">EX AF,AF'</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="40594"></span>9E92</td>
-<td class="instruction">POP IX</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40596"></span>9E94</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="40597"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routines at <a href="30068.html">7574</a>, <a href="40712.html">9F08</a> and <a href="40741.html">9F25</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address-2"><span id="40597"></span>9E95</td>
-<td class="instruction">PUSH DE</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40598"></span>9E96</td>
-<td class="instruction">CALL <a href="40247.html">GetObjectLocationInIX</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40601"></span>9E99</td>
-<td class="instruction">LD DE,$0007</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40604"></span>9E9C</td>
-<td class="instruction">ADD IX,DE</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40606"></span>9E9E</td>
-<td class="instruction">POP DE</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="40607"></span>9E9F</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -570,7 +270,7 @@ Prev: <a href="40381.html">9DBD</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#40409">Map</a></td>
 <td class="next">
-Next: <a href="40608.html">9EA0</a>
+Next: <a href="40500.html">9E34</a>
 </td>
 </tr>
 </table>

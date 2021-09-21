@@ -31,7 +31,7 @@ Next: <a href="41544.html">A248</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="38443.html">962B</a>.
+Used by the routine at <a href="38443.html">YouSeeEntry</a>.
 </div>
 </div>
 </td>
@@ -289,7 +289,7 @@ This entry point is used by the routines at <a href="36253.html">Action_Dir</a>,
 <span id="41356"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="37233.html">Action_Attack</a>, <a href="38554.html">969A</a> and <a href="42305.html">ActionClimbOut</a>.
+This entry point is used by the routines at <a href="37233.html">Action_Attack</a>, <a href="38579.html">96B3</a> and <a href="42305.html">ActionClimbOut</a>.
 </div>
 </div>
 </td>
@@ -562,7 +562,7 @@ This entry point is used by the routines at <a href="41958.html">ActionCapture</
 <td class="asm-label">DisplayExits_14</td>
 <td class="address-2"><span id="41443"></span>A1E3</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -580,19 +580,18 @@ This entry point is used by the routines at <a href="41958.html">ActionCapture</
 <td class="asm-label"></td>
 <td class="address-1"><span id="41450"></span>A1EA</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="41451"></span>A1EB</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Write $01 to <a href="46810.html#46852">B704</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="41453"></span>A1ED</td>
 <td class="instruction">LD ($B704),A</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

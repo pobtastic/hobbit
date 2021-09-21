@@ -39,37 +39,35 @@ Used by the routines at <a href="35915.html">Action_Look</a>, <a href="36006.htm
 <tr>
 <td class="address-2"><span id="40260"></span>9D44</td>
 <td class="instruction">LD A,($B6FA)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">If <a href="46810.html#46842">B6FA</a> is $01 then return.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40263"></span>9D47</td>
 <td class="instruction">CP $01</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40265"></span>9D49</td>
 <td class="instruction">RET Z</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40266"></span>9D4A</td>
 <td class="instruction">INC A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increase TODO by one and write it to <a href="46810.html#46843">B6FB</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40267"></span>9D4B</td>
 <td class="instruction">LD ($B6FB),A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40270"></span>9D4E</td>
 <td class="instruction">POP BC</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40271"></span>9D4F</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -84,14 +82,14 @@ This entry point is used by the routines at <a href="37233.html">Action_Attack</
 <tr>
 <td class="address-2"><span id="40272"></span>9D50</td>
 <td class="instruction">LD A,($B6E8)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="46810.html#46824">CurrentObject</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="40275"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="38554.html">969A</a> and <a href="42305.html">ActionClimbOut</a>.
+This entry point is used by the routines at <a href="38579.html">96B3</a> and <a href="42305.html">ActionClimbOut</a>.
 </div>
 </div>
 </td>
@@ -99,137 +97,132 @@ This entry point is used by the routines at <a href="38554.html">969A</a> and <a
 <tr>
 <td class="address-2"><span id="40275"></span>9D53</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Stash <span class="register">IY</span>, <span class="register">IX</span> and <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40277"></span>9D55</td>
 <td class="instruction">PUSH IX</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40279"></span>9D57</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40280"></span>9D58</td>
 <td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="39882.html">LocateObject</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40283"></span>9D5B</td>
 <td class="instruction">LD B,(IX+$01)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=Mother object.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40286"></span>9D5E</td>
 <td class="instruction">LD IX,$C060</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set <span class="register">IX</span> to $C060 which is 3 bytes less than the start of the <a href="49251.html">object table</a> due to the following line adding $0003 and moving us on to the first record.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="40290"></span>9D62</td>
 <td class="instruction">CALL <a href="39849.html">Step3ByteTable_Next</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="39849.html">Step3ByteTable_Next</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40293"></span>9D65</td>
 <td class="instruction">JR Z,$9D91</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="40260.html#40337">9D91</a> if TODO.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40295"></span>9D67</td>
 <td class="instruction">CP (IY+$01)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Compare TODO, jump back to <a href="40260.html#40290">9D62</a> if so.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40298"></span>9D6A</td>
 <td class="instruction">JR NZ,$9D62</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40300"></span>9D6C</td>
 <td class="instruction">BIT 1,(IY+$07)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40304"></span>9D70</td>
 <td class="instruction">JR Z,$9D8B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40306"></span>9D72</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40307"></span>9D73</td>
 <td class="instruction">LD (IY+$10),$00</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40311"></span>9D77</td>
 <td class="instruction">LD (IY+$01),$FF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40315"></span>9D7B</td>
 <td class="instruction">RES 7,(IY+$07)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40319"></span>9D7F</td>
 <td class="instruction">CALL <a href="40647.html">$9EC7</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="40647.html">9EC7</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40322"></span>9D82</td>
 <td class="instruction">LD HL,$B143</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45378">"evaporate(s|d|ing|es)[0x15]"</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40325"></span>9D85</td>
 <td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40328"></span>9D88</td>
 <td class="instruction">POP AF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40329"></span>9D89</td>
 <td class="instruction">JR $9D62</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="40260.html#40290">9D62</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="40331"></span>9D8B</td>
 <td class="instruction">LD (IY+$01),B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40334"></span>9D8E</td>
 <td class="instruction">JP $9D62</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="40260.html#40290">9D62</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="40337"></span>9D91</td>
 <td class="instruction">POP HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Restore <span class="register">HL</span>, <span class="register">IX</span> and <span class="register">IY</span> from the stack.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40338"></span>9D92</td>
 <td class="instruction">POP IX</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40340"></span>9D94</td>
 <td class="instruction">POP IY</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="40342"></span>9D96</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">
