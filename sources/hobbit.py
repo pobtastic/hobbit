@@ -18,10 +18,53 @@ from skoolkit.skoolmacro import parse_strings, parse_ints, MacroParsingError
 from skoolkit import (BASE_10, BASE_16, CASE_LOWER, CASE_UPPER)
 
 class HobbitHtmlWriter(HtmlWriter):
+	def expand_locationattribute(self, attribute, index, cwd):
+		# #LOCATIONATTRIBUTEbyte
+		end, attribute = parse_ints(attribute, index, 1)
+		attributes = []
+		if attribute & (1 << 7):
+			attributes.append('Light')
+		else:
+			attributes.append('Dark')
+		if attribute & (1 << 1) and attribute & (1 << 2):
+			attributes.append('ON')
+		elif attribute & (1 << 1):
+			attributes.append('INSIDE')
+		elif attribute & (1 << 2):
+			attributes.append('IN')
+		elif attribute & (1 << 3):
+			attributes.append('AT')
+		else:
+			attributes.append('OUTSIDE')
+		return end, '; '.join(attributes)
+
 	def expand_textmessage(self, text, index, cwd):
 		# #TEXTMESSAGEaddress
 		end, address = parse_ints(text, index, 1)
-		return end, 'test'
+		words = []
+		address = self.snapshot[address] + self.snapshot[address + 1] * 0x100
+		while True:
+			character = self.snapshot[address]
+			if character & (1 << 7) == 0:
+				if character < 0x20:
+					print(f"fizz {hex(address)} {hex(character)}")
+					if character > 0x14:
+						break
+				elif character >= 0x60:
+					words.append(self.get_common_word(character))
+				else:
+					print(f"pop {hex(address)} {hex(character)}")
+				address += 0x01
+			else:
+				lsb = character & 0x7F
+				msb = self.snapshot[address + 1]
+				if character & 0xF0 == 0x20 or character & 0xF0 == 0x30 or character & 0xF0 == 0x60:
+					words.append(self.get_word(msb * 0x100 + lsb))
+				else:
+					words.append('')#self.get_token(msb, lsb))
+				address += 0x02
+				# words.append(self.get_word((msb & 0xF0) * 0x100 + lsb))
+		return end, ' '.join(words)
 
 	def expand_location(self, text, index, cwd):
 		# #LOCATIONid[,affix,hex][(prefix[,suffix])]
@@ -84,6 +127,17 @@ class HobbitHtmlWriter(HtmlWriter):
 		# #TEXTTOKENaddress[,order]
 		end, address, order = parse_ints(text, index, 2, (0, 0))
 		return end, self.get_words(address, order)
+
+	def get_common_word(self, index):
+		address = 0xAD3D + (index - 0x60) * 2
+		lsb = self.snapshot[address]
+		msb = self.snapshot[address + 1] + 0x50
+		return self.get_token(msb, lsb)
+
+	def get_token(self, msb, lsb):
+		if (msb & 0x0F | lsb) == 0:
+			return
+		return self.get_word((msb & 0x0F) * 0x100 + lsb + 0x6000)
 
 	def get_word(self, address):
 		word = []

@@ -3800,7 +3800,7 @@ c $74C1 Print Token
 @ $74C1 label=PrintToken
 R $74C1 DE e.g. $56D1 token?
   $74C1,$01 #REGa=#REGd
-  $74C2,$02 Keep only bits 0-3.
+  $74C2,$02,b$01 Keep only bits 0-3.
   $74C4,$01 Combine with #REGe.
   $74C5,$01 Return the result is zero.
   $74C6,$03 Store #REGhl, #REGbc and #REGde on the stack for later.
@@ -3851,6 +3851,181 @@ B $7574,$11
   $792F,$03 #REGhl=#R$AD9F("what ?[0x14]")
   $7937,$03 Call #R$72DD.
 
+g $7F77 Location ID.
+@ $7F77 label=LocationID
+D $7F77 Contains $FF when the location has no graphics data, else the location ID.
+
+c $7F78 Drawing Routine
+@ $7F78 label=Drawing
+  $7F78,$01 Store #REGaf on the stack.
+  $7F79,$06 If #R$B707 is not $00 then jump to #R$7F86.
+  $7F7F,$05 Write $FF to #R$7F77.
+  $7F84,$01 Restore #REGaf from the stack.
+  $7F85,$01 Return.
+N $7F86 Drawing Check
+@ $7F86 label=DrawingCheck
+  $7F86,$01 Retrieve the location ID from the stack.
+  $7F87,$01 Ensure that it's still on the stack for later.
+  $7F88,$05 Store #REGhl, #REGbc, #REGde and #REGix on the stack for later.
+  $7F8D,$04 #REGix=#R$CC00.
+  $7F91,$03 Call #R$9DBD - the Z flag is set if no data is found (#REGa=$FF).
+  $7F94,$03 Store the location ID at #R$7F77.
+  $7F97,$06 #REGhl=Location graphics data address.
+  $7F9D,$03 If there is graphics data for this location then call #R$7FA7.
+  $7FA0,$06 Restore #REGix, #REGde, #REGbc, #REGhl and #REGaf off the stack.
+  $7FA6,$01 Return.
+N $7FA7 Drawing routines.
+@ $7FA7 label=DrawingSetup
+  $7FA7,$03 Store #REGiy and #REGhl on the stack.
+  $7FAA,$03 #REGiy=pointer to graphics data addresses.
+  $7FAD,$02 Store #REGde and #REGbc on the stack.
+  $7FAF,$03 Call #R$820B.
+  $7FB2,$02 #REGd=$7F.
+  $7FB4,$02 #REGe=$3F.
+  $7FB6,$02 #REGb=$01.
+  $7FB8,$02 #REGc=$01.
+  $7FBA,$02 #REGl=$01.
+@ $7FBC label=DrawingLoop
+  $7FBC,$03 Fetch the next drawing instruction.
+  $7FBF,$04 If the value is zero, jump to #R$8069.
+  $7FC3,$02 Increment the graphics data pointer by one.
+  $7FC5,$04 If the graphics data value which was fetched is not $08 (move to X/Y) jump to #R$7FD5.
+N $7FC9 Moves the "pen" held in #REGde to a screen location.
+  $7FC9,$0A Populate #REGde with two values from the graphics data and increment the pointer by two.
+  $7FD3,$02 Jump back to #R$7FBC to fetch the next drawing instruction.
+
+  $7FD5,$04 If bit 7 is set, jump to #R$7FFA.
+  $7FD9,$01 Temporarily store #REGa in #REGb.
+  $7FDA,$02,b$01 Keep only bits 0-2.
+  $7FDC,$01 Store this in #REGc.
+  $7FDD,$01 Restore the old value of #REGa (from #REGb).
+  $7FDE,$01 Rotate #REGa right one bit.
+  $7FDF,$02,b$01 Keep only bits 2-5.
+  $7FE1,$01 Store this in #REGb.
+  $7FE2,$03 Fetch the next drawing instruction.
+  $7FE5,$02,b$01 Keep only bits 0-5.
+  $7FE7,$01 Store this in #REGl.
+  $7FE8,$01 Increment #REGl by one.
+  $7FE9,$03 Fetch the previous drawing instruction again in #REGa.
+  $7FEC,$02 Increment the graphics data pointer by one.
+  $7FEE,$02 Rotate #REGa left two bits.
+  $7FF0,$02,b$01 Keep only bits 0-1.
+  $7FF5,$03 Call #R$8151.
+  $7FF8,$02 Jump back to #R$7FBC to fetch the next drawing instruction.
+  $7FFE,$02,b$01 Keep only bits 0-2.
+  $800F,$03 Jump back to #R$7FBC to fetch the next drawing instruction.
+  $8012,$05 If bit 5 is set then jump back to #R$7FBC to fetch the next drawing instruction.
+  $8017,$02,b$01 Keep only bits 0-2.
+  $8034,$02,b$01 Keep only bits 0-1.
+  $803A,$02,b$01 Keep only bits 0-5.
+  $803F,$02,b$01 Keep only bits 0-2.
+@ $8069 label=DrawingEnd
+  $8066,$03 Jump back to #R$7FBC to fetch the next drawing instruction.
+  $8069,$05 Restore #REGbc, #REGde, #REGhl and #REGiy from the stack.
+  $806E,$01 Return.
+B $806F,$02
+
+  $80EB,$02 Restore #REGhl and #REGde from the stack.
+  $80ED,$01 Return.
+
+  $80EE,$01 Stash #REGhl on the stack.
+  $80EF,$03 Call #R$81DE.
+  $80F3,$01 Restore #REGhl from the stack.
+  $80F4,$01 Return.
+
+  $80F5,$02 Stash #REGaf and #REGde on the stack.
+  $8103,$02 Restore #REGde and #REGaf from the stack.
+  $8105,$01 Return.
+
+  $8106,$02 Stash #REGaf and #REGde on the stack.
+  $8108,$04 #REGhl=#REGhl+$0020.
+  $8114,$02 Restore #REGde and #REGaf from the stack.
+  $8116,$01 Return.
+  $8120,$01 Return.
+  $812A,$01 Return.
+  $8134,$01 Return.
+  $8135,$04 Set bit 0 of #REGa (using #REGh).
+  $8139,$01 Return.
+  $8140,$01 Return.
+  $8147,$01 Return.
+  $8150,$01 Return.
+
+  $8151,$04 If bit 0 of #REGc is not set then jump to #R$8185.
+  $8155,$02 Stash #REGhl and #REGbc on the stack.
+  $8157,$03 Call #R$81B5.
+  $815A,$04 If bit 2 of #REGc is set then jump to #R$8165.
+  $815E,$03 Call #R$8148.
+  $8161,$02
+  $8163,$02 Jump to #R$816A.
+
+  $8165,$03 Call #R$8141.
+  $8168,$02
+  $816A,$01 Decrease #REGb by one.
+  $816B,$02 Jump to #R$817F if it is not zero.
+  $816D,$04 If bit 1 of #REGc is set then jump to #R$8178.
+  $8171,$03 Call #R$813A.
+  $8182,$02 Restore #REGbc and #REGhl from the stack.
+  $8184,$01 Return.
+
+  $8185,$02 Stash #REGhl and #REGbc on the stack.
+  $8187,$03 Call #R$81B5.
+  $81B2,$02 Restore #REGbc and #REGhl from the stack.
+  $81B4,$01 Return.
+
+  $81BC,$02,b$01 Keep only bits 3-4.
+  $81C5,$02,b$01 Keep only bits 3-5.
+  $81DD,$01 Return.
+  $81E2,$02,b$01 Keep only bits 0-2.
+  $81E8,$02,b$01 Keep only bits 6-7.
+  $81F0,$02,b$01 Keep only bits 3-5.
+  $81F9,$02,b$01 Keep only bits 0-4.
+  $81FE,$02,b$01 Keep only bits 0-2.
+  $8200,$01 Stash #REGbc on the stack temporarily.
+  $8201,$01 Copy #REGa to #REGb used as a counter for the rotate command.
+  $8203,$02 #REGa=#EVAL($01,2,8).
+  $8205,$02 Rotate #REGa right once.
+  $8207,$02 Decrease counter by one and loop back to #R$8205 until counter is zero.
+  $8209,$01 Restore #REGbc from the stack.
+  $820A,$01 Return.
+
+@ $820B label=DrawingClear
+  $820B,$03 Call #R$95ED.
+  $820E,$04 Store the first byte of the graphic data in the shadow #REGaf register.
+  $8212,$02 Increment the graphic data pointer to the next byte.
+  $8214,$01 Switch back to the "normal" #REGaf register to check the result of the call to #R$95ED.
+  $8215,$02 Jump to #R$821A if #R$95ED did not set the carry flag (so, it is LIGHT).
+  $8217,$02 Overwrite the graphic data in the shadow #REGaf register to $00 (black).
+  $8219,$01 Switch back to the "normal" #REGaf register simply to accomodate the jump from #R$8215.
+@ $821A label=DrawingBorder
+  $821A,$01 Switch to the shadow #REGaf register containing the first byte of the graphic data (or $00 if it's dark).
+  $821B,$02 Set the border colour to the value in #REGa.
+  $821D,$03 Store #REGhl, #REGde and #REGbc on the stack.
+  $8220,$0D Write $00 to $4000-$4FFF (the screen buffer).
+  $822D,$09 Set up copying to the attribute buffer (start=$5800, length=$01FF).
+  $8236,$03 #REGa=The next byte (second) of the graphic data.
+  $8239,$02 Increment the graphic data pointer to the next byte.
+  $823B,$01 Switch back to the "normal" #REGaf register which contains the LIGHT/ DARK carry flag.
+  $823C,$02 Jump to #R$8241 if #R$95ED did not set the carry flag (so, it is LIGHT).
+  $823E,$02 Overwrite the graphic data in the shadow #REGaf register to $00 (black).
+  $8240,$01 Switch back to the "normal" #REGaf register simply to accomodate the jump from #R$823C.
+@ $8241 label=DrawingPaper
+  $8241,$01 Switch to the shadow #REGaf register containing the second byte of the graphic data (or $00 if it's dark).
+  $8242,$03 Write this to the attribute buffer using the target/ length specified previously.
+  $8245,$03 Restore #REGbc, #REGde and #REGhl from the stack.
+  $8248,$01 Switch back to the "normal" #REGaf register which contains the LIGHT/ DARK carry flag.
+  $8249,$01 Return if it is LIGHT.
+  $824A,$04 Else, restore #REGhl from the stack and jump to #R$8069 to finish.
+B $824E,$03
+
+c $8251
+
+c $82B3
+
+  $838E,$03 Jump to #R$75B4.
+  $8391,$03 Call #R$83F5.
+  $8397,$02,b$01 Keep only bits 0-4.
+  $839D,$03 Jump to #R$6C27.
+
 c $83A0 Display Locate Help Message
 @ $83A0 label=DisplayLocHlpMsg
   $83A7,$03 Store #REGhl and #REGix on the stack for later.
@@ -3871,28 +4046,9 @@ N $83BF Print the message.
 
 b $83CD Locate Help Message
 @ $83CD label=LocHlpMsg
-  $83CD,$01 "Trolls Path"
-W $83CE,$02
-  $83D0,$01 "Rivendell"
-W $83D1,$02
-  $83D3,$01 "Goblins Dungeon"
-W $83D4,$02
-  $83D6,$01 "West Bank"
-W $83D7,$02
-  $83D9,$01 "Dark Dungeon"
-W $83DA,$02
-  $83DC,$01 "Elvenkings Cellar"
-W $83DD,$02
-  $83DF,$01 "Sidedoor"
-W $83E0,$02
-  $83E2,$01 "Forest Road"
-W $83E3,$02
-  $83E5,$01 "Lower Halls"
-W $83E6,$02
-  $83E8,$01 "Black Spiders place"
-W $83E9,$02
-  $83EB,$01 "Trolls Clearing"
-W $83EC,$02
+  $83CD,$01 Location #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+W $83CE,$02 #TEXTMESSAGE(#PC)
+L $83CD,$03,$0B
   $83EE,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
 c $83EF Game Over
@@ -3905,24 +4061,44 @@ N $83F5 Actions "game over".
   $83F7,$04 Write $00 to #R$B701.
   $83FB,$03 #REGhl=#R$B454("you have mastered [0x16]")
   $83FE,$03 Call #R$72DD.
+  $8401,$03 #REGhl=#R$B6F7.
+  $8404,$03 #REGde=$0064 (i.e. "100" in decimal).
   $8407,$03 Call #R$842E.
+  $840A,$03 If the result is non-zero, call #R$858B.
+  $840D,$03 #REGde=$000A (i.e. "10" in decimal).
   $8410,$03 Call #R$842E.
+  $8413,$03 Call #R$858B.
+  $8416,$02 #REGa=$2E (i.e. a period in ASCII, as the produced percentage is a float).
+  $8418,$03 Call #R$858B.
+  $841B,$03 #REGa=the percentage digit, plus $30 to convert to ASCII.
+  $841E,$03 Call #R$858B.
   $8421,$04 Write $00 to #R$B704.
   $8425,$03 #REGhl=#R$B462("% of this adventure")
   $8428,$03 Call #R$72DD.
   $842B,$02 Restore #REGde and #REGhl from the stack.
   $842D,$01 Return.
-N $842E Not sure yet...
-@ $842E label=WUT
+N $842E Converts e.g. "0075" into "7.5" in ASCII for display purposes.
+@ $842E label=PercentageAscii
+  $842E,$02 #REGa=$2F (ASCII "0" less one, due to the following line being the loop and so, incrementing to $30 - which is ASCII "0").
+@ $8430 label=PercentageAscii_Loop
+  $8430,$01 Increment #REGa by one.
+  $8431,$01
+  $8432,$02 Subtract #REGde (either 100 or 10) from #REGhl.
+  $8434,$02 Jump back to #R$8430 if there's no carry.
+  $8436,$01 #REGhl=#REGhl + #REGde.
+  $8437,$02 Compare against $30 (ASCII "0") to set flags for the return.
   $8439,$01 Return.
 
-c $8441 Wait For Key
+N $843A I don't believe this is ever used?
+  $843A,$04 Set the border to $04 (green).
+  $843E,$03 Call #R$84B9.
+
 @ $8441 label=WaitForKey
   $8441,$03 Read from the keyboard port.
-  $8444,$02 A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key).
+  $8444,$02,b$01 A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key).
 .           Hence keep only bits 0-4 for the check.
   $8446,$04 Loop back to #R$8441 until any key has been pressed.
-  $844A,$04 Set the border to white.
+  $844A,$04 Set the border to $07 (white).
   $844E,$03 Jump to #R$82B3.
 
 c $8451 Load Game
@@ -3969,12 +4145,59 @@ c $84CC Save Game
   $8566,$03 Call #R$72DD.
 
 c $8576
-B $85B3,$03
+  $8576,$01 Stash #REGhl on the stack.
+  $8577,$01 #REGl=#REGa.
+  $8578,$04 #REGh=#R$B6FA.
+  $857C,$03 #REGa=#R$B702.
+  $857F,$02
+  $8581,$01 Restore #REGhl from the stack.
+  $8582,$01 Return.
+
+  $8583,$01 Stash #REGaf on the stack.
+  $8584,$02 #REGa=$0D.
+  $8586,$03 Call #R$858B.
+  $8589,$01 Restore #REGaf from the stack.
+  $858A,$01 Return.
+
+  $858B,$03 Call #R$8576.
+  $858E,$01 Return if zero.
+  $858F,$01 Stash #REGaf on the stack.
+  $8590,$06 If #R$B701 is not zero then jump to #R$85B7.
+  $8596,$01 Restore #REGaf from the stack.
+  $8597,$03 Call #R$86A1.
+  $859A,$01 Stash #REGaf on the stack.
+  $859B,,$06 If #R$B700 is not zero then jump to #R$85A3.
+  $85A1,$01 Restore #REGaf from the stack.
+  $85A2,$01 Return.
+
+  $85A3,$01 Restore #REGaf from the stack.
+  $85A4,$04 If this is ASCII "S" then jump to #R$85AB.
+  $85A8,$03 If this is not ASCII "s" then return.
+  $85AB,$01 Stash #REGaf on the stack.
+  $85AC,$02 #REGa=$48 ("F" in ASCII).
+  $85AE,$03 Call #R$86A1.
+  $85B1,$01 Restore #REGaf from the stack.
+  $85B2,$01 Return.
+B $85B3,$04 Percentage buffer.
+
+  $85B7,$01 Restore #REGaf from the stack.
 
 c $867A Print Character
 @ $867A label=PrintChar
+R $867A A ID of character to print
+N $867A #HTML(Prints using the standard ZX Spectrum <a href="https://skoolkid.github.io/rom/asm/3D00.html">CHARSET</a>.)
   $867A,$04 Push #REGaf, #REGbc, #REGde and #REGhl on the stack.
+  $867E,$08 Create offset for the font graphic data look-up.
+  $8686,$04 Calculate font graphic data address.
+  $868A,$03 Store the result in #REGde, restore the screen location to #REGhl.
 @ $868F label=PrintChar_Loop
+  $868D,$02 Set a counter for $08 lines.
+  $868F,$02 Fetch the font byte and copy it to the screen.
+  $8691,$01 Move onto the next font data byte.
+  $8692,$01 Move the screen pointer down one row.
+  $8693,$02 Decrease counter by one and loop back to #R$868F until counter is zero.
+  $8695,$04 Restore #REGhl, #REGde, #REGbc and #REGaf off the stack.
+  $8699,$01 Move the screen pointer across one column, ready for printing the next character.
   $869A,$01 Return.
 
 c $869B
@@ -3986,15 +4209,64 @@ B $86A0,$01
 
 c $876B Scroll Line
 @ $876B label=ScrollLine
+  $876B,$04 Push #REGaf, #REGbc, #REGhl and #REGde on the stack.
+N $87AB Handle the attributes.
+  $87AB,$0B Move the attributes up one character block.
+  $87B6,$02 Set a counter for #N($2A, 2, 3, 1, 1)($) spaces.
+  $87B8,$03 Set the target screen location to #N($5020, 2, 3, 1, 1)($).
+  $87BB,$02 #REGc=$01 TODO.
+  $87BD,$02 #REGa=ASCII "SPACE".
+@ $87BF label=ScrollLine_Spacing
+  $87BF,$03 Call #R$87C9.
+  $87C2,$02 Decrease counter by one and loop back to #R$87BF until counter is zero.
+N $87C4 Housekeeping and return.
+  $87C4,$04 Restore #REGde, #REGhl, #REGbc and #REGaf off the stack.
+  $87C8,$01 Return.
 
 c $87C9 Print Proper Character
 @ $87C9 label=PrintPropChar
-  $87D3,$03 #REGde=#R$8722
+R $87C9 A ASCII value
+R $87C9 C Bit offset
+R $87C9 HL Target screen location
+N $87C9 Prints using the custom #R$8822(font).
+  $87C9,$04 Push #REGaf, #REGbc, #REGde and #REGhl on the stack.
+N $87CD Calculate font graphic address, some examples would be;
+. #TABLE(default,centre,centre,centre,centre,centre)
+. { =h Letter | =h ASCII | =h * 8 | =h Sum | =h Font Graphic Address }
+. { #LET(id=$21) "#CHR({id})" | #N({id}, 2, 3, 1, 1)($) | #N(#EVAL({id} * 8), 2, 3, 1, 1)($) | (#N({id}, 2, 3, 1, 1)($) * 8) + $8722 | #R(#EVAL($8722 + ({id} * 8))) }
+. { #LET(id=$41) "#CHR({id})" | #N({id}, 2, 3, 1, 1)($) | #N(#EVAL({id} * 8), 2, 3, 1, 1)($) | (#N({id}, 2, 3, 1, 1)($) * 8) + $8722 | #R(#EVAL($8722 + ({id} * 8))) }
+. { #LET(id=$61) "#CHR({id})" | #N({id}, 2, 3, 1, 1)($) | #N(#EVAL({id} * 8), 2, 3, 1, 1)($) | (#N({id}, 2, 3, 1, 1)($) * 8) + $8722 | #R(#EVAL($8722 + ({id} * 8))) }
+. TABLE#
+  $87CD,$03 Store the offset for the font graphic data look-up in #REGhl.
+N $87D0 Calculate font graphic data address.
+  $87D0,$07 #REGhl=(#REGhl * 8) + #N($8722, 2, 3, 1, 1)($)
+  $87D7,$03 Store the result in #REGde, restore the screen location to #REGhl.
+  $87DA,$02 Set a counter for $08 lines.
+@ $87DC label=PrintPropChar_Loop
+  $87DC,$01 #REGa=byte of font graphic data
+  $87DD,$01 Stash the counter on the stack temporarily.
+  $87E0,$02 #REGb=#N($FF, 2, 3, 1, 1)($) as a mask.
+@ $87E4 label=PrintPropChar_Shift
+  $87E4,$02 Shift the font graphic data left.
+  $87E6,$02 Shift the mask data left.
+  $87E8,$01 Decrease #REGc by one.
+  $87E9,$02 Loop back to #R$87E4 until we've shifted by the number of bits specified in #REGc.
+@ $87EB label=PrintPropChar_SkipShift
+  $87EB,$01 Stash the font graphic data in #REGc.
+  $87EC,$02 #REGa=invert the shifted mask.
+  $87EE,$01 Merge the mask with the existing data in the screen buffer.
+  $87EF,$01 OR the font graphic data.
+  $87F0,$01 Copy the processed font graphic data to the screen.
+  $87F1,$01 Restore the counter off the stack.
+  $8810,$02 Decrease counter by one and loop back to #R$87DC until counter is zero.
+  $8812,$03 Restore #REGhl, #REGde and #REGbc off the stack.
+  $8820,$01 Restore #REGaf off the stack.
   $8821,$01 Return.
 
 b $8822 Main Font
 @ $8822 label=MainFont
-  $8822,$08 #UDG(#PC)
+N $8822 #LET(id=#EVAL($20 + (#PC - $8822) / 8))CHARACTER: "#MAP({id})(#CHR({id}),$20:SPACE,$60:£,$7F:CLARET)".
+  $8822,b,$01 #UDG(#PC)
 L $8822,$08,$60
 
 c $8B22
@@ -4071,10 +4343,21 @@ c $9076 Action Shoot
 @ $9076 label=Action_Shoot
   $907B,$03 #REGhl=#R$B121("You are not carrying the bow")
 
-  $9098,$03 #REGhl=#R$B127("the arrow misses[0x09] by a wide margin")
-  $90B7,$03 #REGhl=#R$B136("the arrow{5} hits[0x07][0x15]")
-  $90D6,$03 #REGhl=#R$AFF1("You are dead")
+  $9098,$03 #REGhl=#R$B127("the arrow misses[0x09] by a wide margin").
+  $90B7,$03 #REGhl=#R$B136("the arrow{5} hits[0x07][0x15]").
+
+c $90D2 "You are dead" controller.
+@ $90D2 label=YouAreDead
+  $90D6,$03 #REGhl=#R$AFF1("You are dead").
   $90D9,$03 Call #R$72DD.
+  $90DC,$03 Call #R$83F5.
+@ $90DF label=YouAreDead_WaitForKey
+N $90DF This is almost a carbon copy of #R$8441 only differing in that it ends with a jump to #R$6C27 and doesn't set a border colour.
+  $90DF,$03 Read from the keyboard port.
+  $90E2,$02,b$01 A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key).
+.           Hence keep only bits 0-4 for the check.
+  $90E4,$04 Loop back to #R$90DF until any key has been pressed.
+  $90E8,$03 Jump to #R$6C27.
 
 c $90EB Action Inventory
 @ $90EB label=Action_Inventory
@@ -4134,18 +4417,168 @@ c $93DA Action Examine
   $9531,$03 #REGhl=#R$AFC4("i see nothing here")
   $9534,$03 Call #R$72DD.
 
-c $95ED
+  $9586,$06 Fetch the action address from the #R$C730(action table) and store it in #REGhl.
+  $958C,$03 Call #R$9B6C.
+
+@ $959B label=CheckLit
+  $959B,$07 If #R$B6FA is not $01 then jump to #R$95C7.
+N $95A2 This check is a little unnecessary as the first thing the routine at #R$95ED does, is to check exactly this...
+  $95A2,$07 If #R$B6EA is not $00 (i.e. "#TEXTTOKEN($C11B + $08, 1)") then skip the "is location lit" check, instead jump to #R$95AF.
+N $95A9 #R$95ED uses the carry flag to indicate if it is light or dark.
+  $95A9,$06 If the location is dark then call #R$72DD to tell the user #R$AE1F("it is dark").
+@ $95AF label=CheckAction
+  $95AF,$04 #REGb=#R$B6E7.
+  $95B3,$0A Call #R$95DF with #REGix=#R$B708 and #REGa=#R$B6E8.
+  $95BD,$0A Call #R$95DF with #REGix=#R$B70A and #REGa=#R$B6E9.
+N $95C7 Performs housekeeping and returns.
+@ $95C7 label=CheckReturn
+  $95C7,$04 Restore #REGbc, #REGix and #REGhl from the stack.
+  $95CB,$01 Return.
+
+N $95CC Checks if the action given is valid.
+@ $95CC label=CheckValidAction
+  $95CC,$0A Call #R$9DBD with #R$C730, to match the key value of #R$B6E7.
+  $95D6,$04 If the termination character was not reached because an action did match, jump to #R$9586.
+  $95DA,$05 Else, call #R$72CE and jump to #R$95C7.
+
+  $95DF,$05 Return if the object is marked as being a "Fluid".
+  $95E4,$05 Return if the object is not marked as "Gives Light".
+  $95E9,$03 Call #R$9AA0.
+  $95EC,$01 Return.
+
+c $95ED Is Location Lit?
+N $95ED We're only interested if the currently processed charcter is the player. Return if not.
+@ $95ED label=LocationLit
+  $95ED,$05 Return if #R$B6EA is not zero.
+N $95F2 Begin...
+  $95F2,$03 Store #REGix and #REGbc on the stack.
+N $95F5 Check if the player object is inside "something".
+  $95F5,$04 #REGix=#R$C11B("#TEXTTOKEN($C11B + $08, 1)").
+  $95F9,$03 Call #R$9E7A.
+  $95FC,$03 If the player is inside of another object then jump to #R$9608.
+N $95FF Check the location data to see if this location is light or dark.
   $95FF,$03 Call #R$9D37.
+  $9602,$06 If the location is marked as being "LIGHT" then jump to #R$9624 to return.
+N $9608 The "#TEXTTOKEN($C305 + $08, 1)" is a light source, can it be used?
+@ $9608 label=LocationLit_Sword
+  $9608,$02 Stash #REGiy on the stack briefly.
+  $960A,$09 Using #REGa=$0E and #REGhl=#R$C305 which are the object ID and object location for "#TEXTTOKEN($C305 + $08, 1)", call #R$9E34.
+  $9613,$02 Restore #REGiy from the stack.
+  $9615,$02 Jump to #R$9620 if it is dark.
+  $9617,$03 #REGa=#R$C30C(the attributes for "#TEXTTOKEN($C305 + $08, 1)").
+  $961A,$02 XOR #EVAL($F7,2,8).
+  $961C,$04 If the "#TEXTTOKEN($C305 + $08, 1)" is not "Broken", "Gives Light" and is not "Full" (?) then jump to #R$9628.
+N $9620 The below handle the two responses for "light" and "dark" using the carry flag to signify darkness when set, and light unset.
+@ $9620 label=LocationLit_IsDark
+  $9620,$03 #REGhl=#R$AE1F("it is dark").
+  $9623,$01 Set the carry flag.
+@ $9624 label=LocationLit_Return
+  $9624,$03 Restore #REGbc and #REGix from the stack.
   $9627,$01 Return.
+@ $9628 label=LocationLit_IsLight
+  $9628,$01 Reset the carry flag.
   $9629,$02 Jump to #R$9624.
 
-c $962B
+c $962B "You see ..." Routines
+@ $962B label=YouSeeEntry
+  $962B,$03 #REGhl=#R$B000("You see[0x16]").
+  $962E,$02 Jump to #R$964D.
+@ $9630 label=YouSeePreposition
+  $9630,$01 Stash #REGaf on the stack.
+  $9631,$03 Call #R$9BB1.
+M $9634,$05 Fetch the location attribute, keep only bits 1-3 which signify the location preposition ("IN", "ON", "AT", etc).
+  $9637,$02,b$01
+  $9639,$03 Create an offset for the preposition word look-up.
+  $963C,$04 Add the offset to #R$BA80.
+  $9640,$03 Fetch the referenced text bytes which display the preposition word.
+  $9643,$06 Write the text tokens to #R$AFFC($AFFD) which updates the copy for "You are XXXX[0x16]".
+  $9649,$01 Restore #REGaf from the stack.
+  $964A,$03 #REGhl=#R$AFFC("You are in[0x16]").
+@ $964D label=YouSeeWrapper
+  $964D,$05 Stash #REGix, #REGiy and #REGbc on the stack.
+  $9652,$03 Call #R$965B.
+  $9655,$05 Restore #REGbc, #REGiy and #REGix from the stack.
+  $965A,$01 Return.
 
+N $965B From here starts the "intro" to a location;
+. #LIST
+. { Print the "You see[0x16]" text }
+. { Handle printing the location data message for this location (if one exists) }
+. { Handles initiating the location graphics/ drawing (if it exists) }
+. { Handles waiting for a keypress (if something was drawn) }
+. { Prints available exits }
+. LIST#
+@ $965B label=YouSeeStart
+  $965B,$01 Store #REGa in #REGb temporarily.
+  $965C,$03 Call #R$9BB1 to set #REGix to point to the appropriate #R$BA8A(location data) for the current location.
+  $965F,$03 Call #R$72DD.
+  $9662,$06 Load the #R$BA8A(location data) offset for the current location description.
+  $9668,$02 Check that there is a value for the description, set zero flag if not.
+  $966A,$03 Call #R$9686.
+  $966D,$01 Restore the previous value of #REGa (the location ID).
+  $966E,$03 Call #R$7F78.
+  $9671,$07 Test if #R$7F77 contains $FF, call #R$969A if it does not (i.e. wait for a keypress only if something has been drawn).
+  $9678,$03 Call #R$8583.
+  $967B,$01 Restore the previous value of #REGa (the location ID).
+  $967C,$03 Call #R$A0C8.
+@ $967F label=YouSeeExits
+  $967F,$01 Restore the previous value of #REGa (the location ID).
+  $9680,$03 Call #R$A138.
+  $9683,$03 Jump to #R$9F94.
+@ $9686 label=YouSeePrint
+  $9686,$03 Print the location description if one is present.
+@ $9689 label=YouSeeNext
+  $9689,$03 #REGde=$0002.
+  $968C,$02 Stash #REGiy on the stack.
+  $968E,$04 #REGiy=#REGix.
+  $9692,$02 #REGiy=#REGiy + $0002 (from #REGde).
+  $9694,$03 Call #R$9ED6.
+  $9697,$02 Restore #REGiy from the stack.
+  $9699,$01 Return.
+
+@ $969A label=WaitForKey2
+N $969A This is almost a carbon copy of #R$8441 only differing in that it ends with a return.
+  $969A,$03 Read from the keyboard port.
+  $969D,$02,b$01 A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key).
+.           Hence keep only bits 0-4 for the check.
+  $969F,$04 Loop back to #R$969A until any key has been pressed.
+  $96A3,$04 Set the border to white.
   $96A7,$01 Return.
-  $969A,$01 Return.
 
-c $969A
-  $969A
+@ $96A8 label=YouSeeController
+  $96A8,$03 Call #R$9BB1.
+  $96AB,$03 Call #R$9689.
+  $96AE,$03 Call #R$8583.
+  $96B1,$02 Jump to #R$967F.
+
+c $96B3
+
+c $9A85
+R $9A85 A The index to search for
+  $9A85,$02 Stash #REGde and #REGbc on the stack.
+  $9A87,$01 #REGb=#REGa (search key).
+  $9A88,$03 #REGhl=#R$CACB.
+  $9A8B,$03 #REGde=$0007.
+  $9A8E,$04 If the current pointer matches our key jump to #R$9A9A.
+  $9A92,$04 If we've reached the termination character then jump to #R$9A9A.
+  $9A96,$01 Increase the pointer address by $0007 (using #REGde).
+  $9A97,$03 Jump to #R$9A8E.
+  $9A9A,$02 Restore #REGbc and #REGde from the stack.
+  $9A9C,$03 #REGiy=#REGhl.
+  $9A9F,$01 Return.
+
+  $9AA0,$04 Store #REGiy and #REGix on the stack.
+  $9AA4,$03 Call #R$9A85.
+  $9AA7,$04 Jump to #R$9AC8 if the termination character was reached.
+  $9AAB,$06 #REGhl=
+  $9AB1,$03 #REGix=#REGhl.
+  $9AB5,$03 Call #R$9DBD.
+  $9AB8,$04 Jump to #R$9AC8 if the termination character was reached.
+  $9ABC,$0C Store ... TODO
+  $9AC8,$04 Restore #REGix and #REGiy from the stack.
+  $9ACC,$01 Return.
+
+c $9ACD
 
 c $9B02 Action None
 @ $9B02 label=Action_None
@@ -4155,6 +4588,17 @@ c $9B02 Action None
   $9B15,$01 Return.
 
 c $9B16
+
+c $9B6C Execute Action.
+@ $9B6C label=TriggerAction
+  $9B6C,$07 Stash #REGix, #REGiy, #REGde, #REGbc and #REGhl on the stack.
+  $9B73,$05 Call #R$9B80 if #REGhl is not empty (i.e. $0000).
+  $9B78,$07 Restore #REGhl, #REGbc, #REGde, #REGiy and #REGix from the stack.
+  $9B7F,$01 Return.
+@ $9B80 label=TriggerAction_Jump
+  $9B80,$01 Indirect jump to the address held in #REGhl.
+
+c $9B81
 
 c $9B93 Step Into 3ByteTable
 R $9B93 IX Pointer to the record data
@@ -4197,9 +4641,9 @@ N $9BB7 Work out the location now #REGa is validated as a legitimate location ID
 N $9BBF Calculate Location address, some examples would be;
 . #TABLE(default,centre,centre,centre,centre)
 . { =h Location ID | =h Sum | =h Location Table Entry | =h Location Data }
-. { #LET(id=$05) $#EVAL({id},16,2) | $B9E0+($#EVAL({id},16,2)*2) | #R(#EVAL($B9E0 + {id} * 2)) | #R(#EVAL(#PEEK(#EVAL($B9E0 + {id} * 2)) + #EVAL(#PEEK(#EVAL($B9E1 + {id} * 2)) * 256))) }
-. { #LET(id=$20) $#EVAL({id},16,2) | $B9E0+($#EVAL({id},16,2)*2) | #R(#EVAL($B9E0 + {id} * 2)) | #R(#EVAL(#PEEK(#EVAL($B9E0 + {id} * 2)) + #EVAL(#PEEK(#EVAL($B9E1 + {id} * 2)) * 256))) }
-. { #LET(id=$33) $#EVAL({id},16,2) | $B9E0+($#EVAL({id},16,2)*2) | #R(#EVAL($B9E0 + {id} * 2)) | #R(#EVAL(#PEEK(#EVAL($B9E0 + {id} * 2)) + #EVAL(#PEEK(#EVAL($B9E1 + {id} * 2)) * 256))) }
+. { #LET(id=$05) #N({id}, 2, 3, 1, 1)($) | (#N({id}, 2, 3, 1, 1)($) * 2) + #N($B9E0, 2, 3, 1, 1)($) | #R(#EVAL($B9E0 + {id} * 2)) | #R(#EVAL(#PEEK(#EVAL($B9E0 + {id} * 2)) + #EVAL(#PEEK(#EVAL($B9E1 + {id} * 2)) * 256))) }
+. { #LET(id=$20) #N({id}, 2, 3, 1, 1)($) | (#N({id}, 2, 3, 1, 1)($) * 2) + #N($B9E0, 2, 3, 1, 1)($) | #R(#EVAL($B9E0 + {id} * 2)) | #R(#EVAL(#PEEK(#EVAL($B9E0 + {id} * 2)) + #EVAL(#PEEK(#EVAL($B9E1 + {id} * 2)) * 256))) }
+. { #LET(id=$33) #N({id}, 2, 3, 1, 1)($) | (#N({id}, 2, 3, 1, 1)($) * 2) + #N($B9E0, 2, 3, 1, 1)($) | #R(#EVAL($B9E0 + {id} * 2)) | #R(#EVAL(#PEEK(#EVAL($B9E0 + {id} * 2)) + #EVAL(#PEEK(#EVAL($B9E1 + {id} * 2)) * 256))) }
 . TABLE#
   $9BBF,$02 #REGhl=(#REGhl*2)+#REGde
   $9BC1,$03 #REGde=the location from the pointer in #REGhl.
@@ -4250,12 +4694,34 @@ c $9D37 Get Object Location In IX
 @ $9D37 label=GetObjectLocationInIX
 R $9D37 O:IX The object location
   $9D37,$01 Stash #REGaf on the stack.
-  $9D38,$07 #R$B70C.
+  $9D38,$07 Fetch the location ID for the object held by #R$B70C.
   $9D3F,$03 Call #R$9BB1.
   $9D42,$01 Restore #REGaf off the stack.
   $9D43,$01 Return.
 
 c $9D44
+  $9D44,$06 If #R$B6FA is $01 then return.
+  $9D4A,$01 Increase TODO by one and write it to #R$B6FB.
+  $9D4E,$01
+  $9D4F,$01 Return.
+
+  $9D50,$03 #REGa=#R$B6E8.
+
+  $9D53,$05 Stash #REGiy, #REGix and #REGhl on the stack.
+  $9D58,$03 Call #R$9BCA.
+  $9D5B,$03 #REGb=Mother object.
+  $9D5E,$04 Set #REGix to $C060 which is 3 bytes less than the start of the #R$C063(object table) due to the following
+.           line adding $0003 and moving us on to the first record.
+  $9D62,$03 Call #R$9BA9.
+  $9D65,$02 Jump to #R$9D91 if TODO.
+  $9D67,$05 Compare TODO, jump back to #R$9D62 if so.
+  $9D7F,$03 Call #R$9EC7.
+  $9D82,$03 #REGhl=#R$B142("evaporate(s|d|ing|es)[0x15]").
+  $9D85,$03 Call #R$72DD.
+  $9D89,$02 Jump to #R$9D62.
+  $9D8E,$03 Jump to #R$9D62.
+  $9D91,$05 Restore #REGhl, #REGix and #REGiy from the stack.
+  $9D96,$01 Return.
 
 c $9D97
 R $9D97 O:A The number of objects
@@ -4304,20 +4770,54 @@ c $9DD9
   $9DE8,$03 Call #R$9B93.
   $9E08,$03 Call #R$71F3.
   $9E18,$03 Call #R$9E34.
-  $9E20,$04 Restore #REGiy, #REGde and #REGbc off the stack.
+  $9E20,$04 Restore #REGiy, #REGde and #REGbc from the stack.
   $9E24,$01 Return.
 
   $9E25,$03 Call #R$9E2B.
+  $9E33,$01 Return.
+
+c $9E34
+  $9E34,$02 Stash #REGix on the stack.
+  $9E36,$04 #REGix=#R$B70C.
+  $9E3A,$03 Call #R$9E40.
+  $9E3D,$02 Restore #REGix from the stack.
+  $9E3F,$01 Return.
+
   $9E40,$05 Return if the object is not "visible".
   $9E45,$05 Stash #REGiy, #REGix and #REGbc on the stack.
   $9E4A,$01 #REGb=the object ID.
   $9E4B,$03 #REGc=your current location ID.
-  $9E74,$05 Restore #REGbc, #REGix and #REGiy off the stack.
+  $9E74,$05 Restore #REGbc, #REGix and #REGiy from the stack.
   $9E79,$01 Return.
+
+c $9E7A Is Container Lit?
+@ $9E7A label=ContainerLit
+R $9E7A IX Object Data Address e.g. #R$C11B
+R $9E7A O:A Either $FF if this object is not inside a container, or the object ID of the container object
+R $9E7A O:IX Object Data Address of either the input value, or the address of the container object
+  $9E7A,$02 Stash #REGix on the stack.
+@ $9E7C label=ContainerLit_Fetch
+  $9E7C,$07 If the object is not inside of anything then jump to #R$9E92.
+  $9E83,$01 Switch to the shadow register for #REGaf.
+  $9E84,$03 #REGa=The mother object ID.
+  $9E87,$03 Call #R$9BCA.
+  $9E8A,$03 Fetch the objects attributes.
+  $9E8D,$04,b$01 If the 'Give Light' and 'Full' attributes are set then jump to #R$9E7C to rerun the check on this object.
+  $9E91,$01 Switch back to the "normal" #REGaf register.
+@ $9E92 label=ContainerLit_Return
+  $9E92,$02 Restore #REGix from the stack.
+  $9E94,$01 Return.
+
+c $9E95
+  $9E95,$01 Stash #REGde on the stack.
+  $9E96,$03 Call #R$9D37.
+  $9E99,$05 Add $0007 to the object location.
+  $9E9E,$01 Restore #REGde from the stack.
+  $9E9F,$01 Return.
 
 c $9EA0
   $9EA0,$03 Stash #REGiy and #REGde on the stack.
-  $9EC3,$03 Restore #REGde and #REGiy off the stack.
+  $9EC3,$03 Restore #REGde and #REGiy from the stack.
   $9EC6,$01 Return.
 
 c $9EC7
@@ -4328,9 +4828,15 @@ c $9EC7
   $9ED5,$01 Return.
 
   $9ED6,$02 Stash #REGaf and #REGde on the stack.
+  $9ED8,$07 If #R$B703 is not zero then jump to #R$9EFA.
+  $9EDF,$06 #REGde=...
   $9EE5,$03 Call #R$743F.
+  $9EE8,$06 #REGde=...
   $9EEE,$03 Call #R$74C1.
+  $9EF1,$06 #REGde=...
   $9EF7,$03 Call #R$74C1.
+  $9EFA,$06 #REGde=...
+  $9F00,$05 If #REGde is not zero call #R$7478.
   $9F05,$02 Restore #REGde and #REGaf off the stack.
   $9F07,$01 Return.
 
@@ -4358,7 +4864,9 @@ c $9F94
   $9F94,$04 Stash #REGiy, #REGaf and #REGbc on the stack.
   $9F98,$03 #REGhl=#R$B003("You see :[0x14]")
   $9F9B,$03 Call #R$72DD.
-  $9F9E,$02 #REGa=$FF
+  $9F9E,$02 #REGa=$FF.
+  $9FA0,$04 #REGiy=#R$B70C.
+  $9FA4,$03 #REGb=location ID of the object.
   $9FA7,$03 Call #R$9FAF.
   $9FAA,$04 Restore #REGbc, #REGaf and #REGiy off the stack.
   $9FAE,$01 Return.
@@ -4369,6 +4877,9 @@ c $9F94
   $9FBF,$03 Call #R$9FAF if zero.
   $9FC2,$04 Restore #REGbc, #REGde and #REGiy off the stack.
   $9FC6,$01 Return.
+  $9FD3,$02 Stash #REGix on the stack.
+  $9FD5,$04 Set #REGix to $C060 which is 3 bytes less than the start of the #R$C063(object table) due to the following
+.           line adding $0003 and moving us on to the first record.
   $9FD9,$03 Call #R$9BA9.
   $A00E,$03 Call #R$9E34.
   $A01B,$03 Call #R$9EC7.
@@ -4434,8 +4945,11 @@ c $A138 Display Exits
   $A1C7,$01 Return.
   $A1CF,$01 Return.
   $A1E2,$01 Return.
+  $A1E3,$01 Stash #REGhl on the stack.
   $A1E4,$03 #REGhl=#R$B009("You say "[0x16]")
   $A1E7,$03 Call #R$72DD.
+  $A1EA,$01 Restore #REGhl from the stack.
+  $A1EB,$05 Write $01 to #R$B704.
   $A1F0,$03 Call #R$72DD.
   $A1F3,$03 #REGhl=#R$B00F(" ".[0x14]")
   $A1F6,$03 Jump to #R$72DD.
@@ -4458,6 +4972,51 @@ c $A3E6 Action: Capture
 
 c $A541 Action: ClimbOut
 @ $A541 label=ActionClimbOut
+
+  $A918,$05 Set #R$B702 to $01 (daytime).
+  $A91D,$03 #REGhl=#R$B1DB("someone strangle(s|d|ing|es) you from behind").
+  $A920,$03 Call #R$72DD.
+  $A923,$03 Jump to #R$90D2.
+
+  $A971,$03 Call #R$9D44.
+  $A974,$05 Call #R$977F using object #R$C63F($47) - "#TEXTTOKEN($C63F + $08, 1)".
+  $A979,$05 Call #R$977F using object #R$C651($48) - "#TEXTTOKEN($C651 + $08, 1)".
+  $A97E,$03 #REGhl=#R$C646(attributes) for #R$C63F($47) - "#TEXTTOKEN($C63F + $08, 1)".
+  $A981,$02 Reset bit 7 of the attribute byte set to "Visible" = "No".
+  $A983,$03 #REGhl=#R$C658(attributes) for #R$C651($48) - "#TEXTTOKEN($C651 + $08, 1)".
+  $A986,$02 Reset bit 7 of the attribute byte set to "Visible" = "No".
+  $A988,$03 #REGhl=#R$B262("in a clearing with two stone trolls.").
+  $A98B,$03 Write #REGhl to #R$BAC4(the empty location description) for #R$BABC($05) - "#TEXTTOKEN($BABC + $02, $01)".
+  $A98E,$03 #REGhl=Location #R$BABC($05) - "#TEXTTOKEN($BABC + $02, $01)".
+  $A991,$02 Reset bit 6 of the attribute byte.
+  $A993,$05 Call #R$9D53 using object #R$C63F($47) - "#TEXTTOKEN($C63F + $08, 1)".
+  $A998,$05 Call #R$9D53 using object #R$C651($48) - "#TEXTTOKEN($C651 + $08, 1)".
+
+  $A99D,$03 #REGhl=#R$B30B("day dawn(s|d|ing|es)").
+  $A9A0,$05 Set #R$B702 to $01 (daytime).
+  $A9A5,$03 Call #R$72DD.
+  $A9A8,$04 #REGix=#R$CC00.
+  $A9AC,$05 Load the graphics data for #R$E142 "#LOCATIONNAME$05".
+  $A9B1,$06 #REGhl=graphics data pointer.
+  $A9B7,$02 Change the paper colour to $05 (cyan).
+  $A9B9,$01 Increment the graphics data pointer by one.
+  $A9BA,$02 Change the ??? colour to $28 ().
+  $A9BC,$01 Return.
+
+  $A9C9,$03 #REGhl=#R$B238("blimey, look at this!! Can yer cook'em?[0x16]").
+  $A9D0,$03 #REGhl=#R$B24C("yer can try, but he wouldn't make above a mouthfull.").
+  $A9D3,$03 Jump to #R$A1E3.
+
+  $A9DC,$03 #REGhl=#R$B3D9.
+  $A9DF,$03 Call #R$72DD.
+  $A9E2,$03 Jump to #R$90DF.
+
+  $AA8B,$03 #REGhl=#R$B2A4("the hole vanish(s|d|ing|es)[0x15]").
+  $AA8E,$03 Jump to #R$72DD.
+  $AA91,$03 #REGhl=#R$C2BC(attributes) for object #R$C2B5($0B) - "#TEXTTOKEN($C2B5 + $08, $01)".
+  $AA94,$02 Set bit 7 of the attribute byte to "Visible" = "Yes".
+  $AA9C,$03 #REGhl=#R$B277.
+  $AA9F,$03 Jump to #R$72DD.
 
 w $AB53 Actions
 @ $AB53 label=Actions
@@ -4763,6 +5322,7 @@ W $B6DC,$02
 @ $B6E8 label=CurrentObject
   $B6E8,$01
   $B6E9,$01
+@ $B6EA label=CurrentCharacter
   $B6EA,$01
   $B6EB,$03
 W $B6EE,$02
@@ -4773,16 +5333,19 @@ W $B6EE,$02
   $B6F4,$01
   $B6F5,$01
   $B6F6,$01
+@ $B6F7 label=PercentageComplete
 W $B6F7,$02
   $B6F9,$01
-W $B6FA,$02
+  $B6FA,$01
+  $B6FB,$01
 W $B6FC,$02
   $B6FE,$01
   $B6FF,$01
   $B700,$01
-@ $B701 label=WAIT_COUNTDOWN
-  $B701,$01 1=action countdown, 0=countdown finished
-  $B702,$01
+@ $B701 label=WaitCoutdown
+  $B701,$01 1=action countdown, 0=countdown finished.
+@ $B702 label=NightDay
+  $B702,$01 0=night, 1=day.
   $B703,$01
   $B704,$01
   $B705,$01
@@ -4813,21 +5376,27 @@ w $B9E0 Location Table
   $B9E0,$02 #N(#EVAL((#PC - $B9E0) / 2), 2, 3, 1, 1)($) - "#LOCATIONNAME(#EVAL((#PC - $B9E0) / 2))".
 L $B9E0,$02,$50
 
-w $BA80
-  $BA80,$0A,$02
+b $BA80 Location Prepositions
+D $BA80 Used by the routine at #R$962B.
+N $BA80 These are written directly to #R$AFFC($AFFD) which updates the copy for: "You are XXXX[0x16]".
+  $BA80,$02 "OUTSIDE"
+  $BA82,$02 "INSIDE"
+  $BA84,$02 "IN"
+  $BA86,$02 "ON"
+  $BA88,$02 "AT"
 
 b $BA8A Locations
 @ $BA8A label=Locations
   $BA8A,$0D 00:  : ''
 N $BA97 Location $01 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BA97,$01 light, IN
+  $BA97,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BA98,$01 LOCATION_PROP_VOLUME
   $BA99,$06,$02 #TEXTTOKEN(#PC)
 W $BA9F,$02 comfortable tunnel like hall
   $BAA1,$03 #MOVEMENT
   $BAA4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BAA5 Location $04 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BAA5,$01 light, IN
+  $BAA5,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BAA6,$01 LOCATION_PROP_VOLUME
   $BAA7,$06,$02 #TEXTTOKEN(#PC)
 W $BAAD,$02 gloomy empty land dreary hills ahead
@@ -4835,7 +5404,7 @@ W $BAAD,$02 gloomy empty land dreary hills ahead
 L $BAAF,$03,$04
   $BABB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BABC Location $05 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BABC,$01 light, IN
+  $BABC,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BABD,$01 LOCATION_PROP_VOLUME
   $BABE,$06,$02 #TEXTTOKEN(#PC)
 W $BAC4,$02 ---
@@ -4843,7 +5412,7 @@ W $BAC4,$02 ---
 L $BAC6,$03,$03
   $BACF,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BAD0 Location $06 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BAD0,$01 light, IN
+  $BAD0,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BAD1,$01 LOCATION_PROP_VOLUME
   $BAD2,$06,$02 #TEXTTOKEN(#PC)
 W $BAD8,$02 hidden path trolls foot print S [16]
@@ -4851,14 +5420,14 @@ W $BAD8,$02 hidden path trolls foot print S [16]
 L $BADA,$03,$02
   $BAE0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BAE1 Location $07 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BAE1,$01 dark, IN
+  $BAE1,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BAE2,$01 LOCATION_PROP_VOLUME
   $BAE3,$06,$02 #TEXTTOKEN(#PC)
 W $BAE9,$02 trolls cave
   $BAEB,$03 #MOVEMENT
   $BAEE,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BAEF Location $09 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BAEF,$01 light, IN
+  $BAEF,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BAF0,$01 LOCATION_PROP_VOLUME
   $BAF1,$06,$02 #TEXTTOKEN(#PC)
 W $BAF7,$02 ---
@@ -4866,7 +5435,7 @@ W $BAF7,$02 ---
 L $BAF9,$03,$02
   $BAFF,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB00 Location $0A - "#TEXTTOKEN(#PC + $02, $01)"
-  $BB00,$01 light, ON
+  $BB00,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BB01,$01 LOCATION_PROP_VOLUME
   $BB02,$06,$02 #TEXTTOKEN(#PC)
 W $BB08,$02 hard dangerous path misty mountains
@@ -4874,7 +5443,7 @@ W $BB08,$02 hard dangerous path misty mountains
 L $BB0A,$03,$04
   $BB16,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB17 Location $0B - "#TEXTTOKEN(#PC + $02, $01)"
-  $BB17,$01 light, IN
+  $BB17,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BB18,$01 LOCATION_PROP_VOLUME
   $BB19,$06,$02 #TEXTTOKEN(#PC)
 W $BB1F,$02 narrow place dreadful drop into dim valley
@@ -4882,7 +5451,7 @@ W $BB1F,$02 narrow place dreadful drop into dim valley
 L $BB21,$03,$03
   $BB2A,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB2B Location $0C - "#TEXTTOKEN(#PC + $02, $01)"
-  $BB2B,$01 light, ON
+  $BB2B,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BB2C,$01 LOCATION_PROP_VOLUME
   $BB2D,$06,$02 #TEXTTOKEN(#PC)
 W $BB33,$02 narrow dangerous path
@@ -4890,7 +5459,7 @@ W $BB33,$02 narrow dangerous path
 L $BB35,$03,$02
   $BB3B,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB3C Location $0E - "#TEXTTOKEN(#PC + $02, $01)"
-  $BB3C,$01 dark, IN
+  $BB3C,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BB3D,$01 LOCATION_PROP_VOLUME
   $BB3E,$06,$02 #TEXTTOKEN(#PC)
 W $BB44,$02 large dry cave which climb quite comfortable
@@ -4898,7 +5467,7 @@ W $BB44,$02 large dry cave which climb quite comfortable
 L $BB46,$03,$02
   $BB4C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB4D Location $0F - "#TEXTTOKEN(#PC + $02, $01)"
-  $BB4D,$01 dark, IN
+  $BB4D,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BB4E,$01 LOCATION_PROP_VOLUME
   $BB4F,$06,$02 #TEXTTOKEN(#PC)
 W $BB55,$02 ---
@@ -4906,7 +5475,7 @@ W $BB55,$02 ---
 L $BB57,$03,$03
   $BB60,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB61 Location $34 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BB61,$01 dark, IN
+  $BB61,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BB62,$01 LOCATION_PROP_VOLUME
   $BB63,$06,$02 #TEXTTOKEN(#PC)
 W $BB69,$02 ---
@@ -4914,14 +5483,14 @@ W $BB69,$02 ---
 L $BB6B,$03,$03
   $BB74,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB75 Location $35 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BB75,$01 dark, IN
+  $BB75,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BB76,$01 LOCATION_PROP_VOLUME
   $BB77,$06,$02 #TEXTTOKEN(#PC)
 W $BB7D,$02 ---
   $BB7F,$03 #MOVEMENT
   $BB82,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB83 Location $36 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BB83,$01 dark, IN
+  $BB83,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BB84,$01 LOCATION_PROP_VOLUME
   $BB85,$06,$02 #TEXTTOKEN(#PC)
 W $BB8B,$02 ---
@@ -4929,7 +5498,7 @@ W $BB8B,$02 ---
 L $BB8D,$03,$04
   $BB99,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB9A Location $37 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BB9A,$01 dark, IN
+  $BB9A,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BB9B,$01 LOCATION_PROP_VOLUME
   $BB9C,$06,$02 #TEXTTOKEN(#PC)
 W $BBA2,$02 ---
@@ -4937,14 +5506,14 @@ W $BBA2,$02 ---
 L $BBA4,$03,$04
   $BBB0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BBB1 Location $38 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BBB1,$01 dark, IN
+  $BBB1,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BBB2,$01 LOCATION_PROP_VOLUME
   $BBB3,$06,$02 #TEXTTOKEN(#PC)
 W $BBB9,$02 ---
   $BBBB,$03 #MOVEMENT
   $BBBE,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BBBF Location $39 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BBBF,$01 dark, IN
+  $BBBF,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BBC0,$01 LOCATION_PROP_VOLUME
   $BBC1,$06,$02 #TEXTTOKEN(#PC)
 W $BBC7,$02 ---
@@ -4952,7 +5521,7 @@ W $BBC7,$02 ---
 L $BBC9,$03,$03
   $BBD2,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BBD3 Location $3A - "#TEXTTOKEN(#PC + $02, $01)"
-  $BBD3,$01 dark, IN
+  $BBD3,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BBD4,$01 LOCATION_PROP_VOLUME
   $BBD5,$06,$02 #TEXTTOKEN(#PC)
 W $BBDB,$02 ---
@@ -4960,7 +5529,7 @@ W $BBDB,$02 ---
 L $BBDD,$03,$04
   $BBE9,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BBEA Location $3B - "#TEXTTOKEN(#PC + $02, $01)"
-  $BBEA,$01 dark, IN
+  $BBEA,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BBEB,$01 LOCATION_PROP_VOLUME
   $BBEC,$06,$02 #TEXTTOKEN(#PC)
 W $BBF2,$02 ---
@@ -4968,7 +5537,7 @@ W $BBF2,$02 ---
 L $BBF4,$03,$02
   $BBFA,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BBFB Location $3C - "#TEXTTOKEN(#PC + $02, $01)"
-  $BBFB,$01 dark, IN
+  $BBFB,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BBFC,$01 LOCATION_PROP_VOLUME
   $BBFD,$06,$02 #TEXTTOKEN(#PC)
 W $BC03,$02 ---
@@ -4976,7 +5545,7 @@ W $BC03,$02 ---
 L $BC05,$03,$03
   $BC0E,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC0F Location $3D - "#TEXTTOKEN(#PC + $02, $01)"
-  $BC0F,$01 dark, IN
+  $BC0F,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BC10,$01 LOCATION_PROP_VOLUME
   $BC11,$06,$02 #TEXTTOKEN(#PC)
 W $BC17,$02 ---
@@ -4984,14 +5553,14 @@ W $BC17,$02 ---
 L $BC19,$03,$02
   $BC1F,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC20 Location $3E - "#TEXTTOKEN(#PC + $02, $01)"
-  $BC20,$01 dark, IN
+  $BC20,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BC21,$01 LOCATION_PROP_VOLUME
   $BC22,$06,$02 #TEXTTOKEN(#PC)
 W $BC28,$02 ---
   $BC2A,$03 #MOVEMENT
   $BC2D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC2E Location $3F - "#TEXTTOKEN(#PC + $02, $01)"
-  $BC2E,$01 dark, IN
+  $BC2E,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BC2F,$01 LOCATION_PROP_VOLUME
   $BC30,$06,$02 #TEXTTOKEN(#PC)
 W $BC36,$02 ---
@@ -4999,7 +5568,7 @@ W $BC36,$02 ---
 L $BC38,$03,$03
   $BC41,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC42 Location $40 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BC42,$01 dark, IN
+  $BC42,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BC43,$01 LOCATION_PROP_VOLUME
   $BC44,$06,$02 #TEXTTOKEN(#PC)
 W $BC4A,$02 ---
@@ -5007,7 +5576,7 @@ W $BC4A,$02 ---
 L $BC4C,$03,$03
   $BC55,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC56 Location $41 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BC56,$01 dark, IN
+  $BC56,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BC57,$01 LOCATION_PROP_VOLUME
   $BC58,$06,$02 #TEXTTOKEN(#PC)
 W $BC5E,$02 ---
@@ -5015,7 +5584,7 @@ W $BC5E,$02 ---
 L $BC60,$03,$03
   $BC69,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC6A Location $10 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BC6A,$01 dark, IN
+  $BC6A,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BC6B,$01 LOCATION_PROP_VOLUME
   $BC6C,$06,$02 #TEXTTOKEN(#PC)
 W $BC72,$02 big cavern torch ESalong wall S [16]
@@ -5023,14 +5592,14 @@ W $BC72,$02 big cavern torch ESalong wall S [16]
 L $BC74,$03,$03
   $BC7D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC7E Location $11 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BC7E,$01 dark, AT
+  $BC7E,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BC7F,$01 LOCATION_PROP_VOLUME
   $BC80,$06,$02 #TEXTTOKEN(#PC)
 W $BC86,$02 brink deep dark under ground lake
   $BC88,$03 #MOVEMENT
   $BC8B,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC8C Location $12 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BC8C,$01 dark, IN
+  $BC8C,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BC8D,$01 LOCATION_PROP_VOLUME
   $BC8E,$06,$02 #TEXTTOKEN(#PC)
 W $BC94,$02 ---
@@ -5038,7 +5607,7 @@ W $BC94,$02 ---
 L $BC96,$03,$03
   $BC9F,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BCA0 Location $13 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BCA0,$01 dark, INSIDE
+  $BCA0,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BCA1,$01 LOCATION_PROP_VOLUME
   $BCA2,$06,$02 #TEXTTOKEN(#PC)
 W $BCA8,$02 goblins gate
@@ -5046,7 +5615,7 @@ W $BCA8,$02 goblins gate
 L $BCAA,$03,$0A
   $BCC8,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BCC9 Location $14 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BCC9,$01 light, OUTSIDE
+  $BCC9,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BCCA,$01 LOCATION_PROP_VOLUME
   $BCCB,$06,$02 #TEXTTOKEN(#PC)
 W $BCD1,$02 goblins gate
@@ -5054,7 +5623,7 @@ W $BCD1,$02 goblins gate
 L $BCD3,$03,$02
   $BCD9,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BCDA Location $0D - "#TEXTTOKEN(#PC + $02, $01)"
-  $BCDA,$01 dark, IN
+  $BCDA,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BCDB,$01 LOCATION_PROP_VOLUME
   $BCDC,$06,$02 #TEXTTOKEN(#PC)
 W $BCE2,$02 ---
@@ -5062,7 +5631,7 @@ W $BCE2,$02 ---
 L $BCE4,$03,$02
   $BCEA,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BCEB Location $15 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BCEB,$01 light, IN
+  $BCEB,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BCEC,$01 LOCATION_PROP_VOLUME
   $BCED,$06,$02 #TEXTTOKEN(#PC)
 W $BCF3,$02 ---
@@ -5070,7 +5639,7 @@ W $BCF3,$02 ---
 L $BCF5,$03,$02
   $BCFB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BCFC Location $16 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BCFC,$01 light, IN
+  $BCFC,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BCFD,$01 LOCATION_PROP_VOLUME
   $BCFE,$06,$02 #TEXTTOKEN(#PC)
 W $BD04,$02 ---
@@ -5078,7 +5647,7 @@ W $BD04,$02 ---
 L $BD06,$03,$05
   $BD15,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD16 Location $18 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BD16,$01 light, AT
+  $BD16,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BD17,$01 LOCATION_PROP_VOLUME
   $BD18,$06,$02 #TEXTTOKEN(#PC)
 W $BD1E,$02 gate mirkwood
@@ -5086,7 +5655,7 @@ W $BD1E,$02 gate mirkwood
 L $BD20,$03,$03
   $BD29,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD2A Location $19 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BD2A,$01 light, IN
+  $BD2A,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BD2B,$01 LOCATION_PROP_VOLUME
   $BD2C,$06,$02 #TEXTTOKEN(#PC)
 W $BD32,$02 ---
@@ -5094,7 +5663,7 @@ W $BD32,$02 ---
 L $BD34,$03,$03
   $BD3D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD3E Location $1A - "#TEXTTOKEN(#PC + $02, $01)"
-  $BD3E,$01 light, IN
+  $BD3E,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BD3F,$01 LOCATION_PROP_VOLUME
   $BD40,$06,$02 #TEXTTOKEN(#PC)
 W $BD46,$02 place black spider S [16]
@@ -5102,7 +5671,7 @@ W $BD46,$02 place black spider S [16]
 L $BD48,$03,$04
   $BD54,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD55 Location $1B - "#TEXTTOKEN(#PC + $02, $01)"
-  $BD55,$01 light, IN
+  $BD55,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BD56,$01 LOCATION_PROP_VOLUME
   $BD57,$06,$02 #TEXTTOKEN(#PC)
 W $BD5D,$02 forest tangled smothering /3.Person/trees  [16]
@@ -5110,7 +5679,7 @@ W $BD5D,$02 forest tangled smothering /3.Person/trees  [16]
 L $BD5F,$03,$02
   $BD65,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD66 Location $1C - "#TEXTTOKEN(#PC + $02, $01)"
-  $BD66,$01 light, IN
+  $BD66,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BD67,$01 LOCATION_PROP_VOLUME
   $BD68,$06,$02 #TEXTTOKEN(#PC)
 W $BD6E,$02 elvish clearing levelled ground untie logs
@@ -5118,14 +5687,14 @@ W $BD6E,$02 elvish clearing levelled ground untie logs
 L $BD70,$03,$03
   $BD79,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD7A Location $1D - "#TEXTTOKEN(#PC + $02, $01)"
-  $BD7A,$01 light, IN
+  $BD7A,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BD7B,$01 LOCATION_PROP_VOLUME
   $BD7C,$06,$02 #TEXTTOKEN(#PC)
 W $BD82,$02 ---
   $BD84,$03 #MOVEMENT
   $BD87,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD88 Location $1E - "#TEXTTOKEN(#PC + $02, $01)"
-  $BD88,$01 dark, IN
+  $BD88,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BD89,$01 LOCATION_PROP_VOLUME
   $BD8A,$06,$02 #TEXTTOKEN(#PC)
 W $BD90,$02 ---
@@ -5133,7 +5702,7 @@ W $BD90,$02 ---
 L $BD92,$03,$03
   $BD9B,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD9C Location $1F - "#TEXTTOKEN(#PC + $02, $01)"
-  $BD9C,$01 dark, IN
+  $BD9C,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BD9D,$01 LOCATION_PROP_VOLUME
   $BD9E,$06,$02 #TEXTTOKEN(#PC)
 W $BDA4,$02 dark dungeon elvenkings halls
@@ -5141,7 +5710,7 @@ W $BDA4,$02 dark dungeon elvenkings halls
 L $BDA6,$03,$02
   $BDAC,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BDAD Location $20 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BDAD,$01 dark, IN
+  $BDAD,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BDAE,$01 LOCATION_PROP_VOLUME
   $BDAF,$06,$02 #TEXTTOKEN(#PC)
 W $BDB5,$02 cellar where king keeps his barrel Swine
@@ -5149,7 +5718,7 @@ W $BDB5,$02 cellar where king keeps his barrel Swine
 L $BDB7,$03,$03
   $BDC0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BDC1 Location $21 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BDC1,$01 light, AT
+  $BDC1,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BDC2,$01 LOCATION_PROP_VOLUME
   $BDC3,$06,$02 #TEXTTOKEN(#PC)
 W $BDC9,$02 ---
@@ -5157,7 +5726,7 @@ W $BDC9,$02 ---
 L $BDCB,$03,$03
   $BDD4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BDD5 Location $22 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BDD5,$01 light, AT
+  $BDD5,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BDD6,$01 LOCATION_PROP_VOLUME
   $BDD7,$06,$02 #TEXTTOKEN(#PC)
 W $BDDD,$02 ---
@@ -5165,7 +5734,7 @@ W $BDDD,$02 ---
 L $BDDF,$03,$04
   $BDEB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BDEC Location $23 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BDEC,$01 light, IN
+  $BDEC,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BDED,$01 LOCATION_PROP_VOLUME
   $BDEE,$06,$02 #TEXTTOKEN(#PC)
 W $BDF4,$02 wooden town middle long lake
@@ -5173,7 +5742,7 @@ W $BDF4,$02 wooden town middle long lake
 L $BDF6,$03,$04
   $BE02,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE03 Location $24 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BE03,$01 light, ON
+  $BE03,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BE04,$01 LOCATION_PROP_VOLUME
   $BE05,$06,$02 #TEXTTOKEN(#PC)
 W $BE0B,$02 strong river :current climb now strong move against
@@ -5181,7 +5750,7 @@ W $BE0B,$02 strong river :current climb now strong move against
 L $BE0D,$03,$02
   $BE13,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE14 Location $25 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BE14,$01 light, IN
+  $BE14,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BE15,$01 LOCATION_PROP_VOLUME
   $BE16,$06,$02 #TEXTTOKEN(#PC)
 W $BE1C,$02 bleak barren land that was once green
@@ -5189,7 +5758,7 @@ W $BE1C,$02 bleak barren land that was once green
 L $BE1E,$03,$02
   $BE24,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE25 Location $26 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BE25,$01 light, IN
+  $BE25,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BE26,$01 LOCATION_PROP_VOLUME
   $BE27,$06,$02 #TEXTTOKEN(#PC)
 W $BE2D,$02 ruins town dale
@@ -5197,7 +5766,7 @@ W $BE2D,$02 ruins town dale
 L $BE2F,$03,$03
   $BE38,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE39 Location $27 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BE39,$01 light, AT
+  $BE39,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BE3A,$01 LOCATION_PROP_VOLUME
   $BE3B,$06,$02 #TEXTTOKEN(#PC)
 W $BE41,$02 front gate lonely mountain
@@ -5205,7 +5774,7 @@ W $BE41,$02 front gate lonely mountain
 L $BE43,$03,$03
   $BE4C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE4D Location $28 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BE4D,$01 light, ON
+  $BE4D,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BE4E,$01 LOCATION_PROP_VOLUME
   $BE4F,$06,$02 #TEXTTOKEN(#PC)
 W $BE55,$02 west side ravenhill
@@ -5213,7 +5782,7 @@ W $BE55,$02 west side ravenhill
 L $BE57,$03,$03
   $BE60,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE61 Location $29 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BE61,$01 light, IN
+  $BE61,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BE62,$01 LOCATION_PROP_VOLUME
   $BE63,$06,$02 #TEXTTOKEN(#PC)
 W $BE69,$02 halls where /3.Person/sleeps  [16]
@@ -5221,7 +5790,7 @@ W $BE69,$02 halls where /3.Person/sleeps  [16]
 L $BE6B,$03,$03
   $BE74,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE75 Location $2A - "#TEXTTOKEN(#PC + $02, $01)"
-  $BE75,$01 light, IN
+  $BE75,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BE76,$01 LOCATION_PROP_VOLUME
   $BE77,$06,$02 #TEXTTOKEN(#PC)
 W $BE7D,$02 little steep bay ,still untie quiet ,an over hanging cliff
@@ -5229,7 +5798,7 @@ W $BE7D,$02 little steep bay ,still untie quiet ,an over hanging cliff
 L $BE7F,$03,$03
   $BE88,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE89 Location $2B - "#TEXTTOKEN(#PC + $02, $01)"
-  $BE89,$01 dark, IN
+  $BE89,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BE8A,$01 LOCATION_PROP_VOLUME
   $BE8B,$06,$02 #TEXTTOKEN(#PC)
 W $BE91,$02 smooth straight passage
@@ -5237,7 +5806,7 @@ W $BE91,$02 smooth straight passage
 L $BE93,$03,$02
   $BE99,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE9A Location $2C - "#TEXTTOKEN(#PC + $02, $01)"
-  $BE9A,$01 light, ON
+  $BE9A,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BE9B,$01 LOCATION_PROP_VOLUME
   $BE9C,$06,$02 #TEXTTOKEN(#PC)
 W $BEA2,$02 lonely mountain
@@ -5245,7 +5814,7 @@ W $BEA2,$02 lonely mountain
 L $BEA4,$03,$04
   $BEB0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BEB1 Location $2E - "#TEXTTOKEN(#PC + $02, $01)"
-  $BEB1,$01 light, ON
+  $BEB1,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BEB2,$01 LOCATION_PROP_VOLUME
   $BEB3,$06,$02 #TEXTTOKEN(#PC)
 W $BEB9,$02 ---
@@ -5253,7 +5822,7 @@ W $BEB9,$02 ---
 L $BEBB,$03,$02
   $BEC1,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BEC2 Location $2D - "#TEXTTOKEN(#PC + $02, $01)"
-  $BEC2,$01 light, AT
+  $BEC2,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BEC3,$01 LOCATION_PROP_VOLUME
   $BEC4,$06,$02 #TEXTTOKEN(#PC)
 W $BECA,$02 ---
@@ -5261,7 +5830,7 @@ W $BECA,$02 ---
 L $BECC,$03,$02
   $BED2,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BED3 Location $02 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BED3,$01 light, ON
+  $BED3,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BED4,$01 LOCATION_PROP_VOLUME
   $BED5,$06,$02 #TEXTTOKEN(#PC)
 W $BEDB,$02 ---
@@ -5269,7 +5838,7 @@ W $BEDB,$02 ---
 L $BEDD,$03,$02
   $BEE3,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BEE4 Location $03 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BEE4,$01 light, IN
+  $BEE4,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BEE5,$01 LOCATION_PROP_VOLUME
   $BEE6,$06,$02 #TEXTTOKEN(#PC)
 W $BEEC,$02 ---
@@ -5277,7 +5846,7 @@ W $BEEC,$02 ---
 L $BEEE,$03,$02
   $BEF4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BEF5 Location $08 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BEF5,$01 light, AT
+  $BEF5,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BEF6,$01 LOCATION_PROP_VOLUME
   $BEF7,$06,$02 #TEXTTOKEN(#PC)
 W $BEFD,$02 ---
@@ -5285,7 +5854,7 @@ W $BEFD,$02 ---
 L $BEFF,$03,$02
   $BF05,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF06 Location $17 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BF06,$01 light, AT
+  $BF06,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BF07,$01 LOCATION_PROP_VOLUME
   $BF08,$06,$02 #TEXTTOKEN(#PC)
 W $BF0E,$02 ---
@@ -5293,7 +5862,7 @@ W $BF0E,$02 ---
 L $BF10,$03,$02
   $BF16,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF17 Location $30 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BF17,$01 light, ON
+  $BF17,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BF18,$01 LOCATION_PROP_VOLUME
   $BF19,$06,$02 #TEXTTOKEN(#PC)
 W $BF1F,$02 ---
@@ -5301,7 +5870,7 @@ W $BF1F,$02 ---
 L $BF21,$03,$03
   $BF2A,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF2B Location $31 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BF2B,$01 light, AT
+  $BF2B,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BF2C,$01 LOCATION_PROP_VOLUME
   $BF2D,$06,$02 #TEXTTOKEN(#PC)
 W $BF33,$02 ---
@@ -5309,13 +5878,13 @@ W $BF33,$02 ---
 L $BF35,$03,$04
   $BF41,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF42 Location $2F - "#TEXTTOKEN(#PC + $02, $01)"
-  $BF42,$01 light, IN
+  $BF42,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BF43,$01 LOCATION_PROP_VOLUME
   $BF44,$06,$02 #TEXTTOKEN(#PC)
 W $BF4A,$02 ---
   $BF4C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF4D Location $32 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BF4D,$01 light, IN
+  $BF4D,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BF4E,$01 LOCATION_PROP_VOLUME
   $BF4F,$06,$02 #TEXTTOKEN(#PC)
 W $BF55,$02 ---
@@ -5323,7 +5892,7 @@ W $BF55,$02 ---
 L $BF57,$03,$02
   $BF5D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF5E Location $33 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BF5E,$01 light, IN
+  $BF5E,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BF5F,$01 LOCATION_PROP_VOLUME
   $BF60,$06,$02 #TEXTTOKEN(#PC)
 W $BF66,$02 ---
@@ -5331,7 +5900,7 @@ W $BF66,$02 ---
 L $BF68,$03,$03
   $BF71,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF72 Location $42 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BF72,$01 light, ON
+  $BF72,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BF73,$01 LOCATION_PROP_VOLUME
   $BF74,$06,$02 #TEXTTOKEN(#PC)
 W $BF7A,$02 west  [02] [04]east bank black river
@@ -5339,7 +5908,7 @@ W $BF7A,$02 west  [02] [04]east bank black river
 L $BF7C,$03,$02
   $BF82,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF83 Location $43 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BF83,$01 light, ON
+  $BF83,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BF84,$01 LOCATION_PROP_VOLUME
   $BF85,$06,$02 #TEXTTOKEN(#PC)
 W $BF8B,$02 east bank black river
@@ -5347,7 +5916,7 @@ W $BF8B,$02 east bank black river
 L $BF8D,$03,$02
   $BF93,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF94 Location $44 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BF94,$01 light, ON
+  $BF94,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BF95,$01 LOCATION_PROP_VOLUME
   $BF96,$06,$02 #TEXTTOKEN(#PC)
 W $BF9C,$02 ---
@@ -5355,7 +5924,7 @@ W $BF9C,$02 ---
 L $BF9E,$03,$03
   $BFA7,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BFA8 Location $45 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BFA8,$01 light, ON
+  $BFA8,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BFA9,$01 LOCATION_PROP_VOLUME
   $BFAA,$06,$02 #TEXTTOKEN(#PC)
 W $BFB0,$02 ---
@@ -5363,7 +5932,7 @@ W $BFB0,$02 ---
 L $BFB2,$03,$03
   $BFBB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BFBC Location $46 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BFBC,$01 light, ON
+  $BFBC,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BFBD,$01 LOCATION_PROP_VOLUME
   $BFBE,$06,$02 #TEXTTOKEN(#PC)
 W $BFC4,$02 ---
@@ -5371,7 +5940,7 @@ W $BFC4,$02 ---
 L $BFC6,$03,$02
   $BFCC,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BFCD Location $47 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BFCD,$01 light, ON
+  $BFCD,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BFCE,$01 LOCATION_PROP_VOLUME
   $BFCF,$06,$02 #TEXTTOKEN(#PC)
 W $BFD5,$02 ---
@@ -5379,7 +5948,7 @@ W $BFD5,$02 ---
 L $BFD7,$03,$03
   $BFE0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BFE1 Location $48 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BFE1,$01 light, ON
+  $BFE1,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BFE2,$01 LOCATION_PROP_VOLUME
   $BFE3,$06,$02 #TEXTTOKEN(#PC)
 W $BFE9,$02 ---
@@ -5387,7 +5956,7 @@ W $BFE9,$02 ---
 L $BFEB,$03,$03
   $BFF4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BFF5 Location $49 - "#TEXTTOKEN(#PC + $02, $01)"
-  $BFF5,$01 light, ON
+  $BFF5,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BFF6,$01 LOCATION_PROP_VOLUME
   $BFF7,$06,$02 #TEXTTOKEN(#PC)
 W $BFFD,$02 ---
@@ -5395,7 +5964,7 @@ W $BFFD,$02 ---
 L $BFFF,$03,$02
   $C005,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C006 Location $4A - "#TEXTTOKEN(#PC + $02, $01)"
-  $C006,$01 light, ON
+  $C006,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $C007,$01 LOCATION_PROP_VOLUME
   $C008,$06,$02 #TEXTTOKEN(#PC)
 W $C00E,$02 ---
@@ -5403,28 +5972,28 @@ W $C00E,$02 ---
 L $C010,$03,$02
   $C016,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C017 Location $4B - "#TEXTTOKEN(#PC + $02, $01)"
-  $C017,$01 light, ON
+  $C017,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $C018,$01 LOCATION_PROP_VOLUME
   $C019,$06,$02 #TEXTTOKEN(#PC)
 W $C01F,$02 ---
   $C021,$03 #MOVEMENT
   $C024,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C025 Location $4C - "#TEXTTOKEN(#PC + $02, $01)"
-  $C025,$01 light, ON
+  $C025,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $C026,$01 LOCATION_PROP_VOLUME
   $C027,$06,$02 #TEXTTOKEN(#PC)
 W $C02D,$02 ---
   $C02F,$03 #MOVEMENT
   $C032,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C033 Location $4D - "#TEXTTOKEN(#PC + $02, $01)"
-  $C033,$01 light, ON
+  $C033,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $C034,$01 LOCATION_PROP_VOLUME
   $C035,$06,$02 #TEXTTOKEN(#PC)
 W $C03B,$02 ---
   $C03D,$03 #MOVEMENT
   $C040,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C041 Location $4E - "#TEXTTOKEN(#PC + $02, $01)"
-  $C041,$01 light, IN
+  $C041,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $C042,$01 LOCATION_PROP_VOLUME
   $C043,$06,$02 #TEXTTOKEN(#PC)
 W $C049,$02 ---
@@ -5432,7 +6001,7 @@ W $C049,$02 ---
 L $C04B,$03,$02
   $C051,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C052 Location $4F - "#TEXTTOKEN(#PC + $02, $01)"
-  $C052,$01 light, IN
+  $C052,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $C053,$01 LOCATION_PROP_VOLUME
   $C054,$06,$02 #TEXTTOKEN(#PC)
 W $C05A,$02 ---
@@ -5461,8 +6030,8 @@ N $C11B Object $00 - "#TEXTTOKEN(#PC + $08, 1)"
   $C121,$01
   $C122,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C123,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C129,$02 Help Message (none).
@@ -5479,8 +6048,8 @@ N $C133 Object $3C - "#TEXTTOKEN(#PC + $08, 1)"
   $C139,$01
   $C13A,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C13B,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C141,$02 Help Message (none).
@@ -5496,8 +6065,8 @@ N $C145 Object $05 - "#TEXTTOKEN(#PC + $08, 1)"
   $C14B,$01
   $C14C,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C14D,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C153,$02 Help Message (none).
@@ -5515,8 +6084,8 @@ N $C170 Object $01 - "#TEXTTOKEN(#PC + $08, 1)"
   $C176,$01
   $C177,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C178,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C17E,$02 Help Message (none).
@@ -5534,8 +6103,8 @@ N $C19B Object $2B - "#TEXTTOKEN(#PC + $08, 1)"
   $C1A1,$01
   $C1A2,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C1A3,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C1A9,$02 Help Message (none).
@@ -5551,8 +6120,8 @@ N $C1AD Object $02 - "#TEXTTOKEN(#PC + $08, 1)"
   $C1B3,$01
   $C1B4,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C1B5,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C1BB,$02 Help Message (none).
@@ -5568,8 +6137,8 @@ N $C1BF Object $04 - "#TEXTTOKEN(#PC + $08, 1)"
   $C1C5,$01
   $C1C6,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C1C7,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C1CD,$02 Help Message (none).
@@ -5585,8 +6154,8 @@ N $C1D1 Object $03 - "#TEXTTOKEN(#PC + $08, 1)"
   $C1D7,$01
   $C1D8,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C1D9,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C1DF,$02 Help Message (#R(#EVAL(#PEEK(#PC)+#PEEK(#PC+1)*256))).
@@ -5602,8 +6171,8 @@ N $C1E6 Object $06 - "#TEXTTOKEN(#PC + $08, 1)"
   $C1EC,$01
   $C1ED,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C1EE,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C1F4,$02 Help Message (none).
@@ -5620,8 +6189,8 @@ N $C205 Object $07 - "#TEXTTOKEN(#PC + $08, 1)"
   $C20B,$01
   $C20C,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C20D,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C213,$02 Help Message (none).
@@ -5641,8 +6210,8 @@ N $C224 Object $08 - "#TEXTTOKEN(#PC + $08, 1)"
   $C22A,$01
   $C22B,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C22C,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C232,$02 Help Message (none).
@@ -5660,8 +6229,8 @@ N $C24D Object $09 - "#TEXTTOKEN(#PC + $08, 1)"
   $C253,$01
   $C254,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C255,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C25B,$02 Help Message (#R(#EVAL(#PEEK(#PC) + #PEEK(#PC + 1) * 256))).
@@ -5679,8 +6248,8 @@ N $C26D Object $2A - "#TEXTTOKEN(#PC + $08, 1)"
   $C273,$01
   $C274,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C275,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C27B,$02 Help Message (none).
@@ -5698,8 +6267,8 @@ N $C28D Object $0A - "#TEXTTOKEN(#PC + $08, 1)"
   $C293,$01
   $C294,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C295,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C29B,$02 Help Message (none).
@@ -5716,8 +6285,8 @@ N $C2B5 Object $0B - "#TEXTTOKEN(#PC + $08, 1)"
   $C2BB,$01
   $C2BC,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C2BD,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C2C3,$02 Help Message (none).
@@ -5734,8 +6303,8 @@ N $C2DD Object $0C - "#TEXTTOKEN(#PC + $08, 1)"
   $C2E3,$01
   $C2E4,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C2E5,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C2EB,$02 Help Message (none).
@@ -5752,8 +6321,8 @@ N $C305 Object $0E - "#TEXTTOKEN(#PC + $08, 1)"
   $C30B,$01
   $C30C,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C30D,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C313,$02 Help Message (none).
@@ -5769,8 +6338,8 @@ N $C31A Object $10 - "#TEXTTOKEN(#PC + $08, 1)"
   $C320,$01
   $C321,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C322,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C328,$02 Help Message (none).
@@ -5786,8 +6355,8 @@ N $C332 Object $0F - "#TEXTTOKEN(#PC + $08, 1)"
   $C338,$01
   $C339,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C33A,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C340,$02 Help Message (none).
@@ -5803,8 +6372,8 @@ N $C344 Object $11 - "#TEXTTOKEN(#PC + $08, 1)"
   $C34A,$01
   $C34B,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C34C,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C352,$02 Help Message (none).
@@ -5821,8 +6390,8 @@ N $C366 Object $12 - "#TEXTTOKEN(#PC + $08, 1)"
   $C36C,$01
   $C36D,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C36E,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C374,$02 Help Message (none).
@@ -5838,8 +6407,8 @@ N $C381 Object $0D - "#TEXTTOKEN(#PC + $08, 1)"
   $C387,$01
   $C388,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C389,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C38F,$02 Help Message (none).
@@ -5856,8 +6425,8 @@ N $C3A0 Object $3E - "#TEXTTOKEN(#PC + $08, 1)"
   $C3A6,$01
   $C3A7,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C3A8,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C3AE,$02 Help Message (none).
@@ -5873,8 +6442,8 @@ N $C3B2 Object $3F - "#TEXTTOKEN(#PC + $08, 1)"
   $C3B8,$01
   $C3B9,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C3BA,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C3C0,$02 Help Message (none).
@@ -5890,8 +6459,8 @@ N $C3CA Object $40 - "#TEXTTOKEN(#PC + $08, 1)"
   $C3D0,$01
   $C3D1,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C3D2,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C3D8,$02 Help Message (none).
@@ -5907,8 +6476,8 @@ N $C3DC Object $41 - "#TEXTTOKEN(#PC + $08, 1)"
   $C3E2,$01
   $C3E3,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C3E4,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C3EA,$02 Help Message (none).
@@ -5924,8 +6493,8 @@ N $C3EE Object $13 - "#TEXTTOKEN(#PC + $08, 1)"
   $C3F4,$01
   $C3F5,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C3F6,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C3FC,$02 Help Message (none).
@@ -5941,8 +6510,8 @@ N $C418 Object $14 - "#TEXTTOKEN(#PC + $08, 1)"
   $C41E,$01
   $C41F,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C420,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C426,$02 Help Message (none).
@@ -5958,8 +6527,8 @@ N $C430 Object $42 - "#TEXTTOKEN(#PC + $08, 1)"
   $C436,$01
   $C437,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C438,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C43E,$02 Help Message (none).
@@ -5975,8 +6544,8 @@ N $C442 Object $43 - "#TEXTTOKEN(#PC + $08, 1)"
   $C448,$01
   $C449,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C44A,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C450,$02 Help Message (none).
@@ -5992,8 +6561,8 @@ N $C454 Object $15 - "#TEXTTOKEN(#PC + $08, 1)"
   $C45A,$01
   $C45B,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C45C,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C462,$02 Help Message (none).
@@ -6009,8 +6578,8 @@ N $C469 Object $16 - "#TEXTTOKEN(#PC + $08, 1)"
   $C46F,$01
   $C470,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C471,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C477,$02 Help Message (none).
@@ -6026,8 +6595,8 @@ N $C47E Object $17 - "#TEXTTOKEN(#PC + $08, 1)"
   $C484,$01
   $C485,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C486,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C48C,$02 Help Message (none).
@@ -6050,8 +6619,8 @@ N $C49A Object $18 - "#TEXTTOKEN(#PC + $08, 1)"
   $C4A0,$01
   $C4A1,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C4A2,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C4A8,$02 Help Message (none).
@@ -6069,8 +6638,8 @@ N $C4B1 Object $44 - "#TEXTTOKEN(#PC + $08, 1)"
   $C4B7,$01
   $C4B8,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C4B9,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C4BF,$02 Help Message (none).
@@ -6086,8 +6655,8 @@ N $C4C3 Object $46 - "#TEXTTOKEN(#PC + $08, 1)"
   $C4C9,$01
   $C4CA,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C4CB,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C4D1,$02 Help Message (none).
@@ -6103,8 +6672,8 @@ N $C4D5 Object $19 - "#TEXTTOKEN(#PC + $08, 1)"
   $C4DB,$01
   $C4DC,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C4DD,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C4E3,$02 Help Message (none).
@@ -6120,8 +6689,8 @@ N $C4EA Object $1A - "#TEXTTOKEN(#PC + $08, 1)"
   $C4F0,$01
   $C4F1,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C4F2,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C4F8,$02 Help Message (none).
@@ -6137,8 +6706,8 @@ N $C4FF Object $1B - "#TEXTTOKEN(#PC + $08, 1)"
   $C505,$01
   $C506,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C507,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C50D,$02 Help Message (none).
@@ -6155,8 +6724,8 @@ N $C521 Object $1C - "#TEXTTOKEN(#PC + $08, 1)"
   $C527,$01
   $C528,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C529,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C52F,$02 Help Message (none).
@@ -6173,8 +6742,8 @@ N $C534 Object $1D - "#TEXTTOKEN(#PC + $08, 1)"
   $C53A,$01
   $C53B,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C53C,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C542,$02 Help Message (none).
@@ -6190,8 +6759,8 @@ N $C54C Object $1E - "#TEXTTOKEN(#PC + $08, 1)"
   $C552,$01
   $C553,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C554,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C55A,$02 Help Message (none).
@@ -6207,8 +6776,8 @@ N $C567 Object $1F - "#TEXTTOKEN(#PC + $08, 1)"
   $C56D,$01
   $C56E,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C56F,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C575,$02 Help Message (none).
@@ -6224,8 +6793,8 @@ N $C57F Object $20 - "#TEXTTOKEN(#PC + $08, 1)"
   $C585,$01
   $C586,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C587,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C58D,$02 Help Message (none).
@@ -6241,8 +6810,8 @@ N $C597 Object $21 - "#TEXTTOKEN(#PC + $08, 1)"
   $C59D,$01
   $C59E,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C59F,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C5A5,$02 Help Message (none).
@@ -6258,8 +6827,8 @@ N $C5B8 Object $22 - "#TEXTTOKEN(#PC + $08, 1)"
   $C5BE,$01
   $C5BF,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C5C0,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C5C6,$02 Help Message (none).
@@ -6275,8 +6844,8 @@ N $C5CD Object $23 - "#TEXTTOKEN(#PC + $08, 1)"
   $C5D3,$01
   $C5D4,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C5D5,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C5DB,$02 Help Message (none).
@@ -6292,8 +6861,8 @@ N $C5DF Object $24 - "#TEXTTOKEN(#PC + $08, 1)"
   $C5E5,$01
   $C5E6,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C5E7,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C5ED,$02 Help Message (none).
@@ -6309,8 +6878,8 @@ N $C5F4 Object $25 - "#TEXTTOKEN(#PC + $08, 1)"
   $C5FA,$01
   $C5FB,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C5FC,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C602,$02 Help Message (none).
@@ -6326,8 +6895,8 @@ N $C61B Object $29 - "#TEXTTOKEN(#PC + $08, 1)"
   $C621,$01
   $C622,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C623,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C629,$02 Help Message (none).
@@ -6343,8 +6912,8 @@ N $C63F Object $47 - "#TEXTTOKEN(#PC + $08, 1)"
   $C645,$01
   $C646,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C647,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C64D,$02 Help Message (none).
@@ -6360,8 +6929,8 @@ N $C651 Object $48 - "#TEXTTOKEN(#PC + $08, 1)"
   $C657,$01
   $C658,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C659,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C65F,$02 Help Message (none).
@@ -6377,8 +6946,8 @@ N $C663 Object $26 - "#TEXTTOKEN(#PC + $08, 1)"
   $C669,$01
   $C66A,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C66B,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C671,$02 Help Message (none).
@@ -6394,8 +6963,8 @@ N $C678 Object $27 - "#TEXTTOKEN(#PC + $08, 1)"
   $C67E,$01
   $C67F,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C680,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C686,$02 Help Message (none).
@@ -6412,8 +6981,8 @@ N $C68E Object $28 - "#TEXTTOKEN(#PC + $08, 1)"
   $C694,$01
   $C695,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C696,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C69C,$02 Help Message (none).
@@ -6429,8 +6998,8 @@ N $C6A0 Object $3D - "#TEXTTOKEN(#PC + $08, 1)"
   $C6A6,$01
   $C6A7,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C6A8,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C6AE,$02 Help Message (none).
@@ -6446,8 +7015,8 @@ N $C6B8 Object $45 - "#TEXTTOKEN(#PC + $08, 1)"
   $C6BE,$01
   $C6BF,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C6C0,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C6C6,$02 Help Message (none).
@@ -6463,8 +7032,8 @@ N $C6D0 Object $49 - "#TEXTTOKEN(#PC + $08, 1)"
   $C6D6,$01
   $C6D7,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C6D8,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C6DE,$02 Help Message (none).
@@ -6480,8 +7049,8 @@ N $C6E8 Object $4A - "#TEXTTOKEN(#PC + $08, 1)"
   $C6EE,$01
   $C6EF,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C6F0,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C6F6,$02 Help Message (none).
@@ -6497,8 +7066,8 @@ N $C700 Object $4B - "#TEXTTOKEN(#PC + $08, 1)"
   $C706,$01
   $C707,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C708,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C70E,$02 Help Message (none).
@@ -6514,8 +7083,8 @@ N $C718 Object $4C - "#TEXTTOKEN(#PC + $08, 1)"
   $C71E,$01
   $C71F,b Attributes:
 . #TABLE(default,centre,centre,centre,centre,centre,centre,centre,centre)
-. { =h Locked | =h Fluid | =h Full | =h Broken | =h Gives Light | =h Open | =h Animal | =h Visible }
-. { #IF(#PEEK(#PC) & 0 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 7)(yes,no) }
+. { =h Visible | =h Animal | =h Open | =h Gives Light | =h Broken | =h Full | =h Fluid | =h Locked }
+. { #IF(#PEEK(#PC) & 1 << 7)(yes,no) | #IF(#PEEK(#PC) & 1 << 6)(yes,no) | #IF(#PEEK(#PC) & 1 << 5)(yes,no) | #IF(#PEEK(#PC) & 1 << 4)(yes,no) | #IF(#PEEK(#PC) & 1 << 3)(yes,no) | #IF(#PEEK(#PC) & 1 << 2)(yes,no) | #IF(#PEEK(#PC) & 1 << 1)(yes,no) | #IF(#PEEK(#PC) & 1 << 0)(yes,no) }
 . TABLE#
   $C720,$06,$02 Object Name: "#TEXTTOKEN(#PC)".
 W $C726,$02 Help Message (none).
@@ -6635,6 +7204,11 @@ c $C7EA
   $C7F6,$03 Call #R$72DD.
 
 b $C7FC
+  $CA53,$29
+  $CA7C,$4F
+  $CACB,$77,$07
+  $CB42,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+  $CB43
 
 b $CC00 Location Graphics Table
 @ $CC00 label=LocGFXTable
