@@ -19,13 +19,13 @@
 <td class="prev">
 Prev: <a href="33971.html">84B3</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#33977">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#84b9">Map</a></td>
 <td class="next">
 Next: <a href="33996.html">84CC</a>
 </td>
 </tr>
 </table>
-<div class="description">84B9: Routine at 84B9</div>
+<div class="description">84B9: Debounce keyboard</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -37,59 +37,66 @@ Used by the routines at <a href="33775.html">GameOver</a> and <a href="33996.htm
 </td>
 </tr>
 <tr>
-<td class="address-2"><span id="33977"></span>84B9</td>
+<td class="asm-label">DebounceAnyKey</td>
+<td class="address-2"><span id="84b9"></span>84B9</td>
 <td class="instruction">XOR A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Read from the keyboard port.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="33978"></span>84BA</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84ba"></span>84BA</td>
 <td class="instruction">IN A,($FE)</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address-1"><span id="33980"></span>84BC</td>
-<td class="instruction">AND $1F</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84bc"></span>84BC</td>
+<td class="instruction">AND %00011111</td>
+<td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="33982"></span>84BE</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84be"></span>84BE</td>
 <td class="instruction">CP $1F</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Loop back to <a href="33977.html">DebounceAnyKey</a> if a key is being pressed.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="33984"></span>84C0</td>
-<td class="instruction">JR NZ,$84B9</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84c0"></span>84C0</td>
+<td class="instruction">JR NZ,<a href="33977.html#84b9">DebounceAnyKey</a></td>
 </tr>
 <tr>
-<td class="address-2"><span id="33986"></span>84C2</td>
+<td class="asm-label">NormalAnyKey</td>
+<td class="address-2"><span id="84c2"></span>84C2</td>
 <td class="instruction">XOR A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Read from the keyboard port.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="33987"></span>84C3</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84c3"></span>84C3</td>
 <td class="instruction">IN A,($FE)</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address-1"><span id="33989"></span>84C5</td>
-<td class="instruction">AND $1F</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84c5"></span>84C5</td>
+<td class="instruction">AND %00011111</td>
+<td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="33991"></span>84C7</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84c7"></span>84C7</td>
 <td class="instruction">CP $1F</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Loop back to <a href="33977.html#84c2">NormalAnyKey</a> until any key has been pressed.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="33993"></span>84C9</td>
-<td class="instruction">JR Z,$84C2</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84c9"></span>84C9</td>
+<td class="instruction">JR Z,<a href="33977.html#84c2">NormalAnyKey</a></td>
 </tr>
 <tr>
-<td class="address-1"><span id="33995"></span>84CB</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84cb"></span>84CB</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -97,7 +104,7 @@ Used by the routines at <a href="33775.html">GameOver</a> and <a href="33996.htm
 <td class="prev">
 Prev: <a href="33971.html">84B3</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#33977">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#84b9">Map</a></td>
 <td class="next">
 Next: <a href="33996.html">84CC</a>
 </td>

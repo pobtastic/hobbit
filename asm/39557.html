@@ -19,7 +19,7 @@
 <td class="prev">
 Prev: <a href="38579.html">96B3</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#39557">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#9a85">Map</a></td>
 <td class="next">
 Next: <a href="39629.html">9ACD</a>
 </td>
@@ -46,87 +46,87 @@ Used by the routines at <a href="36916.html">Action_Talkto</a> and <a href="3857
 </td>
 </tr>
 <tr>
-<td class="address-2"><span id="39557"></span>9A85</td>
+<td class="address-2"><span id="9a85"></span>9A85</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">DE</span> and <span class="register">BC</span> on the stack.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39558"></span>9A86</td>
+<td class="address-1"><span id="9a86"></span>9A86</td>
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39559"></span>9A87</td>
+<td class="address-1"><span id="9a87"></span>9A87</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span> (search key).</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39560"></span>9A88</td>
+<td class="address-1"><span id="9a88"></span>9A88</td>
 <td class="instruction">LD HL,$CACB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="51196.html#51915">CACB</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="51196.html#cacb">CACB</a>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39563"></span>9A8B</td>
+<td class="address-1"><span id="9a8b"></span>9A8B</td>
 <td class="instruction">LD DE,$0007</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=$0007.</td>
 </tr>
 <tr>
-<td class="address-2"><span id="39566"></span>9A8E</td>
+<td class="address-2"><span id="9a8e"></span>9A8E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">If the current pointer matches our key jump to <a href="39557.html#39578">9A9A</a>.</td>
+<td class="comment-1" rowspan="3">If the current pointer matches our key jump to <a href="39557.html#9a9a">9A9A</a>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39567"></span>9A8F</td>
+<td class="address-1"><span id="9a8f"></span>9A8F</td>
 <td class="instruction">CP B</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39568"></span>9A90</td>
+<td class="address-1"><span id="9a90"></span>9A90</td>
 <td class="instruction">JR Z,$9A9A</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39570"></span>9A92</td>
+<td class="address-1"><span id="9a92"></span>9A92</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-1" rowspan="2">If we've reached the termination character then jump to <a href="39557.html#39578">9A9A</a>.</td>
+<td class="comment-1" rowspan="2">If we've reached the termination character then jump to <a href="39557.html#9a9a">9A9A</a>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39572"></span>9A94</td>
+<td class="address-1"><span id="9a94"></span>9A94</td>
 <td class="instruction">JR Z,$9A9A</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39574"></span>9A96</td>
+<td class="address-1"><span id="9a96"></span>9A96</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-1" rowspan="1">Increase the pointer address by $0007 (using <span class="register">DE</span>).</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39575"></span>9A97</td>
+<td class="address-1"><span id="9a97"></span>9A97</td>
 <td class="instruction">JP $9A8E</td>
-<td class="comment-1" rowspan="1">Jump to <a href="39557.html#39566">9A8E</a>.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="39557.html#9a8e">9A8E</a>.</td>
 </tr>
 <tr>
-<td class="address-2"><span id="39578"></span>9A9A</td>
+<td class="address-2"><span id="9a9a"></span>9A9A</td>
 <td class="instruction">POP BC</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">BC</span> and <span class="register">DE</span> from the stack.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39579"></span>9A9B</td>
+<td class="address-1"><span id="9a9b"></span>9A9B</td>
 <td class="instruction">POP DE</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39580"></span>9A9C</td>
+<td class="address-1"><span id="9a9c"></span>9A9C</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="2"><span class="register">IY</span>=<span class="register">HL</span>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39581"></span>9A9D</td>
+<td class="address-1"><span id="9a9d"></span>9A9D</td>
 <td class="instruction">POP IY</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39583"></span>9A9F</td>
+<td class="address-1"><span id="9a9f"></span>9A9F</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="39584"></span>
+<span id="9aa0"></span>
 <div class="comments">
 <div class="paragraph">
 This entry point is used by the routines at <a href="37850.html">Action_Examine</a> and <a href="38579.html">96B3</a>.
@@ -135,93 +135,93 @@ This entry point is used by the routines at <a href="37850.html">Action_Examine<
 </td>
 </tr>
 <tr>
-<td class="address-2"><span id="39584"></span>9AA0</td>
+<td class="address-2"><span id="9aa0"></span>9AA0</td>
 <td class="instruction">PUSH IY</td>
 <td class="comment-1" rowspan="2">Store <span class="register">IY</span> and <span class="register">IX</span> on the stack.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39586"></span>9AA2</td>
+<td class="address-1"><span id="9aa2"></span>9AA2</td>
 <td class="instruction">PUSH IX</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39588"></span>9AA4</td>
+<td class="address-1"><span id="9aa4"></span>9AA4</td>
 <td class="instruction">CALL $9A85</td>
 <td class="comment-1" rowspan="1">Call <a href="39557.html">9A85</a>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39591"></span>9AA7</td>
+<td class="address-1"><span id="9aa7"></span>9AA7</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-1" rowspan="2">Jump to <a href="39557.html#39624">9AC8</a> if the termination character was reached.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="39557.html#9ac8">9AC8</a> if the termination character was reached.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39593"></span>9AA9</td>
+<td class="address-1"><span id="9aa9"></span>9AA9</td>
 <td class="instruction">JR Z,$9AC8</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39595"></span>9AAB</td>
+<td class="address-1"><span id="9aab"></span>9AAB</td>
 <td class="instruction">LD L,(IY+$04)</td>
 <td class="comment-1" rowspan="2"><span class="register">HL</span>=</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39598"></span>9AAE</td>
+<td class="address-1"><span id="9aae"></span>9AAE</td>
 <td class="instruction">LD H,(IY+$05)</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39601"></span>9AB1</td>
+<td class="address-1"><span id="9ab1"></span>9AB1</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="2"><span class="register">IX</span>=<span class="register">HL</span>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39602"></span>9AB2</td>
+<td class="address-1"><span id="9ab2"></span>9AB2</td>
 <td class="instruction">POP IX</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39604"></span>9AB4</td>
+<td class="address-1"><span id="9ab4"></span>9AB4</td>
 <td class="instruction">LD A,B</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address-1"><span id="39605"></span>9AB5</td>
+<td class="address-1"><span id="9ab5"></span>9AB5</td>
 <td class="instruction">CALL <a href="40381.html">IndexIdTable</a></td>
 <td class="comment-1" rowspan="1">Call <a href="40381.html">IndexIdTable</a>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39608"></span>9AB8</td>
+<td class="address-1"><span id="9ab8"></span>9AB8</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-1" rowspan="2">Jump to <a href="39557.html#39624">9AC8</a> if the termination character was reached.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="39557.html#9ac8">9AC8</a> if the termination character was reached.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39610"></span>9ABA</td>
+<td class="address-1"><span id="9aba"></span>9ABA</td>
 <td class="instruction">JR Z,$9AC8</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39612"></span>9ABC</td>
+<td class="address-1"><span id="9abc"></span>9ABC</td>
 <td class="instruction">LD L,(IX+$01)</td>
 <td class="comment-1" rowspan="4">Store ... TODO</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39615"></span>9ABF</td>
+<td class="address-1"><span id="9abf"></span>9ABF</td>
 <td class="instruction">LD H,(IX+$02)</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39618"></span>9AC2</td>
+<td class="address-1"><span id="9ac2"></span>9AC2</td>
 <td class="instruction">LD (IY+$02),L</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39621"></span>9AC5</td>
+<td class="address-1"><span id="9ac5"></span>9AC5</td>
 <td class="instruction">LD (IY+$03),H</td>
 </tr>
 <tr>
-<td class="address-2"><span id="39624"></span>9AC8</td>
+<td class="address-2"><span id="9ac8"></span>9AC8</td>
 <td class="instruction">POP IX</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">IX</span> and <span class="register">IY</span> from the stack.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39626"></span>9ACA</td>
+<td class="address-1"><span id="9aca"></span>9ACA</td>
 <td class="instruction">POP IY</td>
 </tr>
 <tr>
-<td class="address-1"><span id="39628"></span>9ACC</td>
+<td class="address-1"><span id="9acc"></span>9ACC</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
@@ -231,7 +231,7 @@ This entry point is used by the routines at <a href="37850.html">Action_Examine<
 <td class="prev">
 Prev: <a href="38579.html">96B3</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#39557">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#9a85">Map</a></td>
 <td class="next">
 Next: <a href="39629.html">9ACD</a>
 </td>

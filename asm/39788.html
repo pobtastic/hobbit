@@ -19,7 +19,7 @@
 <td class="prev">
 Prev: <a href="39702.html">9B16</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#39788">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#9b6c">Map</a></td>
 <td class="next">
 Next: <a href="39809.html">9B81</a>
 </td>
@@ -34,85 +34,94 @@ Next: <a href="39809.html">9B81</a>
 Used by the routines at <a href="36253.html">Action_Dir</a>, <a href="37850.html">Action_Examine</a>, <a href="38579.html">96B3</a> and <a href="40778.html">9F4A</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Pointer to the action code</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="asm-label">TriggerAction</td>
-<td class="address-2"><span id="39788"></span>9B6C</td>
+<td class="address-2"><span id="9b6c"></span>9B6C</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="5">Stash <span class="register">IX</span>, <span class="register">IY</span>, <span class="register">DE</span>, <span class="register">BC</span> and <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39790"></span>9B6E</td>
+<td class="address-1"><span id="9b6e"></span>9B6E</td>
 <td class="instruction">PUSH IY</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39792"></span>9B70</td>
+<td class="address-1"><span id="9b70"></span>9B70</td>
 <td class="instruction">PUSH DE</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39793"></span>9B71</td>
+<td class="address-1"><span id="9b71"></span>9B71</td>
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39794"></span>9B72</td>
+<td class="address-1"><span id="9b72"></span>9B72</td>
 <td class="instruction">PUSH HL</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39795"></span>9B73</td>
+<td class="address-1"><span id="9b73"></span>9B73</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-1" rowspan="3">Call <a href="39788.html#39808">TriggerAction_Jump</a> if <span class="register">HL</span> is not empty (i.e. $0000).</td>
+<td class="comment-1" rowspan="3">Call <a href="39788.html#9b80">TriggerAction_Jump</a> if <span class="register">HL</span> is not empty (i.e. $0000).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39796"></span>9B74</td>
+<td class="address-1"><span id="9b74"></span>9B74</td>
 <td class="instruction">OR H</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39797"></span>9B75</td>
-<td class="instruction">CALL NZ,<a href="39788.html#39808">TriggerAction_Jump</a></td>
+<td class="address-1"><span id="9b75"></span>9B75</td>
+<td class="instruction">CALL NZ,<a href="39788.html#9b80">TriggerAction_Jump</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39800"></span>9B78</td>
+<td class="address-1"><span id="9b78"></span>9B78</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="5">Restore <span class="register">HL</span>, <span class="register">BC</span>, <span class="register">DE</span>, <span class="register">IY</span> and <span class="register">IX</span> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39801"></span>9B79</td>
+<td class="address-1"><span id="9b79"></span>9B79</td>
 <td class="instruction">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39802"></span>9B7A</td>
+<td class="address-1"><span id="9b7a"></span>9B7A</td>
 <td class="instruction">POP DE</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39803"></span>9B7B</td>
+<td class="address-1"><span id="9b7b"></span>9B7B</td>
 <td class="instruction">POP IY</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39805"></span>9B7D</td>
+<td class="address-1"><span id="9b7d"></span>9B7D</td>
 <td class="instruction">POP IX</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="39807"></span>9B7F</td>
+<td class="address-1"><span id="9b7f"></span>9B7F</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="asm-label">TriggerAction_Jump</td>
-<td class="address-2"><span id="39808"></span>9B80</td>
+<td class="address-2"><span id="9b80"></span>9B80</td>
 <td class="instruction">JP (HL)</td>
 <td class="comment-1" rowspan="1">Indirect jump to the address held in <span class="register">HL</span>.</td>
 </tr>
@@ -122,7 +131,7 @@ Used by the routines at <a href="36253.html">Action_Dir</a>, <a href="37850.html
 <td class="prev">
 Prev: <a href="39702.html">9B16</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#39788">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#9b6c">Map</a></td>
 <td class="next">
 Next: <a href="39809.html">9B81</a>
 </td>

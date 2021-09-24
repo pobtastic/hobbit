@@ -19,7 +19,7 @@
 <td class="prev">
 Prev: <a href="33459.html">82B3</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#33696">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#83a0">Map</a></td>
 <td class="next">
 Next: <a href="33741.html">83CD</a>
 </td>
@@ -35,36 +35,36 @@ Next: <a href="33741.html">83CD</a>
 </tr>
 <tr>
 <td class="asm-label">DisplayLocHlpMsg</td>
-<td class="address-2"><span id="33696"></span>83A0</td>
+<td class="address-2"><span id="83a0"></span>83A0</td>
 <td class="instruction">LD A,($B6EA)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33699"></span>83A3</td>
+<td class="address-1"><span id="83a3"></span>83A3</td>
 <td class="instruction">AND A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33700"></span>83A4</td>
-<td class="instruction">JP NZ,<a href="30068.html#30132">$75B4</a></td>
+<td class="address-1"><span id="83a4"></span>83A4</td>
+<td class="instruction">JP NZ,<a href="30068.html#75b4">$75B4</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33703"></span>83A7</td>
+<td class="address-1"><span id="83a7"></span>83A7</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="2">Store <span class="register">HL</span> and <span class="register">IX</span> on the stack for later.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33704"></span>83A8</td>
+<td class="address-1"><span id="83a8"></span>83A8</td>
 <td class="instruction">PUSH IX</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="33706"></span>
+<span id="83aa"></span>
 <div class="comments">
 <div class="paragraph">
 Default message response should there be no match for the current location.
@@ -74,13 +74,13 @@ Default message response should there be no match for the current location.
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33706"></span>83AA</td>
+<td class="address-1"><span id="83aa"></span>83AA</td>
 <td class="instruction">LD HL,$B467</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#46183">"you're doing fine[0x15]"</a></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#b467">"you're doing fine[0x15]"</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="33709"></span>
+<span id="83ad"></span>
 <div class="comments">
 <div class="paragraph">
 Use the current location ID to look-up if there is a specific help message.
@@ -90,29 +90,29 @@ Use the current location ID to look-up if there is a specific help message.
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33709"></span>83AD</td>
+<td class="address-1"><span id="83ad"></span>83AD</td>
 <td class="instruction">LD A,($C12B)</td>
-<td class="comment-1" rowspan="3">Using the <a href="49435.html#49451">current location number</a>, see if there is a help message available for display. This is achieved by passing <a href="33741.html">LocHlpMsg</a> to the <a href="40381.html">Index ID Table</a> routine.</td>
+<td class="comment-1" rowspan="3">Using the <a href="49435.html#c12b">current location number</a>, see if there is a help message available for display. This is achieved by passing <a href="33741.html">LocHlpMsg</a> to the <a href="40381.html">Index ID Table</a> routine.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33712"></span>83B0</td>
+<td class="address-1"><span id="83b0"></span>83B0</td>
 <td class="instruction">LD IX,$83CD</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33716"></span>83B4</td>
+<td class="address-1"><span id="83b4"></span>83B4</td>
 <td class="instruction">CALL <a href="40381.html">IndexIdTable</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33719"></span>83B7</td>
-<td class="instruction">JR Z,<a href="33696.html#33727">DisplayLocHlpMsg_Print</a></td>
-<td class="comment-1" rowspan="1">If there is no message, jump directly to <a href="33696.html#33727">DisplayLocHlpMsg_Print</a> to display the default message.</td>
+<td class="address-1"><span id="83b7"></span>83B7</td>
+<td class="instruction">JR Z,<a href="33696.html#83bf">DisplayLocHlpMsg_Print</a></td>
+<td class="comment-1" rowspan="1">If there is no message, jump directly to <a href="33696.html#83bf">DisplayLocHlpMsg_Print</a> to display the default message.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="33721"></span>
+<span id="83b9"></span>
 <div class="comments">
 <div class="paragraph">
 Point to the specific help for the current location.
@@ -122,18 +122,18 @@ Point to the specific help for the current location.
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33721"></span>83B9</td>
+<td class="address-1"><span id="83b9"></span>83B9</td>
 <td class="instruction">LD L,(IX+$01)</td>
 <td class="comment-1" rowspan="2"><span class="register">HL</span>=The address of the help message</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33724"></span>83BC</td>
+<td class="address-1"><span id="83bc"></span>83BC</td>
 <td class="instruction">LD H,(IX+$02)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="33727"></span>
+<span id="83bf"></span>
 <div class="comments">
 <div class="paragraph">
 Print the message.
@@ -143,35 +143,35 @@ Print the message.
 </tr>
 <tr>
 <td class="asm-label">DisplayLocHlpMsg_Print</td>
-<td class="address-2"><span id="33727"></span>83BF</td>
+<td class="address-2"><span id="83bf"></span>83BF</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-1" rowspan="2">Write $01 to <a href="46810.html#46849">WaitCoutdown</a>.</td>
+<td class="comment-1" rowspan="2">Write $01 to <a href="46810.html#b701">WaitCoutdown</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33729"></span>83C1</td>
+<td class="address-1"><span id="83c1"></span>83C1</td>
 <td class="instruction">LD ($B701),A</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33732"></span>83C4</td>
+<td class="address-1"><span id="83c4"></span>83C4</td>
 <td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
 <td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33735"></span>83C7</td>
+<td class="address-1"><span id="83c7"></span>83C7</td>
 <td class="instruction">POP IX</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">IX</span> and <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33737"></span>83C9</td>
+<td class="address-1"><span id="83c9"></span>83C9</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="33738"></span>83CA</td>
+<td class="address-1"><span id="83ca"></span>83CA</td>
 <td class="instruction">JP <a href="33459.html">$82B3</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="33459.html">82B3</a>.</td>
 </tr>
@@ -181,7 +181,7 @@ Print the message.
 <td class="prev">
 Prev: <a href="33459.html">82B3</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#33696">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#83a0">Map</a></td>
 <td class="next">
 Next: <a href="33741.html">83CD</a>
 </td>

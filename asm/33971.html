@@ -17,15 +17,15 @@
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="33944.html">8498</a>
+Prev: <a href="33873.html">8451</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#33971">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#84b3">Map</a></td>
 <td class="next">
 Next: <a href="33977.html">84B9</a>
 </td>
 </tr>
 </table>
-<div class="description">84B3: Routine at 84B3</div>
+<div class="description">84B3: Copies 3 bytes from source to target</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -34,30 +34,46 @@ Next: <a href="33977.html">84B9</a>
 Used by the routines at <a href="33873.html">LoadGame</a> and <a href="33996.html">SaveGame</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">Source</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Target</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
-<td class="address-2"><span id="33971"></span>84B3</td>
+<td class="asm-label">ThreeByteCopy</td>
+<td class="address-2"><span id="84b3"></span>84B3</td>
 <td class="instruction">LD BC,$0003</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=$0003.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="33974"></span>84B6</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84b6"></span>84B6</td>
 <td class="instruction">LDIR</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Copy three bytes of data from <span class="register">DE</span> to <span class="register">HL</span>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="33976"></span>84B8</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84b8"></span>84B8</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="33944.html">8498</a>
+Prev: <a href="33873.html">8451</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#33971">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#84b3">Map</a></td>
 <td class="next">
 Next: <a href="33977.html">84B9</a>
 </td>

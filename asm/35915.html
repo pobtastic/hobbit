@@ -17,9 +17,9 @@
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="35618.html">8B22</a>
+Prev: <a href="35713.html">8B81</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#35915">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#8c4b">Map</a></td>
 <td class="next">
 Next: <a href="36006.html">8CA6</a>
 </td>
@@ -35,181 +35,181 @@ Next: <a href="36006.html">8CA6</a>
 </tr>
 <tr>
 <td class="asm-label">Action_Look</td>
-<td class="address-2"><span id="35915"></span>8C4B</td>
+<td class="address-2"><span id="8c4b"></span>8C4B</td>
 <td class="instruction">CALL <a href="40260.html">$9D44</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35918"></span>8C4E</td>
+<td class="address-1"><span id="8c4e"></span>8C4E</td>
 <td class="instruction">LD IX,($B70C)</td>
-<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="46810.html#46860">ptrCurObject</a></td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="46810.html#b70c">ptrCurObject</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35922"></span>8C52</td>
+<td class="address-1"><span id="8c52"></span>8C52</td>
 <td class="instruction">LD A,(IX+$01)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35925"></span>8C55</td>
+<td class="address-1"><span id="8c55"></span>8C55</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35927"></span>8C57</td>
-<td class="instruction">JR Z,<a href="35915.html#35989">Action_Look_0</a></td>
+<td class="address-1"><span id="8c57"></span>8C57</td>
+<td class="instruction">JR Z,<a href="35915.html#8c95">Action_Look_0</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35929"></span>8C59</td>
+<td class="address-1"><span id="8c59"></span>8C59</td>
 <td class="instruction">LD HL,$0080</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35932"></span>8C5C</td>
+<td class="address-1"><span id="8c5c"></span>8C5C</td>
 <td class="instruction">LD ($AFFD),HL</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35935"></span>8C5F</td>
+<td class="address-1"><span id="8c5f"></span>8C5F</td>
 <td class="instruction">LD HL,$AFFC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45052">"You are in[0x16]"</a></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#affc">"You are in[0x16]"</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35938"></span>8C62</td>
+<td class="address-1"><span id="8c62"></span>8C62</td>
 <td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
 <td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35941"></span>8C65</td>
+<td class="address-1"><span id="8c65"></span>8C65</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35943"></span>8C67</td>
+<td class="address-1"><span id="8c67"></span>8C67</td>
 <td class="instruction">LD A,(IX+$01)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35946"></span>8C6A</td>
+<td class="address-1"><span id="8c6a"></span>8C6A</td>
 <td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35949"></span>8C6D</td>
-<td class="instruction">CALL <a href="41040.html#41117">$A09D</a></td>
+<td class="address-1"><span id="8c6d"></span>8C6D</td>
+<td class="instruction">CALL <a href="41040.html#a09d">$A09D</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35952"></span>8C70</td>
+<td class="address-1"><span id="8c70"></span>8C70</td>
 <td class="instruction">LD E,(IX+$08)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35955"></span>8C73</td>
+<td class="address-1"><span id="8c73"></span>8C73</td>
 <td class="instruction">LD A,(IX+$09)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35958"></span>8C76</td>
+<td class="address-1"><span id="8c76"></span>8C76</td>
 <td class="instruction">AND $0F</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35960"></span>8C78</td>
+<td class="address-1"><span id="8c78"></span>8C78</td>
 <td class="instruction">LD D,A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35961"></span>8C79</td>
+<td class="address-1"><span id="8c79"></span>8C79</td>
 <td class="instruction">CALL <a href="29889.html">PrintToken</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35964"></span>8C7C</td>
+<td class="address-1"><span id="8c7c"></span>8C7C</td>
 <td class="instruction">LD A,$2E</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35966"></span>8C7E</td>
-<td class="instruction">CALL <a href="34166.html#34187">$858B</a></td>
+<td class="address-1"><span id="8c7e"></span>8C7E</td>
+<td class="instruction">CALL <a href="34166.html#858b">$858B</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35969"></span>8C81</td>
-<td class="instruction">CALL <a href="34166.html#34179">$8583</a></td>
+<td class="address-1"><span id="8c81"></span>8C81</td>
+<td class="instruction">CALL <a href="34166.html#8583">$8583</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35972"></span>8C84</td>
+<td class="address-1"><span id="8c84"></span>8C84</td>
 <td class="instruction">LD HL,$B003</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45059">"You see :[0x14]"</a></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#b003">"You see :[0x14]"</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35975"></span>8C87</td>
+<td class="address-1"><span id="8c87"></span>8C87</td>
 <td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
 <td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35978"></span>8C8A</td>
+<td class="address-1"><span id="8c8a"></span>8C8A</td>
 <td class="instruction">POP IX</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">IX</span> off the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35980"></span>8C8C</td>
+<td class="address-1"><span id="8c8c"></span>8C8C</td>
 <td class="instruction">LD A,(IX+$01)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35983"></span>8C8F</td>
+<td class="address-1"><span id="8c8f"></span>8C8F</td>
 <td class="instruction">LD B,(IX+$10)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35986"></span>8C92</td>
-<td class="instruction">JP <a href="40852.html#40879">$9FAF</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="40852.html#40879">9FAF</a>.</td>
+<td class="address-1"><span id="8c92"></span>8C92</td>
+<td class="instruction">JP <a href="40852.html#9faf">$9FAF</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="40852.html#9faf">9FAF</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Action_Look_0</td>
-<td class="address-2"><span id="35989"></span>8C95</td>
+<td class="address-2"><span id="8c95"></span>8C95</td>
 <td class="instruction">LD A,(IX+$10)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35992"></span>8C98</td>
-<td class="instruction">JP <a href="38443.html#38448">YouSeePreposition</a></td>
+<td class="address-1"><span id="8c98"></span>8C98</td>
+<td class="instruction">JP <a href="38443.html#9630">YouSeePreposition</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="35995"></span>
+<span id="8c9b"></span>
 <div class="comments">
 <div class="paragraph">
 This entry point is used by the routines at <a href="36006.html">Action_Putdown</a> and <a href="37850.html">Action_Examine</a>.
@@ -219,31 +219,31 @@ This entry point is used by the routines at <a href="36006.html">Action_Putdown<
 </tr>
 <tr>
 <td class="asm-label">Action_Look_1</td>
-<td class="address-2"><span id="35995"></span>8C9B</td>
+<td class="address-2"><span id="8c9b"></span>8C9B</td>
 <td class="instruction">CALL <a href="40056.html">$9C78</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35998"></span>8C9E</td>
+<td class="address-1"><span id="8c9e"></span>8C9E</td>
 <td class="instruction">RET C</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="35999"></span>8C9F</td>
+<td class="address-1"><span id="8c9f"></span>8C9F</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="36000"></span>8CA0</td>
+<td class="address-1"><span id="8ca0"></span>8CA0</td>
 <td class="instruction">LD HL,$ADF1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#44529">"You are not carrying it[0x15]"</a></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#adf1">"You are not carrying it[0x15]"</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="36003"></span>8CA3</td>
+<td class="address-1"><span id="8ca3"></span>8CA3</td>
 <td class="instruction">JP <a href="29405.html">PrintMsg</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="29405.html">PrintMsg</a>.</td>
 </tr>
@@ -251,9 +251,9 @@ This entry point is used by the routines at <a href="36006.html">Action_Putdown<
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="35618.html">8B22</a>
+Prev: <a href="35713.html">8B81</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#35915">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#8c4b">Map</a></td>
 <td class="next">
 Next: <a href="36006.html">8CA6</a>
 </td>

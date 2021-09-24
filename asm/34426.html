@@ -19,7 +19,7 @@
 <td class="prev">
 Prev: <a href="34166.html">8576</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#34426">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#867a">Map</a></td>
 <td class="next">
 Next: <a href="34459.html">869B</a>
 </td>
@@ -40,14 +40,14 @@ Used by the routine at <a href="34166.html">8576</a>.
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">ID of character to print</td>
+<td class="register-desc">ASCII value of character to print</td>
 </tr>
 </table>
 </td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="34426"></span>
+<span id="867a"></span>
 <div class="comments">
 <div class="paragraph">
 Prints using the standard ZX Spectrum <a href="https://skoolkid.github.io/rom/asm/3D00.html">CHARSET</a>.
@@ -57,148 +57,177 @@ Prints using the standard ZX Spectrum <a href="https://skoolkid.github.io/rom/as
 </tr>
 <tr>
 <td class="asm-label">PrintChar</td>
-<td class="address-2"><span id="34426"></span>867A</td>
+<td class="address-2"><span id="867a"></span>867A</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-1" rowspan="4">Push <span class="register">AF</span>, <span class="register">BC</span>, <span class="register">DE</span> and <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34427"></span>867B</td>
+<td class="address-1"><span id="867b"></span>867B</td>
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34428"></span>867C</td>
+<td class="address-1"><span id="867c"></span>867C</td>
 <td class="instruction">PUSH DE</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34429"></span>867D</td>
+<td class="address-1"><span id="867d"></span>867D</td>
 <td class="instruction">PUSH HL</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34430"></span>867E</td>
+<td class="address-1"><span id="867e"></span>867E</td>
 <td class="instruction">SUB $20</td>
-<td class="comment-1" rowspan="6">Create offset for the font graphic data look-up.</td>
+<td class="comment-1" rowspan="6">Create offset for the font graphic data look-up. For example; <table class="default">
+<tr>
+<th colspan="1" rowspan="1">Letter</th>
+<th colspan="1" rowspan="1">ASCII Value</th>
+<th colspan="1" rowspan="1">SUB $20</th>
+<th colspan="1" rowspan="1">* 8</th>
+<th colspan="1" rowspan="1">CHARSET + offset</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">"&#65;"</td>
+<td class="centre" colspan="1" rowspan="1">$41</td>
+<td class="centre" colspan="1" rowspan="1">$21</td>
+<td class="centre" colspan="1" rowspan="1">$108</td>
+<td class="centre" colspan="1" rowspan="1"><a href="https://skoolkid.github.io/rom/asm/3D00.html#3E08">$3E08</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">"&#81;"</td>
+<td class="centre" colspan="1" rowspan="1">$51</td>
+<td class="centre" colspan="1" rowspan="1">$31</td>
+<td class="centre" colspan="1" rowspan="1">$188</td>
+<td class="centre" colspan="1" rowspan="1"><a href="https://skoolkid.github.io/rom/asm/3D00.html#3E88">$3E88</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">"&#97;"</td>
+<td class="centre" colspan="1" rowspan="1">$61</td>
+<td class="centre" colspan="1" rowspan="1">$41</td>
+<td class="centre" colspan="1" rowspan="1">$208</td>
+<td class="centre" colspan="1" rowspan="1"><a href="https://skoolkid.github.io/rom/asm/3D00.html#3F08">$3F08</a></td>
+</tr>
+</table></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34432"></span>8680</td>
+<td class="address-1"><span id="8680"></span>8680</td>
 <td class="instruction">LD L,A</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34433"></span>8681</td>
+<td class="address-1"><span id="8681"></span>8681</td>
 <td class="instruction">LD H,$00</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34435"></span>8683</td>
+<td class="address-1"><span id="8683"></span>8683</td>
 <td class="instruction">ADD HL,HL</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34436"></span>8684</td>
+<td class="address-1"><span id="8684"></span>8684</td>
 <td class="instruction">ADD HL,HL</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34437"></span>8685</td>
+<td class="address-1"><span id="8685"></span>8685</td>
 <td class="instruction">ADD HL,HL</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34438"></span>8686</td>
+<td class="address-1"><span id="8686"></span>8686</td>
 <td class="instruction">LD DE,$3D00</td>
-<td class="comment-1" rowspan="2">Calculate font graphic data address.</td>
+<td class="comment-1" rowspan="2">Calculate font graphic data address using <a href="https://skoolkid.github.io/rom/asm/3D00.html">CHARSET</a> + offset.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34441"></span>8689</td>
+<td class="address-1"><span id="8689"></span>8689</td>
 <td class="instruction">ADD HL,DE</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34442"></span>868A</td>
+<td class="address-1"><span id="868a"></span>868A</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-1" rowspan="3">Store the result in <span class="register">DE</span>, restore the screen location to <span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34443"></span>868B</td>
+<td class="address-1"><span id="868b"></span>868B</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34444"></span>868C</td>
+<td class="address-1"><span id="868c"></span>868C</td>
 <td class="instruction">PUSH HL</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34445"></span>868D</td>
+<td class="address-1"><span id="868d"></span>868D</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-1" rowspan="1">Set a counter for $08 lines.</td>
 </tr>
 <tr>
 <td class="asm-label">PrintChar_Loop</td>
-<td class="address-2"><span id="34447"></span>868F</td>
+<td class="address-2"><span id="868f"></span>868F</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-1" rowspan="2">Fetch the font byte and copy it to the screen.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34448"></span>8690</td>
+<td class="address-1"><span id="8690"></span>8690</td>
 <td class="instruction">LD (HL),A</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34449"></span>8691</td>
+<td class="address-1"><span id="8691"></span>8691</td>
 <td class="instruction">INC DE</td>
 <td class="comment-1" rowspan="1">Move onto the next font data byte.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34450"></span>8692</td>
+<td class="address-1"><span id="8692"></span>8692</td>
 <td class="instruction">INC H</td>
 <td class="comment-1" rowspan="1">Move the screen pointer down one row.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34451"></span>8693</td>
-<td class="instruction">DJNZ <a href="34426.html#34447">PrintChar_Loop</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="34426.html#34447">PrintChar_Loop</a> until counter is zero.</td>
+<td class="address-1"><span id="8693"></span>8693</td>
+<td class="instruction">DJNZ <a href="34426.html#868f">PrintChar_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="34426.html#868f">PrintChar_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34453"></span>8695</td>
+<td class="address-1"><span id="8695"></span>8695</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="4">Restore <span class="register">HL</span>, <span class="register">DE</span>, <span class="register">BC</span> and <span class="register">AF</span> off the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34454"></span>8696</td>
+<td class="address-1"><span id="8696"></span>8696</td>
 <td class="instruction">POP DE</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34455"></span>8697</td>
+<td class="address-1"><span id="8697"></span>8697</td>
 <td class="instruction">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34456"></span>8698</td>
+<td class="address-1"><span id="8698"></span>8698</td>
 <td class="instruction">POP AF</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34457"></span>8699</td>
+<td class="address-1"><span id="8699"></span>8699</td>
 <td class="instruction">INC L</td>
 <td class="comment-1" rowspan="1">Move the screen pointer across one column, ready for printing the next character.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="34458"></span>869A</td>
+<td class="address-1"><span id="869a"></span>869A</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
@@ -208,7 +237,7 @@ Prints using the standard ZX Spectrum <a href="https://skoolkid.github.io/rom/as
 <td class="prev">
 Prev: <a href="34166.html">8576</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#34426">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#867a">Map</a></td>
 <td class="next">
 Next: <a href="34459.html">869B</a>
 </td>

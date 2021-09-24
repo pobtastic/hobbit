@@ -19,7 +19,7 @@
 <td class="prev">
 Prev: <a href="37790.html">939E</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#37850">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#93da">Map</a></td>
 <td class="next">
 Next: <a href="38381.html">95ED</a>
 </td>
@@ -38,351 +38,351 @@ Used by the routine at <a href="42305.html">ActionClimbOut</a>.
 </tr>
 <tr>
 <td class="asm-label">Action_Examine</td>
-<td class="address-2"><span id="37850"></span>93DA</td>
+<td class="address-2"><span id="93da"></span>93DA</td>
 <td class="instruction">CALL <a href="40260.html">$9D44</a></td>
 <td class="comment-1" rowspan="1">Call <a href="40260.html">9D44</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37853"></span>93DD</td>
+<td class="address-1"><span id="93dd"></span>93DD</td>
 <td class="instruction">LD A,($B6E8)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="46810.html#46824">CurrentObject</a></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="46810.html#b6e8">CurrentObject</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37856"></span>93E0</td>
+<td class="address-1"><span id="93e0"></span>93E0</td>
 <td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
 <td class="comment-1" rowspan="1">Call <a href="39882.html">LocateObject</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37859"></span>93E3</td>
+<td class="address-1"><span id="93e3"></span>93E3</td>
 <td class="instruction">LD L,(IX+$0E)</td>
 <td class="comment-1" rowspan="2"><span class="register">HL</span>=offset for object help text.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37862"></span>93E6</td>
+<td class="address-1"><span id="93e6"></span>93E6</td>
 <td class="instruction">LD H,(IX+$0F)</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37865"></span>93E9</td>
+<td class="address-1"><span id="93e9"></span>93E9</td>
 <td class="instruction">LD A,H</td>
 <td class="comment-1" rowspan="3">If this value is not $0000 then jump to <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37866"></span>93EA</td>
+<td class="address-1"><span id="93ea"></span>93EA</td>
 <td class="instruction">OR L</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37867"></span>93EB</td>
+<td class="address-1"><span id="93eb"></span>93EB</td>
 <td class="instruction">JP NZ,<a href="29405.html">PrintMsg</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37870"></span>93EE</td>
+<td class="address-1"><span id="93ee"></span>93EE</td>
 <td class="instruction">LD HL,$B000</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45056">"You see[0x16]"</a></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#b000">"You see[0x16]"</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37873"></span>93F1</td>
+<td class="address-1"><span id="93f1"></span>93F1</td>
 <td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
 <td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37876"></span>93F4</td>
+<td class="address-1"><span id="93f4"></span>93F4</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="2"><span class="register">IY</span>=<span class="register">IX</span></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37878"></span>93F6</td>
+<td class="address-1"><span id="93f6"></span>93F6</td>
 <td class="instruction">POP IY</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37880"></span>93F8</td>
+<td class="address-1"><span id="93f8"></span>93F8</td>
 <td class="instruction">CALL <a href="40647.html">$9EC7</a></td>
 <td class="comment-1" rowspan="1">Call <a href="40647.html">9EC7</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37883"></span>93FB</td>
+<td class="address-1"><span id="93fb"></span>93FB</td>
 <td class="instruction">LD A,$2E</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37885"></span>93FD</td>
-<td class="instruction">CALL <a href="34166.html#34187">$858B</a></td>
-<td class="comment-1" rowspan="1">Call <a href="34166.html#34187">858B</a>.</td>
+<td class="address-1"><span id="93fd"></span>93FD</td>
+<td class="instruction">CALL <a href="34166.html#858b">$858B</a></td>
+<td class="comment-1" rowspan="1">Call <a href="34166.html#858b">858B</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37888"></span>9400</td>
-<td class="instruction">CALL <a href="34166.html#34179">$8583</a></td>
-<td class="comment-1" rowspan="1">Call <a href="34166.html#34179">8583</a>.</td>
+<td class="address-1"><span id="9400"></span>9400</td>
+<td class="instruction">CALL <a href="34166.html#8583">$8583</a></td>
+<td class="comment-1" rowspan="1">Call <a href="34166.html#8583">8583</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37891"></span>9403</td>
+<td class="address-1"><span id="9403"></span>9403</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37892"></span>9404</td>
+<td class="address-1"><span id="9404"></span>9404</td>
 <td class="instruction">LD IX,($B708)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37896"></span>9408</td>
-<td class="instruction">CALL <a href="42305.html#42442">ActionClimbOut_4</a></td>
+<td class="address-1"><span id="9408"></span>9408</td>
+<td class="instruction">CALL <a href="42305.html#a5ca">ActionClimbOut_4</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37899"></span>940B</td>
-<td class="instruction">JP Z,<a href="41272.html#41324">DisplayExits_3</a></td>
+<td class="address-1"><span id="940b"></span>940B</td>
+<td class="instruction">JP Z,<a href="41272.html#a16c">DisplayExits_3</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37902"></span>940E</td>
+<td class="address-1"><span id="940e"></span>940E</td>
 <td class="instruction">LD A,($B6E8)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37905"></span>9411</td>
+<td class="address-1"><span id="9411"></span>9411</td>
 <td class="instruction">CALL <a href="40343.html">ObjectCount</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37908"></span>9414</td>
+<td class="address-1"><span id="9414"></span>9414</td>
 <td class="instruction">CP $00</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37910"></span>9416</td>
-<td class="instruction">JR Z,<a href="37850.html#37923">Action_Examine_0</a></td>
+<td class="address-1"><span id="9416"></span>9416</td>
+<td class="instruction">JR Z,<a href="37850.html#9423">Action_Examine_0</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37912"></span>9418</td>
+<td class="address-1"><span id="9418"></span>9418</td>
 <td class="instruction">CALL <a href="40260.html">$9D44</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37915"></span>941B</td>
-<td class="instruction">CALL <a href="40260.html#40272">$9D50</a></td>
+<td class="address-1"><span id="941b"></span>941B</td>
+<td class="instruction">CALL <a href="40260.html#9d50">$9D50</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37918"></span>941E</td>
+<td class="address-1"><span id="941e"></span>941E</td>
 <td class="instruction">RES 2,(IX+$07)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37922"></span>9422</td>
+<td class="address-1"><span id="9422"></span>9422</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_0</td>
-<td class="address-2"><span id="37923"></span>9423</td>
+<td class="address-2"><span id="9423"></span>9423</td>
 <td class="instruction">LD A,$02</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37925"></span>9425</td>
-<td class="instruction">JP <a href="41272.html#41324">DisplayExits_3</a></td>
+<td class="address-1"><span id="9425"></span>9425</td>
+<td class="instruction">JP <a href="41272.html#a16c">DisplayExits_3</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37928"></span>9428</td>
-<td class="instruction">CALL <a href="36006.html#36133">Action_Putdown_4</a></td>
+<td class="address-1"><span id="9428"></span>9428</td>
+<td class="instruction">CALL <a href="36006.html#8d25">Action_Putdown_4</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37931"></span>942B</td>
+<td class="address-1"><span id="942b"></span>942B</td>
 <td class="instruction">CALL <a href="40260.html">$9D44</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37934"></span>942E</td>
+<td class="address-1"><span id="942e"></span>942E</td>
 <td class="instruction">LD A,($B6F6)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37937"></span>9431</td>
+<td class="address-1"><span id="9431"></span>9431</td>
 <td class="instruction">LD IX,($B70A)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37941"></span>9435</td>
+<td class="address-1"><span id="9435"></span>9435</td>
 <td class="instruction">LD B,(IX+$00)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_1</td>
-<td class="address-2"><span id="37944"></span>9438</td>
+<td class="address-2"><span id="9438"></span>9438</td>
 <td class="instruction">CP (IX+$10)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37947"></span>943B</td>
-<td class="instruction">JR Z,<a href="37850.html#37956">Action_Examine_2</a></td>
+<td class="address-1"><span id="943b"></span>943B</td>
+<td class="instruction">JR Z,<a href="37850.html#9444">Action_Examine_2</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37949"></span>943D</td>
+<td class="address-1"><span id="943d"></span>943D</td>
 <td class="instruction">INC IX</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37951"></span>943F</td>
-<td class="instruction">DJNZ <a href="37850.html#37944">Action_Examine_1</a></td>
+<td class="address-1"><span id="943f"></span>943F</td>
+<td class="instruction">DJNZ <a href="37850.html#9438">Action_Examine_1</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37953"></span>9441</td>
+<td class="address-1"><span id="9441"></span>9441</td>
 <td class="instruction">JP <a href="29390.html">ICannotDoThat</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_2</td>
-<td class="address-2"><span id="37956"></span>9444</td>
+<td class="address-2"><span id="9444"></span>9444</td>
 <td class="instruction">LD A,(IX+$11)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37959"></span>9447</td>
+<td class="address-1"><span id="9447"></span>9447</td>
 <td class="instruction">DEC B</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37960"></span>9448</td>
-<td class="instruction">JR NZ,<a href="37850.html#37963">Action_Examine_3</a></td>
+<td class="address-1"><span id="9448"></span>9448</td>
+<td class="instruction">JR NZ,<a href="37850.html#944b">Action_Examine_3</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37962"></span>944A</td>
+<td class="address-1"><span id="944a"></span>944A</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_3</td>
-<td class="address-2"><span id="37963"></span>944B</td>
+<td class="address-2"><span id="944b"></span>944B</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37964"></span>944C</td>
+<td class="address-1"><span id="944c"></span>944C</td>
 <td class="instruction">LD HL,$ADFC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#44540">"and it get(s|d|ing|es) swept away"</a></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#adfc">"and it get(s|d|ing|es) swept away"</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37967"></span>944F</td>
+<td class="address-1"><span id="944f"></span>944F</td>
 <td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
 <td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37970"></span>9452</td>
+<td class="address-1"><span id="9452"></span>9452</td>
 <td class="instruction">POP AF</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37971"></span>9453</td>
+<td class="address-1"><span id="9453"></span>9453</td>
 <td class="instruction">LD IX,($B708)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37975"></span>9457</td>
+<td class="address-1"><span id="9457"></span>9457</td>
 <td class="instruction">LD (IX+$10),A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37978"></span>945A</td>
+<td class="address-1"><span id="945a"></span>945A</td>
 <td class="instruction">LD (IX+$01),$FF</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37982"></span>945E</td>
+<td class="address-1"><span id="945e"></span>945E</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37983"></span>945F</td>
+<td class="address-1"><span id="945f"></span>945F</td>
 <td class="instruction">LD A,($B6E8)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37986"></span>9462</td>
-<td class="instruction">CALL <a href="39900.html#39901">$9BDD</a></td>
+<td class="address-1"><span id="9462"></span>9462</td>
+<td class="instruction">CALL <a href="39900.html#9bdd">$9BDD</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37989"></span>9465</td>
+<td class="address-1"><span id="9465"></span>9465</td>
 <td class="instruction">LD A,($C12B)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37992"></span>9468</td>
+<td class="address-1"><span id="9468"></span>9468</td>
 <td class="instruction">AND A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37993"></span>9469</td>
+<td class="address-1"><span id="9469"></span>9469</td>
 <td class="instruction">JP Z,<a href="37074.html">YouAreDead</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="37996"></span>946C</td>
+<td class="address-1"><span id="946c"></span>946C</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="37997"></span>
+<span id="946d"></span>
 <div class="comments">
 <div class="paragraph">
 This entry point is used by the routine at <a href="41730.html">ActionBurn</a>.
@@ -392,73 +392,73 @@ This entry point is used by the routine at <a href="41730.html">ActionBurn</a>.
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_4</td>
-<td class="address-2"><span id="37997"></span>946D</td>
-<td class="instruction">CALL <a href="41272.html#41465">DisplayExits_15</a></td>
+<td class="address-2"><span id="946d"></span>946D</td>
+<td class="instruction">CALL <a href="41272.html#a1f9">DisplayExits_15</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38000"></span>9470</td>
-<td class="instruction">JP NZ,<a href="41272.html#41324">DisplayExits_3</a></td>
+<td class="address-1"><span id="9470"></span>9470</td>
+<td class="instruction">JP NZ,<a href="41272.html#a16c">DisplayExits_3</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38003"></span>9473</td>
+<td class="address-1"><span id="9473"></span>9473</td>
 <td class="instruction">LD A,$C6</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_5</td>
-<td class="address-2"><span id="38005"></span>9475</td>
+<td class="address-2"><span id="9475"></span>9475</td>
 <td class="instruction">LD ($948B),A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38008"></span>9478</td>
+<td class="address-1"><span id="9478"></span>9478</td>
 <td class="instruction">LD IY,($B70A)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38012"></span>947C</td>
+<td class="address-1"><span id="947c"></span>947C</td>
 <td class="instruction">BIT 3,(IY+$07)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38016"></span>9480</td>
+<td class="address-1"><span id="9480"></span>9480</td>
 <td class="instruction">LD A,$83</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38018"></span>9482</td>
-<td class="instruction">JP NZ,<a href="41272.html#41316">DisplayExits_2</a></td>
+<td class="address-1"><span id="9482"></span>9482</td>
+<td class="instruction">JP NZ,<a href="41272.html#a164">DisplayExits_2</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38021"></span>9485</td>
+<td class="address-1"><span id="9485"></span>9485</td>
 <td class="instruction">CALL <a href="40260.html">$9D44</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38024"></span>9488</td>
+<td class="address-1"><span id="9488"></span>9488</td>
 <td class="instruction">SET 0,(IX+$07)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38028"></span>948C</td>
+<td class="address-1"><span id="948c"></span>948C</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="38029"></span>
+<span id="948d"></span>
 <div class="comments">
 <div class="paragraph">
 This entry point is used by the routine at <a href="41730.html">ActionBurn</a>.
@@ -468,666 +468,666 @@ This entry point is used by the routine at <a href="41730.html">ActionBurn</a>.
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_6</td>
-<td class="address-2"><span id="38029"></span>948D</td>
+<td class="address-2"><span id="948d"></span>948D</td>
 <td class="instruction">LD IX,($B708)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38033"></span>9491</td>
+<td class="address-1"><span id="9491"></span>9491</td>
 <td class="instruction">BIT 0,(IX+$07)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38037"></span>9495</td>
+<td class="address-1"><span id="9495"></span>9495</td>
 <td class="instruction">LD A,$00</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38039"></span>9497</td>
-<td class="instruction">JP Z,<a href="41272.html#41324">DisplayExits_3</a></td>
+<td class="address-1"><span id="9497"></span>9497</td>
+<td class="instruction">JP Z,<a href="41272.html#a16c">DisplayExits_3</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38042"></span>949A</td>
-<td class="instruction">CALL <a href="41272.html#41476">DisplayExits_16</a></td>
+<td class="address-1"><span id="949a"></span>949A</td>
+<td class="instruction">CALL <a href="41272.html#a204">DisplayExits_16</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38045"></span>949D</td>
-<td class="instruction">JP NZ,<a href="41272.html#41324">DisplayExits_3</a></td>
+<td class="address-1"><span id="949d"></span>949D</td>
+<td class="instruction">JP NZ,<a href="41272.html#a16c">DisplayExits_3</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38048"></span>94A0</td>
+<td class="address-1"><span id="94a0"></span>94A0</td>
 <td class="instruction">LD A,$86</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38050"></span>94A2</td>
-<td class="instruction">JR <a href="37850.html#38005">Action_Examine_5</a></td>
+<td class="address-1"><span id="94a2"></span>94A2</td>
+<td class="instruction">JR <a href="37850.html#9475">Action_Examine_5</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38052"></span>94A4</td>
-<td class="instruction">CALL <a href="35915.html#35995">Action_Look_1</a></td>
+<td class="address-1"><span id="94a4"></span>94A4</td>
+<td class="instruction">CALL <a href="35915.html#8c9b">Action_Look_1</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38055"></span>94A7</td>
+<td class="address-1"><span id="94a7"></span>94A7</td>
 <td class="instruction">LD A,($B6E9)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38058"></span>94AA</td>
-<td class="instruction">CALL <a href="40741.html#40744">$9F28</a></td>
+<td class="address-1"><span id="94aa"></span>94AA</td>
+<td class="instruction">CALL <a href="40741.html#9f28">$9F28</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38061"></span>94AD</td>
+<td class="address-1"><span id="94ad"></span>94AD</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38063"></span>94AF</td>
+<td class="address-1"><span id="94af"></span>94AF</td>
 <td class="instruction">JP Z,<a href="40822.html">$9F76</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38066"></span>94B2</td>
+<td class="address-1"><span id="94b2"></span>94B2</td>
 <td class="instruction">LD IY,($B70A)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38070"></span>94B6</td>
+<td class="address-1"><span id="94b6"></span>94B6</td>
 <td class="instruction">BIT 5,(IY+$07)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38074"></span>94BA</td>
+<td class="address-1"><span id="94ba"></span>94BA</td>
 <td class="instruction">LD A,$05</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38076"></span>94BC</td>
-<td class="instruction">JP Z,<a href="41272.html#41316">DisplayExits_2</a></td>
+<td class="address-1"><span id="94bc"></span>94BC</td>
+<td class="instruction">JP Z,<a href="41272.html#a164">DisplayExits_2</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38079"></span>94BF</td>
+<td class="address-1"><span id="94bf"></span>94BF</td>
 <td class="instruction">CALL <a href="40260.html">$9D44</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38082"></span>94C2</td>
+<td class="address-1"><span id="94c2"></span>94C2</td>
 <td class="instruction">LD B,(IX+$02)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38085"></span>94C5</td>
+<td class="address-1"><span id="94c5"></span>94C5</td>
 <td class="instruction">LD IX,($B708)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38089"></span>94C9</td>
+<td class="address-1"><span id="94c9"></span>94C9</td>
 <td class="instruction">LD (IX+$01),$FF</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38093"></span>94CD</td>
+<td class="address-1"><span id="94cd"></span>94CD</td>
 <td class="instruction">LD (IX+$10),B</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38096"></span>94D0</td>
+<td class="address-1"><span id="94d0"></span>94D0</td>
 <td class="instruction">LD A,($B6E8)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38099"></span>94D3</td>
-<td class="instruction">JP <a href="39900.html#39901">$9BDD</a></td>
+<td class="address-1"><span id="94d3"></span>94D3</td>
+<td class="instruction">JP <a href="39900.html#9bdd">$9BDD</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="38102"></span>
+<span id="94d6"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="30068.html">7574</a>.
+This entry point is used by the routine at <a href="30673.html">77D1</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_7</td>
-<td class="address-2"><span id="38102"></span>94D6</td>
+<td class="address-2"><span id="94d6"></span>94D6</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38104"></span>94D8</td>
+<td class="address-1"><span id="94d8"></span>94D8</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38105"></span>94D9</td>
-<td class="instruction">CALL <a href="39702.html#39748">$9B44</a></td>
+<td class="address-1"><span id="94d9"></span>94D9</td>
+<td class="instruction">CALL <a href="39702.html#9b44">$9B44</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38108"></span>94DC</td>
+<td class="address-1"><span id="94dc"></span>94DC</td>
 <td class="instruction">LD A,$00</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38110"></span>94DE</td>
-<td class="instruction">JR Z,<a href="37850.html#38152">Action_Examine_8</a></td>
+<td class="address-1"><span id="94de"></span>94DE</td>
+<td class="instruction">JR Z,<a href="37850.html#9508">Action_Examine_8</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38112"></span>94E0</td>
+<td class="address-1"><span id="94e0"></span>94E0</td>
 <td class="instruction">LD A,($B6E7)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38115"></span>94E3</td>
+<td class="address-1"><span id="94e3"></span>94E3</td>
 <td class="instruction">LD IX,$C730</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38119"></span>94E7</td>
+<td class="address-1"><span id="94e7"></span>94E7</td>
 <td class="instruction">CALL <a href="40381.html">IndexIdTable</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38122"></span>94EA</td>
+<td class="address-1"><span id="94ea"></span>94EA</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38124"></span>94EC</td>
+<td class="address-1"><span id="94ec"></span>94EC</td>
 <td class="instruction">LD A,$01</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38126"></span>94EE</td>
-<td class="instruction">JR NZ,<a href="37850.html#38152">Action_Examine_8</a></td>
+<td class="address-1"><span id="94ee"></span>94EE</td>
+<td class="instruction">JR NZ,<a href="37850.html#9508">Action_Examine_8</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38128"></span>94F0</td>
-<td class="instruction">CALL <a href="41272.html#41424">DisplayExits_11</a></td>
+<td class="address-1"><span id="94f0"></span>94F0</td>
+<td class="instruction">CALL <a href="41272.html#a1d0">DisplayExits_11</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38131"></span>94F3</td>
+<td class="address-1"><span id="94f3"></span>94F3</td>
 <td class="instruction">LD A,$01</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38133"></span>94F5</td>
-<td class="instruction">JR Z,<a href="37850.html#38152">Action_Examine_8</a></td>
+<td class="address-1"><span id="94f5"></span>94F5</td>
+<td class="instruction">JR Z,<a href="37850.html#9508">Action_Examine_8</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38135"></span>94F7</td>
+<td class="address-1"><span id="94f7"></span>94F7</td>
 <td class="instruction">LD A,($B6E8)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38138"></span>94FA</td>
+<td class="address-1"><span id="94fa"></span>94FA</td>
 <td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38141"></span>94FD</td>
+<td class="address-1"><span id="94fd"></span>94FD</td>
 <td class="instruction">LD A,($B6E7)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38144"></span>9500</td>
+<td class="address-1"><span id="9500"></span>9500</td>
 <td class="instruction">CALL <a href="39809.html">$9B81</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38147"></span>9503</td>
+<td class="address-1"><span id="9503"></span>9503</td>
 <td class="instruction">LD A,$01</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38149"></span>9505</td>
-<td class="instruction">JR C,<a href="37850.html#38152">Action_Examine_8</a></td>
+<td class="address-1"><span id="9505"></span>9505</td>
+<td class="instruction">JR C,<a href="37850.html#9508">Action_Examine_8</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38151"></span>9507</td>
+<td class="address-1"><span id="9507"></span>9507</td>
 <td class="instruction">SUB A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_8</td>
-<td class="address-2"><span id="38152"></span>9508</td>
+<td class="address-2"><span id="9508"></span>9508</td>
 <td class="instruction">LD ($B6FB),A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38155"></span>950B</td>
+<td class="address-1"><span id="950b"></span>950B</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38156"></span>950C</td>
+<td class="address-1"><span id="950c"></span>950C</td>
 <td class="instruction">POP IX</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38158"></span>950E</td>
+<td class="address-1"><span id="950e"></span>950E</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="38159"></span>
+<span id="950f"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="30068.html">7574</a> and <a href="38579.html">96B3</a>.
+This entry point is used by the routines at <a href="30673.html">77D1</a> and <a href="38579.html">96B3</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_9</td>
-<td class="address-2"><span id="38159"></span>950F</td>
+<td class="address-2"><span id="950f"></span>950F</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38160"></span>9510</td>
+<td class="address-1"><span id="9510"></span>9510</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38162"></span>9512</td>
+<td class="address-1"><span id="9512"></span>9512</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38163"></span>9513</td>
-<td class="instruction">CALL <a href="39702.html#39748">$9B44</a></td>
+<td class="address-1"><span id="9513"></span>9513</td>
+<td class="instruction">CALL <a href="39702.html#9b44">$9B44</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38166"></span>9516</td>
-<td class="instruction">JP Z,<a href="37850.html#38362">Action_Examine_15</a></td>
+<td class="address-1"><span id="9516"></span>9516</td>
+<td class="instruction">JP Z,<a href="37850.html#95da">Action_Examine_15</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38169"></span>9519</td>
+<td class="address-1"><span id="9519"></span>9519</td>
 <td class="instruction">CALL <a href="38381.html">LocationLit</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38172"></span>951C</td>
-<td class="instruction">JR NC,<a href="37850.html#38201">Action_Examine_11</a></td>
+<td class="address-1"><span id="951c"></span>951C</td>
+<td class="instruction">JR NC,<a href="37850.html#9539">Action_Examine_11</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38174"></span>951E</td>
+<td class="address-1"><span id="951e"></span>951E</td>
 <td class="instruction">LD A,($B711)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38177"></span>9521</td>
+<td class="address-1"><span id="9521"></span>9521</td>
 <td class="instruction">AND A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38178"></span>9522</td>
-<td class="instruction">JR NZ,<a href="37850.html#38193">Action_Examine_10</a></td>
+<td class="address-1"><span id="9522"></span>9522</td>
+<td class="instruction">JR NZ,<a href="37850.html#9531">Action_Examine_10</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38180"></span>9524</td>
+<td class="address-1"><span id="9524"></span>9524</td>
 <td class="instruction">CALL <a href="40056.html">$9C78</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38183"></span>9527</td>
-<td class="instruction">JR NC,<a href="37850.html#38193">Action_Examine_10</a></td>
+<td class="address-1"><span id="9527"></span>9527</td>
+<td class="instruction">JR NC,<a href="37850.html#9531">Action_Examine_10</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38185"></span>9529</td>
+<td class="address-1"><span id="9529"></span>9529</td>
 <td class="instruction">LD A,($B6E9)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38188"></span>952C</td>
-<td class="instruction">CALL <a href="40056.html#40059">$9C7B</a></td>
+<td class="address-1"><span id="952c"></span>952C</td>
+<td class="instruction">CALL <a href="40056.html#9c7b">$9C7B</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38191"></span>952F</td>
-<td class="instruction">JR C,<a href="37850.html#38201">Action_Examine_11</a></td>
+<td class="address-1"><span id="952f"></span>952F</td>
+<td class="instruction">JR C,<a href="37850.html#9539">Action_Examine_11</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_10</td>
-<td class="address-2"><span id="38193"></span>9531</td>
+<td class="address-2"><span id="9531"></span>9531</td>
 <td class="instruction">LD HL,$AFC4</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#44996">"i see nothing here"</a></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#afc4">"i see nothing here"</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38196"></span>9534</td>
+<td class="address-1"><span id="9534"></span>9534</td>
 <td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
 <td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38199"></span>9537</td>
-<td class="instruction">JR <a href="37850.html#38299">CheckLit</a></td>
+<td class="address-1"><span id="9537"></span>9537</td>
+<td class="instruction">JR <a href="37850.html#959b">CheckLit</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_11</td>
-<td class="address-2"><span id="38201"></span>9539</td>
+<td class="address-2"><span id="9539"></span>9539</td>
 <td class="instruction">LD A,($B6FE)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38204"></span>953C</td>
+<td class="address-1"><span id="953c"></span>953C</td>
 <td class="instruction">CP $01</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38206"></span>953E</td>
-<td class="instruction">JP Z,<a href="37850.html#38348">CheckValidAction</a></td>
+<td class="address-1"><span id="953e"></span>953E</td>
+<td class="instruction">JP Z,<a href="37850.html#95cc">CheckValidAction</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38209"></span>9541</td>
+<td class="address-1"><span id="9541"></span>9541</td>
 <td class="instruction">LD A,($B6E8)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38212"></span>9544</td>
+<td class="address-1"><span id="9544"></span>9544</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38214"></span>9546</td>
-<td class="instruction">JP Z,<a href="37850.html#38348">CheckValidAction</a></td>
+<td class="address-1"><span id="9546"></span>9546</td>
+<td class="instruction">JP Z,<a href="37850.html#95cc">CheckValidAction</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38217"></span>9549</td>
+<td class="address-1"><span id="9549"></span>9549</td>
 <td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38220"></span>954C</td>
+<td class="address-1"><span id="954c"></span>954C</td>
 <td class="instruction">LD ($B708),IX</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38224"></span>9550</td>
+<td class="address-1"><span id="9550"></span>9550</td>
 <td class="instruction">LD A,($B6E8)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38227"></span>9553</td>
-<td class="instruction">CALL <a href="38579.html#38696">$9728</a></td>
+<td class="address-1"><span id="9553"></span>9553</td>
+<td class="instruction">CALL <a href="38579.html#9728">$9728</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38230"></span>9556</td>
-<td class="instruction">JR NZ,<a href="37850.html#38299">CheckLit</a></td>
+<td class="address-1"><span id="9556"></span>9556</td>
+<td class="instruction">JR NZ,<a href="37850.html#959b">CheckLit</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38232"></span>9558</td>
+<td class="address-1"><span id="9558"></span>9558</td>
 <td class="instruction">LD A,($B6E9)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38235"></span>955B</td>
+<td class="address-1"><span id="955b"></span>955B</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38237"></span>955D</td>
-<td class="instruction">JR Z,<a href="37850.html#38266">Action_Examine_12</a></td>
+<td class="address-1"><span id="955d"></span>955D</td>
+<td class="instruction">JR Z,<a href="37850.html#957a">Action_Examine_12</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38239"></span>955F</td>
+<td class="address-1"><span id="955f"></span>955F</td>
 <td class="instruction">LD A,($B6FF)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38242"></span>9562</td>
+<td class="address-1"><span id="9562"></span>9562</td>
 <td class="instruction">CP $01</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38244"></span>9564</td>
-<td class="instruction">JR Z,<a href="37850.html#38348">CheckValidAction</a></td>
+<td class="address-1"><span id="9564"></span>9564</td>
+<td class="instruction">JR Z,<a href="37850.html#95cc">CheckValidAction</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38246"></span>9566</td>
+<td class="address-1"><span id="9566"></span>9566</td>
 <td class="instruction">LD A,($B6E9)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38249"></span>9569</td>
+<td class="address-1"><span id="9569"></span>9569</td>
 <td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38252"></span>956C</td>
+<td class="address-1"><span id="956c"></span>956C</td>
 <td class="instruction">LD ($B70A),IX</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38256"></span>9570</td>
-<td class="instruction">CALL <a href="38579.html#38696">$9728</a></td>
+<td class="address-1"><span id="9570"></span>9570</td>
+<td class="instruction">CALL <a href="38579.html#9728">$9728</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38259"></span>9573</td>
-<td class="instruction">JR NZ,<a href="37850.html#38299">CheckLit</a></td>
+<td class="address-1"><span id="9573"></span>9573</td>
+<td class="instruction">JR NZ,<a href="37850.html#959b">CheckLit</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38261"></span>9575</td>
-<td class="instruction">CALL <a href="41272.html#41424">DisplayExits_11</a></td>
+<td class="address-1"><span id="9575"></span>9575</td>
+<td class="instruction">CALL <a href="41272.html#a1d0">DisplayExits_11</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38264"></span>9578</td>
-<td class="instruction">JR Z,<a href="37850.html#38270">Action_Examine_13</a></td>
+<td class="address-1"><span id="9578"></span>9578</td>
+<td class="instruction">JR Z,<a href="37850.html#957e">Action_Examine_13</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_12</td>
-<td class="address-2"><span id="38266"></span>957A</td>
+<td class="address-2"><span id="957a"></span>957A</td>
 <td class="instruction">LD IX,($B708)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_13</td>
-<td class="address-2"><span id="38270"></span>957E</td>
+<td class="address-2"><span id="957e"></span>957E</td>
 <td class="instruction">LD A,($B6E7)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38273"></span>9581</td>
+<td class="address-1"><span id="9581"></span>9581</td>
 <td class="instruction">CALL <a href="39809.html">$9B81</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38276"></span>9584</td>
-<td class="instruction">JR NC,<a href="37850.html#38348">CheckValidAction</a></td>
+<td class="address-1"><span id="9584"></span>9584</td>
+<td class="instruction">JR NC,<a href="37850.html#95cc">CheckValidAction</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_14</td>
-<td class="address-2"><span id="38278"></span>9586</td>
+<td class="address-2"><span id="9586"></span>9586</td>
 <td class="instruction">LD L,(IX+$01)</td>
 <td class="comment-1" rowspan="2">Fetch the action address from the <a href="50992.html">action table</a> and store it in <span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38281"></span>9589</td>
+<td class="address-1"><span id="9589"></span>9589</td>
 <td class="instruction">LD H,(IX+$02)</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38284"></span>958C</td>
+<td class="address-1"><span id="958c"></span>958C</td>
 <td class="instruction">CALL <a href="39788.html">TriggerAction</a></td>
 <td class="comment-1" rowspan="1">Call <a href="39788.html">TriggerAction</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38287"></span>958F</td>
+<td class="address-1"><span id="958f"></span>958F</td>
 <td class="instruction">INC IX</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38289"></span>9591</td>
+<td class="address-1"><span id="9591"></span>9591</td>
 <td class="instruction">INC IX</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38291"></span>9593</td>
+<td class="address-1"><span id="9593"></span>9593</td>
 <td class="instruction">INC IX</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38293"></span>9595</td>
+<td class="address-1"><span id="9595"></span>9595</td>
 <td class="instruction">SUB A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38294"></span>9596</td>
+<td class="address-1"><span id="9596"></span>9596</td>
 <td class="instruction">CP (IX+$00)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38297"></span>9599</td>
-<td class="instruction">JR Z,<a href="37850.html#38278">Action_Examine_14</a></td>
+<td class="address-1"><span id="9599"></span>9599</td>
+<td class="instruction">JR Z,<a href="37850.html#9586">Action_Examine_14</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label">CheckLit</td>
-<td class="address-2"><span id="38299"></span>959B</td>
+<td class="address-2"><span id="959b"></span>959B</td>
 <td class="instruction">LD A,($B6FA)</td>
-<td class="comment-1" rowspan="3">If <a href="46810.html#46842">B6FA</a> is not $01 then jump to <a href="37850.html#38343">CheckReturn</a>.</td>
+<td class="comment-1" rowspan="3">If <a href="46810.html#b6fa">B6FA</a> is not $01 then jump to <a href="37850.html#95c7">CheckReturn</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38302"></span>959E</td>
+<td class="address-1"><span id="959e"></span>959E</td>
 <td class="instruction">CP $01</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38304"></span>95A0</td>
-<td class="instruction">JR NZ,<a href="37850.html#38343">CheckReturn</a></td>
+<td class="address-1"><span id="95a0"></span>95A0</td>
+<td class="instruction">JR NZ,<a href="37850.html#95c7">CheckReturn</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="38306"></span>
+<span id="95a2"></span>
 <div class="comments">
 <div class="paragraph">
 This check is a little unnecessary as the first thing the routine at <a href="38381.html">LocationLit</a> does, is to check exactly this...
@@ -1137,23 +1137,23 @@ This check is a little unnecessary as the first thing the routine at <a href="38
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38306"></span>95A2</td>
+<td class="address-1"><span id="95a2"></span>95A2</td>
 <td class="instruction">LD A,($B6EA)</td>
-<td class="comment-1" rowspan="3">If <a href="46810.html#46826">CurrentCharacter</a> is not $00 (i.e. "You") then skip the "is location lit" check, instead jump to <a href="37850.html#38319">CheckAction</a>.</td>
+<td class="comment-1" rowspan="3">If <a href="46810.html#b6ea">CurrentCharacter</a> is not $00 (i.e. "You") then skip the "is location lit" check, instead jump to <a href="37850.html#95af">CheckAction</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38309"></span>95A5</td>
+<td class="address-1"><span id="95a5"></span>95A5</td>
 <td class="instruction">CP $00</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38311"></span>95A7</td>
-<td class="instruction">JR NZ,<a href="37850.html#38319">CheckAction</a></td>
+<td class="address-1"><span id="95a7"></span>95A7</td>
+<td class="instruction">JR NZ,<a href="37850.html#95af">CheckAction</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="38313"></span>
+<span id="95a9"></span>
 <div class="comments">
 <div class="paragraph">
 <a href="38381.html">LocationLit</a> uses the carry flag to indicate if it is light or dark.
@@ -1163,61 +1163,61 @@ This check is a little unnecessary as the first thing the routine at <a href="38
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38313"></span>95A9</td>
+<td class="address-1"><span id="95a9"></span>95A9</td>
 <td class="instruction">CALL <a href="38381.html">LocationLit</a></td>
-<td class="comment-1" rowspan="2">If the location is dark then call <a href="29405.html">PrintMsg</a> to tell the user <a href="44413.html#44575">"it is dark"</a>.</td>
+<td class="comment-1" rowspan="2">If the location is dark then call <a href="29405.html">PrintMsg</a> to tell the user <a href="44413.html#ae1f">"it is dark"</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38316"></span>95AC</td>
+<td class="address-1"><span id="95ac"></span>95AC</td>
 <td class="instruction">CALL C,<a href="29405.html">PrintMsg</a></td>
 </tr>
 <tr>
 <td class="asm-label">CheckAction</td>
-<td class="address-2"><span id="38319"></span>95AF</td>
+<td class="address-2"><span id="95af"></span>95AF</td>
 <td class="instruction">LD A,($B6E7)</td>
-<td class="comment-1" rowspan="2"><span class="register">B</span>=<a href="46810.html#46823">CurrentAction</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">B</span>=<a href="46810.html#b6e7">CurrentAction</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38322"></span>95B2</td>
+<td class="address-1"><span id="95b2"></span>95B2</td>
 <td class="instruction">LD B,A</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38323"></span>95B3</td>
+<td class="address-1"><span id="95b3"></span>95B3</td>
 <td class="instruction">LD A,($B6E8)</td>
-<td class="comment-1" rowspan="3">Call <a href="37850.html#38367">Action_Examine_16</a> with <span class="register">IX</span>=<a href="46810.html#46856">B708</a> and <span class="register">A</span>=<a href="46810.html#46824">CurrentObject</a>.</td>
+<td class="comment-1" rowspan="3">Call <a href="37850.html#95df">Action_Examine_16</a> with <span class="register">IX</span>=<a href="46810.html#b708">B708</a> and <span class="register">A</span>=<a href="46810.html#b6e8">CurrentObject</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38326"></span>95B6</td>
+<td class="address-1"><span id="95b6"></span>95B6</td>
 <td class="instruction">LD IX,($B708)</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38330"></span>95BA</td>
-<td class="instruction">CALL <a href="37850.html#38367">Action_Examine_16</a></td>
+<td class="address-1"><span id="95ba"></span>95BA</td>
+<td class="instruction">CALL <a href="37850.html#95df">Action_Examine_16</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38333"></span>95BD</td>
+<td class="address-1"><span id="95bd"></span>95BD</td>
 <td class="instruction">LD A,($B6E9)</td>
-<td class="comment-1" rowspan="3">Call <a href="37850.html#38367">Action_Examine_16</a> with <span class="register">IX</span>=<a href="46810.html#46858">B70A</a> and <span class="register">A</span>=<a href="46810.html#46825">B6E9</a>.</td>
+<td class="comment-1" rowspan="3">Call <a href="37850.html#95df">Action_Examine_16</a> with <span class="register">IX</span>=<a href="46810.html#b70a">B70A</a> and <span class="register">A</span>=<a href="46810.html#b6e9">B6E9</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38336"></span>95C0</td>
+<td class="address-1"><span id="95c0"></span>95C0</td>
 <td class="instruction">LD IX,($B70A)</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38340"></span>95C4</td>
-<td class="instruction">CALL <a href="37850.html#38367">Action_Examine_16</a></td>
+<td class="address-1"><span id="95c4"></span>95C4</td>
+<td class="instruction">CALL <a href="37850.html#95df">Action_Examine_16</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="38343"></span>
+<span id="95c7"></span>
 <div class="comments">
 <div class="paragraph">
 Performs housekeeping and returns.
@@ -1227,29 +1227,29 @@ Performs housekeeping and returns.
 </tr>
 <tr>
 <td class="asm-label">CheckReturn</td>
-<td class="address-2"><span id="38343"></span>95C7</td>
+<td class="address-2"><span id="95c7"></span>95C7</td>
 <td class="instruction">POP BC</td>
 <td class="comment-1" rowspan="3">Restore <span class="register">BC</span>, <span class="register">IX</span> and <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38344"></span>95C8</td>
+<td class="address-1"><span id="95c8"></span>95C8</td>
 <td class="instruction">POP IX</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38346"></span>95CA</td>
+<td class="address-1"><span id="95ca"></span>95CA</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38347"></span>95CB</td>
+<td class="address-1"><span id="95cb"></span>95CB</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="38348"></span>
+<span id="95cc"></span>
 <div class="comments">
 <div class="paragraph">
 Checks if the action given is valid.
@@ -1259,45 +1259,45 @@ Checks if the action given is valid.
 </tr>
 <tr>
 <td class="asm-label">CheckValidAction</td>
-<td class="address-2"><span id="38348"></span>95CC</td>
+<td class="address-2"><span id="95cc"></span>95CC</td>
 <td class="instruction">LD A,($B6E7)</td>
-<td class="comment-1" rowspan="3">Call <a href="40381.html">IndexIdTable</a> with <a href="50992.html">ActionTable</a>, to match the key value of <a href="46810.html#46823">CurrentAction</a>.</td>
+<td class="comment-1" rowspan="3">Call <a href="40381.html">IndexIdTable</a> with <a href="50992.html">ActionTable</a>, to match the key value of <a href="46810.html#b6e7">CurrentAction</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38351"></span>95CF</td>
+<td class="address-1"><span id="95cf"></span>95CF</td>
 <td class="instruction">LD IX,$C730</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38355"></span>95D3</td>
+<td class="address-1"><span id="95d3"></span>95D3</td>
 <td class="instruction">CALL <a href="40381.html">IndexIdTable</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38358"></span>95D6</td>
+<td class="address-1"><span id="95d6"></span>95D6</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-1" rowspan="2">If the termination character was not reached because an action did match, jump to <a href="37850.html#38278">Action_Examine_14</a>.</td>
+<td class="comment-1" rowspan="2">If the termination character was not reached because an action did match, jump to <a href="37850.html#9586">Action_Examine_14</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38360"></span>95D8</td>
-<td class="instruction">JR NZ,<a href="37850.html#38278">Action_Examine_14</a></td>
+<td class="address-1"><span id="95d8"></span>95D8</td>
+<td class="instruction">JR NZ,<a href="37850.html#9586">Action_Examine_14</a></td>
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_15</td>
-<td class="address-2"><span id="38362"></span>95DA</td>
+<td class="address-2"><span id="95da"></span>95DA</td>
 <td class="instruction">CALL <a href="29390.html">ICannotDoThat</a></td>
-<td class="comment-1" rowspan="2">Else, call <a href="29390.html">ICannotDoThat</a> and jump to <a href="37850.html#38343">CheckReturn</a>.</td>
+<td class="comment-1" rowspan="2">Else, call <a href="29390.html">ICannotDoThat</a> and jump to <a href="37850.html#95c7">CheckReturn</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38365"></span>95DD</td>
-<td class="instruction">JR <a href="37850.html#38343">CheckReturn</a></td>
+<td class="address-1"><span id="95dd"></span>95DD</td>
+<td class="instruction">JR <a href="37850.html#95c7">CheckReturn</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="38367"></span>
+<span id="95df"></span>
 <div class="comments">
 <div class="paragraph">
 This entry point is used by the routine at <a href="36853.html">Action_ThrowAt</a>.
@@ -1307,35 +1307,35 @@ This entry point is used by the routine at <a href="36853.html">Action_ThrowAt</
 </tr>
 <tr>
 <td class="asm-label">Action_Examine_16</td>
-<td class="address-2"><span id="38367"></span>95DF</td>
+<td class="address-2"><span id="95df"></span>95DF</td>
 <td class="instruction">BIT 6,(IX+$07)</td>
 <td class="comment-1" rowspan="2">Return if the object is marked as being a "Fluid".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38371"></span>95E3</td>
+<td class="address-1"><span id="95e3"></span>95E3</td>
 <td class="instruction">RET Z</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38372"></span>95E4</td>
+<td class="address-1"><span id="95e4"></span>95E4</td>
 <td class="instruction">BIT 3,(IX+$07)</td>
 <td class="comment-1" rowspan="2">Return if the object is not marked as "Gives Light".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38376"></span>95E8</td>
+<td class="address-1"><span id="95e8"></span>95E8</td>
 <td class="instruction">RET NZ</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38377"></span>95E9</td>
-<td class="instruction">CALL <a href="39557.html#39584">$9AA0</a></td>
-<td class="comment-1" rowspan="1">Call <a href="39557.html#39584">9AA0</a>.</td>
+<td class="address-1"><span id="95e9"></span>95E9</td>
+<td class="instruction">CALL <a href="39557.html#9aa0">$9AA0</a></td>
+<td class="comment-1" rowspan="1">Call <a href="39557.html#9aa0">9AA0</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38380"></span>95EC</td>
+<td class="address-1"><span id="95ec"></span>95EC</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
@@ -1345,7 +1345,7 @@ This entry point is used by the routine at <a href="36853.html">Action_ThrowAt</
 <td class="prev">
 Prev: <a href="37790.html">939E</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#37850">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#93da">Map</a></td>
 <td class="next">
 Next: <a href="38381.html">95ED</a>
 </td>

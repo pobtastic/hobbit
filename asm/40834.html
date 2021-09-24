@@ -19,13 +19,13 @@
 <td class="prev">
 Prev: <a href="40822.html">9F76</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#40834">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#9f82">Map</a></td>
 <td class="next">
 Next: <a href="40852.html">9F94</a>
 </td>
 </tr>
 </table>
-<div class="description">9F82: Routine at 9F82</div>
+<div class="description">9F82: Get Object First Location</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -34,50 +34,75 @@ Next: <a href="40852.html">9F94</a>
 Used by the routines at <a href="38579.html">96B3</a>, <a href="39629.html">9ACD</a> and <a href="39682.html">Action_None</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Object ID</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Either $FF if the object appears once, or the location ID of the first time the object appears.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
-<td class="address-2"><span id="40834"></span>9F82</td>
+<td class="asm-label">ObjectFirstLocation</td>
+<td class="address-2"><span id="9f82"></span>9F82</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Return if this is the terminator character ($FF).</td>
 </tr>
 <tr>
-<td class="address-1"><span id="40836"></span>9F84</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9f84"></span>9F84</td>
 <td class="instruction">RET Z</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address-1"><span id="40837"></span>9F85</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9f85"></span>9F85</td>
 <td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="39882.html">LocateObject</a>.</td>
+<td class="comment-1" rowspan="1">Call <a href="39882.html">LocateObject</a> to set <span class="register">IX</span> to the object data address.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="40840"></span>9F88</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9f88"></span>9F88</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Does the object appear in the game once?</td>
 </tr>
 <tr>
-<td class="address-1"><span id="40842"></span>9F8A</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9f8a"></span>9F8A</td>
 <td class="instruction">CP (IX+$00)</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address-1"><span id="40845"></span>9F8D</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9f8d"></span>9F8D</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=$FF (termination character).</td>
 </tr>
 <tr>
-<td class="address-1"><span id="40847"></span>9F8F</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9f8f"></span>9F8F</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return if not.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="40848"></span>9F90</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9f90"></span>9F90</td>
 <td class="instruction">LD A,(IX+$10)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the first location the object appears in.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="40851"></span>9F93</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9f93"></span>9F93</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
@@ -87,7 +112,7 @@ Used by the routines at <a href="38579.html">96B3</a>, <a href="39629.html">9ACD
 <td class="prev">
 Prev: <a href="40822.html">9F76</a>
 </td>
-<td class="up">Up: <a href="../maps/all.html#40834">Map</a></td>
+<td class="up">Up: <a href="../maps/all.html#9f82">Map</a></td>
 <td class="next">
 Next: <a href="40852.html">9F94</a>
 </td>
