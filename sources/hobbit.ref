@@ -3,11 +3,11 @@
 ;
 ; To build the HTML disassembly, run these commands:
 ;   tap2sna.py @hobbit.t2s
-;   sna2skool.py -H -c hobbit.ctl HobbitThe.z80 > hobbit.skool
-;   skool2html.py -H hobbit.skool -T dark
+;   sna2skool.py -H -c sources/hobbit.ctl HobbitThe.z80 > sources/hobbit.skool
+;   skool2html.py -H sources/hobbit.skool -T dark
 
 [Config]
-RefFiles=changelog.ref;links.ref
+RefFiles=changelog.ref;facts.ref
 HtmlWriterClass=:hobbit.HobbitHtmlWriter
 GameDir=hobbit
 
@@ -16,6 +16,29 @@ Game=The Hobbit
 Logo=#SCR2,6,0,19,9,$4000,$5800(/images/logo)
 Copyright=&copy; 1982 Melbourne House
 StyleSheet=skoolkit.css;skoolkit-dark.css
+AddressAnchor={address#IF({base}==16)(:04x)}
 
-[Links]
-Links=Links
+[Index:Reference:Reference]
+Facts
+Credits
+Changelog
+
+[Paths]
+Changelog=reference/changelog.html
+Credits=reference/credits.html
+Links=reference/links.html
+
+[Page:Credits]
+PageContent=#INCLUDE(Credits)
+
+[Credits]
+<div>
+  <p>This work would not be possible without the efforts of;</p>
+  <dl>
+    <dt>ICEMARK - Christopher Jon Wild</dt>
+    <dd><a href="https://www.icemark.com/dataformats/hobbit/index.html">https://www.icemark.com/dataformats/hobbit/index.html</a></dd>
+    <dt>ZX OpenSource</dt>
+    <dd><a href="http://opensourcezx.untergrund.net/a_games-hobbit_src.html">http://opensourcezx.untergrund.net/a_games-hobbit_src.html</a></dd>
+  </dl>
+  <p>Without these to guide my early versions, I'm sure I wouldn't have gotten very far!</p>
+</div>

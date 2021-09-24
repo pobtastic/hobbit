@@ -3629,6 +3629,7 @@ N $6BEA YOUR
 c $6C00 Game Entry Point
 @ $6C00 label=Start
   $6C00,$01 Disable interrupts.
+N $6C01 Initial set-up; copies "clean" data to the "CopyOf..." store. This is then used to create a new game in #R$6C27.
   $6C01,$0B Copies #R$C11B to #R$F400 ($615 bytes).
   $6C0C,$08 Copies #R$BA8A to #R$FA15 ($5D9 bytes).
   $6C14,$0B Copies #R$B6EB to $5F00 ($1D bytes).
@@ -3636,30 +3637,102 @@ c $6C00 Game Entry Point
 @ $6C27 label=ReStart
   $6C27,$01 Disable interrupts.
   $6C28,$03 Set the stack pointer to #R$5EFF.
+N $6C2B Reset the border and paper colours for location #LOCATION($05, 1, 1)($) - "#LOCATIONNAME($05)".
   $6C2B,$04 #REGix=#R$CC00
   $6C2F,$05 Call #R$9DBD with location #LOCATION($05, 1, 1)($) - "#LOCATIONNAME($05)".
   $6C34,$06 #REGhl=#R$E142 (#REGhl=location graphics data for "#LOCATIONNAME($05)").
-  $6C3A,$05 Write $00 to the first and second addresses.
+  $6C3A,$05 Write $00 (black) to the first (border) and second (paper) addresses.
+N $6C3F Copy "clean" data to the game tables ready for a new game.
   $6C3F,$0B Copies #R$F400 to #R$C11B ($615 bytes).
   $6C4A,$08 Copies #R$FA15 to #R$BA8A ($5D9 bytes).
   $6C52,$0B Copies $5F00 to #R$B6EB ($1D bytes).
   $6C5D,$08 Copies $CA84 to $5F1D ($BF bytes).
   $6C65,$03 Set the border colour to black.
+  $6C68,$05 #HTML(Write $38 to <a href="https://skoolkid.github.io/rom/asm/5C48.html">BORDCR</a>.)
 @ $6C6D label=ReStart_Keypress
-  $6C6D
+  $6C6D,$03 Read from the keyboard port.
+  $6C70,$02,b$01 A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key).
+.           Hence keep only bits 0-4 for the check.
+  $6C72,$04 Loop back to #R$6C6D until any key has been pressed.
+
+  $6C76,$04 Read from the keyboard port.
+. #TABLE(default,centre,centre,centre,centre,centre,centre)
+. { =h,r2 Port Number | =h,c5 Bit }
+. { =h 0 | =h 1 | =h 2 | =h 3 | =h 4 }
+. { $7F | SPACE | FULL-STOP | M | N | B }
+. TABLE#
+  $6C7A,$02,b$01 Keep bit 3 ("N").
+  $6C7C,$03 Write it to #R$B707.
+  $6C7F,$06 Write $50E0 to #R$85B4(the percentage buffer).
+  $6C85,$05 Write $2B to #R$85B4($85B6).
+  $6C8A,$06 Write $5020 to #R$869C.
+  $6C90,$05 Write $01 to #R$869E.
+  $6C95,$05 Write $20 to #R$85B3.
+  $6C9A,$05 Write $2A to #R$869B.
+  $6C9F,$08 Write $00 to #N$C8 bytes, starting from #R$B738 (using #R$70E2).
+  $6CA7,$05 #REGr = refresh register; i.e. write a semi-random number to #R$B70E.
+  $6CAC,$10 Write $00 to;
+.           #LIST
+.           { #R$869F }
+.           { #R$86A0 }
+.           { #R$B71A }
+.           { #R$B700 }
+.           { #R$B6F2 }
+.           LIST#
+  $6CBC,$0B Write $01 to;
+.           #LIST
+.           { #R$B702 }
+.           { #R$B6FA }
+.           { #R$B704 }
+.           LIST#
+  $6CC7,$06 Write $0000 to #R$B6F7.
+N $6CCD This section draws the "Squiggle" line which separates the windows.
   $6CCD,$03 Call #R$6FD3.
   $6CD0,$03 #REGhl=#R$5140
   $6CD3,$03 #REGde=#R$6DCC
-  $6CD6,$02 #REGc=#PEEK($6CD7)
-  $6CD8,$02 Set a counter of #PEEK($6CD9).
+  $6CD6,$02 #REGc=$05.
+@ $6CD8 label=SquiggleGFX_Loop_1
+  $6CD8,$02 Set a counter of $10.
+  $6CDA,$01 Stash #REGhl (the screen buffer pointer) temporarily - this is because the line is a repeated pattern.
+@ $6CDB label=SquiggleGFX_Loop_2
+  $6CDB,$02 Copy one byte from #REGde (the squiggle graphics data), to #REGhl (the screen buffer).
+  $6CDD,$02 Increase both pointers by one.
+  $6CDF,$02 Copy one byte from #REGde (the squiggle graphics data), to #REGhl (the screen buffer).
+  $6CE1,$01 Increase #REGhl (the screen buffer) pointer by one.
+  $6CE2,$01 Decrease #REGde (the squiggle graphics data) pointer by one.
+  $6CE3,$02 Decrease counter by one and loop back to #R$6CDB until counter is zero.
+  $6CE5,$02 Increase #REGde (the squiggle graphics data) pointer by two.
+  $6CE7,$01 Restore #REGhl (the screen buffer position) from the stack.
+  $6CE8,$01 Increase #REGh by one (i.e. move down a line).
+  $6CE9,$03 Decrease #REGc by one and loop back to #R$6CD8 until counter is zero.
+
+  $6CEC,$05 Write $11 to #R$B716.
+  $6CF1,$03 #REGa=#R$B706.
+  $6CF4,$01 Increase #REGa by one.
+  $6CF5,$02 If #REGa is not zero then jump to #R$6D13.
+  $6CF7,$03 Call #R$97AD.
 
   $6CFA,$03 #REGhl=#R$6FF2
 
   $6D06,$0B Copies $6FF4 to $6FF9 ($05 bytes).
+  $6D11,$02 Jump to #R$6D22.
+
+  $6D13,$05 Write $01 to #R$B705.
+  $6D18,$05 Write $09 to #R$B716.
+  $6D1D,$03 Call #R$6DD6.
+
+  $6D22,$08 Write $00 to #N$40 bytes, starting from #R$709C (using #R$70E2).
+  $6D2A,$03 #REGhl=#R$6FF9.
+  $6D2D,$04 #REGiy=#R$709C.
+  $6D31,$03 Call #R$6E97.
+
+  $6D9F,$03 Jump to #R$6D13.
 
   $6DA2,$03 #REGhl=#R$AD93("i do not know the word "[0x16]"")
   $6DA5,$05 Write $01 to #R$B701.
   $6DAA,$03 Call #R$72DD.
+
+  $6DC9,$03 Jump to #R$6D13.
 
 b $6DCC Squiggle Graphics
 @ $6DCC label=SquiggleGFX
@@ -3691,10 +3764,25 @@ W $70DD,$02
   $70DF,$01
 W $70E0,$02
 
-c $70E2
+c $70E2 Blanks "n" memory locations
+R $70E2 B Counter
+R $70E2 HL Target
+@ $70E2 label=Blanker
+  $70E2,$01 #REGa=$00.
+@ $70E3 label=Blanker_Loop
+  $70E3,$01 Write #REGa to #REGhl.
+  $70E4,$01 Increment #REGhl by one.
+  $70E5,$02 Decrease counter by one and loop back to #R$70E3 until counter is zero.
+  $70E7,$01 Return.
 
 c $70E8 Index Action
+R $70E8 A The ID of the Action; $01-$3B
 @ $70E8 label=IndexAction
+  $70E8,$03 Create an offset in #REGhl.
+  $70EB,$07 #REGhl = #R$AB53($AB4B) + (#REGhl * $08).
+  $70F2,$01 Return.
+
+c $70F3
 
 b $7291 Print Table
 B $7291,$04
@@ -3754,8 +3842,17 @@ N $7326 X
   $733F,$01 Indirect jump to the address held in #REGhl.
 
 c $7340
-c $7344
-c $735B
+  $7340,$02 #REGd=$60.
+  $7342,$02 Jump to #R$734B.
+
+  $7344,$02 #REGd=$30.
+  $7346,$02 Jump to #R$734B.
+
+  $7348,$03 Call #R$74C1.
+
+  $734B,$02 #REGa=$2E.
+
+@ $735B label=Return
   $735B,$04 Restore #REGde from #R$70DD.
   $735F,$04 Restore #REGix from #R$70E0.
   $7363,$03 Restore #REGa from #R$70DC.
@@ -3763,7 +3860,7 @@ c $735B
 c $7367
 c $7376
 c $737E
-c $738B
+@ $738B label=
 c $738D
 c $7394
 c $73A3
@@ -3846,7 +3943,48 @@ N $74E7 Check minimum length.
   $7573,$01 Return.
 
 c $7574
-B $7574,$11
+B $7574,$06
+B $757A,$01
+B $757B,$0A
+  $7585,$04 #REGiy=#R$B9C8.
+  $7589,$01 #REGa=$00.
+  $758A,$03 Write #REGa to #R$B71B.
+  $758D,$03 Call #R$785F.
+  $7590,$03 Write $00 to #R$B706.
+  $7593,$02 #REGe=$FF.
+  $7595,$03 #REGa=#R$B71A.
+  $7599,$02 #REGd=$A0.
+  $759B,$03 If #REGa is not zero jump to #R$7614.
+  $75A0,$04 Write $00 to #R$757A.
+  $75B1,$03 Call #R$7864.
+  $75B4,$08 Write $00 to #N$0A bytes, starting from #R$757B (using #R$70E2).
+  $75BC,$02 Set bit 4 of #REGe.
+
+  $75BE,$03 Call #R$7873.
+  $75C1,$01 Stash #REGde on the stack.
+  $75C5,$03 Create an offset in #REGde.
+  $75C8,$04 #REGhl=#R$75D2 + offset.
+  $75CC,$03 #REGde=Address from the jump table.
+  $75CF,$01 Switch #REGhl and #REGde.
+  $75D0,$01 Restore #REGde from the stack.
+  $75D1,$01 Indirect jump to the address held in #REGhl.
+
+@ $75D2 label=JumpTable
+W $75D2,$1A,$02
+
+c $75EC
+c $75F6
+c $75FA
+c $76EC
+c $76F2
+c $770B
+c $772F
+c $7733
+c $7790
+c $7795
+c $77A2
+c $77C9
+c $77D1
 
   $792F,$03 #REGhl=#R$AD9F("what ?[0x14]")
   $7937,$03 Call #R$72DD.
@@ -4103,46 +4241,148 @@ N $843A I don't believe this is ever used?
 
 c $8451 Load Game
 @ $8451 label=LoadGame
+  $8451,$03 Stash #REGix and #REGde on the stack.
+N $8454 Load "flags".
+  $8454,$02 Set the load as a "data block".
+  $8456,$01 Set the carry flag.
+  $8457,$04 Set the start address to; #R$B6EB.
+  $845B,$03 Set the block length to; $001D bytes.
+  $845E,$03 Call #R$8498.
+N $8461 Load "objects".
+  $8461,$02 Set the load as a "data block".
+  $8463,$01 Set the carry flag.
+  $8464,$04 Set the start address to; #R$C11B.
+  $8468,$03 Set the block length to; $0615 bytes.
+  $846B,$03 Call #R$8498.
+N $846E Load...
+  $846E,$02 Set the load as a "data block".
+  $8470,$01 Set the carry flag.
+  $8471,$04 Set the start address to; #R$CA84.
+  $8475,$03 Set the block length to; $00BF bytes.
+  $8478,$03 Call #R$8498.
+N $847B Load "locations".
+  $847B,$02 Set the load as a "data block".
+  $847D,$01 Set the carry flag.
+  $847E,$04  Set the start address to; #R$BA8A.
+  $8482,$03 Set the block length to; $05D9 bytes.
+  $8485,$03 Call #R$8498.
+N $8488 Success!
+  $8488,$01 Disable interrupts.
+  $8489,$09 Call #R$84B3 using #REGhl=#R$B6EB and #REGde=$C9E2.
+  $8492,$03 Restore #REGde and #REGix from the stack.
+  $8495,$03 Jump to #R$82B3.
 
-c $8498 Load Block
+N $8498 Load Block
 @ $8498 label=LoadBlock
   $8498,$03 #HTML(Call <a href="https://skoolkid.github.io/rom/asm/0556.html">LD_BYTES</a>.)
+  $849B,$01 Return if the carry flag is set.
+  $849C,$05 Write $01 to #R$B701.
   $84A1,$03 #REGhl=#R$B357("tape error - hit any key to restart program[0x15]")
   $84A4,$03 Call #R$72DD.
 @ $84A7 label=LoadBlock_Loop
-  $84A7
+  $84A7,$03 Read from the keyboard port.
+  $84AA,$02,b$01 A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key).
+.           Hence keep only bits 0-4 for the check.
+  $84AC,$04 Loop back to #R$84A7 until any key has been pressed.
   $84B0,$03 Jump to #R$6C27.
 
-c $84B3
+c $84B3 Copies 3 bytes from source to target
+R $84B3 DE Source
+R $84B3 HL Target
+@ $84B3 label=ThreeByteCopy
+  $84B3,$03 #REGbc=$0003.
+  $84B6,$02 Copy three bytes of data from #REGde to #REGhl.
+  $84B8,$01 Return.
 
-c $84B9
+c $84B9 Debounce keyboard
+@ $84B9 label=DebounceAnyKey
+  $84B9,$03 Read from the keyboard port.
+  $84BC,$02,b$01 A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key).
+.           Hence keep only bits 0-4 for the check.
+  $84BE,$04 Loop back to #R$84B9 if a key is being pressed.
+@ $84C2 label=NormalAnyKey
+  $84C2,$03 Read from the keyboard port.
+  $84C5,$02,b$01 A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key).
+.           Hence keep only bits 0-4 for the check.
+  $84C7,$04 Loop back to #R$84C2 until any key has been pressed.
+  $84CB,$01 Return.
 
 c $84CC Save Game
 @ $84CC label=SaveGame
+  $84CC,$03 Stash #REGix and #REGde on the stack.
+  $84CF,$09 Call #R$84B3 with #REGde=#R$B6EB and #REGhl=$C9E2.
+  $84D8,$05 Write $01 to #R$B701.
   $84DD,$03 #REGhl=#R$B342("start tape then press any key")
   $84E0,$03 Call #R$72DD.
+  $84E3,$03 Call #R$84B9.
+N $84E6 Save "flags".
   $84E6,$02 Set the save as a "data block".
   $84E8,$04 Set the start address to; #R$B6EB.
   $84EC,$03 Set the block length to; $001D bytes.
   $84EF,$03 #HTML(Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.)
+N $84F2 Save "objects".
   $84F2,$02 Set the save as a "data block".
   $84F4,$04 Set the start address to; #R$C11B.
   $84F8,$03 Set the block length to; $0615 bytes.
   $84FB,$03 #HTML(Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.)
+N $84FE Save ...
   $84FE,$02 Set the save as a "data block".
   $8500,$04 Set the start address to; $CA84.
   $8504,$03 Set the block length to; $00BF bytes.
   $8507,$03 #HTML(Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.)
+N $850A Save "locations".
   $850A,$02 Set the save as a "data block".
   $850C,$04 Set the start address to; #R$BA8A.
   $8510,$03 Set the block length to; $05D9 bytes.
   $8513,$03 #HTML(Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.)
+N $8516 Begin verification.
   $8516,$03 #REGhl=#R$B3A4("rewind and prepare tape for verification -- then hit any key")
   $8519,$03 Call #R$72DD.
+  $851C,$03 Call #R$84B9.
+N $851F Verify "flags".
+  $851F,$02 Set the load as a "data block".
+  $8521,$01 Reset the carry flag.
+  $8522,$04 Set the start address to; #R$B6EB.
+  $8526,$03 Set the block length to; $001D bytes.
+  $8529,$03 Call #R$855A.
+N $852C Verify "objects".
+  $852C,$02 Set the load as a "data block".
+  $852E,$01 Reset the carry flag.
+  $852F,$04 Set the start address to; #R$C11B.
+  $8533,$03 Set the block length to; $0615 bytes.
+  $8536,$03 Call #R$855A.
+N $8539 Verify ...
+  $8539,$02 Set the load as a "data block".
+  $853B,$01 Reset the carry flag.
+  $853C,$04 Set the start address to; $CA84.
+  $8540,$03 Set the block length to; $00BF bytes.
+  $8543,$03 Call #R$855A.
+N $8546 Verify "locations".
+  $8546,$02 Set the load as a "data block".
+  $8548,$01 Reset the carry flag.
+  $8549,$04 Set the start address to; #R$BA8A.
+  $854D,$03 Set the block length to; $05D9 bytes.
+  $8550,$03 Call #R$855A.
+N $8553 Success!
+@ $8553 label=SaveGame_Done
   $8553,$01 Disable interrupts.
+  $8554,$03 Restore #REGde and #REGix from the stack.
+  $8557,$03 Jump to #R$82B3.
+N $855A Verify block.
+@ $855A label=VerifyBlock
   $855A,$03 #HTML(Call <a href="https://skoolkid.github.io/rom/asm/0556.html">LD_BYTES</a>.)
+  $855D,$01 Return if the carry flag is set.
+  $855E,$05 Write $01 to #R$B701.
   $8563,$03 #REGhl=#R$B381("tape error - hit any key to continue[0x15]")
   $8566,$03 Call #R$72DD.
+N $8569 This is almost a carbon copy of #R$8441.
+@ $8569 label=VerifyBlock_WaitForKey
+  $8569,$03 Read from the keyboard port.
+  $856C,$02,b$01 A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key).
+.           Hence keep only bits 0-4 for the check.
+  $856E,$04 Loop back to #R$8569 until any key has been pressed.
+  $8572,$01 Restore #REGde from the stack.
+  $8573,$03 Jump to #R$8553.
 
 c $8576
   $8576,$01 Stash #REGhl on the stack.
@@ -4178,17 +4418,25 @@ c $8576
   $85AE,$03 Call #R$86A1.
   $85B1,$01 Restore #REGaf from the stack.
   $85B2,$01 Return.
-B $85B3,$04 Percentage buffer.
+  $85B3,$01
+B $85B4,$03 Percentage buffer.
+@ $85B4 label=PercentageBuffer
 
   $85B7,$01 Restore #REGaf from the stack.
 
 c $867A Print Character
 @ $867A label=PrintChar
-R $867A A ID of character to print
+R $867A A ASCII value of character to print
 N $867A #HTML(Prints using the standard ZX Spectrum <a href="https://skoolkid.github.io/rom/asm/3D00.html">CHARSET</a>.)
   $867A,$04 Push #REGaf, #REGbc, #REGde and #REGhl on the stack.
-  $867E,$08 Create offset for the font graphic data look-up.
-  $8686,$04 Calculate font graphic data address.
+  $867E,$08 Create offset for the font graphic data look-up. For example;
+. #TABLE(default,centre,centre,centre,centre,centre)
+. { =h Letter | =h ASCII Value | =h SUB #N($20, 2, 3, 1, 1)($) | =h * 8 | =h CHARSET + offset }
+. { #LET(id=$41) #LET(result=$3D00 + ({id} - $20) * 8) "#CHR({id})" | #N({id}, 2, 3, 1, 1)($) | #N({id} - $20, 2, 3, 1, 1)($) | #N(({id} - $20) * 8, 2, 3, 1, 1)($) | #HTML(<a href="https://skoolkid.github.io/rom/asm/3D00.html##N({result}, 2, 3, 1, 1)()">#N({result}, 2, 3, 1, 1)($)</a>) }
+. { #LET(id=$51) #LET(result=$3D00 + ({id} - $20) * 8) "#CHR({id})" | #N({id}, 2, 3, 1, 1)($) | #N({id} - $20, 2, 3, 1, 1)($) | #N(({id} - $20) * 8, 2, 3, 1, 1)($) | #HTML(<a href="https://skoolkid.github.io/rom/asm/3D00.html##N({result}, 2, 3, 1, 1)()">#N({result}, 2, 3, 1, 1)($)</a>) }
+. { #LET(id=$61) #LET(result=$3D00 + ({id} - $20) * 8) "#CHR({id})" | #N({id}, 2, 3, 1, 1)($) | #N({id} - $20, 2, 3, 1, 1)($) | #N(({id} - $20) * 8, 2, 3, 1, 1)($) | #HTML(<a href="https://skoolkid.github.io/rom/asm/3D00.html##N({result}, 2, 3, 1, 1)()">#N({result}, 2, 3, 1, 1)($)</a>) }
+. TABLE#
+  $8686,$04 #HTML(Calculate font graphic data address using <a href="https://skoolkid.github.io/rom/asm/3D00.html">CHARSET</a> + offset.)
   $868A,$03 Store the result in #REGde, restore the screen location to #REGhl.
 @ $868F label=PrintChar_Loop
   $868D,$02 Set a counter for $08 lines.
@@ -4210,11 +4458,46 @@ B $86A0,$01
 c $876B Scroll Line
 @ $876B label=ScrollLine
   $876B,$04 Push #REGaf, #REGbc, #REGhl and #REGde on the stack.
+N $876F Set up the initial values.
+  $876F,$03 #REGhl=$4020 (source).
+  $8772,$03 #REGde=$4000 (target).
+  $8775,$02 #REGa=$11 (number of lines to shift).
+  $8777,$02 #REGb=$00.
+@ $8779 label=ScrollLine_Loop
+  $8779,$02 Stash #REGhl and #REGde on the stack.
+  $877B,$02 #REGc=$08 (byte counter).
+@ $877D label=ScrollLine_Line
+  $877D,$03 Stash #REGhl, #REGde and #REGbc on the stack.
+  $8780,$02 #REGc=$20 (column counter - i.e. one row).
+  $8782,$02 Copy the row up one.
+  $8784,$03 Restore #REGbc, #REGde and #REGhl from the stack.
+  $8787,$02 Increment the MSB of #REGhl and #REGde by one to point to the next line down.
+  $8789,$01 Decrease our byte counter in #REGc by one.
+  $878A,$02 Jump back to #R$877D unless the whole line is moved (i.e. #REGc is now zero).
+  $878C,$02 Restore #REGde and #REGhl from the stack. They are now at their values prior to the line move #R$8779.
+  $878E,$06 #REGde=#REGde + $20 and #REGhl=#REGhl + $20.
+  $8794,$01 Stash #REGaf on the stack.
+  $8795,$01 #REGa=#REGd.
+  $8796,$02,b$01 Keep only bits 0-2.
+  $8798,$02 Skip to #R$879E if zero.
+N $879A Handle changing the target between each screen buffer area.
+  $879A,$04 #REGd=#REGd + $07.
+@ $879E label=ScrollLine_SkipDE
+  $879E,$01 #REGa=#REGh.
+  $879F,$02,b$01 Keep only bits 0-2.
+  $87A1,$02 Skip to #R$87A7 if zero.
+N $87A3 Handle changing the source between each screen buffer area.
+  $87A3,$04 #REGh=#REGh + $07.
+@ $87A7 label=ScrollLine_SkipHL
+  $87A7,$01 Restore #REGaf containing the line counter from the stack.
+  $87A8,$01 Decrease #REGa by one.
+  $87A9,$02 Loop back to #R$8779 until the line counter is zero.
 N $87AB Handle the attributes.
   $87AB,$0B Move the attributes up one character block.
+N $87B6 This creates the indent.
   $87B6,$02 Set a counter for #N($2A, 2, 3, 1, 1)($) spaces.
   $87B8,$03 Set the target screen location to #N($5020, 2, 3, 1, 1)($).
-  $87BB,$02 #REGc=$01 TODO.
+  $87BB,$02 #REGc=$01 (bit offset).
   $87BD,$02 #REGa=ASCII "SPACE".
 @ $87BF label=ScrollLine_Spacing
   $87BF,$03 Call #R$87C9.
@@ -4270,6 +4553,88 @@ N $8822 #LET(id=#EVAL($20 + (#PC - $8822) / 8))CHARACTER: "#MAP({id})(#CHR({id})
 L $8822,$08,$60
 
 c $8B22
+
+c $8B78 Pause
+@ $8B78 label=Pause
+  $8B78,$03 Set a counter in #REGbc=#N$03E8.
+@ $8B7B label=Pause_Loop
+  $8B7B,$01 Decrease the counter by one.
+  $8B7C,$04 Loop back to #R$8B7B until the counter is zero.
+  $8B80,$01 Return.
+
+c $8B81 Get Key
+B $8B81,$08
+W $8B89,$02
+B $8B8B,$08
+@ $8B93 label=GetKey
+  $8B93,$04 Stash #REGhl, #REGix and #REGbc on the stack.
+  $8B97,$03 Call #R$8B78.
+  $8B9A,$04 Write $0000 to #R$8B89.
+  $8B9E,$03 #REGhl=$8B8B.
+  $8BA1,$04 #REGix=#R$8B81.
+  $8BA5,$03 #REGbc=$FEFE.
+@ $8BA8 label=GetKey_Loop
+  $8BA8,$02 Read from the keyboard port.
+  $8BAA,$02,b$01 Keep only bits 0-4.
+  $8BAC,$03 OR against what #REGix is pointing to.
+  $8BAF,$01 Stash #REGaf on the stack.
+  $8BB0,$01 Invert the bits (1's complement on #REGa).
+  $8BB1,$01 Keep bits based on what #REGhl is pointing to.
+  $8BB2,$01 Invert the bits back (1's complement on #REGa).
+  $8BB3,$02 If it is zero, jump to #R$8BBC.
+  $8BB5,$04 Stash #REGbc at #R$8B89.
+  $8BB9,$03 Stash #REGa at #R$8B89.
+@ $8BBC label=GetKey_
+  $8BBC,$01 Restore #REGaf from the stack.
+  $8BBD,$01 Stash #REGa at #REGhl.
+  $8BBE,$01 Increase #REGhl by one.
+  $8BBF,$02 Increase #REGix by one.
+  $8BC1,$02 Rotate #REGb left.
+  $8BC3,$02 If there is carry then this is not a match, jump back to #R$8BA8 to try again.
+  $8BC5,$04 #REGbc=#R$8B89.
+N $8BC9 If no key match was found, end...
+  $8BC9,$04 If #REGbc is $0000, jump to #R$8BF6.
+  $8BCD,$02 #REGa=$FB.
+  $8BCF,$02 #REGa=#REGa + 5.
+  $8BD1,$02 Rotate #REGb right once.
+  $8BD3,$02 If there is any carry, jump to #R$8BCF.
+  $8BD5,$01 Decrease #REGa by one, ready for the following loop to begin in the same place.
+  $8BD6,$01 Increment #REGa by one.
+  $8BD7,$02 Rotate #REGc right once.
+  $8BD9,$02 If there is any carry, jump to #R$8BD6.
+  $8BDB,$03 Create an offset in #REGbc.
+  $8BDE,$03 #REGhl=#R$8BFB.
+  $8BE1,$04 Read from the keyboard port.
+. #TABLE(default,centre,centre,centre,centre,centre,centre)
+. { =h,r2 Port Number | =h,c5 Bit }
+. { =h 0 | =h 1 | =h 2 | =h 3 | =h 4 }
+. { $FE | SHIFT | Z | X | C | V }
+. TABLE#
+  $8BE5,$02,b$01 Keep only bit 0 (SHIFT).
+  $8BE7,$02 If it is zero, jump to #R$8BF1.
+  $8BE9,$04 Read from the keyboard port.
+. #TABLE(default,centre,centre,centre,centre,centre,centre)
+. { =h,r2 Port Number | =h,c5 Bit }
+. { =h 0 | =h 1 | =h 2 | =h 3 | =h 4 }
+. { $7F | SPACE | FULL-STOP | M | N | B }
+. TABLE#
+  $8BED,$02,b$01 Keep only bit 1 (FULL-STOP).
+  $8BEF,$02 If it is not zero, jump to #R$8BF4.
+@ $8BF1 label=GetKey_UseMap2
+  $8BF1,$03 #REGhl=#R$8C23.
+@ $8BF4 label=GetKey_GetByte
+  $8BF4,$01 #REGhl=#REGhl + keyboard map offset.
+  $8BF5,$01 #REGa=#REGhl (fetched byte from keyboard map).
+@ $8BF6 label=GetKey_Return
+  $8BF6,$04 Restore #REGbc, #REGix and #REGhl from the stack.
+  $8BFA,$01 Return.
+
+@ $8BFB label=KeyboardMap1
+B $8BFB,$05 #FOR$00,$04||n|#IF(#PEEK(#PC+n) > $00)(#CHR(#PEEK(#PC+n)),--)|, ||
+L $8BFB,$05,$08
+@ $8C23 label=KeyboardMap2
+B $8C23,$05 #FOR$00,$04||n|#IF(#PEEK(#PC+n) > $00)(#CHR(#PEEK(#PC+n)),--)|, ||
+L $8C23,$05,$08
 
 c $8C4B Action Look
 @ $8C4B label=Action_Look
@@ -4553,6 +4918,9 @@ N $969A This is almost a carbon copy of #R$8441 only differing in that it ends w
 
 c $96B3
 
+  $976E,$03 #REGhl=#R$AFE4("[0x04] is carrying[0x04][0x15]").
+  $9771,$03 Call #R$72DD.
+
 c $9A85
 R $9A85 A The index to search for
   $9A85,$02 Stash #REGde and #REGbc on the stack.
@@ -4582,14 +4950,19 @@ c $9ACD
 
 c $9B02 Action None
 @ $9B02 label=Action_None
-  $9B02,$05 Call #R$9F82 using #REGa=$00.
+  $9B02,$05 Call #R$9F82 using #REGa=$00 #R$C11B("#TEXTTOKEN($C11B + $08, 1)").
+  $9B07,$03 Write #REGa to #R$B6F5.
   $9B0A,$03 Call #R$95ED.
   $9B0D,$02 #REGa=$00.
+  $9B0F,$02 If it is light jump to #R$9B12.
+  $9B11,$01 #REGa=$01.
+  $9B12,$03 Write #REGa to #R$980C.
   $9B15,$01 Return.
 
 c $9B16
 
 c $9B6C Execute Action.
+R $9B6C HL Pointer to the action code
 @ $9B6C label=TriggerAction
   $9B6C,$07 Stash #REGix, #REGiy, #REGde, #REGbc and #REGhl on the stack.
   $9B73,$05 Call #R$9B80 if #REGhl is not empty (i.e. $0000).
@@ -4851,13 +5224,27 @@ c $9F25
   $9F49,$01 Return.
 
 c $9F4A
+  $9F4A,$10 Switch the addresses stored in #R$B708 and #R$B70A using #REGde and #REGiy.
+  $9F66,$03 Call #R$9B6C.
   $9F75,$01 Return.
 
 c $9F76
+  $9F76,$03 #REGa=#R$B6FA.
+  $9F79,$01 Decrease #REGa by one.
+  $9F7A,$03 Jump to #R$712B if #REGa is now zero.
+  $9F7D,$04 Write $00 to #R$B6FB.
   $9F81,$01 Return.
 
-c $9F82
-  $9F85,$03 Call #R$9BCA.
+c $9F82 Get Object First Location
+R $9F82 A Object ID
+R $9F82 O:A Either $FF if the object appears once, or the location ID of the first time the object appears.
+@ $9F82 label=ObjectFirstLocation
+  $9F82,$03 Return if this is the terminator character ($FF).
+  $9F85,$03 Call #R$9BCA to set #REGix to the object data address.
+  $9F88,$05 Does the object appear in the game once?
+  $9F8D,$02 #REGa=$FF (termination character).
+  $9F8F,$01 Return if not.
+  $9F90,$03 #REGa=the first location the object appears in.
   $9F93,$01 Return.
 
 c $9F94
@@ -4972,6 +5359,38 @@ c $A3E6 Action: Capture
 
 c $A541 Action: ClimbOut
 @ $A541 label=ActionClimbOut
+  $A541,$04 #REGiy=#R$B70C.
+  $A545,$03 #REGa=#R$B6E8.
+  $A548,$06 If this is not a mother object (i.e. something to climb out of) jump to #R$9F76.
+  $A54E,$03 Call #R$9BCA.
+  $A551,$03 Call #R$A5CA.
+  $A557,$03 Call #R$9D44.
+  $A55E,$01 Return.
+
+  $A5DC,$03 #REGhl=#R$B085("the vicious warg run around you and howls.").
+
+  $A5EB,$04 #REGix=#R$C3EE("#TEXTTOKEN($C3EE + $08, 1)").
+  $A5EF,$03 #REGa=location of the "#TEXTTOKEN($C3EE + $08, 1)".
+  $A5F2,$03 Return if "#TEXTTOKEN($C3EE + $08, 1)" is not at location #R$BDC1($21) - "#TEXTTOKEN($BDC1 + $02, $01)".
+
+  $A5FF,$03 #REGa=#R$C11C(player mother object).
+  $A602,$02 Is the player inside object $13, i.e. using the "#TEXTTOKEN($C3EE + $08, 1)"?
+  $A604,$03 #REGhl=#R$B32C("you are thrown onto the bank of the long lake").
+  $A607,$03 If so, call #R$72DD.
+
+  $A615,$04 #REGix=#R$C3EE("#TEXTTOKEN($C3EE + $08, 1)").
+  $A619,$04 Update the location of the object to location #R$BDAD($20) - "#TEXTTOKEN($BDAD + $02, $01)".
+
+  $A633,$04 #REGiy=Object #R$C418($14) - "#TEXTTOKEN($C418 + $08, 1)".
+  $A63F,$01 Return.
+
+  $A651,$03 #REGhl=#R$B0CB("where's the thief ?[0x16]").
+  $A664,$03 #REGhl=#R$B0F4("thorin wait.").
+  $A66A,$03 #REGhl=#R$B0D5("get us out of this one, thief ![0x16]").
+  $A670,$03 #REGhl=#R$B0E5("thorin sit(s|d|ing|es) down and start(s|d|ing|es) sing(s|d|ing|es) about gold.").
+  $A678,$03 #REGhl=#R$B05B("hurry up.").
+  $A687,$03 #REGhl=#R$B11B("you cannot reach[0x07][0x15]").
+  $A6BB,$03 #REGhl=#R$B017("[0x00] enter(s|d|ing|es).[0x14]").
 
   $A918,$05 Set #R$B702 to $01 (daytime).
   $A91D,$03 #REGhl=#R$B1DB("someone strangle(s|d|ing|es) you from behind").
@@ -5017,6 +5436,21 @@ c $A541 Action: ClimbOut
   $AA94,$02 Set bit 7 of the attribute byte to "Visible" = "Yes".
   $AA9C,$03 #REGhl=#R$B277.
   $AA9F,$03 Jump to #R$72DD.
+
+  $AAB8,$03 #REGhl=#R$B037("the magic door open(s|d|ing|es).[0x14]").
+  $AADA,$03 #REGhl=#R$B03F("the magic door close(s|d|ing|es).[0x14]").
+  $AB16,$03 #REGhl=#R$B0FD("the spider web is slowly smothering you.").
+  $AB19,$03 Call #R$72DD.
+  $AB1C,$03 Jump to #R$90D2.
+
+  $AB1F,$03 #REGhl=#R$B311("You see some pale bulbous eyes star(s|d|ing|es) at You[0x15]").
+  $AB22,$03 Call #R$72DD.
+
+  $AB44,$03 #REGhl=#R$B311("You see some pale bulbous eyes star(s|d|ing|es) at You[0x15]").
+  $AB47,$03 Call #R$72DD.
+  $AB4A,$03 #REGhl=#R$B31F("some thing drop(s|d|ing|es) from above and sting(s|d|ing|es)[0x15]").
+  $AB4D,$03 Call #R$72DD.
+  $AB50,$03 Jump to #R$90D2.
 
 w $AB53 Actions
 @ $AB53 label=Actions
@@ -5370,6 +5804,8 @@ W $B717,$02
   $B71D,$01
 W $B71E,$1A
   $B738,$01
+
+b $B9C8
 
 w $B9E0 Location Table
 @ $B9E0 label=LocationTable
@@ -7195,17 +7631,40 @@ L $C78E,$03,$07
 B $C7A3,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
 c $C7A4
+  $C7A4,$03 #REGhl=#R$C437(attributes) of object $42 - "#TEXTTOKEN($C430 + $08, 1)".
+  $C7A7,$03 Return if "broken" bit is set.
+  $C7AA,$05 Write $42 to #R$CAE7.
+  $C7AF,$02 Set "visible" bit for "#TEXTTOKEN($C430 + $08, 1)".
+  $C7B1,$01 Return.
+
 c $C7B2
 c $C7B9
+  $C7B9,$06 Copy #R$CAA0 to #R$CAA1.
+  $C7BF,$01 Return.
+
 c $C7C0
+  $C7C0
+  $C7C5,$03 #REGhl=#R$C13A(attributes) of object $3C - "#TEXTTOKEN($C133 + $08, 1)".
+  $C7C8,$04 Jump to #R$C7D1 if "broken" bit is not set.
+  $C7CC,$05 Write $3C to #R$CB03.
+  $C7D1,$03 #REGhl=#R$C4CA(attributes) of object $46 - "#TEXTTOKEN($C4C3 + $08, 1)".
+  $C7D7,$05 Write $46 to #R$CAFC.
+  $C7DC,$01 Return.
+
 c $C7DD
+
 c $C7EA
+  $C7EA,$06 If #R$C11C(player mother object) is object $13 - "#TEXTTOKEN($C3EE + $08, 1)" then return.
+  $C7F0,$03 Call #R$8E39.
   $C7F3,$03 #REGhl=#R$B26D("You are swept forcefully against the portcullis")
   $C7F6,$03 Call #R$72DD.
+  $C7F9,$03 Jump to #R$90D2.
 
 b $C7FC
   $CA53,$29
   $CA7C,$4F
+  $CAA0
+  $CAA1
   $CACB,$77,$07
   $CB42,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
   $CB43
