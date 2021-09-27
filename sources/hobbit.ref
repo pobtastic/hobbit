@@ -18,6 +18,11 @@ Copyright=&copy; 1982 Melbourne House
 StyleSheet=skoolkit.css;skoolkit-dark.css
 AddressAnchor={address#IF({base}==16)(:04x)}
 
+[Index:DataTables:Data tables and buffers]
+GameStatusBuffer
+Locations
+Objects
+
 [Index:Reference:Reference]
 Facts
 Credits
@@ -27,6 +32,12 @@ Changelog
 Changelog=reference/changelog.html
 Credits=reference/credits.html
 Links=reference/links.html
+
+[Page:Locations]
+Content=asm/#N$BA8A.html
+
+[Page:Objects]
+Content=asm/#N$C11B.html
 
 [Page:Credits]
 PageContent=#INCLUDE(Credits)

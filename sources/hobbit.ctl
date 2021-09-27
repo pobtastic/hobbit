@@ -6,7 +6,8 @@ B $4000,6144,32 Pixels
 B $5800,768,32 Attributes
 
 b $5B00
-@ $5B00 replace=/#MOVEMENT/#TABLE(default,centre,centre,centre) { =h Direction | =h Via | =h Destination } { #MAP(#PEEK(#PC))(?,$01:N,$02:S,$03:E,$04:W,$05:NE,$06:NW,$07:SE,$08:SW,$09:UP,$0A:DN) | #IF(#PEEK(#PC + 1) > $00)(#OBJECT(#PEEK(#PC + $01), 1, 1)($),---) | #LOCATION(#PEEK(#PC + $02), 1, 1)($) - "#LOCATIONNAME(#PEEK(#PC + $02))" } TABLE#
+@ $5B00 expand=#DEF(#MOVEMENT(address) #TABLE(default,centre,centre,centre) { =h Direction | =h Via | =h Destination } { #MAP(#PEEK($address))(?,$01:N,$02:S,$03:E,$04:W,$05:NE,$06:NW,$07:SE,$08:SW,$09:UP,$0A:DN) | #IF(#PEEK($address + 1) > $00)(#OBJECT(#PEEK($address + $01), 1, 1)($),---) | #LOCATION(#PEEK($address + $02), 1, 1)($) - "#LOCATIONNAME(#PEEK($address + $02))" } TABLE#)
+@ $5B00 expand=#DEF(#ACTION #MAP(#PEEK(#PC))(?,$00:None,$01:North,$02:South,$03:East,$04:West,$05:Northeast,$06:Northwest,$07:Southeast,$08:Southwest,$09:Up,$0A:Down,$0D:Drop,$0F:Attack,$13:Take,$17:Look,$1A:Inventory,$1C:Examine,$1D:Give To,$1F:Enter,$20:Go Into,$24:Run,$27:Follow,$2A:Throw At,$2D:Burn,$2E:Tie To,$30:Capture,$33:Untie,$35:Talk To,$37:Climb Out Of,$3A:Shoot,$3B:Carry))
 @ $5B00 replace=/#WORDINDEX/#R#(#EVAL(#PEEK(#PC + 1) * $100 + #PEEK(#PC) + $6000))
 
 b $5EFF Stack
@@ -3789,6 +3790,7 @@ B $7291,$04
 @ $7295 label=PrintTable
 W $7295,$2E
 
+
 c $72C3
   $72C3,$03 Call #R$858B.
   $72C9,$04 Write $00 to #R$B704.
@@ -3864,6 +3866,12 @@ c $737E
 c $738D
 c $7394
 c $73A3
+  $73A3,$04 Write $00 to #R$B703.
+  $73A7,$03 #REGa=#R$B6EA.
+  $73AA,$03 Call #R$7488.
+  $73AD,$01 #REGa=$00.
+  $73AE,$01 Return.
+
 c $73AF
 c $73BD
 c $73C2
@@ -3873,6 +3881,29 @@ c $7407
 c $740C
 c $7425
 c $742D
+
+  $7455,$03 #REGhl=#R$AD2D.
+  $7462,$03 #REGhl=#R$AD35.
+  $7469,$02,b$01 Keep only bits 1-4.
+  $746B,$01 Stash #REGde on the stack.
+  $746C,$03 Create an offset in #REGde using #REGa as the LSB.
+  $746F,$01 #REGhl = #REGhl + offset.
+  $7470,$03 #REGde=contents of the calculated address.
+  $7473,$03 Call #R$74C1.
+  $7476,$01 Restore #REGde from the stack.
+  $7477,$01 Return.
+
+  $7478,$01 Stash #REGde on the stack.
+  $7479,$03 #REGa=#R$B703.
+  $747C,$04 Call #R$743F if #REGa is non-zero.
+  $7480,$01 Restore #REGde from the stack.
+  $7481,$01 #REGa=#REGd.
+  $7482,$02,b$01 Keep only bits 0-3.
+  $7484,$01 #REGd=#REGa.
+  $7485,$03 Jump to #R$74C1.
+
+  $748D,$03 #REGde=$0AE3.
+  $7490,$03 Jump to #R$74C1.
 
 c $7493 Get Common Word
 R $7493 A Letter reference
@@ -3891,7 +3922,16 @@ g $74A6 Output Buffer
 @ $74A6 label=OutputBuffer
   $74A6,$14
 
-c $74BA
+c $74BA Print Action
+@ $74BA label=PrintAction
+R $74BA HL Pointer to an action in the #R$AB53(actions table)
+R $74BA O:HL Pointer is incremented twice
+R $74BA O:DE A word token
+E $74BA Continues on to #R$74C1 to print.
+M $74BA,$07 Store the word token in #REGde (we keep only bits 0-3 of the MSB).
+  $74BA,$04
+  $74BE,$02,b$01
+  $74C0,$01
 
 c $74C1 Print Token
 @ $74C1 label=PrintToken
@@ -4669,17 +4709,78 @@ c $8D33 Action Pickup
 @ $8D33 label=Action_Pickup
   $8D36,$03 #REGhl=#R$AE11("You are already carrying[0x07][0x15]")
 
-b $8D6E
-B $8D6E,$01
-W $8D6F,$02
+b $8D6E Location Percentage Completion Table
+@ $8D6E label=PercentageLocationTable
+N $8D6E #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+B $8D6E,$01 Location ID.
+W $8D6F,$02 Percentage to add.
 L $8D6E,$03,$0E
+N $8D98 End of table.
 B $8D98,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+
+
+
+g $8D99 Action Location Buffer
+@ $8D99 label=ActionLocationData
+W $8D99,$02 Pointer to the current location data from #R$BA8A.
+@ $8D9B label=ActionLocationID
+B $8D9B,$01 The current location ID.
+@ $8D9C label=
+B $8D9C,$01
 
 c $8D9D Action Dir
 @ $8D9D label=Action_Dir
+  $8D9D,$05 Jump to #R$8DAB if #R$95ED reports that it is light.
+
+  $8DD9,$06 Jump to #R$9F76 if #R$95ED reports that it is light.
+  $8DDF,$03 Call #R$9D44.
+  $8DE2,$04 #REGix=#R$C11B.
+
   $8DE7,$03 #REGhl=#R$AD7D("but fall and hit your head[0x15]")
   $8DF1,$03 #REGhl=#R$AD8A("but fall and smash your skull")
   $8DF4,$03 Call #R$72DD.
+  $8DF7,$03 Jump to #R$90D2.
+
+  $8E12,$03 Call #R$9D44.
+  $8E15,$03 Update the location.
+  $8E18,$03 #REGa=#R$B6EA.
+  $8E1B,$03 Call #R$9BDD.
+  $8E1E,$03 #REGa=#R$B6EA.
+  $8E21,$03 Return if the character is not #OBJECT($00, 1, 1)($).
+  $8E24,$0A Call #R$9DBD using the #R$C78E(events table), looking for a match with #R$8D9B.
+  $8E2E,$02 Jump to #R$8E39 if no event was found.
+  $8E30,$06 Load the event from the #R$C78E(events table).
+  $8E36,$03 Call #R$9B6C to execute it.
+
+N $8E39 The game adds a one-time only value to the completion percentage once certain locations are reached (as long as
+.       it's not dark).
+@ $8E39 label=PercentageLocation
+  $8E39,$04 Return if #R$95ED reports that it is dark.
+  $8E3D,$03 #REGa=#R$B6EA.
+  $8E40,$01 Set zero flag if the character is #OBJECT($00, 1, 1)($).
+  $8E41,$03 #REGa=#R$8D9B.
+  $8E44,$02 Jump to #R$8E6A to deal with any other object.
+  $8E46,$03 #REGhl=#R$8D99.
+  $8E49,$05 If bit 6 is already (percentage is already added) set jump to #R$96A8.
+  $8E4E,$02 Set bit 6 of the location attributes, this sets that the percentage has already been added and hence will be
+.           skipped the next time this location is accessed.
+  $8E50,$01 Stash #REGaf on the stack.
+  $8E51,$07 Call #R$9DBD with #R$8D6E.
+  $8E58,$02 Jump to #R$8E69 if there was no match.
+  $8E5A,$01 Stash #REGde on the stack.
+  $8E5B,$06 #REGde=the percentage value to add from the match of #R$8D6E.
+  $8E61,$07 Add the percentage value to #R$B6F7 and write it.
+  $8E68,$01 Restore #REGde from the stack.
+@ $8E69 label=PercentageLocation_Return
+  $8E69,$01 Restore #REGaf from the stack.
+@ $8E6A label=PercentageLocation_Skip
+  $8E6A,$03 Jump to #R$9630.
+
+  $8E6D,$03 #REGhl=#R$AE23("[0x04] is too small for you to enter").
+  $8E76,$03 #REGhl=#R$AE2E("[0x04] is too full for you to{5} enter[0x15]").
+
+  $8E81,$03 Call #R$72DD.
+  $8E84,$01 Return.
 
   $8F35,$03 #REGhl=#R$AE1F("it is dark")
   $8F38,$03 Jump to #R$72DD.
@@ -5059,7 +5160,34 @@ N $9C5E Success! We've found a record which matches $01 (TODO).
 
 c $9C78
 
-c $9C9F
+c $9C9F Random Number
+R $9C9F A Random seed?
+R $9C9F O:A Random number
+@ $9C9F label=GetRandomNum
+  $9C9F,$03 Call #R$9CA8.
+  $9CA2,$03 Return if bit 7 is set.
+  $9CA5,$02 Negate the accumulator.
+  $9CA7,$01 Return.
+
+@ $9CA8 label=CalcRandom
+  $9CA8,$03 Stash #REGix and #REGbc on the stack.
+  $9CAB,$01 #REGc=#REGa.
+  $9CAC,$02 #REGa=#REGa * 2.
+  $9CAE,$02 Jump to #R$9CB2 if there's no carry over.
+  $9CB0,$02 Else, set #REGa=#N$FF.
+  $9CB2,$01 #REGb=#REGa.
+  $9CB3,$07 Increase the LSB of the #R$B712 by one.
+  $9CBA,$02 If the LSB has not "rolled over" to $00, skip updating the MSB on the following line. Jump to #R$9CB2.
+  $9CBC,$03 Increase the MSB of the #R$B712 by one.
+  $9CBF,$04 #REGix=#R$B712.
+  $9CC3,$03 #REGa=#R$B70E.
+  $9CCE,$01 Stash #REGhl on the stack.
+  $9CCF,$04 Compare #R$B70E against #REGa.
+  $9CD3,$01 Restore #REGhl from the stack.
+  $9CD4,$02 If the result of the comparison was zero, jump back to #R$9CB3 to try again.
+  $9CD6,$03 Write #REGa to #R$B70E.
+  $9CE4,$03 Restore #REGbc and #REGix from the stack.
+  $9CE7,$01 Return.
 
 c $9CE8
 
@@ -5789,10 +5917,12 @@ W $B6FC,$02
 W $B70A,$02
 @ $B70C label=ptrCurObject
 W $B70C,$02
+@ $B70E label=RandomSeed
   $B70E,$01
   $B70F,$01
   $B710,$01
   $B711,$01
+@ $B712 label=RandomCounter
 W $B712,$02
 W $B714,$02
   $B716,$01
@@ -5829,14 +5959,14 @@ N $BA97 Location $01 - "#TEXTTOKEN(#PC + $02, $01)"
   $BA98,$01 LOCATION_PROP_VOLUME
   $BA99,$06,$02 #TEXTTOKEN(#PC)
 W $BA9F,$02 comfortable tunnel like hall
-  $BAA1,$03 #MOVEMENT
+  $BAA1,$03 #MOVEMENT(#PC)
   $BAA4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BAA5 Location $04 - "#TEXTTOKEN(#PC + $02, $01)"
   $BAA5,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BAA6,$01 LOCATION_PROP_VOLUME
   $BAA7,$06,$02 #TEXTTOKEN(#PC)
 W $BAAD,$02 gloomy empty land dreary hills ahead
-  $BAAF,$03 #MOVEMENT
+  $BAAF,$03 #MOVEMENT(#PC)
 L $BAAF,$03,$04
   $BABB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BABC Location $05 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5844,7 +5974,7 @@ N $BABC Location $05 - "#TEXTTOKEN(#PC + $02, $01)"
   $BABD,$01 LOCATION_PROP_VOLUME
   $BABE,$06,$02 #TEXTTOKEN(#PC)
 W $BAC4,$02 ---
-  $BAC6,$03 #MOVEMENT
+  $BAC6,$03 #MOVEMENT(#PC)
 L $BAC6,$03,$03
   $BACF,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BAD0 Location $06 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5852,7 +5982,7 @@ N $BAD0 Location $06 - "#TEXTTOKEN(#PC + $02, $01)"
   $BAD1,$01 LOCATION_PROP_VOLUME
   $BAD2,$06,$02 #TEXTTOKEN(#PC)
 W $BAD8,$02 hidden path trolls foot print S [16]
-  $BADA,$03 #MOVEMENT
+  $BADA,$03 #MOVEMENT(#PC)
 L $BADA,$03,$02
   $BAE0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BAE1 Location $07 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5860,14 +5990,14 @@ N $BAE1 Location $07 - "#TEXTTOKEN(#PC + $02, $01)"
   $BAE2,$01 LOCATION_PROP_VOLUME
   $BAE3,$06,$02 #TEXTTOKEN(#PC)
 W $BAE9,$02 trolls cave
-  $BAEB,$03 #MOVEMENT
+  $BAEB,$03 #MOVEMENT(#PC)
   $BAEE,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BAEF Location $09 - "#TEXTTOKEN(#PC + $02, $01)"
   $BAEF,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BAF0,$01 LOCATION_PROP_VOLUME
   $BAF1,$06,$02 #TEXTTOKEN(#PC)
 W $BAF7,$02 ---
-  $BAF9,$03 #MOVEMENT
+  $BAF9,$03 #MOVEMENT(#PC)
 L $BAF9,$03,$02
   $BAFF,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB00 Location $0A - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5875,7 +6005,7 @@ N $BB00 Location $0A - "#TEXTTOKEN(#PC + $02, $01)"
   $BB01,$01 LOCATION_PROP_VOLUME
   $BB02,$06,$02 #TEXTTOKEN(#PC)
 W $BB08,$02 hard dangerous path misty mountains
-  $BB0A,$03 #MOVEMENT
+  $BB0A,$03 #MOVEMENT(#PC)
 L $BB0A,$03,$04
   $BB16,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB17 Location $0B - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5883,7 +6013,7 @@ N $BB17 Location $0B - "#TEXTTOKEN(#PC + $02, $01)"
   $BB18,$01 LOCATION_PROP_VOLUME
   $BB19,$06,$02 #TEXTTOKEN(#PC)
 W $BB1F,$02 narrow place dreadful drop into dim valley
-  $BB21,$03 #MOVEMENT
+  $BB21,$03 #MOVEMENT(#PC)
 L $BB21,$03,$03
   $BB2A,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB2B Location $0C - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5891,7 +6021,7 @@ N $BB2B Location $0C - "#TEXTTOKEN(#PC + $02, $01)"
   $BB2C,$01 LOCATION_PROP_VOLUME
   $BB2D,$06,$02 #TEXTTOKEN(#PC)
 W $BB33,$02 narrow dangerous path
-  $BB35,$03 #MOVEMENT
+  $BB35,$03 #MOVEMENT(#PC)
 L $BB35,$03,$02
   $BB3B,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB3C Location $0E - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5899,7 +6029,7 @@ N $BB3C Location $0E - "#TEXTTOKEN(#PC + $02, $01)"
   $BB3D,$01 LOCATION_PROP_VOLUME
   $BB3E,$06,$02 #TEXTTOKEN(#PC)
 W $BB44,$02 large dry cave which climb quite comfortable
-  $BB46,$03 #MOVEMENT
+  $BB46,$03 #MOVEMENT(#PC)
 L $BB46,$03,$02
   $BB4C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB4D Location $0F - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5907,7 +6037,7 @@ N $BB4D Location $0F - "#TEXTTOKEN(#PC + $02, $01)"
   $BB4E,$01 LOCATION_PROP_VOLUME
   $BB4F,$06,$02 #TEXTTOKEN(#PC)
 W $BB55,$02 ---
-  $BB57,$03 #MOVEMENT
+  $BB57,$03 #MOVEMENT(#PC)
 L $BB57,$03,$03
   $BB60,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB61 Location $34 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5915,7 +6045,7 @@ N $BB61 Location $34 - "#TEXTTOKEN(#PC + $02, $01)"
   $BB62,$01 LOCATION_PROP_VOLUME
   $BB63,$06,$02 #TEXTTOKEN(#PC)
 W $BB69,$02 ---
-  $BB6B,$03 #MOVEMENT
+  $BB6B,$03 #MOVEMENT(#PC)
 L $BB6B,$03,$03
   $BB74,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB75 Location $35 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5923,14 +6053,14 @@ N $BB75 Location $35 - "#TEXTTOKEN(#PC + $02, $01)"
   $BB76,$01 LOCATION_PROP_VOLUME
   $BB77,$06,$02 #TEXTTOKEN(#PC)
 W $BB7D,$02 ---
-  $BB7F,$03 #MOVEMENT
+  $BB7F,$03 #MOVEMENT(#PC)
   $BB82,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB83 Location $36 - "#TEXTTOKEN(#PC + $02, $01)"
   $BB83,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BB84,$01 LOCATION_PROP_VOLUME
   $BB85,$06,$02 #TEXTTOKEN(#PC)
 W $BB8B,$02 ---
-  $BB8D,$03 #MOVEMENT
+  $BB8D,$03 #MOVEMENT(#PC)
 L $BB8D,$03,$04
   $BB99,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BB9A Location $37 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5938,7 +6068,7 @@ N $BB9A Location $37 - "#TEXTTOKEN(#PC + $02, $01)"
   $BB9B,$01 LOCATION_PROP_VOLUME
   $BB9C,$06,$02 #TEXTTOKEN(#PC)
 W $BBA2,$02 ---
-  $BBA4,$03 #MOVEMENT
+  $BBA4,$03 #MOVEMENT(#PC)
 L $BBA4,$03,$04
   $BBB0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BBB1 Location $38 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5946,14 +6076,14 @@ N $BBB1 Location $38 - "#TEXTTOKEN(#PC + $02, $01)"
   $BBB2,$01 LOCATION_PROP_VOLUME
   $BBB3,$06,$02 #TEXTTOKEN(#PC)
 W $BBB9,$02 ---
-  $BBBB,$03 #MOVEMENT
+  $BBBB,$03 #MOVEMENT(#PC)
   $BBBE,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BBBF Location $39 - "#TEXTTOKEN(#PC + $02, $01)"
   $BBBF,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BBC0,$01 LOCATION_PROP_VOLUME
   $BBC1,$06,$02 #TEXTTOKEN(#PC)
 W $BBC7,$02 ---
-  $BBC9,$03 #MOVEMENT
+  $BBC9,$03 #MOVEMENT(#PC)
 L $BBC9,$03,$03
   $BBD2,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BBD3 Location $3A - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5961,7 +6091,7 @@ N $BBD3 Location $3A - "#TEXTTOKEN(#PC + $02, $01)"
   $BBD4,$01 LOCATION_PROP_VOLUME
   $BBD5,$06,$02 #TEXTTOKEN(#PC)
 W $BBDB,$02 ---
-  $BBDD,$03 #MOVEMENT
+  $BBDD,$03 #MOVEMENT(#PC)
 L $BBDD,$03,$04
   $BBE9,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BBEA Location $3B - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5969,7 +6099,7 @@ N $BBEA Location $3B - "#TEXTTOKEN(#PC + $02, $01)"
   $BBEB,$01 LOCATION_PROP_VOLUME
   $BBEC,$06,$02 #TEXTTOKEN(#PC)
 W $BBF2,$02 ---
-  $BBF4,$03 #MOVEMENT
+  $BBF4,$03 #MOVEMENT(#PC)
 L $BBF4,$03,$02
   $BBFA,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BBFB Location $3C - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5977,7 +6107,7 @@ N $BBFB Location $3C - "#TEXTTOKEN(#PC + $02, $01)"
   $BBFC,$01 LOCATION_PROP_VOLUME
   $BBFD,$06,$02 #TEXTTOKEN(#PC)
 W $BC03,$02 ---
-  $BC05,$03 #MOVEMENT
+  $BC05,$03 #MOVEMENT(#PC)
 L $BC05,$03,$03
   $BC0E,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC0F Location $3D - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5985,7 +6115,7 @@ N $BC0F Location $3D - "#TEXTTOKEN(#PC + $02, $01)"
   $BC10,$01 LOCATION_PROP_VOLUME
   $BC11,$06,$02 #TEXTTOKEN(#PC)
 W $BC17,$02 ---
-  $BC19,$03 #MOVEMENT
+  $BC19,$03 #MOVEMENT(#PC)
 L $BC19,$03,$02
   $BC1F,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC20 Location $3E - "#TEXTTOKEN(#PC + $02, $01)"
@@ -5993,14 +6123,14 @@ N $BC20 Location $3E - "#TEXTTOKEN(#PC + $02, $01)"
   $BC21,$01 LOCATION_PROP_VOLUME
   $BC22,$06,$02 #TEXTTOKEN(#PC)
 W $BC28,$02 ---
-  $BC2A,$03 #MOVEMENT
+  $BC2A,$03 #MOVEMENT(#PC)
   $BC2D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC2E Location $3F - "#TEXTTOKEN(#PC + $02, $01)"
   $BC2E,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BC2F,$01 LOCATION_PROP_VOLUME
   $BC30,$06,$02 #TEXTTOKEN(#PC)
 W $BC36,$02 ---
-  $BC38,$03 #MOVEMENT
+  $BC38,$03 #MOVEMENT(#PC)
 L $BC38,$03,$03
   $BC41,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC42 Location $40 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6008,7 +6138,7 @@ N $BC42 Location $40 - "#TEXTTOKEN(#PC + $02, $01)"
   $BC43,$01 LOCATION_PROP_VOLUME
   $BC44,$06,$02 #TEXTTOKEN(#PC)
 W $BC4A,$02 ---
-  $BC4C,$03 #MOVEMENT
+  $BC4C,$03 #MOVEMENT(#PC)
 L $BC4C,$03,$03
   $BC55,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC56 Location $41 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6016,7 +6146,7 @@ N $BC56 Location $41 - "#TEXTTOKEN(#PC + $02, $01)"
   $BC57,$01 LOCATION_PROP_VOLUME
   $BC58,$06,$02 #TEXTTOKEN(#PC)
 W $BC5E,$02 ---
-  $BC60,$03 #MOVEMENT
+  $BC60,$03 #MOVEMENT(#PC)
 L $BC60,$03,$03
   $BC69,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC6A Location $10 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6024,7 +6154,7 @@ N $BC6A Location $10 - "#TEXTTOKEN(#PC + $02, $01)"
   $BC6B,$01 LOCATION_PROP_VOLUME
   $BC6C,$06,$02 #TEXTTOKEN(#PC)
 W $BC72,$02 big cavern torch ESalong wall S [16]
-  $BC74,$03 #MOVEMENT
+  $BC74,$03 #MOVEMENT(#PC)
 L $BC74,$03,$03
   $BC7D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC7E Location $11 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6032,14 +6162,14 @@ N $BC7E Location $11 - "#TEXTTOKEN(#PC + $02, $01)"
   $BC7F,$01 LOCATION_PROP_VOLUME
   $BC80,$06,$02 #TEXTTOKEN(#PC)
 W $BC86,$02 brink deep dark under ground lake
-  $BC88,$03 #MOVEMENT
+  $BC88,$03 #MOVEMENT(#PC)
   $BC8B,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BC8C Location $12 - "#TEXTTOKEN(#PC + $02, $01)"
   $BC8C,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BC8D,$01 LOCATION_PROP_VOLUME
   $BC8E,$06,$02 #TEXTTOKEN(#PC)
 W $BC94,$02 ---
-  $BC96,$03 #MOVEMENT
+  $BC96,$03 #MOVEMENT(#PC)
 L $BC96,$03,$03
   $BC9F,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BCA0 Location $13 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6047,7 +6177,7 @@ N $BCA0 Location $13 - "#TEXTTOKEN(#PC + $02, $01)"
   $BCA1,$01 LOCATION_PROP_VOLUME
   $BCA2,$06,$02 #TEXTTOKEN(#PC)
 W $BCA8,$02 goblins gate
-  $BCAA,$03 #MOVEMENT
+  $BCAA,$03 #MOVEMENT(#PC)
 L $BCAA,$03,$0A
   $BCC8,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BCC9 Location $14 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6055,7 +6185,7 @@ N $BCC9 Location $14 - "#TEXTTOKEN(#PC + $02, $01)"
   $BCCA,$01 LOCATION_PROP_VOLUME
   $BCCB,$06,$02 #TEXTTOKEN(#PC)
 W $BCD1,$02 goblins gate
-  $BCD3,$03 #MOVEMENT
+  $BCD3,$03 #MOVEMENT(#PC)
 L $BCD3,$03,$02
   $BCD9,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BCDA Location $0D - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6063,7 +6193,7 @@ N $BCDA Location $0D - "#TEXTTOKEN(#PC + $02, $01)"
   $BCDB,$01 LOCATION_PROP_VOLUME
   $BCDC,$06,$02 #TEXTTOKEN(#PC)
 W $BCE2,$02 ---
-  $BCE4,$03 #MOVEMENT
+  $BCE4,$03 #MOVEMENT(#PC)
 L $BCE4,$03,$02
   $BCEA,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BCEB Location $15 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6071,7 +6201,7 @@ N $BCEB Location $15 - "#TEXTTOKEN(#PC + $02, $01)"
   $BCEC,$01 LOCATION_PROP_VOLUME
   $BCED,$06,$02 #TEXTTOKEN(#PC)
 W $BCF3,$02 ---
-  $BCF5,$03 #MOVEMENT
+  $BCF5,$03 #MOVEMENT(#PC)
 L $BCF5,$03,$02
   $BCFB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BCFC Location $16 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6079,7 +6209,7 @@ N $BCFC Location $16 - "#TEXTTOKEN(#PC + $02, $01)"
   $BCFD,$01 LOCATION_PROP_VOLUME
   $BCFE,$06,$02 #TEXTTOKEN(#PC)
 W $BD04,$02 ---
-  $BD06,$03 #MOVEMENT
+  $BD06,$03 #MOVEMENT(#PC)
 L $BD06,$03,$05
   $BD15,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD16 Location $18 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6087,7 +6217,7 @@ N $BD16 Location $18 - "#TEXTTOKEN(#PC + $02, $01)"
   $BD17,$01 LOCATION_PROP_VOLUME
   $BD18,$06,$02 #TEXTTOKEN(#PC)
 W $BD1E,$02 gate mirkwood
-  $BD20,$03 #MOVEMENT
+  $BD20,$03 #MOVEMENT(#PC)
 L $BD20,$03,$03
   $BD29,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD2A Location $19 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6095,7 +6225,7 @@ N $BD2A Location $19 - "#TEXTTOKEN(#PC + $02, $01)"
   $BD2B,$01 LOCATION_PROP_VOLUME
   $BD2C,$06,$02 #TEXTTOKEN(#PC)
 W $BD32,$02 ---
-  $BD34,$03 #MOVEMENT
+  $BD34,$03 #MOVEMENT(#PC)
 L $BD34,$03,$03
   $BD3D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD3E Location $1A - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6103,7 +6233,7 @@ N $BD3E Location $1A - "#TEXTTOKEN(#PC + $02, $01)"
   $BD3F,$01 LOCATION_PROP_VOLUME
   $BD40,$06,$02 #TEXTTOKEN(#PC)
 W $BD46,$02 place black spider S [16]
-  $BD48,$03 #MOVEMENT
+  $BD48,$03 #MOVEMENT(#PC)
 L $BD48,$03,$04
   $BD54,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD55 Location $1B - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6111,7 +6241,7 @@ N $BD55 Location $1B - "#TEXTTOKEN(#PC + $02, $01)"
   $BD56,$01 LOCATION_PROP_VOLUME
   $BD57,$06,$02 #TEXTTOKEN(#PC)
 W $BD5D,$02 forest tangled smothering /3.Person/trees  [16]
-  $BD5F,$03 #MOVEMENT
+  $BD5F,$03 #MOVEMENT(#PC)
 L $BD5F,$03,$02
   $BD65,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD66 Location $1C - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6119,7 +6249,7 @@ N $BD66 Location $1C - "#TEXTTOKEN(#PC + $02, $01)"
   $BD67,$01 LOCATION_PROP_VOLUME
   $BD68,$06,$02 #TEXTTOKEN(#PC)
 W $BD6E,$02 elvish clearing levelled ground untie logs
-  $BD70,$03 #MOVEMENT
+  $BD70,$03 #MOVEMENT(#PC)
 L $BD70,$03,$03
   $BD79,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD7A Location $1D - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6127,14 +6257,14 @@ N $BD7A Location $1D - "#TEXTTOKEN(#PC + $02, $01)"
   $BD7B,$01 LOCATION_PROP_VOLUME
   $BD7C,$06,$02 #TEXTTOKEN(#PC)
 W $BD82,$02 ---
-  $BD84,$03 #MOVEMENT
+  $BD84,$03 #MOVEMENT(#PC)
   $BD87,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD88 Location $1E - "#TEXTTOKEN(#PC + $02, $01)"
   $BD88,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $BD89,$01 LOCATION_PROP_VOLUME
   $BD8A,$06,$02 #TEXTTOKEN(#PC)
 W $BD90,$02 ---
-  $BD92,$03 #MOVEMENT
+  $BD92,$03 #MOVEMENT(#PC)
 L $BD92,$03,$03
   $BD9B,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BD9C Location $1F - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6142,7 +6272,7 @@ N $BD9C Location $1F - "#TEXTTOKEN(#PC + $02, $01)"
   $BD9D,$01 LOCATION_PROP_VOLUME
   $BD9E,$06,$02 #TEXTTOKEN(#PC)
 W $BDA4,$02 dark dungeon elvenkings halls
-  $BDA6,$03 #MOVEMENT
+  $BDA6,$03 #MOVEMENT(#PC)
 L $BDA6,$03,$02
   $BDAC,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BDAD Location $20 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6150,7 +6280,7 @@ N $BDAD Location $20 - "#TEXTTOKEN(#PC + $02, $01)"
   $BDAE,$01 LOCATION_PROP_VOLUME
   $BDAF,$06,$02 #TEXTTOKEN(#PC)
 W $BDB5,$02 cellar where king keeps his barrel Swine
-  $BDB7,$03 #MOVEMENT
+  $BDB7,$03 #MOVEMENT(#PC)
 L $BDB7,$03,$03
   $BDC0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BDC1 Location $21 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6158,7 +6288,7 @@ N $BDC1 Location $21 - "#TEXTTOKEN(#PC + $02, $01)"
   $BDC2,$01 LOCATION_PROP_VOLUME
   $BDC3,$06,$02 #TEXTTOKEN(#PC)
 W $BDC9,$02 ---
-  $BDCB,$03 #MOVEMENT
+  $BDCB,$03 #MOVEMENT(#PC)
 L $BDCB,$03,$03
   $BDD4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BDD5 Location $22 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6166,7 +6296,7 @@ N $BDD5 Location $22 - "#TEXTTOKEN(#PC + $02, $01)"
   $BDD6,$01 LOCATION_PROP_VOLUME
   $BDD7,$06,$02 #TEXTTOKEN(#PC)
 W $BDDD,$02 ---
-  $BDDF,$03 #MOVEMENT
+  $BDDF,$03 #MOVEMENT(#PC)
 L $BDDF,$03,$04
   $BDEB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BDEC Location $23 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6174,7 +6304,7 @@ N $BDEC Location $23 - "#TEXTTOKEN(#PC + $02, $01)"
   $BDED,$01 LOCATION_PROP_VOLUME
   $BDEE,$06,$02 #TEXTTOKEN(#PC)
 W $BDF4,$02 wooden town middle long lake
-  $BDF6,$03 #MOVEMENT
+  $BDF6,$03 #MOVEMENT(#PC)
 L $BDF6,$03,$04
   $BE02,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE03 Location $24 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6182,7 +6312,7 @@ N $BE03 Location $24 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE04,$01 LOCATION_PROP_VOLUME
   $BE05,$06,$02 #TEXTTOKEN(#PC)
 W $BE0B,$02 strong river :current climb now strong move against
-  $BE0D,$03 #MOVEMENT
+  $BE0D,$03 #MOVEMENT(#PC)
 L $BE0D,$03,$02
   $BE13,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE14 Location $25 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6190,7 +6320,7 @@ N $BE14 Location $25 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE15,$01 LOCATION_PROP_VOLUME
   $BE16,$06,$02 #TEXTTOKEN(#PC)
 W $BE1C,$02 bleak barren land that was once green
-  $BE1E,$03 #MOVEMENT
+  $BE1E,$03 #MOVEMENT(#PC)
 L $BE1E,$03,$02
   $BE24,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE25 Location $26 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6198,7 +6328,7 @@ N $BE25 Location $26 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE26,$01 LOCATION_PROP_VOLUME
   $BE27,$06,$02 #TEXTTOKEN(#PC)
 W $BE2D,$02 ruins town dale
-  $BE2F,$03 #MOVEMENT
+  $BE2F,$03 #MOVEMENT(#PC)
 L $BE2F,$03,$03
   $BE38,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE39 Location $27 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6206,7 +6336,7 @@ N $BE39 Location $27 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE3A,$01 LOCATION_PROP_VOLUME
   $BE3B,$06,$02 #TEXTTOKEN(#PC)
 W $BE41,$02 front gate lonely mountain
-  $BE43,$03 #MOVEMENT
+  $BE43,$03 #MOVEMENT(#PC)
 L $BE43,$03,$03
   $BE4C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE4D Location $28 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6214,7 +6344,7 @@ N $BE4D Location $28 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE4E,$01 LOCATION_PROP_VOLUME
   $BE4F,$06,$02 #TEXTTOKEN(#PC)
 W $BE55,$02 west side ravenhill
-  $BE57,$03 #MOVEMENT
+  $BE57,$03 #MOVEMENT(#PC)
 L $BE57,$03,$03
   $BE60,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE61 Location $29 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6222,7 +6352,7 @@ N $BE61 Location $29 - "#TEXTTOKEN(#PC + $02, $01)"
   $BE62,$01 LOCATION_PROP_VOLUME
   $BE63,$06,$02 #TEXTTOKEN(#PC)
 W $BE69,$02 halls where /3.Person/sleeps  [16]
-  $BE6B,$03 #MOVEMENT
+  $BE6B,$03 #MOVEMENT(#PC)
 L $BE6B,$03,$03
   $BE74,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE75 Location $2A - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6230,7 +6360,7 @@ N $BE75 Location $2A - "#TEXTTOKEN(#PC + $02, $01)"
   $BE76,$01 LOCATION_PROP_VOLUME
   $BE77,$06,$02 #TEXTTOKEN(#PC)
 W $BE7D,$02 little steep bay ,still untie quiet ,an over hanging cliff
-  $BE7F,$03 #MOVEMENT
+  $BE7F,$03 #MOVEMENT(#PC)
 L $BE7F,$03,$03
   $BE88,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE89 Location $2B - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6238,7 +6368,7 @@ N $BE89 Location $2B - "#TEXTTOKEN(#PC + $02, $01)"
   $BE8A,$01 LOCATION_PROP_VOLUME
   $BE8B,$06,$02 #TEXTTOKEN(#PC)
 W $BE91,$02 smooth straight passage
-  $BE93,$03 #MOVEMENT
+  $BE93,$03 #MOVEMENT(#PC)
 L $BE93,$03,$02
   $BE99,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BE9A Location $2C - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6246,7 +6376,7 @@ N $BE9A Location $2C - "#TEXTTOKEN(#PC + $02, $01)"
   $BE9B,$01 LOCATION_PROP_VOLUME
   $BE9C,$06,$02 #TEXTTOKEN(#PC)
 W $BEA2,$02 lonely mountain
-  $BEA4,$03 #MOVEMENT
+  $BEA4,$03 #MOVEMENT(#PC)
 L $BEA4,$03,$04
   $BEB0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BEB1 Location $2E - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6254,7 +6384,7 @@ N $BEB1 Location $2E - "#TEXTTOKEN(#PC + $02, $01)"
   $BEB2,$01 LOCATION_PROP_VOLUME
   $BEB3,$06,$02 #TEXTTOKEN(#PC)
 W $BEB9,$02 ---
-  $BEBB,$03 #MOVEMENT
+  $BEBB,$03 #MOVEMENT(#PC)
 L $BEBB,$03,$02
   $BEC1,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BEC2 Location $2D - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6262,7 +6392,7 @@ N $BEC2 Location $2D - "#TEXTTOKEN(#PC + $02, $01)"
   $BEC3,$01 LOCATION_PROP_VOLUME
   $BEC4,$06,$02 #TEXTTOKEN(#PC)
 W $BECA,$02 ---
-  $BECC,$03 #MOVEMENT
+  $BECC,$03 #MOVEMENT(#PC)
 L $BECC,$03,$02
   $BED2,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BED3 Location $02 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6270,7 +6400,7 @@ N $BED3 Location $02 - "#TEXTTOKEN(#PC + $02, $01)"
   $BED4,$01 LOCATION_PROP_VOLUME
   $BED5,$06,$02 #TEXTTOKEN(#PC)
 W $BEDB,$02 ---
-  $BEDD,$03 #MOVEMENT
+  $BEDD,$03 #MOVEMENT(#PC)
 L $BEDD,$03,$02
   $BEE3,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BEE4 Location $03 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6278,7 +6408,7 @@ N $BEE4 Location $03 - "#TEXTTOKEN(#PC + $02, $01)"
   $BEE5,$01 LOCATION_PROP_VOLUME
   $BEE6,$06,$02 #TEXTTOKEN(#PC)
 W $BEEC,$02 ---
-  $BEEE,$03 #MOVEMENT
+  $BEEE,$03 #MOVEMENT(#PC)
 L $BEEE,$03,$02
   $BEF4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BEF5 Location $08 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6286,7 +6416,7 @@ N $BEF5 Location $08 - "#TEXTTOKEN(#PC + $02, $01)"
   $BEF6,$01 LOCATION_PROP_VOLUME
   $BEF7,$06,$02 #TEXTTOKEN(#PC)
 W $BEFD,$02 ---
-  $BEFF,$03 #MOVEMENT
+  $BEFF,$03 #MOVEMENT(#PC)
 L $BEFF,$03,$02
   $BF05,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF06 Location $17 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6294,7 +6424,7 @@ N $BF06 Location $17 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF07,$01 LOCATION_PROP_VOLUME
   $BF08,$06,$02 #TEXTTOKEN(#PC)
 W $BF0E,$02 ---
-  $BF10,$03 #MOVEMENT
+  $BF10,$03 #MOVEMENT(#PC)
 L $BF10,$03,$02
   $BF16,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF17 Location $30 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6302,7 +6432,7 @@ N $BF17 Location $30 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF18,$01 LOCATION_PROP_VOLUME
   $BF19,$06,$02 #TEXTTOKEN(#PC)
 W $BF1F,$02 ---
-  $BF21,$03 #MOVEMENT
+  $BF21,$03 #MOVEMENT(#PC)
 L $BF21,$03,$03
   $BF2A,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF2B Location $31 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6310,7 +6440,7 @@ N $BF2B Location $31 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF2C,$01 LOCATION_PROP_VOLUME
   $BF2D,$06,$02 #TEXTTOKEN(#PC)
 W $BF33,$02 ---
-  $BF35,$03 #MOVEMENT
+  $BF35,$03 #MOVEMENT(#PC)
 L $BF35,$03,$04
   $BF41,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF42 Location $2F - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6324,7 +6454,7 @@ N $BF4D Location $32 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF4E,$01 LOCATION_PROP_VOLUME
   $BF4F,$06,$02 #TEXTTOKEN(#PC)
 W $BF55,$02 ---
-  $BF57,$03 #MOVEMENT
+  $BF57,$03 #MOVEMENT(#PC)
 L $BF57,$03,$02
   $BF5D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF5E Location $33 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6332,7 +6462,7 @@ N $BF5E Location $33 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF5F,$01 LOCATION_PROP_VOLUME
   $BF60,$06,$02 #TEXTTOKEN(#PC)
 W $BF66,$02 ---
-  $BF68,$03 #MOVEMENT
+  $BF68,$03 #MOVEMENT(#PC)
 L $BF68,$03,$03
   $BF71,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF72 Location $42 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6340,7 +6470,7 @@ N $BF72 Location $42 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF73,$01 LOCATION_PROP_VOLUME
   $BF74,$06,$02 #TEXTTOKEN(#PC)
 W $BF7A,$02 west  [02] [04]east bank black river
-  $BF7C,$03 #MOVEMENT
+  $BF7C,$03 #MOVEMENT(#PC)
 L $BF7C,$03,$02
   $BF82,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF83 Location $43 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6348,7 +6478,7 @@ N $BF83 Location $43 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF84,$01 LOCATION_PROP_VOLUME
   $BF85,$06,$02 #TEXTTOKEN(#PC)
 W $BF8B,$02 east bank black river
-  $BF8D,$03 #MOVEMENT
+  $BF8D,$03 #MOVEMENT(#PC)
 L $BF8D,$03,$02
   $BF93,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BF94 Location $44 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6356,7 +6486,7 @@ N $BF94 Location $44 - "#TEXTTOKEN(#PC + $02, $01)"
   $BF95,$01 LOCATION_PROP_VOLUME
   $BF96,$06,$02 #TEXTTOKEN(#PC)
 W $BF9C,$02 ---
-  $BF9E,$03 #MOVEMENT
+  $BF9E,$03 #MOVEMENT(#PC)
 L $BF9E,$03,$03
   $BFA7,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BFA8 Location $45 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6364,7 +6494,7 @@ N $BFA8 Location $45 - "#TEXTTOKEN(#PC + $02, $01)"
   $BFA9,$01 LOCATION_PROP_VOLUME
   $BFAA,$06,$02 #TEXTTOKEN(#PC)
 W $BFB0,$02 ---
-  $BFB2,$03 #MOVEMENT
+  $BFB2,$03 #MOVEMENT(#PC)
 L $BFB2,$03,$03
   $BFBB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BFBC Location $46 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6372,7 +6502,7 @@ N $BFBC Location $46 - "#TEXTTOKEN(#PC + $02, $01)"
   $BFBD,$01 LOCATION_PROP_VOLUME
   $BFBE,$06,$02 #TEXTTOKEN(#PC)
 W $BFC4,$02 ---
-  $BFC6,$03 #MOVEMENT
+  $BFC6,$03 #MOVEMENT(#PC)
 L $BFC6,$03,$02
   $BFCC,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BFCD Location $47 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6380,7 +6510,7 @@ N $BFCD Location $47 - "#TEXTTOKEN(#PC + $02, $01)"
   $BFCE,$01 LOCATION_PROP_VOLUME
   $BFCF,$06,$02 #TEXTTOKEN(#PC)
 W $BFD5,$02 ---
-  $BFD7,$03 #MOVEMENT
+  $BFD7,$03 #MOVEMENT(#PC)
 L $BFD7,$03,$03
   $BFE0,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BFE1 Location $48 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6388,7 +6518,7 @@ N $BFE1 Location $48 - "#TEXTTOKEN(#PC + $02, $01)"
   $BFE2,$01 LOCATION_PROP_VOLUME
   $BFE3,$06,$02 #TEXTTOKEN(#PC)
 W $BFE9,$02 ---
-  $BFEB,$03 #MOVEMENT
+  $BFEB,$03 #MOVEMENT(#PC)
 L $BFEB,$03,$03
   $BFF4,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $BFF5 Location $49 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6396,7 +6526,7 @@ N $BFF5 Location $49 - "#TEXTTOKEN(#PC + $02, $01)"
   $BFF6,$01 LOCATION_PROP_VOLUME
   $BFF7,$06,$02 #TEXTTOKEN(#PC)
 W $BFFD,$02 ---
-  $BFFF,$03 #MOVEMENT
+  $BFFF,$03 #MOVEMENT(#PC)
 L $BFFF,$03,$02
   $C005,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C006 Location $4A - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6404,7 +6534,7 @@ N $C006 Location $4A - "#TEXTTOKEN(#PC + $02, $01)"
   $C007,$01 LOCATION_PROP_VOLUME
   $C008,$06,$02 #TEXTTOKEN(#PC)
 W $C00E,$02 ---
-  $C010,$03 #MOVEMENT
+  $C010,$03 #MOVEMENT(#PC)
 L $C010,$03,$02
   $C016,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C017 Location $4B - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6412,28 +6542,28 @@ N $C017 Location $4B - "#TEXTTOKEN(#PC + $02, $01)"
   $C018,$01 LOCATION_PROP_VOLUME
   $C019,$06,$02 #TEXTTOKEN(#PC)
 W $C01F,$02 ---
-  $C021,$03 #MOVEMENT
+  $C021,$03 #MOVEMENT(#PC)
   $C024,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C025 Location $4C - "#TEXTTOKEN(#PC + $02, $01)"
   $C025,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $C026,$01 LOCATION_PROP_VOLUME
   $C027,$06,$02 #TEXTTOKEN(#PC)
 W $C02D,$02 ---
-  $C02F,$03 #MOVEMENT
+  $C02F,$03 #MOVEMENT(#PC)
   $C032,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C033 Location $4D - "#TEXTTOKEN(#PC + $02, $01)"
   $C033,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $C034,$01 LOCATION_PROP_VOLUME
   $C035,$06,$02 #TEXTTOKEN(#PC)
 W $C03B,$02 ---
-  $C03D,$03 #MOVEMENT
+  $C03D,$03 #MOVEMENT(#PC)
   $C040,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C041 Location $4E - "#TEXTTOKEN(#PC + $02, $01)"
   $C041,b$01 #LOCATIONATTRIBUTE(#PEEK(#PC))
   $C042,$01 LOCATION_PROP_VOLUME
   $C043,$06,$02 #TEXTTOKEN(#PC)
 W $C049,$02 ---
-  $C04B,$03 #MOVEMENT
+  $C04B,$03 #MOVEMENT(#PC)
 L $C04B,$03,$02
   $C051,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 N $C052 Location $4F - "#TEXTTOKEN(#PC + $02, $01)"
@@ -6441,7 +6571,7 @@ N $C052 Location $4F - "#TEXTTOKEN(#PC + $02, $01)"
   $C053,$01 LOCATION_PROP_VOLUME
   $C054,$06,$02 #TEXTTOKEN(#PC)
 W $C05A,$02 ---
-  $C05C,$03 #MOVEMENT
+  $C05C,$03 #MOVEMENT(#PC)
 L $C05C,$03,$02
   $C062,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
@@ -7529,142 +7659,282 @@ W $C726,$02 Help Message (none).
 
 b $C730 Action Table
 @ $C730 label=ActionTable
-M $C730,$03 North
-B $C730,$01
-W $C731,$02
-M $C733,$03 South
-B $C733,$01
-W $C734,$02
-M $C736,$03 East
-B $C736,$01
-W $C737,$02
-M $C739,$03 West
-B $C739,$01
-W $C73A,$02
-M $C73C,$03 Northeast
-B $C73C,$01
-W $C73D,$02
-M $C73F,$03 Northwest
-B $C73F,$01
-W $C740,$02
-M $C742,$03 Southeast
-B $C742,$01
-W $C743,$02
-M $C745,$03 Southwest
-B $C745,$01
-W $C746,$02
-M $C748,$03 Up
-B $C748,$01
-W $C749,$02
-M $C74B,$03 Down
-B $C74B,$01
-W $C74C,$02
-M $C74E,$03 Take
-B $C74E,$01
-W $C74F,$02
-M $C751,$03 Drop
-B $C751,$01
-W $C752,$02
-M $C754,$03 Attack
-B $C754,$01
-W $C755,$02
-M $C757,$03 Look
-B $C757,$01
-W $C758,$02
-M $C75A,$03 Inventory
-B $C75A,$01
-W $C75B,$02
-M $C75D,$03 Examine
-B $C75D,$01
-W $C75E,$02
-M $C760,$03 Give To
-B $C760,$01
-W $C761,$02
-M $C763,$03 Enter
-B $C763,$01
-W $C764,$02
-M $C766,$03 Go Into
-B $C766,$01
-W $C767,$02
-M $C769,$03 Run
-B $C769,$01
-W $C76A,$02
-M $C76C,$03 Follow
-B $C76C,$01
-W $C76D,$02
-M $C76F,$03 Throw At
-B $C76F,$01
-W $C770,$02
-M $C772,$03 Capture
-B $C772,$01
-W $C773,$02
-M $C775,$03 None
-B $C775,$01
-W $C776,$02
-M $C778,$03 Untie
-B $C778,$01
-W $C779,$02
-M $C77B,$03 Tie To
-B $C77B,$01
-W $C77C,$02
-M $C77E,$03 Burn
-B $C77E,$01
-W $C77F,$02
-M $C781,$03 Talk To
-B $C781,$01
-W $C782,$02
-M $C784,$03 Shoot
-B $C784,$01
-W $C785,$02
-M $C787,$03 Carry
-B $C787,$01
-W $C788,$02
-M $C78A,$03 Climb Out Of
-B $C78A,$01
-W $C78B,$02
+N $C730 Action: "#ACTION".
+B $C730,$01 Action ID.
+W $C731,$02 Action routine.
+L $C730,$03,$1F
+N $C78D End of table.
 B $C78D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
-b $C78E
-B $C78E,$01
-W $C78F,$02
+b $C78E Event Jump Table
+N $C78E #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+B $C78E,$01 Location ID.
+W $C78F,$02 Event address.
 L $C78E,$03,$07
+N $C7A3 End of table.
 B $C7A3,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
-c $C7A4
+c $C7A4 Event: #LOCATIONNAME($16)
+N $C7A4 At the start of the game, the #TEXTTOKEN($C430 + $08, 1) is invisible (!) and only becomes visible after
+.       entering #LOCATIONNAME($16).
+@ $C7A4 label=EventBeornsHouse
   $C7A4,$03 #REGhl=#R$C437(attributes) of object $42 - "#TEXTTOKEN($C430 + $08, 1)".
-  $C7A7,$03 Return if "broken" bit is set.
+  $C7A7,$03 Return if the "#TEXTTOKEN($C430 + $08, 1)" is "broken" (bit 3 is set).
   $C7AA,$05 Write $42 to #R$CAE7.
   $C7AF,$02 Set "visible" bit for "#TEXTTOKEN($C430 + $08, 1)".
   $C7B1,$01 Return.
 
-c $C7B2
-c $C7B9
+c $C7B2 Event: #LOCATIONNAME($1A)
+@ $C7B2 label=EventSpiderThreadsPlace
+  $C7B2,$06 Copy #R$CA92 to #R$CA93.
+  $C7B8,$01 Return.
+
+c $C7B9 Event: #LOCATIONNAME($1D)
+@ $C7B9 label=EventDeepBog
   $C7B9,$06 Copy #R$CAA0 to #R$CAA1.
   $C7BF,$01 Return.
 
-c $C7C0
-  $C7C0
+c $C7C0 Event: #LOCATIONNAME($20)
+@ $C7C0 label=EventElvenkingsCellar
+  $C7C0,$05 Write $03 to #R$CAC4.
   $C7C5,$03 #REGhl=#R$C13A(attributes) of object $3C - "#TEXTTOKEN($C133 + $08, 1)".
-  $C7C8,$04 Jump to #R$C7D1 if "broken" bit is not set.
+  $C7C8,$04 Jump to #R$C7D1 if "#TEXTTOKEN($C133 + $08, 1)" is "broken" (bit 3 is set).
   $C7CC,$05 Write $3C to #R$CB03.
+@ $C7D1 label=EventElvenkingsCellar_Skip
   $C7D1,$03 #REGhl=#R$C4CA(attributes) of object $46 - "#TEXTTOKEN($C4C3 + $08, 1)".
+  $C7D4,$03 Return if the "#TEXTTOKEN($C4C3 + $08, 1)" is "broken" (bit 3 is set).
   $C7D7,$05 Write $46 to #R$CAFC.
   $C7DC,$01 Return.
 
-c $C7DD
+c $C7DD Event: #LOCATIONNAME($03)
+@ $C7DD label=EventForest
+  $C7DD,$06 Copy #R$8D9B to #R$B6F3.
+  $C7E3,$06 Copy #R$CABC to #R$CABD.
+  $C7E9,$01 Return.
 
-c $C7EA
+c $C7EA Event: #LOCATIONNAME($21)
+N $C7EA Is Player Protected in "#TEXTTOKEN($C3EE + $08, 1)"
+@ $C7EA label=EventForestriver
   $C7EA,$06 If #R$C11C(player mother object) is object $13 - "#TEXTTOKEN($C3EE + $08, 1)" then return.
+N $C7F0 Uh oh ... you dead.
   $C7F0,$03 Call #R$8E39.
   $C7F3,$03 #REGhl=#R$B26D("You are swept forcefully against the portcullis")
   $C7F6,$03 Call #R$72DD.
   $C7F9,$03 Jump to #R$90D2.
 
-b $C7FC
+b $C7FC Gollums Riddles
+  $C7FC,$01
+  $C7FD,$01
+W $C7FE,$02
+  $C800,$01
+  $C801,$01
+W $C802,$02
+  $C804,$01
+  $C805,$01
+W $C806,$02
+  $C808,$01
+  $C809,$01
+W $C80A,$02
+  $C80C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+  $C80D,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+
+b $C80E
+D $C80E See #R$9C9F.
+N $C80E "#LOCATIONNAME(#PEEK(#PC))".
+  $C80E,$01 Location #LOCATION(#PEEK(#PC), 1, 1)($).
+W $C80F,$02 The direction for #R(#PEEK(#PC + 1) * $100 + #PEEK(#PC))(#LOCATIONNAME(#PEEK(#PC - 1))).
+  $C811,$03 #MOVEMENT(#PC)
+L $C80E,$06,$05
+  $C82C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+
+b $C82D
+  $C82D,$01
+W $C82E,$02
+  $C830,$01
+W $C831,$02
+  $C833,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+  $C834,$01
+W $C835,$02
+  $C837,$01
+W $C838,$02
+  $C83A,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+  $C83B,$01
+W $C83C,$02
+  $C83E,$01
+W $C83F,$02
+  $C841,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+  $C842,$01
+  $C843,$01
+  $C844,$01 #OBJECT(#PEEK(#PC), 1, 1)($)
+  $C845,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+  $C846,$01
+  $C847,$01
+W $C848,$02
+  $C84A,$01
+W $C84B,$02
+  $C84D,$01
+  $C84E,$01
+  $C84F,$01
+  $C850,$01
+W $C851,$02
+  $C853,$01
+W $C854,$02
+  $C856,$01
+  $C857,$01
+  $C858,$01
+  $C859,$01
+W $C85A,$02
+  $C85C,$01
+W $C85D,$02
+  $C85F,$01
+  $C860,$01
+  $C861,$01 #OBJECT(#PEEK(#PC), 1, 1)($)
+  $C862,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+  $C863,$01
+  $C864,$01
+  $C865,$01
+  $C866,$01
+W $C867,$02
+  $C869,$01
+W $C86A,$02
+  $C86C,$01
+  $C86D,$01
+  $C86E,$01
+W $C86F,$02
+  $C871,$01
+  $C872,$01
+  $C873,$01
+  $C874,$01
+W $C875,$02
+  $C877,$01
+W $C878,$02
+  $C87A,$01
+  $C87B,$01
+  $C87C,$01
+  $C87D,$01
+W $C87E,$02
+  $C880,$01
+W $C881,$02
+  $C883,$01
+  $C884,$01
+  $C885,$01
+  $C886,$01
+W $C887,$02
+  $C889,$01
+W $C88A,$02
+  $C88C,$01
+  $C88D,$01
+  $C88E,$01
+  $C88F,$01
+W $C890,$02
+  $C892,$01
+W $C893,$02
+  $C895,$01
+  $C896,$01
+  $C897,$01
+  $C898,$01
+  $C899,$01
+  $C89A,$01
+  $C89B,$01
+W $C89C,$02
+
+N $C8A1 Gandalf.
+  $C8A1,$01
+W $C8A2,$02
+  $C8A4,$01
+W $C8A5,$02
+  $C8A7,$01
+W $C8A8,$02
+  $C8AA,$01
+W $C8AB,$02
+  $C8AD,$01
+W $C8AE,$02
+  $C8B0,$01
+W $C8B1,$02
+  $C8B3,$01
+W $C8B4,$02
+  $C8B6,$01
+W $C8B7,$02
+  $C8B9,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+
+N $C8BA Gandalfs initial actions.
+  $C8BA,$01
+  $C8BB,$01 #ACTION
+  $C8BC,$01 #OBJECT(#PEEK(#PC), 1, 1)($)
+  $C8BD,$01 #OBJECT(#PEEK(#PC), 1, 1)($)
+
+  $C8BE,$01
+  $C8BF,$01 #ACTION
+  $C8C0,$01 #OBJECT(#PEEK(#PC), 1, 1)($)
+  $C8C1,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+
   $CA53,$29
-  $CA7C,$4F
-  $CAA0
-  $CAA1
+  $CA7C,$08
+
+N $CA84 Barrel.
+  $CA84,$01
+  $CA85,$01
+W $CA86,$02
+  $CA88,$01
+W $CA89,$02
+N $CA8B Spider Web.
+  $CA8B,$01
+  $CA8C,$01
+W $CA8D,$02
+  $CA8F,$01
+W $CA90,$02
+N $CA92 Spider Web.
+  $CA92,$01
+  $CA93,$01
+W $CA94,$02
+  $CA96,$01
+W $CA97,$02
+N $CA99 Goblins Door.
+  $CA99,$01
+  $CA9A,$01
+W $CA9B,$02
+  $CA9D,$01
+W $CA9E,$02
+N $CAA0 Deep Bog.
+  $CAA0,$01
+  $CAA1,$01
+W $CAA2,$02
+  $CAA4,$01
+W $CAA5,$02
+N $CAA7 Magic Door.
+  $CAA7,$01
+  $CAA8,$01
+W $CAA9,$02
+  $CAAB,$01
+W $CAAC,$02
+N $CAAE Ring.
+  $CAAE,$01
+  $CAAF,$01
+W $CAB0,$02
+  $CAB2,$01
+W $CAB3,$02
+N $CAB5 ???
+  $CAB5,$01
+  $CAB6,$01
+W $CAB7,$02
+  $CAB9,$01
+W $CABA,$02
+N $CABC Forest.
+  $CABC,$01
+  $CABD,$01
+W $CABE,$02
+  $CAC0,$01
+W $CAC1,$02
+N $CAC3 Hole.
+  $CAC3,$01
+  $CAC4,$01
+W $CAC5,$02
+  $CAC7,$01
+W $CAC8,$02
+
+  $CACA,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+
+b $CACB
   $CACB,$77,$07
   $CB42,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
   $CB43

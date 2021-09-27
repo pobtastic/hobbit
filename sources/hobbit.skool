@@ -223,7 +223,8 @@ b$4000 DEFB $01,$07,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$03,$06,$00,$C0,
  $5AC0 DEFB $07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07 ;
  $5AE0 DEFB $07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07 ; }
 
-@replace=/#MOVEMENT/#TABLE(default,centre,centre,centre) { =h Direction | =h Via | =h Destination } { #MAP(#PEEK(#PC))(?,$01:N,$02:S,$03:E,$04:W,$05:NE,$06:NW,$07:SE,$08:SW,$09:UP,$0A:DN) | #IF(#PEEK(#PC + 1) > $00)(#OBJECT(#PEEK(#PC + $01), 1, 1)($),---) | #LOCATION(#PEEK(#PC + $02), 1, 1)($) - "#LOCATIONNAME(#PEEK(#PC + $02))" } TABLE#
+@expand=#DEF(#MOVEMENT(address) #TABLE(default,centre,centre,centre) { =h Direction | =h Via | =h Destination } { #MAP(#PEEK($address))(?,$01:N,$02:S,$03:E,$04:W,$05:NE,$06:NW,$07:SE,$08:SW,$09:UP,$0A:DN) | #IF(#PEEK($address + 1) > $00)(#OBJECT(#PEEK($address + $01), 1, 1)($),---) | #LOCATION(#PEEK($address + $02), 1, 1)($) - "#LOCATIONNAME(#PEEK($address + $02))" } TABLE#)
+@expand=#DEF(#ACTION #MAP(#PEEK(#PC))(?,$00:None,$01:North,$02:South,$03:East,$04:West,$05:Northeast,$06:Northwest,$07:Southeast,$08:Southwest,$09:Up,$0A:Down,$0D:Drop,$0F:Attack,$13:Take,$17:Look,$1A:Inventory,$1C:Examine,$1D:Give To,$1F:Enter,$20:Go Into,$24:Run,$27:Follow,$2A:Throw At,$2D:Burn,$2E:Tie To,$30:Capture,$33:Untie,$35:Talk To,$37:Climb Out Of,$3A:Shoot,$3B:Carry))
 @replace=/#WORDINDEX/#R#(#EVAL(#PEEK(#PC + 1) * $100 + #PEEK(#PC) + $6000))
 ; Data block at 5B00
 b$5B00 DEFB $00,$00,$00,$00,$00,$00,$00,$00
@@ -5162,13 +5163,13 @@ c$7394 POP DE        ;
  $73A2 RET           ;
 
 ; Routine at 73A3
-c$73A3 XOR A         ;
- $73A4 LD ($B703),A  ;
+c$73A3 XOR A         ; {Write $00 to #R$B703.
+ $73A4 LD ($B703),A  ; }
 ; This entry point is used by the routine at #R$70F3.
-*$73A7 LD A,($B6EA)  ;
- $73AA CALL $7488    ;
- $73AD XOR A         ;
- $73AE RET           ;
+*$73A7 LD A,($B6EA)  ; #REGa=#R$B6EA.
+ $73AA CALL $7488    ; Call #R$7488.
+ $73AD XOR A         ; #REGa=$00.
+ $73AE RET           ; Return.
 
 ; Routine at 73AF
 c$73AF LD A,$01      ;
@@ -5286,43 +5287,43 @@ c$742D POP DE        ;
 *$744F LD A,$01      ;
  $7451 LD ($B704),A  ;
  $7454 RET           ;
-*$7455 LD HL,$AD2D   ;
+*$7455 LD HL,$AD2D   ; #REGhl=#R$AD2D.
  $7458 LD A,($B701)  ;
  $745B LD E,A        ;
  $745C LD A,($70DF)  ;
  $745F OR E          ;
  $7460 JR Z,$7465    ;
- $7462 LD HL,$AD35   ;
+ $7462 LD HL,$AD35   ; #REGhl=#R$AD35.
 *$7465 LD A,D        ;
  $7466 RRCA          ;
  $7467 RRCA          ;
  $7468 RRCA          ;
- $7469 AND $1E       ;
- $746B PUSH DE       ;
- $746C LD E,A        ;
- $746D LD D,$00      ;
- $746F ADD HL,DE     ;
- $7470 LD E,(HL)     ;
+ $7469 AND %00011110 ; Keep only bits 1-4.
+ $746B PUSH DE       ; Stash #REGde on the stack.
+ $746C LD E,A        ; {Create an offset in #REGde using #REGa as the LSB.
+ $746D LD D,$00      ; }
+ $746F ADD HL,DE     ; #REGhl = #REGhl + offset.
+ $7470 LD E,(HL)     ; {#REGde=contents of the calculated address.
  $7471 INC HL        ;
- $7472 LD D,(HL)     ;
- $7473 CALL $74C1    ;
- $7476 POP DE        ;
- $7477 RET           ;
+ $7472 LD D,(HL)     ; }
+ $7473 CALL $74C1    ; Call #R$74C1.
+ $7476 POP DE        ; Restore #REGde from the stack.
+ $7477 RET           ; Return.
 ; This entry point is used by the routines at #R$7394 and #R$9EC7.
-*$7478 PUSH DE       ;
- $7479 LD A,($B703)  ;
- $747C AND A         ;
- $747D CALL NZ,$743F ;
- $7480 POP DE        ;
- $7481 LD A,D        ;
- $7482 AND $0F       ;
- $7484 LD D,A        ;
- $7485 JP $74C1      ;
+*$7478 PUSH DE       ; Stash #REGde on the stack.
+ $7479 LD A,($B703)  ; #REGa=#R$B703.
+ $747C AND A         ; {Call #R$743F if #REGa is non-zero.
+ $747D CALL NZ,$743F ; }
+ $7480 POP DE        ; Restore #REGde from the stack.
+ $7481 LD A,D        ; #REGa=#REGd.
+ $7482 AND %00001111 ; Keep only bits 0-3.
+ $7484 LD D,A        ; #REGd=#REGa.
+ $7485 JP $74C1      ; Jump to #R$74C1.
 ; This entry point is used by the routines at #R$73A3 and #R$740C.
 *$7488 CP $FF        ;
  $748A JP NZ,$73D6   ;
- $748D LD DE,$0AE3   ;
- $7490 JP $74C1      ;
+ $748D LD DE,$0AE3   ; #REGde=$0AE3.
+ $7490 JP $74C1      ; Jump to #R$74C1.
 
 ; Get Common Word
 ;
@@ -5351,15 +5352,21 @@ g$74A6 DEFB $F1,$78,$36,$04,$CD,$30,$79,$36
  $74AE DEFB $36,$23,$73,$23,$70,$18,$1C,$FE
  $74B6 DEFB $0B,$20,$1B,$CB
 
-; Routine at 74BA
+; Print Action
 ;
 ; Used by the routine at #R$70F3.
-c$74BA LD E,(HL)     ;
- $74BB INC HL        ;
+;
+;   HL Pointer to an action in the #R$AB53(actions table)
+; O:HL Pointer is incremented twice
+; O:DE A word token
+@label=PrintAction
+c$74BA LD E,(HL)     ; {Store the word token in #REGde (we keep only bits 0-3
+ $74BB INC HL        ; of the MSB).
  $74BC LD A,(HL)     ;
  $74BD INC HL        ;
- $74BE AND $0F       ;
- $74C0 LD D,A        ;
+ $74BE AND %00001111 ;
+ $74C0 LD D,A        ; }
+; Continues on to #R$74C1 to print.
 
 ; Print Token
 ;
@@ -9570,45 +9577,72 @@ c$8D33 CALL $9C78    ;
 *$8D6A LD ($C367),A  ;
  $8D6D RET           ;
 
-; Data block at 8D6E
-b$8D6E DEFB $04
- $8D6F DEFW $0019
- $8D71 DEFB $07
- $8D72 DEFW $0032
- $8D74 DEFB $0B
- $8D75 DEFW $0019
- $8D77 DEFB $16
- $8D78 DEFW $0019
- $8D7A DEFB $0D
- $8D7B DEFW $004B
- $8D7D DEFB $41
- $8D7E DEFW $0032
- $8D80 DEFB $1B
- $8D81 DEFW $0019
- $8D83 DEFB $1C
- $8D84 DEFW $0019
- $8D86 DEFB $1F
- $8D87 DEFW $0032
- $8D89 DEFB $22
- $8D8A DEFW $0064
- $8D8C DEFB $26
- $8D8D DEFW $0019
- $8D8F DEFB $2A
- $8D90 DEFW $0019
- $8D92 DEFB $2B
- $8D93 DEFW $0032
- $8D95 DEFB $29
- $8D96 DEFW $00C8
- $8D98 DEFB $FF             ; Termination character (#N(#PEEK(#PC), 2, 3, 1,
-                            ; 1)($)).
- $8D99 DEFB $00,$00,$00,$00
+; Location Percentage Completion Table
+;
+; .
+;
+; .
+;
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+@label=PercentageLocationTable
+b$8D6E DEFB $04      ; Location ID.
+ $8D6F DEFW $0019    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D71 DEFB $07      ; Location ID.
+ $8D72 DEFW $0032    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D74 DEFB $0B      ; Location ID.
+ $8D75 DEFW $0019    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D77 DEFB $16      ; Location ID.
+ $8D78 DEFW $0019    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D7A DEFB $0D      ; Location ID.
+ $8D7B DEFW $004B    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D7D DEFB $41      ; Location ID.
+ $8D7E DEFW $0032    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D80 DEFB $1B      ; Location ID.
+ $8D81 DEFW $0019    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D83 DEFB $1C      ; Location ID.
+ $8D84 DEFW $0019    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D86 DEFB $1F      ; Location ID.
+ $8D87 DEFW $0032    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D89 DEFB $22      ; Location ID.
+ $8D8A DEFW $0064    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D8C DEFB $26      ; Location ID.
+ $8D8D DEFW $0019    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D8F DEFB $2A      ; Location ID.
+ $8D90 DEFW $0019    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D92 DEFB $2B      ; Location ID.
+ $8D93 DEFW $0032    ; Percentage to add.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $8D95 DEFB $29      ; Location ID.
+ $8D96 DEFW $00C8    ; Percentage to add.
+; End of table.
+ $8D98 DEFB $FF      ; Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+
+; Action Location Buffer
+@label=ActionLocationData
+g$8D99 DEFW $0000    ; Pointer to the current location data from #R$BA8A.
+@label=ActionLocationID
+ $8D9B DEFB $00      ; The current location ID.
+@label=
+ $8D9C DEFB $00
 
 ; Action Dir
 ;
 ; Used by the routine at #R$8FAD.
 @label=Action_Dir
-c$8D9D CALL $95ED      ;
- $8DA0 JR NC,$8DAB     ;
+c$8D9D CALL $95ED      ; {Jump to #R$8DAB if #R$95ED reports that it is light.
+ $8DA0 JR NC,$8DAB     ; }
  $8DA2 LD A,$09        ;
  $8DA4 CALL $9C9F      ;
  $8DA7 INC A           ;
@@ -9630,17 +9664,17 @@ c$8D9D CALL $95ED      ;
  $8DD2 CALL $9F08      ;
  $8DD5 CP $FF          ;
  $8DD7 JR NZ,$8DFA     ;
-*$8DD9 CALL $95ED      ;
- $8DDC JP NC,$9F76     ;
- $8DDF CALL $9D44      ;
- $8DE2 LD IX,$C11B     ;
+*$8DD9 CALL $95ED      ; {Jump to #R$9F76 if #R$95ED reports that it is light.
+ $8DDC JP NC,$9F76     ; }
+ $8DDF CALL $9D44      ; Call #R$9D44.
+ $8DE2 LD IX,$C11B     ; #REGix=#R$C11B.
  $8DE6 AND A           ;
  $8DE7 LD HL,$AD7D     ; #REGhl=#R$AD7D("but fall and hit your head[0x15]")
  $8DEA RR (IX+$05)     ;
  $8DEE JP NZ,$72DD     ;
  $8DF1 LD HL,$AD8A     ; #REGhl=#R$AD8A("but fall and smash your skull")
  $8DF4 CALL $72DD      ; Call #R$72DD.
- $8DF7 JP $90D2        ;
+ $8DF7 JP $90D2        ; Jump to #R$90D2.
 *$8DFA LD A,(IX+$02)   ;
  $8DFD AND A           ;
  $8DFE JR Z,$8DD9      ;
@@ -9654,54 +9688,62 @@ c$8D9D CALL $95ED      ;
  $8E0F DEC A           ;
  $8E10 JR Z,$8E72      ;
 ; This entry point is used by the routine at #R$9BDC.
-*$8E12 CALL $9D44      ;
- $8E15 LD (IY+$10),B   ;
- $8E18 LD A,($B6EA)    ;
- $8E1B CALL $9BDD      ;
- $8E1E LD A,($B6EA)    ;
- $8E21 CP $00          ;
- $8E23 RET NZ          ;
- $8E24 LD IX,$C78E     ;
- $8E28 LD A,($8D9B)    ;
- $8E2B CALL $9DBD      ;
- $8E2E JR Z,$8E39      ;
- $8E30 LD L,(IX+$01)   ;
- $8E33 LD H,(IX+$02)   ;
- $8E36 CALL $9B6C      ;
-; This entry point is used by the routine at #R$C7EA.
-*$8E39 CALL $95ED      ;
- $8E3C RET C           ;
- $8E3D LD A,($B6EA)    ;
- $8E40 AND A           ;
- $8E41 LD A,($8D9B)    ;
- $8E44 JR NZ,$8E6A     ;
- $8E46 LD HL,($8D99)   ;
- $8E49 BIT 6,(HL)      ;
- $8E4B JP NZ,$96A8     ;
- $8E4E SET 6,(HL)      ;
- $8E50 PUSH AF         ;
- $8E51 LD IX,$8D6E     ;
- $8E55 CALL $9DBD      ;
- $8E58 JR Z,$8E69      ;
- $8E5A PUSH DE         ;
- $8E5B LD E,(IX+$01)   ;
- $8E5E LD D,(IX+$02)   ;
- $8E61 LD HL,($B6F7)   ;
+*$8E12 CALL $9D44      ; Call #R$9D44.
+ $8E15 LD (IY+$10),B   ; Update the location.
+ $8E18 LD A,($B6EA)    ; #REGa=#R$B6EA.
+ $8E1B CALL $9BDD      ; Call #R$9BDD.
+ $8E1E LD A,($B6EA)    ; #REGa=#R$B6EA.
+ $8E21 CP $00          ; {Return if the character is not #OBJECT($00, 1, 1)($).
+ $8E23 RET NZ          ; }
+ $8E24 LD IX,$C78E     ; {Call #R$9DBD using the #R$C78E(events table), looking
+ $8E28 LD A,($8D9B)    ; for a match with #R$8D9B.
+ $8E2B CALL $9DBD      ; }
+ $8E2E JR Z,$8E39      ; Jump to #R$8E39 if no event was found.
+ $8E30 LD L,(IX+$01)   ; {Load the event from the #R$C78E(events table).
+ $8E33 LD H,(IX+$02)   ; }
+ $8E36 CALL $9B6C      ; Call #R$9B6C to execute it.
+; The game adds a one-time only value to the completion percentage once certain locations are reached (as long as
+;       it's not dark).
+@label=PercentageLocation
+*$8E39 CALL $95ED      ; {Return if #R$95ED reports that it is dark.
+ $8E3C RET C           ; }
+ $8E3D LD A,($B6EA)    ; #REGa=#R$B6EA.
+ $8E40 AND A           ; Set zero flag if the character is #OBJECT($00, 1,
+                       ; 1)($).
+ $8E41 LD A,($8D9B)    ; #REGa=#R$8D9B.
+ $8E44 JR NZ,$8E6A     ; Jump to #R$8E6A to deal with any other object.
+ $8E46 LD HL,($8D99)   ; #REGhl=#R$8D99.
+ $8E49 BIT 6,(HL)      ; {If bit 6 is already (percentage is already added) set
+ $8E4B JP NZ,$96A8     ; jump to #R$96A8.}
+ $8E4E SET 6,(HL)      ; Set bit 6 of the location attributes, this sets that the percentage has already been added and hence will be
+                       ;           skipped the next time this location is accessed.
+ $8E50 PUSH AF         ; Stash #REGaf on the stack.
+ $8E51 LD IX,$8D6E     ; {Call #R$9DBD with #R$8D6E.
+ $8E55 CALL $9DBD      ; }
+ $8E58 JR Z,$8E69      ; Jump to #R$8E69 if there was no match.
+ $8E5A PUSH DE         ; Stash #REGde on the stack.
+ $8E5B LD E,(IX+$01)   ; {#REGde=the percentage value to add from the match of
+ $8E5E LD D,(IX+$02)   ; #R$8D6E.}
+ $8E61 LD HL,($B6F7)   ; {Add the percentage value to #R$B6F7 and write it.
  $8E64 ADD HL,DE       ;
- $8E65 LD ($B6F7),HL   ;
- $8E68 POP DE          ;
-*$8E69 POP AF          ;
-*$8E6A JP $9630        ;
-*$8E6D LD HL,$AE23     ;
+ $8E65 LD ($B6F7),HL   ; }
+ $8E68 POP DE          ; Restore #REGde from the stack.
+@label=PercentageLocation_Return
+*$8E69 POP AF          ; Restore #REGaf from the stack.
+@label=PercentageLocation_Skip
+*$8E6A JP $9630        ; Jump to #R$9630.
+*$8E6D LD HL,$AE23     ; #REGhl=#R$AE23("[0x04] is too small for you to
+                       ; enter").
  $8E70 JR $8E79        ;
 *$8E72 LD IX,($8D99)   ;
- $8E76 LD HL,$AE2E     ;
+ $8E76 LD HL,$AE2E     ; #REGhl=#R$AE2E("[0x04] is too full for you to{5}
+                       ; enter[0x15]").
 *$8E79 PUSH HL         ;
  $8E7A LD L,(IX+$02)   ;
  $8E7D LD H,(IX+$03)   ;
  $8E80 EX (SP),HL      ;
- $8E81 CALL $72DD      ;
- $8E84 RET             ;
+ $8E81 CALL $72DD      ; Call #R$72DD.
+ $8E84 RET             ; Return.
 *$8E85 AND A           ;
  $8E86 JR Z,$8EA7      ;
  $8E88 CALL $9BCA      ;
@@ -11504,47 +11546,54 @@ c$9C78 LD A,($B6E8)  ;
  $9C9D AND A         ;
  $9C9E RET           ;
 
-; Routine at 9C9F
+; Random Number
 ;
 ; Used by the routines at #R$8D9D, #R$8FAD, #R$9034, #R$9076, #R$96B3, #R$A302,
 ; #R$A3E6 and #R$A541.
-c$9C9F CALL $9CA8     ;
- $9CA2 BIT 7,A        ;
- $9CA4 RET Z          ;
- $9CA5 NEG            ;
- $9CA7 RET            ;
+;
+;   A Random seed?
+; O:A Random number
+@label=GetRandomNum
+c$9C9F CALL $9CA8     ; Call #R$9CA8.
+ $9CA2 BIT 7,A        ; {Return if bit 7 is set.
+ $9CA4 RET Z          ; }
+ $9CA5 NEG            ; Negate the accumulator.
+ $9CA7 RET            ; Return.
 ; This entry point is used by the routine at #R$9171.
-*$9CA8 PUSH IX        ;
- $9CAA PUSH BC        ;
- $9CAB LD C,A         ;
- $9CAC SLA A          ;
- $9CAE JR NC,$9CB2    ;
- $9CB0 LD A,$FF       ;
-*$9CB2 LD B,A         ;
-*$9CB3 LD IX,$B712    ;
- $9CB7 INC (IX+$01)   ;
- $9CBA JR NZ,$9CBF    ;
- $9CBC INC (IX+$00)   ;
-*$9CBF LD IX,($B712)  ;
- $9CC3 LD A,($B70E)   ;
+@label=CalcRandom
+*$9CA8 PUSH IX        ; {Stash #REGix and #REGbc on the stack.
+ $9CAA PUSH BC        ; }
+ $9CAB LD C,A         ; #REGc=#REGa.
+ $9CAC SLA A          ; #REGa=#REGa * 2.
+ $9CAE JR NC,$9CB2    ; Jump to #R$9CB2 if there's no carry over.
+ $9CB0 LD A,$FF       ; Else, set #REGa=#N$FF.
+*$9CB2 LD B,A         ; #REGb=#REGa.
+*$9CB3 LD IX,$B712    ; {Increase the LSB of the #R$B712 by one.
+ $9CB7 INC (IX+$01)   ; }
+ $9CBA JR NZ,$9CBF    ; If the LSB has not "rolled over" to $00, skip updating
+                      ; the MSB on the following line. Jump to #R$9CB2.
+ $9CBC INC (IX+$00)   ; Increase the MSB of the #R$B712 by one.
+*$9CBF LD IX,($B712)  ; #REGix=#R$B712.
+ $9CC3 LD A,($B70E)   ; #REGa=#R$B70E.
  $9CC6 ADC A,(IX+$00) ;
  $9CC9 ADD IX,DE      ;
  $9CCB XOR (IX+$01)   ;
- $9CCE PUSH HL        ;
- $9CCF LD HL,$B70E    ;
- $9CD2 CP (HL)        ;
- $9CD3 POP HL         ;
- $9CD4 JR Z,$9CB3     ;
- $9CD6 LD ($B70E),A   ;
+ $9CCE PUSH HL        ; Stash #REGhl on the stack.
+ $9CCF LD HL,$B70E    ; {Compare #R$B70E against #REGa.
+ $9CD2 CP (HL)        ; }
+ $9CD3 POP HL         ; Restore #REGhl from the stack.
+ $9CD4 JR Z,$9CB3     ; If the result of the comparison was zero, jump back to
+                      ; #R$9CB3 to try again.
+ $9CD6 LD ($B70E),A   ; Write #REGa to #R$B70E.
 *$9CD9 CP B           ;
  $9CDA JR C,$9CE3     ;
  $9CDC JR Z,$9CE3     ;
  $9CDE SRL A          ;
  $9CE0 JP $9CD9       ;
 *$9CE3 SUB C          ;
- $9CE4 POP BC         ;
- $9CE5 POP IX         ;
- $9CE7 RET            ;
+ $9CE4 POP BC         ; {Restore #REGbc and #REGix from the stack.
+ $9CE5 POP IX         ; }
+ $9CE7 RET            ; Return.
 
 ; Routine at 9CE8
 ;
@@ -14036,10 +14085,12 @@ b$B6DA DEFW $0000
  $B70A DEFW $0000
 @label=ptrCurObject
  $B70C DEFW $C11B
+@label=RandomSeed
  $B70E DEFB $00
  $B70F DEFB $00
  $B710 DEFB $00
  $B711 DEFB $00
+@label=RandomCounter
  $B712 DEFW $0000
  $B714 DEFW $0000
  $B716 DEFB $00
@@ -14339,7 +14390,7 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BA9B DEFB $03,$07                         ;
  $BA9D DEFB $DA,$03                         ; }
  $BA9F DEFW $B575                           ; comfortable tunnel like hall
- $BAA1 DEFB $03,$05,$04                     ; #MOVEMENT
+ $BAA1 DEFB $03,$05,$04                     ; #MOVEMENT(#PC)
  $BAA4 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $04 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14350,10 +14401,10 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BAAB DEFB $00,$00                         ; }
  $BAAD DEFW $B57E                           ; gloomy empty land dreary hills
                                             ; ahead
- $BAAF DEFB $04,$05,$01                     ; #MOVEMENT
- $BAB2 DEFB $03,$00,$05                     ; #MOVEMENT
- $BAB5 DEFB $01,$00,$05                     ; #MOVEMENT
- $BAB8 DEFB $05,$00,$06                     ; #MOVEMENT
+ $BAAF DEFB $04,$05,$01                     ; #MOVEMENT(#PC)
+ $BAB2 DEFB $03,$00,$05                     ; #MOVEMENT(#PC)
+ $BAB5 DEFB $01,$00,$05                     ; #MOVEMENT(#PC)
+ $BAB8 DEFB $05,$00,$06                     ; #MOVEMENT(#PC)
  $BABB DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $05 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14363,9 +14414,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BAC0 DEFB $FD,$06                         ;
  $BAC2 DEFB $00,$00                         ; }
  $BAC4 DEFW $0000                           ; ---
- $BAC6 DEFB $08,$00,$04                     ; #MOVEMENT
- $BAC9 DEFB $07,$00,$09                     ; #MOVEMENT
- $BACC DEFB $01,$00,$06                     ; #MOVEMENT
+ $BAC6 DEFB $08,$00,$04                     ; #MOVEMENT(#PC)
+ $BAC9 DEFB $07,$00,$09                     ; #MOVEMENT(#PC)
+ $BACC DEFB $01,$00,$06                     ; #MOVEMENT(#PC)
  $BACF DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $06 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14376,8 +14427,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BAD6 DEFB $00,$00                         ; }
  $BAD8 DEFW $B58C                           ; hidden path trolls foot print S
                                             ; [16]
- $BADA DEFB $02,$00,$05                     ; #MOVEMENT
- $BADD DEFB $01,$01,$07                     ; #MOVEMENT
+ $BADA DEFB $02,$00,$05                     ; #MOVEMENT(#PC)
+ $BADD DEFB $01,$01,$07                     ; #MOVEMENT(#PC)
  $BAE0 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $07 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14387,7 +14438,7 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BAE5 DEFB $FD,$06                         ;
  $BAE7 DEFB $00,$00                         ; }
  $BAE9 DEFW $B59A                           ; trolls cave
- $BAEB DEFB $02,$01,$06                     ; #MOVEMENT
+ $BAEB DEFB $02,$01,$06                     ; #MOVEMENT(#PC)
  $BAEE DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $09 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14397,8 +14448,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BAF3 DEFB $00,$00                         ;
  $BAF5 DEFB $00,$00                         ; }
  $BAF7 DEFW $0000                           ; ---
- $BAF9 DEFB $03,$00,$0A                     ; #MOVEMENT
- $BAFC DEFB $04,$00,$05                     ; #MOVEMENT
+ $BAF9 DEFB $03,$00,$0A                     ; #MOVEMENT(#PC)
+ $BAFC DEFB $04,$00,$05                     ; #MOVEMENT(#PC)
  $BAFF DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $0A - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14409,10 +14460,10 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BB06 DEFB $00,$00                         ; }
  $BB08 DEFW $B59F                           ; hard dangerous path misty
                                             ; mountains
- $BB0A DEFB $03,$00,$0B                     ; #MOVEMENT
- $BB0D DEFB $01,$00,$44                     ; #MOVEMENT
- $BB10 DEFB $04,$00,$09                     ; #MOVEMENT
- $BB13 DEFB $02,$00,$49                     ; #MOVEMENT
+ $BB0A DEFB $03,$00,$0B                     ; #MOVEMENT(#PC)
+ $BB0D DEFB $01,$00,$44                     ; #MOVEMENT(#PC)
+ $BB10 DEFB $04,$00,$09                     ; #MOVEMENT(#PC)
+ $BB13 DEFB $02,$00,$49                     ; #MOVEMENT(#PC)
  $BB16 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $0B - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14423,9 +14474,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BB1D DEFB $00,$00                         ; }
  $BB1F DEFW $B5AC                           ; narrow place dreadful drop into
                                             ; dim valley
- $BB21 DEFB $03,$00,$0C                     ; #MOVEMENT
- $BB24 DEFB $04,$00,$0A                     ; #MOVEMENT
- $BB27 DEFB $01,$00,$0E                     ; #MOVEMENT
+ $BB21 DEFB $03,$00,$0C                     ; #MOVEMENT(#PC)
+ $BB24 DEFB $04,$00,$0A                     ; #MOVEMENT(#PC)
+ $BB27 DEFB $01,$00,$0E                     ; #MOVEMENT(#PC)
  $BB2A DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $0C - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14435,8 +14486,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BB2F DEFB $85,$01                         ;
  $BB31 DEFB $64,$04                         ; }
  $BB33 DEFW $B5BE                           ; narrow dangerous path
- $BB35 DEFB $03,$00,$16                     ; #MOVEMENT
- $BB38 DEFB $04,$00,$0B                     ; #MOVEMENT
+ $BB35 DEFB $03,$00,$16                     ; #MOVEMENT(#PC)
+ $BB38 DEFB $04,$00,$0B                     ; #MOVEMENT(#PC)
  $BB3B DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $0E - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14447,8 +14498,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BB42 DEFB $EC,$01                         ; }
  $BB44 DEFW $B5C5                           ; large dry cave which climb quite
                                             ; comfortable
- $BB46 DEFB $0A,$06,$0F                     ; #MOVEMENT
- $BB49 DEFB $02,$00,$0B                     ; #MOVEMENT
+ $BB46 DEFB $0A,$06,$0F                     ; #MOVEMENT(#PC)
+ $BB49 DEFB $02,$00,$0B                     ; #MOVEMENT(#PC)
  $BB4C DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $0F - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14458,9 +14509,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BB51 DEFB $8E,$01                         ;
  $BB53 DEFB $6A,$06                         ; }
  $BB55 DEFW $0000                           ; ---
- $BB57 DEFB $09,$06,$0E                     ; #MOVEMENT
- $BB5A DEFB $02,$00,$34                     ; #MOVEMENT
- $BB5D DEFB $05,$00,$3A                     ; #MOVEMENT
+ $BB57 DEFB $09,$06,$0E                     ; #MOVEMENT(#PC)
+ $BB5A DEFB $02,$00,$34                     ; #MOVEMENT(#PC)
+ $BB5D DEFB $05,$00,$3A                     ; #MOVEMENT(#PC)
  $BB60 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $34 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14470,9 +14521,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BB65 DEFB $8E,$01                         ;
  $BB67 DEFB $6A,$06                         ; }
  $BB69 DEFW $0000                           ; ---
- $BB6B DEFB $01,$00,$0F                     ; #MOVEMENT
- $BB6E DEFB $0A,$00,$35                     ; #MOVEMENT
- $BB71 DEFB $09,$00,$36                     ; #MOVEMENT
+ $BB6B DEFB $01,$00,$0F                     ; #MOVEMENT(#PC)
+ $BB6E DEFB $0A,$00,$35                     ; #MOVEMENT(#PC)
+ $BB71 DEFB $09,$00,$36                     ; #MOVEMENT(#PC)
  $BB74 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $35 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14482,7 +14533,7 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BB79 DEFB $8E,$01                         ;
  $BB7B DEFB $6A,$06                         ; }
  $BB7D DEFW $0000                           ; ---
- $BB7F DEFB $09,$00,$34                     ; #MOVEMENT
+ $BB7F DEFB $09,$00,$34                     ; #MOVEMENT(#PC)
  $BB82 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $36 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14492,10 +14543,10 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BB87 DEFB $8E,$01                         ;
  $BB89 DEFB $6A,$06                         ; }
  $BB8B DEFW $0000                           ; ---
- $BB8D DEFB $0A,$00,$34                     ; #MOVEMENT
- $BB90 DEFB $07,$00,$37                     ; #MOVEMENT
- $BB93 DEFB $02,$00,$40                     ; #MOVEMENT
- $BB96 DEFB $08,$00,$11                     ; #MOVEMENT
+ $BB8D DEFB $0A,$00,$34                     ; #MOVEMENT(#PC)
+ $BB90 DEFB $07,$00,$37                     ; #MOVEMENT(#PC)
+ $BB93 DEFB $02,$00,$40                     ; #MOVEMENT(#PC)
+ $BB96 DEFB $08,$00,$11                     ; #MOVEMENT(#PC)
  $BB99 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $37 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14505,10 +14556,10 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BB9E DEFB $8E,$01                         ;
  $BBA0 DEFB $6A,$06                         ; }
  $BBA2 DEFW $0000                           ; ---
- $BBA4 DEFB $02,$00,$11                     ; #MOVEMENT
- $BBA7 DEFB $05,$00,$36                     ; #MOVEMENT
- $BBAA DEFB $08,$00,$3D                     ; #MOVEMENT
- $BBAD DEFB $04,$00,$3C                     ; #MOVEMENT
+ $BBA4 DEFB $02,$00,$11                     ; #MOVEMENT(#PC)
+ $BBA7 DEFB $05,$00,$36                     ; #MOVEMENT(#PC)
+ $BBAA DEFB $08,$00,$3D                     ; #MOVEMENT(#PC)
+ $BBAD DEFB $04,$00,$3C                     ; #MOVEMENT(#PC)
  $BBB0 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $38 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14518,7 +14569,7 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BBB5 DEFB $8E,$01                         ;
  $BBB7 DEFB $6A,$06                         ; }
  $BBB9 DEFW $0000                           ; ---
- $BBBB DEFB $08,$00,$3C                     ; #MOVEMENT
+ $BBBB DEFB $08,$00,$3C                     ; #MOVEMENT(#PC)
  $BBBE DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $39 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14528,9 +14579,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BBC3 DEFB $8E,$01                         ;
  $BBC5 DEFB $6A,$06                         ; }
  $BBC7 DEFW $0000                           ; ---
- $BBC9 DEFB $09,$00,$10                     ; #MOVEMENT
- $BBCC DEFB $04,$00,$41                     ; #MOVEMENT
- $BBCF DEFB $01,$00,$3A                     ; #MOVEMENT
+ $BBC9 DEFB $09,$00,$10                     ; #MOVEMENT(#PC)
+ $BBCC DEFB $04,$00,$41                     ; #MOVEMENT(#PC)
+ $BBCF DEFB $01,$00,$3A                     ; #MOVEMENT(#PC)
  $BBD2 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $3A - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14540,10 +14591,10 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BBD7 DEFB $8E,$01                         ;
  $BBD9 DEFB $6A,$06                         ; }
  $BBDB DEFW $0000                           ; ---
- $BBDD DEFB $07,$00,$3E                     ; #MOVEMENT
- $BBE0 DEFB $03,$00,$0F                     ; #MOVEMENT
- $BBE3 DEFB $02,$00,$39                     ; #MOVEMENT
- $BBE6 DEFB $09,$00,$3B                     ; #MOVEMENT
+ $BBDD DEFB $07,$00,$3E                     ; #MOVEMENT(#PC)
+ $BBE0 DEFB $03,$00,$0F                     ; #MOVEMENT(#PC)
+ $BBE3 DEFB $02,$00,$39                     ; #MOVEMENT(#PC)
+ $BBE6 DEFB $09,$00,$3B                     ; #MOVEMENT(#PC)
  $BBE9 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $3B - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14553,8 +14604,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BBEE DEFB $8E,$01                         ;
  $BBF0 DEFB $6A,$06                         ; }
  $BBF2 DEFW $0000                           ; ---
- $BBF4 DEFB $0A,$00,$3A                     ; #MOVEMENT
- $BBF7 DEFB $02,$00,$3C                     ; #MOVEMENT
+ $BBF4 DEFB $0A,$00,$3A                     ; #MOVEMENT(#PC)
+ $BBF7 DEFB $02,$00,$3C                     ; #MOVEMENT(#PC)
  $BBFA DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $3C - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14564,9 +14615,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BBFF DEFB $8E,$01                         ;
  $BC01 DEFB $6A,$06                         ; }
  $BC03 DEFW $0000                           ; ---
- $BC05 DEFB $07,$00,$3D                     ; #MOVEMENT
- $BC08 DEFB $01,$00,$3B                     ; #MOVEMENT
- $BC0B DEFB $06,$00,$38                     ; #MOVEMENT
+ $BC05 DEFB $07,$00,$3D                     ; #MOVEMENT(#PC)
+ $BC08 DEFB $01,$00,$3B                     ; #MOVEMENT(#PC)
+ $BC0B DEFB $06,$00,$38                     ; #MOVEMENT(#PC)
  $BC0E DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $3D - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14576,8 +14627,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BC13 DEFB $8E,$01                         ;
  $BC15 DEFB $6A,$06                         ; }
  $BC17 DEFW $0000                           ; ---
- $BC19 DEFB $01,$00,$36                     ; #MOVEMENT
- $BC1C DEFB $06,$00,$3C                     ; #MOVEMENT
+ $BC19 DEFB $01,$00,$36                     ; #MOVEMENT(#PC)
+ $BC1C DEFB $06,$00,$3C                     ; #MOVEMENT(#PC)
  $BC1F DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $3E - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14587,7 +14638,7 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BC24 DEFB $8E,$01                         ;
  $BC26 DEFB $6A,$06                         ; }
  $BC28 DEFW $0000                           ; ---
- $BC2A DEFB $03,$00,$3D                     ; #MOVEMENT
+ $BC2A DEFB $03,$00,$3D                     ; #MOVEMENT(#PC)
  $BC2D DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $3F - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14597,9 +14648,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BC32 DEFB $8E,$01                         ;
  $BC34 DEFB $6A,$06                         ; }
  $BC36 DEFW $0000                           ; ---
- $BC38 DEFB $09,$00,$40                     ; #MOVEMENT
- $BC3B DEFB $01,$00,$12                     ; #MOVEMENT
- $BC3E DEFB $03,$00,$3A                     ; #MOVEMENT
+ $BC38 DEFB $09,$00,$40                     ; #MOVEMENT(#PC)
+ $BC3B DEFB $01,$00,$12                     ; #MOVEMENT(#PC)
+ $BC3E DEFB $03,$00,$3A                     ; #MOVEMENT(#PC)
  $BC41 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $40 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14609,9 +14660,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BC46 DEFB $8E,$01                         ;
  $BC48 DEFB $6A,$06                         ; }
  $BC4A DEFW $0000                           ; ---
- $BC4C DEFB $06,$00,$41                     ; #MOVEMENT
- $BC4F DEFB $04,$00,$36                     ; #MOVEMENT
- $BC52 DEFB $08,$00,$3F                     ; #MOVEMENT
+ $BC4C DEFB $06,$00,$41                     ; #MOVEMENT(#PC)
+ $BC4F DEFB $04,$00,$36                     ; #MOVEMENT(#PC)
+ $BC52 DEFB $08,$00,$3F                     ; #MOVEMENT(#PC)
  $BC55 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $41 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14621,9 +14672,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BC5A DEFB $8E,$01                         ;
  $BC5C DEFB $6A,$06                         ; }
  $BC5E DEFW $0000                           ; ---
- $BC60 DEFB $01,$00,$40                     ; #MOVEMENT
- $BC63 DEFB $07,$00,$39                     ; #MOVEMENT
- $BC66 DEFB $03,$00,$13                     ; #MOVEMENT
+ $BC60 DEFB $01,$00,$40                     ; #MOVEMENT(#PC)
+ $BC63 DEFB $07,$00,$39                     ; #MOVEMENT(#PC)
+ $BC66 DEFB $03,$00,$13                     ; #MOVEMENT(#PC)
  $BC69 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $10 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14634,9 +14685,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BC70 DEFB $E8,$02                         ; }
  $BC72 DEFW $B5D3                           ; big cavern torch ESalong wall S
                                             ; [16]
- $BC74 DEFB $0A,$00,$39                     ; #MOVEMENT
- $BC77 DEFB $05,$00,$12                     ; #MOVEMENT
- $BC7A DEFB $07,$11,$0D                     ; #MOVEMENT
+ $BC74 DEFB $0A,$00,$39                     ; #MOVEMENT(#PC)
+ $BC77 DEFB $05,$00,$12                     ; #MOVEMENT(#PC)
+ $BC7A DEFB $07,$11,$0D                     ; #MOVEMENT(#PC)
  $BC7D DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $11 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14646,7 +14697,7 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BC82 DEFB $96,$01                         ;
  $BC84 DEFB $8E,$01                         ; }
  $BC86 DEFW $B5E4                           ; brink deep dark under ground lake
- $BC88 DEFB $01,$00,$37                     ; #MOVEMENT
+ $BC88 DEFB $01,$00,$37                     ; #MOVEMENT(#PC)
  $BC8B DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $12 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14656,9 +14707,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BC90 DEFB $8E,$01                         ;
  $BC92 DEFB $85,$07                         ; }
  $BC94 DEFW $0000                           ; ---
- $BC96 DEFB $08,$00,$10                     ; #MOVEMENT
- $BC99 DEFB $07,$00,$3F                     ; #MOVEMENT
- $BC9C DEFB $01,$1B,$0D                     ; #MOVEMENT
+ $BC96 DEFB $08,$00,$10                     ; #MOVEMENT(#PC)
+ $BC99 DEFB $07,$00,$3F                     ; #MOVEMENT(#PC)
+ $BC9C DEFB $01,$1B,$0D                     ; #MOVEMENT(#PC)
  $BC9F DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $13 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14668,16 +14719,16 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BCA4 DEFB $7B,$03                         ;
  $BCA6 DEFB $E8,$02                         ; }
  $BCA8 DEFW $B5F3                           ; goblins gate
- $BCAA DEFB $04,$00,$10                     ; #MOVEMENT
- $BCAD DEFB $01,$00,$10                     ; #MOVEMENT
- $BCB0 DEFB $02,$00,$10                     ; #MOVEMENT
- $BCB3 DEFB $09,$0A,$14                     ; #MOVEMENT
- $BCB6 DEFB $03,$00,$10                     ; #MOVEMENT
- $BCB9 DEFB $07,$00,$10                     ; #MOVEMENT
- $BCBC DEFB $08,$00,$10                     ; #MOVEMENT
- $BCBF DEFB $0A,$00,$10                     ; #MOVEMENT
- $BCC2 DEFB $05,$00,$41                     ; #MOVEMENT
- $BCC5 DEFB $06,$00,$10                     ; #MOVEMENT
+ $BCAA DEFB $04,$00,$10                     ; #MOVEMENT(#PC)
+ $BCAD DEFB $01,$00,$10                     ; #MOVEMENT(#PC)
+ $BCB0 DEFB $02,$00,$10                     ; #MOVEMENT(#PC)
+ $BCB3 DEFB $09,$0A,$14                     ; #MOVEMENT(#PC)
+ $BCB6 DEFB $03,$00,$10                     ; #MOVEMENT(#PC)
+ $BCB9 DEFB $07,$00,$10                     ; #MOVEMENT(#PC)
+ $BCBC DEFB $08,$00,$10                     ; #MOVEMENT(#PC)
+ $BCBF DEFB $0A,$00,$10                     ; #MOVEMENT(#PC)
+ $BCC2 DEFB $05,$00,$41                     ; #MOVEMENT(#PC)
+ $BCC5 DEFB $06,$00,$10                     ; #MOVEMENT(#PC)
  $BCC8 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $14 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14687,8 +14738,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BCCD DEFB $C2,$04                         ;
  $BCCF DEFB $E8,$02                         ; }
  $BCD1 DEFW $B5F3                           ; goblins gate
- $BCD3 DEFB $0A,$0A,$13                     ; #MOVEMENT
- $BCD6 DEFB $03,$00,$15                     ; #MOVEMENT
+ $BCD3 DEFB $0A,$0A,$13                     ; #MOVEMENT(#PC)
+ $BCD6 DEFB $03,$00,$15                     ; #MOVEMENT(#PC)
  $BCD9 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $0D - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14698,8 +14749,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BCDE DEFB $E8,$02                         ;
  $BCE0 DEFB $00,$00                         ; }
  $BCE2 DEFW $0000                           ; ---
- $BCE4 DEFB $01,$11,$10                     ; #MOVEMENT
- $BCE7 DEFB $04,$1B,$12                     ; #MOVEMENT
+ $BCE4 DEFB $01,$11,$10                     ; #MOVEMENT(#PC)
+ $BCE7 DEFB $04,$1B,$12                     ; #MOVEMENT(#PC)
  $BCEA DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $15 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14709,8 +14760,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BCEF DEFB $F0,$06                         ;
  $BCF1 DEFB $00,$00                         ; }
  $BCF3 DEFW $0000                           ; ---
- $BCF5 DEFB $03,$00,$16                     ; #MOVEMENT
- $BCF8 DEFB $04,$00,$14                     ; #MOVEMENT
+ $BCF5 DEFB $03,$00,$16                     ; #MOVEMENT(#PC)
+ $BCF8 DEFB $04,$00,$14                     ; #MOVEMENT(#PC)
  $BCFB DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $16 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14720,11 +14771,11 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BD00 DEFB $93,$00                         ;
  $BD02 DEFB $00,$00                         ; }
  $BD04 DEFW $0000                           ; ---
- $BD06 DEFB $05,$00,$18                     ; #MOVEMENT
- $BD09 DEFB $06,$00,$14                     ; #MOVEMENT
- $BD0C DEFB $02,$00,$2E                     ; #MOVEMENT
- $BD0F DEFB $08,$00,$0C                     ; #MOVEMENT
- $BD12 DEFB $01,$00,$31                     ; #MOVEMENT
+ $BD06 DEFB $05,$00,$18                     ; #MOVEMENT(#PC)
+ $BD09 DEFB $06,$00,$14                     ; #MOVEMENT(#PC)
+ $BD0C DEFB $02,$00,$2E                     ; #MOVEMENT(#PC)
+ $BD0F DEFB $08,$00,$0C                     ; #MOVEMENT(#PC)
+ $BD12 DEFB $01,$00,$31                     ; #MOVEMENT(#PC)
  $BD15 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $18 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14734,9 +14785,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BD1A DEFB $A0,$02                         ;
  $BD1C DEFB $00,$00                         ; }
  $BD1E DEFW $B5F8                           ; gate mirkwood
- $BD20 DEFB $04,$00,$16                     ; #MOVEMENT
- $BD23 DEFB $02,$00,$2E                     ; #MOVEMENT
- $BD26 DEFB $03,$00,$19                     ; #MOVEMENT
+ $BD20 DEFB $04,$00,$16                     ; #MOVEMENT(#PC)
+ $BD23 DEFB $02,$00,$2E                     ; #MOVEMENT(#PC)
+ $BD26 DEFB $03,$00,$19                     ; #MOVEMENT(#PC)
  $BD29 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $19 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14746,9 +14797,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BD2E DEFB $99,$00                         ;
  $BD30 DEFB $D8,$02                         ; }
  $BD32 DEFW $0000                           ; ---
- $BD34 DEFB $04,$00,$18                     ; #MOVEMENT
- $BD37 DEFB $03,$00,$42                     ; #MOVEMENT
- $BD3A DEFB $02,$09,$00                     ; #MOVEMENT
+ $BD34 DEFB $04,$00,$18                     ; #MOVEMENT(#PC)
+ $BD37 DEFB $03,$00,$42                     ; #MOVEMENT(#PC)
+ $BD3A DEFB $02,$09,$00                     ; #MOVEMENT(#PC)
  $BD3D DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $1A - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14758,10 +14809,10 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BD42 DEFB $23,$06                         ;
  $BD44 DEFB $BA,$06                         ; }
  $BD46 DEFW $B60F                           ; place black spider S [16]
- $BD48 DEFB $03,$07,$1D                     ; #MOVEMENT
- $BD4B DEFB $04,$07,$32                     ; #MOVEMENT
- $BD4E DEFB $01,$07,$1C                     ; #MOVEMENT
- $BD51 DEFB $02,$07,$1B                     ; #MOVEMENT
+ $BD48 DEFB $03,$07,$1D                     ; #MOVEMENT(#PC)
+ $BD4B DEFB $04,$07,$32                     ; #MOVEMENT(#PC)
+ $BD4E DEFB $01,$07,$1C                     ; #MOVEMENT(#PC)
+ $BD51 DEFB $02,$07,$1B                     ; #MOVEMENT(#PC)
  $BD54 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $1B - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14772,8 +14823,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BD5B DEFB $00,$00                         ; }
  $BD5D DEFW $B619                           ; forest tangled smothering
                                             ; /3.Person/trees  [16]
- $BD5F DEFB $01,$07,$1A                     ; #MOVEMENT
- $BD62 DEFB $04,$07,$32                     ; #MOVEMENT
+ $BD5F DEFB $01,$07,$1A                     ; #MOVEMENT(#PC)
+ $BD62 DEFB $04,$07,$32                     ; #MOVEMENT(#PC)
  $BD65 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $1C - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14784,9 +14835,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BD6C DEFB $22,$02                         ; }
  $BD6E DEFW $B624                           ; elvish clearing levelled ground
                                             ; untie logs
- $BD70 DEFB $04,$00,$19                     ; #MOVEMENT
- $BD73 DEFB $03,$07,$1A                     ; #MOVEMENT
- $BD76 DEFB $05,$0D,$1E                     ; #MOVEMENT
+ $BD70 DEFB $04,$00,$19                     ; #MOVEMENT(#PC)
+ $BD73 DEFB $03,$07,$1A                     ; #MOVEMENT(#PC)
+ $BD76 DEFB $05,$0D,$1E                     ; #MOVEMENT(#PC)
  $BD79 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $1D - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14796,7 +14847,7 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BD7E DEFB $96,$01                         ;
  $BD80 DEFB $00,$00                         ; }
  $BD82 DEFW $0000                           ; ---
- $BD84 DEFB $04,$07,$1A                     ; #MOVEMENT
+ $BD84 DEFB $04,$07,$1A                     ; #MOVEMENT(#PC)
  $BD87 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $1E - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14806,9 +14857,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BD8C DEFB $13,$02                         ;
  $BD8E DEFB $FF,$02                         ; }
  $BD90 DEFW $0000                           ; ---
- $BD92 DEFB $03,$08,$1F                     ; #MOVEMENT
- $BD95 DEFB $02,$00,$20                     ; #MOVEMENT
- $BD98 DEFB $04,$0D,$1C                     ; #MOVEMENT
+ $BD92 DEFB $03,$08,$1F                     ; #MOVEMENT(#PC)
+ $BD95 DEFB $02,$00,$20                     ; #MOVEMENT(#PC)
+ $BD98 DEFB $04,$0D,$1C                     ; #MOVEMENT(#PC)
  $BD9B DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $1F - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14818,8 +14869,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BDA0 DEFB $8E,$01                         ;
  $BDA2 DEFB $00,$00                         ; }
  $BDA4 DEFW $B632                           ; dark dungeon elvenkings halls
- $BDA6 DEFB $08,$08,$20                     ; #MOVEMENT
- $BDA9 DEFB $04,$08,$1E                     ; #MOVEMENT
+ $BDA6 DEFB $08,$08,$20                     ; #MOVEMENT(#PC)
+ $BDA9 DEFB $04,$08,$1E                     ; #MOVEMENT(#PC)
  $BDAC DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $20 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14830,9 +14881,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BDB3 DEFB $00,$00                         ; }
  $BDB5 DEFW $B63D                           ; cellar where king keeps his
                                             ; barrel Swine
- $BDB7 DEFB $05,$08,$1F                     ; #MOVEMENT
- $BDBA DEFB $01,$00,$1E                     ; #MOVEMENT
- $BDBD DEFB $0A,$0C,$21                     ; #MOVEMENT
+ $BDB7 DEFB $05,$08,$1F                     ; #MOVEMENT(#PC)
+ $BDBA DEFB $01,$00,$1E                     ; #MOVEMENT(#PC)
+ $BDBD DEFB $0A,$0C,$21                     ; #MOVEMENT(#PC)
  $BDC0 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $21 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14842,9 +14893,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BDC5 DEFB $00,$00                         ;
  $BDC7 DEFB $00,$00                         ; }
  $BDC9 DEFW $0000                           ; ---
- $BDCB DEFB $03,$27,$22                     ; #MOVEMENT
- $BDCE DEFB $09,$0C,$00                     ; #MOVEMENT
- $BDD1 DEFB $02,$2A,$00                     ; #MOVEMENT
+ $BDCB DEFB $03,$27,$22                     ; #MOVEMENT(#PC)
+ $BDCE DEFB $09,$0C,$00                     ; #MOVEMENT(#PC)
+ $BDD1 DEFB $02,$2A,$00                     ; #MOVEMENT(#PC)
  $BDD4 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $22 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14854,10 +14905,10 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BDD9 DEFB $0F,$04                         ;
  $BDDB DEFB $00,$00                         ; }
  $BDDD DEFW $0000                           ; ---
- $BDDF DEFB $01,$00,$24                     ; #MOVEMENT
- $BDE2 DEFB $03,$00,$23                     ; #MOVEMENT
- $BDE5 DEFB $06,$27,$21                     ; #MOVEMENT
- $BDE8 DEFB $02,$00,$2D                     ; #MOVEMENT
+ $BDDF DEFB $01,$00,$24                     ; #MOVEMENT(#PC)
+ $BDE2 DEFB $03,$00,$23                     ; #MOVEMENT(#PC)
+ $BDE5 DEFB $06,$27,$21                     ; #MOVEMENT(#PC)
+ $BDE8 DEFB $02,$00,$2D                     ; #MOVEMENT(#PC)
  $BDEB DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $23 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14867,10 +14918,10 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BDF0 DEFB $B7,$03                         ;
  $BDF2 DEFB $00,$00                         ; }
  $BDF4 DEFW $B64F                           ; wooden town middle long lake
- $BDF6 DEFB $01,$00,$22                     ; #MOVEMENT
- $BDF9 DEFB $02,$00,$22                     ; #MOVEMENT
- $BDFC DEFB $03,$00,$22                     ; #MOVEMENT
- $BDFF DEFB $04,$00,$22                     ; #MOVEMENT
+ $BDF6 DEFB $01,$00,$22                     ; #MOVEMENT(#PC)
+ $BDF9 DEFB $02,$00,$22                     ; #MOVEMENT(#PC)
+ $BDFC DEFB $03,$00,$22                     ; #MOVEMENT(#PC)
+ $BDFF DEFB $04,$00,$22                     ; #MOVEMENT(#PC)
  $BE02 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $24 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14881,8 +14932,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BE09 DEFB $00,$00                         ; }
  $BE0B DEFW $B65D                           ; strong river :current climb now
                                             ; strong move against
- $BE0D DEFB $09,$00,$25                     ; #MOVEMENT
- $BE10 DEFB $02,$00,$22                     ; #MOVEMENT
+ $BE0D DEFB $09,$00,$25                     ; #MOVEMENT(#PC)
+ $BE10 DEFB $02,$00,$22                     ; #MOVEMENT(#PC)
  $BE13 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $25 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14893,8 +14944,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BE1A DEFB $00,$00                         ; }
  $BE1C DEFW $B671                           ; bleak barren land that was once
                                             ; green
- $BE1E DEFB $01,$00,$26                     ; #MOVEMENT
- $BE21 DEFB $0A,$00,$24                     ; #MOVEMENT
+ $BE1E DEFB $01,$00,$26                     ; #MOVEMENT(#PC)
+ $BE21 DEFB $0A,$00,$24                     ; #MOVEMENT(#PC)
  $BE24 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $26 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14904,9 +14955,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BE29 DEFB $81,$01                         ;
  $BE2B DEFB $00,$00                         ; }
  $BE2D DEFW $B680                           ; ruins town dale
- $BE2F DEFB $01,$00,$27                     ; #MOVEMENT
- $BE32 DEFB $02,$00,$25                     ; #MOVEMENT
- $BE35 DEFB $06,$00,$28                     ; #MOVEMENT
+ $BE2F DEFB $01,$00,$27                     ; #MOVEMENT(#PC)
+ $BE32 DEFB $02,$00,$25                     ; #MOVEMENT(#PC)
+ $BE35 DEFB $06,$00,$28                     ; #MOVEMENT(#PC)
  $BE38 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $27 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14916,9 +14967,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BE3D DEFB $40,$09                         ;
  $BE3F DEFB $00,$00                         ; }
  $BE41 DEFW $B68A                           ; front gate lonely mountain
- $BE43 DEFB $01,$00,$29                     ; #MOVEMENT
- $BE46 DEFB $02,$00,$26                     ; #MOVEMENT
- $BE49 DEFB $04,$00,$28                     ; #MOVEMENT
+ $BE43 DEFB $01,$00,$29                     ; #MOVEMENT(#PC)
+ $BE46 DEFB $02,$00,$26                     ; #MOVEMENT(#PC)
+ $BE49 DEFB $04,$00,$28                     ; #MOVEMENT(#PC)
  $BE4C DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $28 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14928,9 +14979,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BE51 DEFB $00,$00                         ;
  $BE53 DEFB $00,$00                         ; }
  $BE55 DEFW $B695                           ; west side ravenhill
- $BE57 DEFB $01,$00,$2A                     ; #MOVEMENT
- $BE5A DEFB $07,$00,$25                     ; #MOVEMENT
- $BE5D DEFB $03,$00,$27                     ; #MOVEMENT
+ $BE57 DEFB $01,$00,$2A                     ; #MOVEMENT(#PC)
+ $BE5A DEFB $07,$00,$25                     ; #MOVEMENT(#PC)
+ $BE5D DEFB $03,$00,$27                     ; #MOVEMENT(#PC)
  $BE60 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $29 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14941,9 +14992,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BE67 DEFB $00,$00                         ; }
  $BE69 DEFW $B69D                           ; halls where /3.Person/sleeps
                                             ; [16]
- $BE6B DEFB $02,$00,$27                     ; #MOVEMENT
- $BE6E DEFB $03,$00,$2B                     ; #MOVEMENT
- $BE71 DEFB $09,$00,$2C                     ; #MOVEMENT
+ $BE6B DEFB $02,$00,$27                     ; #MOVEMENT(#PC)
+ $BE6E DEFB $03,$00,$2B                     ; #MOVEMENT(#PC)
+ $BE71 DEFB $09,$00,$2C                     ; #MOVEMENT(#PC)
  $BE74 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $2A - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14954,9 +15005,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BE7B DEFB $00,$00                         ; }
  $BE7D DEFW $B6A7                           ; little steep bay ,still untie
                                             ; quiet ,an over hanging cliff
- $BE7F DEFB $02,$00,$28                     ; #MOVEMENT
- $BE82 DEFB $03,$0B,$2B                     ; #MOVEMENT
- $BE85 DEFB $01,$00,$33                     ; #MOVEMENT
+ $BE7F DEFB $02,$00,$28                     ; #MOVEMENT(#PC)
+ $BE82 DEFB $03,$0B,$2B                     ; #MOVEMENT(#PC)
+ $BE85 DEFB $01,$00,$33                     ; #MOVEMENT(#PC)
  $BE88 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $2B - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14966,8 +15017,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BE8D DEFB $ED,$05                         ;
  $BE8F DEFB $46,$06                         ; }
  $BE91 DEFW $B6BE                           ; smooth straight passage
- $BE93 DEFB $04,$0B,$2A                     ; #MOVEMENT
- $BE96 DEFB $03,$00,$29                     ; #MOVEMENT
+ $BE93 DEFB $04,$0B,$2A                     ; #MOVEMENT(#PC)
+ $BE96 DEFB $03,$00,$29                     ; #MOVEMENT(#PC)
  $BE99 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $2C - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14977,10 +15028,10 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BE9E DEFB $09,$04                         ;
  $BEA0 DEFB $00,$00                         ; }
  $BEA2 DEFW $B6C5                           ; lonely mountain
- $BEA4 DEFB $0A,$00,$29                     ; #MOVEMENT
- $BEA7 DEFB $04,$00,$2A                     ; #MOVEMENT
- $BEAA DEFB $02,$00,$27                     ; #MOVEMENT
- $BEAD DEFB $08,$00,$28                     ; #MOVEMENT
+ $BEA4 DEFB $0A,$00,$29                     ; #MOVEMENT(#PC)
+ $BEA7 DEFB $04,$00,$2A                     ; #MOVEMENT(#PC)
+ $BEAA DEFB $02,$00,$27                     ; #MOVEMENT(#PC)
+ $BEAD DEFB $08,$00,$28                     ; #MOVEMENT(#PC)
  $BEB0 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $2E - "#TEXTTOKEN(#PC + $02, $01)"
@@ -14990,8 +15041,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BEB5 DEFB $A0,$02                         ;
  $BEB7 DEFB $00,$00                         ; }
  $BEB9 DEFW $0000                           ; ---
- $BEBB DEFB $03,$00,$02                     ; #MOVEMENT
- $BEBE DEFB $01,$00,$18                     ; #MOVEMENT
+ $BEBB DEFB $03,$00,$02                     ; #MOVEMENT(#PC)
+ $BEBE DEFB $01,$00,$18                     ; #MOVEMENT(#PC)
  $BEC1 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $2D - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15001,8 +15052,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BEC6 DEFB $00,$00                         ;
  $BEC8 DEFB $00,$00                         ; }
  $BECA DEFW $0000                           ; ---
- $BECC DEFB $02,$00,$08                     ; #MOVEMENT
- $BECF DEFB $04,$00,$03                     ; #MOVEMENT
+ $BECC DEFB $02,$00,$08                     ; #MOVEMENT(#PC)
+ $BECF DEFB $04,$00,$03                     ; #MOVEMENT(#PC)
  $BED2 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $02 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15012,8 +15063,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BED7 DEFB $A0,$02                         ;
  $BED9 DEFB $00,$00                         ; }
  $BEDB DEFW $0000                           ; ---
- $BEDD DEFB $03,$00,$03                     ; #MOVEMENT
- $BEE0 DEFB $04,$00,$2E                     ; #MOVEMENT
+ $BEDD DEFB $03,$00,$03                     ; #MOVEMENT(#PC)
+ $BEE0 DEFB $04,$00,$2E                     ; #MOVEMENT(#PC)
  $BEE3 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $03 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15023,8 +15074,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BEE8 DEFB $00,$00                         ;
  $BEEA DEFB $00,$00                         ; }
  $BEEC DEFW $0000                           ; ---
- $BEEE DEFB $04,$00,$02                     ; #MOVEMENT
- $BEF1 DEFB $03,$00,$2D                     ; #MOVEMENT
+ $BEEE DEFB $04,$00,$02                     ; #MOVEMENT(#PC)
+ $BEF1 DEFB $03,$00,$2D                     ; #MOVEMENT(#PC)
  $BEF4 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $08 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15034,8 +15085,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BEF9 DEFB $70,$05                         ;
  $BEFB DEFB $00,$00                         ; }
  $BEFD DEFW $0000                           ; ---
- $BEFF DEFB $01,$00,$2D                     ; #MOVEMENT
- $BF02 DEFB $04,$00,$03                     ; #MOVEMENT
+ $BEFF DEFB $01,$00,$2D                     ; #MOVEMENT(#PC)
+ $BF02 DEFB $04,$00,$03                     ; #MOVEMENT(#PC)
  $BF05 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $17 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15045,8 +15096,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BF0A DEFB $00,$00                         ;
  $BF0C DEFB $00,$00                         ; }
  $BF0E DEFW $0000                           ; ---
- $BF10 DEFB $07,$2A,$21                     ; #MOVEMENT
- $BF13 DEFB $01,$00,$30                     ; #MOVEMENT
+ $BF10 DEFB $07,$2A,$21                     ; #MOVEMENT(#PC)
+ $BF13 DEFB $01,$00,$30                     ; #MOVEMENT(#PC)
  $BF16 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $30 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15056,9 +15107,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BF1B DEFB $00,$00                         ;
  $BF1D DEFB $00,$00                         ; }
  $BF1F DEFW $0000                           ; ---
- $BF21 DEFB $08,$00,$31                     ; #MOVEMENT
- $BF24 DEFB $03,$00,$2F                     ; #MOVEMENT
- $BF27 DEFB $07,$00,$17                     ; #MOVEMENT
+ $BF21 DEFB $08,$00,$31                     ; #MOVEMENT(#PC)
+ $BF24 DEFB $03,$00,$2F                     ; #MOVEMENT(#PC)
+ $BF27 DEFB $07,$00,$17                     ; #MOVEMENT(#PC)
  $BF2A DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $31 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15068,10 +15119,10 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BF2F DEFB $FF,$02                         ;
  $BF31 DEFB $00,$00                         ; }
  $BF33 DEFW $0000                           ; ---
- $BF35 DEFB $05,$00,$30                     ; #MOVEMENT
- $BF38 DEFB $02,$00,$16                     ; #MOVEMENT
- $BF3B DEFB $03,$00,$18                     ; #MOVEMENT
- $BF3E DEFB $08,$00,$0A                     ; #MOVEMENT
+ $BF35 DEFB $05,$00,$30                     ; #MOVEMENT(#PC)
+ $BF38 DEFB $02,$00,$16                     ; #MOVEMENT(#PC)
+ $BF3B DEFB $03,$00,$18                     ; #MOVEMENT(#PC)
+ $BF3E DEFB $08,$00,$0A                     ; #MOVEMENT(#PC)
  $BF41 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $2F - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15090,8 +15141,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BF51 DEFB $04,$03                         ;
  $BF53 DEFB $00,$00                         ; }
  $BF55 DEFW $0000                           ; ---
- $BF57 DEFB $05,$07,$1A                     ; #MOVEMENT
- $BF5A DEFB $04,$00,$43                     ; #MOVEMENT
+ $BF57 DEFB $05,$07,$1A                     ; #MOVEMENT(#PC)
+ $BF5A DEFB $04,$00,$43                     ; #MOVEMENT(#PC)
  $BF5D DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $33 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15101,9 +15152,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BF62 DEFB $28,$02                         ;
  $BF64 DEFB $00,$00                         ; }
  $BF66 DEFW $0000                           ; ---
- $BF68 DEFB $01,$00,$2F                     ; #MOVEMENT
- $BF6B DEFB $02,$00,$2A                     ; #MOVEMENT
- $BF6E DEFB $09,$00,$2C                     ; #MOVEMENT
+ $BF68 DEFB $01,$00,$2F                     ; #MOVEMENT(#PC)
+ $BF6B DEFB $02,$00,$2A                     ; #MOVEMENT(#PC)
+ $BF6E DEFB $09,$00,$2C                     ; #MOVEMENT(#PC)
  $BF71 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $42 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15114,8 +15165,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BF78 DEFB $00,$00                         ; }
  $BF7A DEFW $B6CA                           ; west  [02] [04]east bank black
                                             ; river
- $BF7C DEFB $04,$00,$19                     ; #MOVEMENT
- $BF7F DEFB $03,$09,$43                     ; #MOVEMENT
+ $BF7C DEFB $04,$00,$19                     ; #MOVEMENT(#PC)
+ $BF7F DEFB $03,$09,$43                     ; #MOVEMENT(#PC)
  $BF82 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $43 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15125,8 +15176,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BF87 DEFB $FE,$01                         ;
  $BF89 DEFB $00,$00                         ; }
  $BF8B DEFW $B6CF                           ; east bank black river
- $BF8D DEFB $03,$00,$32                     ; #MOVEMENT
- $BF90 DEFB $04,$09,$42                     ; #MOVEMENT
+ $BF8D DEFB $03,$00,$32                     ; #MOVEMENT(#PC)
+ $BF90 DEFB $04,$09,$42                     ; #MOVEMENT(#PC)
  $BF93 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $44 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15136,9 +15187,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BF98 DEFB $64,$04                         ;
  $BF9A DEFB $00,$00                         ; }
  $BF9C DEFW $0000                           ; ---
- $BF9E DEFB $03,$00,$47                     ; #MOVEMENT
- $BFA1 DEFB $05,$00,$45                     ; #MOVEMENT
- $BFA4 DEFB $02,$00,$0A                     ; #MOVEMENT
+ $BF9E DEFB $03,$00,$47                     ; #MOVEMENT(#PC)
+ $BFA1 DEFB $05,$00,$45                     ; #MOVEMENT(#PC)
+ $BFA4 DEFB $02,$00,$0A                     ; #MOVEMENT(#PC)
  $BFA7 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $45 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15148,9 +15199,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BFAC DEFB $64,$04                         ;
  $BFAE DEFB $00,$00                         ; }
  $BFB0 DEFW $0000                           ; ---
- $BFB2 DEFB $01,$00,$46                     ; #MOVEMENT
- $BFB5 DEFB $08,$00,$44                     ; #MOVEMENT
- $BFB8 DEFB $02,$00,$0A                     ; #MOVEMENT
+ $BFB2 DEFB $01,$00,$46                     ; #MOVEMENT(#PC)
+ $BFB5 DEFB $08,$00,$44                     ; #MOVEMENT(#PC)
+ $BFB8 DEFB $02,$00,$0A                     ; #MOVEMENT(#PC)
  $BFBB DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $46 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15160,8 +15211,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BFC0 DEFB $64,$04                         ;
  $BFC2 DEFB $00,$00                         ; }
  $BFC4 DEFW $0000                           ; ---
- $BFC6 DEFB $07,$00,$48                     ; #MOVEMENT
- $BFC9 DEFB $02,$00,$45                     ; #MOVEMENT
+ $BFC6 DEFB $07,$00,$48                     ; #MOVEMENT(#PC)
+ $BFC9 DEFB $02,$00,$45                     ; #MOVEMENT(#PC)
  $BFCC DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $47 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15171,9 +15222,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BFD1 DEFB $64,$04                         ;
  $BFD3 DEFB $00,$00                         ; }
  $BFD5 DEFW $0000                           ; ---
- $BFD7 DEFB $06,$00,$45                     ; #MOVEMENT
- $BFDA DEFB $02,$00,$4A                     ; #MOVEMENT
- $BFDD DEFB $04,$00,$44                     ; #MOVEMENT
+ $BFD7 DEFB $06,$00,$45                     ; #MOVEMENT(#PC)
+ $BFDA DEFB $02,$00,$4A                     ; #MOVEMENT(#PC)
+ $BFDD DEFB $04,$00,$44                     ; #MOVEMENT(#PC)
  $BFE0 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $48 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15183,9 +15234,9 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BFE5 DEFB $64,$04                         ;
  $BFE7 DEFB $00,$00                         ; }
  $BFE9 DEFW $0000                           ; ---
- $BFEB DEFB $06,$00,$46                     ; #MOVEMENT
- $BFEE DEFB $08,$00,$47                     ; #MOVEMENT
- $BFF1 DEFB $0A,$00,$4B                     ; #MOVEMENT
+ $BFEB DEFB $06,$00,$46                     ; #MOVEMENT(#PC)
+ $BFEE DEFB $08,$00,$47                     ; #MOVEMENT(#PC)
+ $BFF1 DEFB $0A,$00,$4B                     ; #MOVEMENT(#PC)
  $BFF4 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $49 - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15195,8 +15246,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $BFF9 DEFB $64,$04                         ;
  $BFFB DEFB $00,$00                         ; }
  $BFFD DEFW $0000                           ; ---
- $BFFF DEFB $03,$00,$4A                     ; #MOVEMENT
- $C002 DEFB $01,$00,$0A                     ; #MOVEMENT
+ $BFFF DEFB $03,$00,$4A                     ; #MOVEMENT(#PC)
+ $C002 DEFB $01,$00,$0A                     ; #MOVEMENT(#PC)
  $C005 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $4A - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15206,8 +15257,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $C00A DEFB $64,$04                         ;
  $C00C DEFB $00,$00                         ; }
  $C00E DEFW $0000                           ; ---
- $C010 DEFB $01,$00,$47                     ; #MOVEMENT
- $C013 DEFB $04,$00,$49                     ; #MOVEMENT
+ $C010 DEFB $01,$00,$47                     ; #MOVEMENT(#PC)
+ $C013 DEFB $04,$00,$49                     ; #MOVEMENT(#PC)
  $C016 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $4B - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15217,7 +15268,7 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $C01B DEFB $3C,$06                         ;
  $C01D DEFB $00,$00                         ; }
  $C01F DEFW $0000                           ; ---
- $C021 DEFB $0A,$00,$4C                     ; #MOVEMENT
+ $C021 DEFB $0A,$00,$4C                     ; #MOVEMENT(#PC)
  $C024 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $4C - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15227,7 +15278,7 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $C029 DEFB $3C,$06                         ;
  $C02B DEFB $00,$00                         ; }
  $C02D DEFW $0000                           ; ---
- $C02F DEFB $0A,$00,$4D                     ; #MOVEMENT
+ $C02F DEFB $0A,$00,$4D                     ; #MOVEMENT(#PC)
  $C032 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $4D - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15237,7 +15288,7 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $C037 DEFB $3C,$06                         ;
  $C039 DEFB $00,$00                         ; }
  $C03B DEFW $0000                           ; ---
- $C03D DEFB $0A,$00,$4E                     ; #MOVEMENT
+ $C03D DEFB $0A,$00,$4E                     ; #MOVEMENT(#PC)
  $C040 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $4E - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15247,8 +15298,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $C045 DEFB $96,$01                         ;
  $C047 DEFB $40,$04                         ; }
  $C049 DEFW $0000                           ; ---
- $C04B DEFB $03,$00,$4F                     ; #MOVEMENT
- $C04E DEFB $09,$00,$4D                     ; #MOVEMENT
+ $C04B DEFB $03,$00,$4F                     ; #MOVEMENT(#PC)
+ $C04E DEFB $09,$00,$4D                     ; #MOVEMENT(#PC)
  $C051 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Location $4F - "#TEXTTOKEN(#PC + $02, $01)"
@@ -15258,8 +15309,8 @@ b$BA8A DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; {00:  : ''
  $C056 DEFB $96,$01                         ;
  $C058 DEFB $40,$04                         ; }
  $C05A DEFW $0000                           ; ---
- $C05C DEFB $04,$00,$4E                     ; #MOVEMENT
- $C05F DEFB $09,$00,$4A                     ; #MOVEMENT
+ $C05C DEFB $04,$00,$4E                     ; #MOVEMENT(#PC)
+ $C05F DEFB $09,$00,$4A                     ; #MOVEMENT(#PC)
  $C062 DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
@@ -17095,218 +17146,439 @@ b$C11B DEFB $01                             ; Appears in the game #PEEK(#PC)
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
 ; Action Table
+;
+; .
+;
+; .
+;
+; Action: "#ACTION".
 @label=ActionTable
-b$C730 DEFB $01      ; {North
- $C731 DEFW $8D9D    ; }
- $C733 DEFB $02      ; {South
- $C734 DEFW $8D9D    ; }
- $C736 DEFB $03      ; {East
- $C737 DEFW $8D9D    ; }
- $C739 DEFB $04      ; {West
- $C73A DEFW $8D9D    ; }
- $C73C DEFB $05      ; {Northeast
- $C73D DEFW $8D9D    ; }
- $C73F DEFB $06      ; {Northwest
- $C740 DEFW $8D9D    ; }
- $C742 DEFB $07      ; {Southeast
- $C743 DEFW $8D9D    ; }
- $C745 DEFB $08      ; {Southwest
- $C746 DEFW $8D9D    ; }
- $C748 DEFB $09      ; {Up
- $C749 DEFW $8D9D    ; }
- $C74B DEFB $0A      ; {Down
- $C74C DEFW $8D9D    ; }
- $C74E DEFB $13      ; {Take
- $C74F DEFW $8D33    ; }
- $C751 DEFB $0D      ; {Drop
- $C752 DEFW $8CA6    ; }
- $C754 DEFB $0F      ; {Attack
- $C755 DEFW $9171    ; }
- $C757 DEFB $17      ; {Look
- $C758 DEFW $8C4B    ; }
- $C75A DEFB $1A      ; {Inventory
- $C75B DEFW $90EB    ; }
- $C75D DEFB $1C      ; {Examine
- $C75E DEFW $93DA    ; }
- $C760 DEFB $1D      ; {Give To
- $C761 DEFW $939E    ; }
- $C763 DEFB $1F      ; {Enter
- $C764 DEFW $8FCD    ; }
- $C766 DEFB $20      ; {Go Into
- $C767 DEFW $8FCD    ; }
- $C769 DEFB $24      ; {Run
- $C76A DEFW $8FAD    ; }
- $C76C DEFB $27      ; {Follow
- $C76D DEFW $8FD6    ; }
- $C76F DEFB $2A      ; {Throw At
- $C770 DEFW $8FF5    ; }
- $C772 DEFB $30      ; {Capture
- $C773 DEFW $A3E6    ; }
- $C775 DEFB $00      ; {None
- $C776 DEFW $9B02    ; }
- $C778 DEFB $33      ; {Untie
- $C779 DEFW $A2B4    ; }
- $C77B DEFB $2E      ; {Tie To
- $C77C DEFW $A248    ; }
- $C77E DEFB $2D      ; {Burn
- $C77F DEFW $A302    ; }
- $C781 DEFB $35      ; {Talk To
- $C782 DEFW $9034    ; }
- $C784 DEFB $3A      ; {Shoot
- $C785 DEFW $9076    ; }
- $C787 DEFB $3B      ; {Carry
- $C788 DEFW $8D33    ; }
- $C78A DEFB $37      ; {Climb Out Of
- $C78B DEFW $A541    ; }
+b$C730 DEFB $01      ; Action ID.
+ $C731 DEFW $8D9D    ; Action routine.
+; Action: "#ACTION".
+ $C733 DEFB $02      ; Action ID.
+ $C734 DEFW $8D9D    ; Action routine.
+; Action: "#ACTION".
+ $C736 DEFB $03      ; Action ID.
+ $C737 DEFW $8D9D    ; Action routine.
+; Action: "#ACTION".
+ $C739 DEFB $04      ; Action ID.
+ $C73A DEFW $8D9D    ; Action routine.
+; Action: "#ACTION".
+ $C73C DEFB $05      ; Action ID.
+ $C73D DEFW $8D9D    ; Action routine.
+; Action: "#ACTION".
+ $C73F DEFB $06      ; Action ID.
+ $C740 DEFW $8D9D    ; Action routine.
+; Action: "#ACTION".
+ $C742 DEFB $07      ; Action ID.
+ $C743 DEFW $8D9D    ; Action routine.
+; Action: "#ACTION".
+ $C745 DEFB $08      ; Action ID.
+ $C746 DEFW $8D9D    ; Action routine.
+; Action: "#ACTION".
+ $C748 DEFB $09      ; Action ID.
+ $C749 DEFW $8D9D    ; Action routine.
+; Action: "#ACTION".
+ $C74B DEFB $0A      ; Action ID.
+ $C74C DEFW $8D9D    ; Action routine.
+; Action: "#ACTION".
+ $C74E DEFB $13      ; Action ID.
+ $C74F DEFW $8D33    ; Action routine.
+; Action: "#ACTION".
+ $C751 DEFB $0D      ; Action ID.
+ $C752 DEFW $8CA6    ; Action routine.
+; Action: "#ACTION".
+ $C754 DEFB $0F      ; Action ID.
+ $C755 DEFW $9171    ; Action routine.
+; Action: "#ACTION".
+ $C757 DEFB $17      ; Action ID.
+ $C758 DEFW $8C4B    ; Action routine.
+; Action: "#ACTION".
+ $C75A DEFB $1A      ; Action ID.
+ $C75B DEFW $90EB    ; Action routine.
+; Action: "#ACTION".
+ $C75D DEFB $1C      ; Action ID.
+ $C75E DEFW $93DA    ; Action routine.
+; Action: "#ACTION".
+ $C760 DEFB $1D      ; Action ID.
+ $C761 DEFW $939E    ; Action routine.
+; Action: "#ACTION".
+ $C763 DEFB $1F      ; Action ID.
+ $C764 DEFW $8FCD    ; Action routine.
+; Action: "#ACTION".
+ $C766 DEFB $20      ; Action ID.
+ $C767 DEFW $8FCD    ; Action routine.
+; Action: "#ACTION".
+ $C769 DEFB $24      ; Action ID.
+ $C76A DEFW $8FAD    ; Action routine.
+; Action: "#ACTION".
+ $C76C DEFB $27      ; Action ID.
+ $C76D DEFW $8FD6    ; Action routine.
+; Action: "#ACTION".
+ $C76F DEFB $2A      ; Action ID.
+ $C770 DEFW $8FF5    ; Action routine.
+; Action: "#ACTION".
+ $C772 DEFB $30      ; Action ID.
+ $C773 DEFW $A3E6    ; Action routine.
+; Action: "#ACTION".
+ $C775 DEFB $00      ; Action ID.
+ $C776 DEFW $9B02    ; Action routine.
+; Action: "#ACTION".
+ $C778 DEFB $33      ; Action ID.
+ $C779 DEFW $A2B4    ; Action routine.
+; Action: "#ACTION".
+ $C77B DEFB $2E      ; Action ID.
+ $C77C DEFW $A248    ; Action routine.
+; Action: "#ACTION".
+ $C77E DEFB $2D      ; Action ID.
+ $C77F DEFW $A302    ; Action routine.
+; Action: "#ACTION".
+ $C781 DEFB $35      ; Action ID.
+ $C782 DEFW $9034    ; Action routine.
+; Action: "#ACTION".
+ $C784 DEFB $3A      ; Action ID.
+ $C785 DEFW $9076    ; Action routine.
+; Action: "#ACTION".
+ $C787 DEFB $3B      ; Action ID.
+ $C788 DEFW $8D33    ; Action routine.
+; Action: "#ACTION".
+ $C78A DEFB $37      ; Action ID.
+ $C78B DEFW $A541    ; Action routine.
+; End of table.
  $C78D DEFB $FF      ; Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
-; Data block at C78E
-b$C78E DEFB $16
- $C78F DEFW $C7A4
- $C791 DEFB $1A
- $C792 DEFW $C7B2
- $C794 DEFB $1D
- $C795 DEFW $C7B9
- $C797 DEFB $21
- $C798 DEFW $C7EA
- $C79A DEFB $02
- $C79B DEFW $C7DD
- $C79D DEFB $03
- $C79E DEFW $C7DD
- $C7A0 DEFB $20
- $C7A1 DEFW $C7C0
+; Event Jump Table
+;
+; .
+;
+; .
+;
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+b$C78E DEFB $16      ; Location ID.
+ $C78F DEFW $C7A4    ; Event address.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $C791 DEFB $1A      ; Location ID.
+ $C792 DEFW $C7B2    ; Event address.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $C794 DEFB $1D      ; Location ID.
+ $C795 DEFW $C7B9    ; Event address.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $C797 DEFB $21      ; Location ID.
+ $C798 DEFW $C7EA    ; Event address.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $C79A DEFB $02      ; Location ID.
+ $C79B DEFW $C7DD    ; Event address.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $C79D DEFB $03      ; Location ID.
+ $C79E DEFW $C7DD    ; Event address.
+; #LOCATION(#PEEK(#PC), 1)($) - "#LOCATIONNAME(#PEEK(#PC))".
+ $C7A0 DEFB $20      ; Location ID.
+ $C7A1 DEFW $C7C0    ; Event address.
+; End of table.
  $C7A3 DEFB $FF      ; Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
-; Routine at C7A4
+; Event: #LOCATIONNAME($16)
+;
+; .
+;
+; .
+;
+; At the start of the game, the #TEXTTOKEN($C430 + $08, 1) is invisible (!) and only becomes visible after
+;       entering #LOCATIONNAME($16).
+@label=EventBeornsHouse
 c$C7A4 LD HL,$C437   ; #REGhl=#R$C437(attributes) of object $42 -
                      ; "#TEXTTOKEN($C430 + $08, 1)".
- $C7A7 BIT 3,(HL)    ; {Return if "broken" bit is set.
- $C7A9 RET NZ        ; }
+ $C7A7 BIT 3,(HL)    ; {Return if the "#TEXTTOKEN($C430 + $08, 1)" is "broken"
+ $C7A9 RET NZ        ; (bit 3 is set).}
  $C7AA LD A,$42      ; {Write $42 to #R$CAE7.
  $C7AC LD ($CAE7),A  ; }
  $C7AF SET 7,(HL)    ; Set "visible" bit for "#TEXTTOKEN($C430 + $08, 1)".
  $C7B1 RET           ; Return.
 
-; Routine at C7B2
-c$C7B2 LD A,($CA92)  ;
- $C7B5 LD ($CA93),A  ;
- $C7B8 RET           ;
+; Event: #LOCATIONNAME($1A)
+@label=EventSpiderThreadsPlace
+c$C7B2 LD A,($CA92)  ; {Copy #R$CA92 to #R$CA93.
+ $C7B5 LD ($CA93),A  ; }
+ $C7B8 RET           ; Return.
 
-; Routine at C7B9
+; Event: #LOCATIONNAME($1D)
+@label=EventDeepBog
 c$C7B9 LD A,($CAA0)  ; {Copy #R$CAA0 to #R$CAA1.
  $C7BC LD ($CAA1),A  ; }
  $C7BF RET           ; Return.
 
-; Routine at C7C0
-c$C7C0 LD A,$03      ;
- $C7C2 LD ($CAC4),A  ;
+; Event: #LOCATIONNAME($20)
+@label=EventElvenkingsCellar
+c$C7C0 LD A,$03      ; {Write $03 to #R$CAC4.
+ $C7C2 LD ($CAC4),A  ; }
  $C7C5 LD HL,$C13A   ; #REGhl=#R$C13A(attributes) of object $3C -
                      ; "#TEXTTOKEN($C133 + $08, 1)".
- $C7C8 BIT 3,(HL)    ; {Jump to #R$C7D1 if "broken" bit is not set.
- $C7CA JR NZ,$C7D1   ; }
+ $C7C8 BIT 3,(HL)    ; {Jump to #R$C7D1 if "#TEXTTOKEN($C133 + $08, 1)" is
+ $C7CA JR NZ,$C7D1   ; "broken" (bit 3 is set).}
  $C7CC LD A,$3C      ; {Write $3C to #R$CB03.
  $C7CE LD ($CB03),A  ; }
+@label=EventElvenkingsCellar_Skip
 *$C7D1 LD HL,$C4CA   ; #REGhl=#R$C4CA(attributes) of object $46 -
                      ; "#TEXTTOKEN($C4C3 + $08, 1)".
- $C7D4 BIT 3,(HL)    ;
- $C7D6 RET NZ        ;
+ $C7D4 BIT 3,(HL)    ; {Return if the "#TEXTTOKEN($C4C3 + $08, 1)" is "broken"
+ $C7D6 RET NZ        ; (bit 3 is set).}
  $C7D7 LD A,$46      ; {Write $46 to #R$CAFC.
  $C7D9 LD ($CAFC),A  ; }
  $C7DC RET           ; Return.
 
-; Routine at C7DD
-c$C7DD LD A,($8D9B)  ;
- $C7E0 LD ($B6F3),A  ;
- $C7E3 LD A,($CABC)  ;
- $C7E6 LD ($CABD),A  ;
- $C7E9 RET           ;
+; Event: #LOCATIONNAME($03)
+@label=EventForest
+c$C7DD LD A,($8D9B)  ; {Copy #R$8D9B to #R$B6F3.
+ $C7E0 LD ($B6F3),A  ; }
+ $C7E3 LD A,($CABC)  ; {Copy #R$CABC to #R$CABD.
+ $C7E6 LD ($CABD),A  ; }
+ $C7E9 RET           ; Return.
 
-; Routine at C7EA
+; Event: #LOCATIONNAME($21)
+;
+; .
+;
+; .
+;
+; Is Player Protected in "#TEXTTOKEN($C3EE + $08, 1)"
+@label=EventForestriver
 c$C7EA LD A,($C11C)  ; {If #R$C11C(player mother object) is object $13 -
  $C7ED CP $13        ; "#TEXTTOKEN($C3EE + $08, 1)" then return.
  $C7EF RET Z         ; }
+; Uh oh ... you dead.
  $C7F0 CALL $8E39    ; Call #R$8E39.
  $C7F3 LD HL,$B26D   ; #REGhl=#R$B26D("You are swept forcefully against the
                      ; portcullis")
  $C7F6 CALL $72DD    ; Call #R$72DD.
  $C7F9 JP $90D2      ; Jump to #R$90D2.
 
-; Data block at C7FC
-b$C7FC DEFB $74,$04,$EE,$B1,$29,$04,$B7,$B2
- $C804 DEFB $74,$04,$EE,$B1,$29,$04,$B7,$B2
- $C80C DEFB $FF,$FF,$16,$12,$BD,$01,$00,$31
- $C814 DEFB $18,$26,$BD,$03,$00,$19,$15,$F8
- $C81C DEFB $BC,$04,$00,$14,$22,$E2,$BD,$03
- $C824 DEFB $00,$23,$0A,$0A,$BB,$03,$00,$0B
- $C82C DEFB $FF,$00,$42,$C8,$0F,$9E,$C8,$FF
- $C834 DEFB $00,$71,$C8,$0F,$9E,$C8,$FF,$00
- $C83C DEFB $95,$C8,$0F,$9E,$C8,$FF,$02,$10
- $C844 DEFB $06,$FF,$14,$30,$4D,$C8,$0E,$46
- $C84C DEFB $C8,$04,$09,$14,$30,$56,$C8,$0E
- $C854 DEFB $4F,$C8,$04,$0A,$14,$30,$5F,$C8
- $C85C DEFB $0E,$58,$C8,$02,$0C,$06,$FF,$04
- $C864 DEFB $02,$14,$30,$6C,$C8,$0E,$65,$C8
- $C86C DEFB $04,$01,$0E,$42,$C8,$04,$06,$14
- $C874 DEFB $30,$7A,$C8,$0E,$73,$C8,$04,$01
- $C87C DEFB $14,$30,$83,$C8,$0E,$7C,$C8,$04
- $C884 DEFB $08,$14,$30,$8C,$C8,$0E,$85,$C8
- $C88C DEFB $04,$09,$14,$30,$71,$C8,$0E,$8E
- $C894 DEFB $C8,$04,$24,$04,$0F,$04,$30,$0E
- $C89C DEFB $95,$C8,$04,$30,$07,$00,$C2,$C8
- $C8A4 DEFB $00,$D0,$C8,$00,$D4,$C8,$00,$DA
- $C8AC DEFB $C8,$00,$DE,$C8,$1D,$7F,$CA,$30
- $C8B4 DEFB $73,$CA,$0F,$5E,$CA,$FF,$02,$1D
- $C8BC DEFB $03,$00,$02,$10,$05,$FF,$04,$24
- $C8C4 DEFB $14,$13,$D0,$C8,$03,$F5,$A4,$00
- $C8CC DEFB $04,$0C,$04,$1D,$04,$24,$04,$0D
- $C8D4 DEFB $04,$24,$03,$FE,$A4,$00,$04,$24
- $C8DC DEFB $04,$1D,$04,$10,$0F,$04,$00,$EC
- $C8E4 DEFB $C8,$1D,$7F,$CA,$0F,$5E,$CA,$FF
- $C8EC DEFB $12,$27,$00,$FF,$F5,$C8,$0E,$EC
- $C8F4 DEFB $C8,$12,$13,$02,$FF,$FF,$C8,$23
- $C8FC DEFB $1C,$A5,$00,$13,$40,$A6,$00,$0C
- $C904 DEFB $C9,$04,$FF,$04,$24,$0E,$EC,$C8
- $C90C DEFB $03,$57,$A6,$00,$0E,$EC,$C8,$00
- $C914 DEFB $1D,$C9,$0F,$1D,$C9,$1D,$7F,$CA
- $C91C DEFB $FF,$04,$30,$04,$24,$0E,$1D,$C9
- $C924 DEFB $00,$28,$C9,$FF,$14,$0F,$2F,$C9
- $C92C DEFB $0E,$28,$C9,$14,$27,$3A,$C9,$03
- $C934 DEFB $D1,$A5,$00,$0E,$28,$C9,$14,$24
- $C93C DEFB $41,$C9,$0E,$28,$C9,$04,$FF,$0E
- $C944 DEFB $28,$C9,$00,$50,$C9,$0F,$60,$C9
- $C94C DEFB $1D,$7F,$CA,$FF,$02,$26,$08,$0F
- $C954 DEFB $02,$10,$08,$FF,$02,$0C,$08,$FF
- $C95C DEFB $02,$25,$08,$0F,$14,$30,$67,$C9
- $C964 DEFB $0E,$60,$C9,$02,$10,$13,$FF,$02
- $C96C DEFB $21,$14,$FF,$04,$30,$02,$0C,$13
- $C974 DEFB $FF,$02,$10,$0C,$FF,$04,$30,$02
- $C97C DEFB $13,$13,$FF,$02,$2C,$13,$0C,$04
- $C984 DEFB $30,$02,$0C,$0C,$FF,$14,$30,$50
- $C98C DEFB $C9,$0E,$50,$C9,$00,$A0,$C9,$0F
- $C994 DEFB $AA,$C9,$1D,$7F,$CA,$FF,$13,$25
- $C99C DEFB $A5,$00,$A4,$C9,$03,$E5,$A9,$00
- $C9A4 DEFB $04,$FF,$14,$FF,$9A,$C9,$14,$0F
- $C9AC DEFB $9A,$C9,$0E,$AA,$C9,$00,$B8,$C9
- $C9B4 DEFB $0F,$CD,$C9,$FF,$13,$DC,$A6,$00
- $C9BC DEFB $C1,$C9,$0E,$B8,$C9,$13,$98,$A6
- $C9C4 DEFB $00,$D2,$C9,$13,$C2,$A6,$00,$D2
- $C9CC DEFB $C9,$04,$2D,$0E,$B8,$C9,$04,$24
- $C9D4 DEFB $0E,$B8,$C9,$00,$DE,$C9,$0F,$E9
- $C9DC DEFB $C9,$FF,$43,$AB,$A8,$00,$42,$13
- $C9E4 DEFB $25,$FF,$0E,$DE,$C9,$54,$3A,$5E
- $C9EC DEFB $CA,$0E,$E9,$C9,$00,$F7,$C9,$0F
- $C9F4 DEFB $2B,$CA,$FF,$13,$D2,$A8,$00,$10
- $C9FC DEFB $CA,$43,$F6,$A8,$00,$02,$0D,$10
- $CA04 DEFB $FF,$14,$01,$21,$CA,$02,$13,$10
- $CA0C DEFB $FF,$0E,$F7,$C9,$14,$01,$26,$CA
- $CA14 DEFB $13,$26,$A9,$00,$F7,$C9,$02,$13
- $CA1C DEFB $10,$FF,$0E,$F7,$C9,$04,$08,$0E
- $CA24 DEFB $09,$CA,$04,$08,$0E,$14,$CA,$02
- $CA2C DEFB $28,$10,$FF,$04,$24,$0E,$F7,$C9
- $CA34 DEFB $00,$41,$CA,$0F,$5E,$CA,$FF,$13
- $CA3C DEFB $BD,$A9,$00,$3B,$CA,$03,$4E,$A9
- $CA44 DEFB $00,$04,$FF,$03,$4E,$A9,$00,$04
- $CA4C DEFB $FF,$03,$4E,$A9,$00,$04,$FF
+; Gollums Riddles
+b$C7FC DEFB $74
+ $C7FD DEFB $04
+ $C7FE DEFW $B1EE
+ $C800 DEFB $29
+ $C801 DEFB $04
+ $C802 DEFW $B2B7
+ $C804 DEFB $74
+ $C805 DEFB $04
+ $C806 DEFW $B1EE
+ $C808 DEFB $29
+ $C809 DEFB $04
+ $C80A DEFW $B2B7
+ $C80C DEFB $FF      ; Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C80D DEFB $FF      ; Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+
+; Data block at C80E
+;
+; See #R$9C9F.
+;
+; .
+;
+; "#LOCATIONNAME(#PEEK(#PC))".
+b$C80E DEFB $16         ; Location #LOCATION(#PEEK(#PC), 1, 1)($).
+ $C80F DEFW $BD12       ; The direction for #R(#PEEK(#PC + 1) * $100 +
+                        ; #PEEK(#PC))(#LOCATIONNAME(#PEEK(#PC - 1))).
+ $C811 DEFB $01,$00,$31 ; #MOVEMENT(#PC)
+; "#LOCATIONNAME(#PEEK(#PC))".
+ $C814 DEFB $18         ; Location #LOCATION(#PEEK(#PC), 1, 1)($).
+ $C815 DEFW $BD26       ; The direction for #R(#PEEK(#PC + 1) * $100 +
+                        ; #PEEK(#PC))(#LOCATIONNAME(#PEEK(#PC - 1))).
+ $C817 DEFB $03,$00,$19 ; #MOVEMENT(#PC)
+; "#LOCATIONNAME(#PEEK(#PC))".
+ $C81A DEFB $15         ; Location #LOCATION(#PEEK(#PC), 1, 1)($).
+ $C81B DEFW $BCF8       ; The direction for #R(#PEEK(#PC + 1) * $100 +
+                        ; #PEEK(#PC))(#LOCATIONNAME(#PEEK(#PC - 1))).
+ $C81D DEFB $04,$00,$14 ; #MOVEMENT(#PC)
+; "#LOCATIONNAME(#PEEK(#PC))".
+ $C820 DEFB $22         ; Location #LOCATION(#PEEK(#PC), 1, 1)($).
+ $C821 DEFW $BDE2       ; The direction for #R(#PEEK(#PC + 1) * $100 +
+                        ; #PEEK(#PC))(#LOCATIONNAME(#PEEK(#PC - 1))).
+ $C823 DEFB $03,$00,$23 ; #MOVEMENT(#PC)
+; "#LOCATIONNAME(#PEEK(#PC))".
+ $C826 DEFB $0A         ; Location #LOCATION(#PEEK(#PC), 1, 1)($).
+ $C827 DEFW $BB0A       ; The direction for #R(#PEEK(#PC + 1) * $100 +
+                        ; #PEEK(#PC))(#LOCATIONNAME(#PEEK(#PC - 1))).
+ $C829 DEFB $03,$00,$0B ; #MOVEMENT(#PC)
+ $C82C DEFB $FF         ; Termination character (#N(#PEEK(#PC), 2, 3, 1,
+                        ; 1)($)).
+
+; Data block at C82D
+b$C82D DEFB $00
+ $C82E DEFW $C842
+ $C830 DEFB $0F
+ $C831 DEFW $C89E
+ $C833 DEFB $FF                             ; Termination character
+                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C834 DEFB $00
+ $C835 DEFW $C871
+ $C837 DEFB $0F
+ $C838 DEFW $C89E
+ $C83A DEFB $FF                             ; Termination character
+                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C83B DEFB $00
+ $C83C DEFW $C895
+ $C83E DEFB $0F
+ $C83F DEFW $C89E
+ $C841 DEFB $FF                             ; Termination character
+                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C842 DEFB $02
+ $C843 DEFB $10
+ $C844 DEFB $06                             ; #OBJECT(#PEEK(#PC), 1, 1)($)
+ $C845 DEFB $FF                             ; Termination character
+                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C846 DEFB $14
+ $C847 DEFB $30
+ $C848 DEFW $C84D
+ $C84A DEFB $0E
+ $C84B DEFW $C846
+ $C84D DEFB $04
+ $C84E DEFB $09
+ $C84F DEFB $14
+ $C850 DEFB $30
+ $C851 DEFW $C856
+ $C853 DEFB $0E
+ $C854 DEFW $C84F
+ $C856 DEFB $04
+ $C857 DEFB $0A
+ $C858 DEFB $14
+ $C859 DEFB $30
+ $C85A DEFW $C85F
+ $C85C DEFB $0E
+ $C85D DEFW $C858
+ $C85F DEFB $02
+ $C860 DEFB $0C
+ $C861 DEFB $06                             ; #OBJECT(#PEEK(#PC), 1, 1)($)
+ $C862 DEFB $FF                             ; Termination character
+                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C863 DEFB $04
+ $C864 DEFB $02
+ $C865 DEFB $14
+ $C866 DEFB $30
+ $C867 DEFW $C86C
+ $C869 DEFB $0E
+ $C86A DEFW $C865
+ $C86C DEFB $04
+ $C86D DEFB $01
+ $C86E DEFB $0E
+ $C86F DEFW $C842
+ $C871 DEFB $04
+ $C872 DEFB $06
+ $C873 DEFB $14
+ $C874 DEFB $30
+ $C875 DEFW $C87A
+ $C877 DEFB $0E
+ $C878 DEFW $C873
+ $C87A DEFB $04
+ $C87B DEFB $01
+ $C87C DEFB $14
+ $C87D DEFB $30
+ $C87E DEFW $C883
+ $C880 DEFB $0E
+ $C881 DEFW $C87C
+ $C883 DEFB $04
+ $C884 DEFB $08
+ $C885 DEFB $14
+ $C886 DEFB $30
+ $C887 DEFW $C88C
+ $C889 DEFB $0E
+ $C88A DEFW $C885
+ $C88C DEFB $04
+ $C88D DEFB $09
+ $C88E DEFB $14
+ $C88F DEFB $30
+ $C890 DEFW $C871
+ $C892 DEFB $0E
+ $C893 DEFW $C88E
+ $C895 DEFB $04
+ $C896 DEFB $24
+ $C897 DEFB $04
+ $C898 DEFB $0F
+ $C899 DEFB $04
+ $C89A DEFB $30
+ $C89B DEFB $0E
+ $C89C DEFW $C895
+ $C89E DEFB $04,$30,$07
+; Gandalf.
+ $C8A1 DEFB $00
+ $C8A2 DEFW $C8C2
+ $C8A4 DEFB $00
+ $C8A5 DEFW $C8D0
+ $C8A7 DEFB $00
+ $C8A8 DEFW $C8D4
+ $C8AA DEFB $00
+ $C8AB DEFW $C8DA
+ $C8AD DEFB $00
+ $C8AE DEFW $C8DE
+ $C8B0 DEFB $1D
+ $C8B1 DEFW $CA7F
+ $C8B3 DEFB $30
+ $C8B4 DEFW $CA73
+ $C8B6 DEFB $0F
+ $C8B7 DEFW $CA5E
+ $C8B9 DEFB $FF                             ; Termination character
+                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+; Gandalfs initial actions.
+ $C8BA DEFB $02
+ $C8BB DEFB $1D                             ; #ACTION
+ $C8BC DEFB $03                             ; #OBJECT(#PEEK(#PC), 1, 1)($)
+ $C8BD DEFB $00                             ; #OBJECT(#PEEK(#PC), 1, 1)($)
+ $C8BE DEFB $02
+ $C8BF DEFB $10                             ; #ACTION
+ $C8C0 DEFB $05                             ; #OBJECT(#PEEK(#PC), 1, 1)($)
+ $C8C1 DEFB $FF                             ; Termination character
+                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C8C2 DEFB $04,$24,$14,$13,$D0,$C8,$03,$F5
+ $C8CA DEFB $A4,$00,$04,$0C,$04,$1D,$04,$24
+ $C8D2 DEFB $04,$0D,$04,$24,$03,$FE,$A4,$00
+ $C8DA DEFB $04,$24,$04,$1D,$04,$10,$0F,$04
+ $C8E2 DEFB $00,$EC,$C8,$1D,$7F,$CA,$0F,$5E
+ $C8EA DEFB $CA,$FF,$12,$27,$00,$FF,$F5,$C8
+ $C8F2 DEFB $0E,$EC,$C8,$12,$13,$02,$FF,$FF
+ $C8FA DEFB $C8,$23,$1C,$A5,$00,$13,$40,$A6
+ $C902 DEFB $00,$0C,$C9,$04,$FF,$04,$24,$0E
+ $C90A DEFB $EC,$C8,$03,$57,$A6,$00,$0E,$EC
+ $C912 DEFB $C8,$00,$1D,$C9,$0F,$1D,$C9,$1D
+ $C91A DEFB $7F,$CA,$FF,$04,$30,$04,$24,$0E
+ $C922 DEFB $1D,$C9,$00,$28,$C9,$FF,$14,$0F
+ $C92A DEFB $2F,$C9,$0E,$28,$C9,$14,$27,$3A
+ $C932 DEFB $C9,$03,$D1,$A5,$00,$0E,$28,$C9
+ $C93A DEFB $14,$24,$41,$C9,$0E,$28,$C9,$04
+ $C942 DEFB $FF,$0E,$28,$C9,$00,$50,$C9,$0F
+ $C94A DEFB $60,$C9,$1D,$7F,$CA,$FF,$02,$26
+ $C952 DEFB $08,$0F,$02,$10,$08,$FF,$02,$0C
+ $C95A DEFB $08,$FF,$02,$25,$08,$0F,$14,$30
+ $C962 DEFB $67,$C9,$0E,$60,$C9,$02,$10,$13
+ $C96A DEFB $FF,$02,$21,$14,$FF,$04,$30,$02
+ $C972 DEFB $0C,$13,$FF,$02,$10,$0C,$FF,$04
+ $C97A DEFB $30,$02,$13,$13,$FF,$02,$2C,$13
+ $C982 DEFB $0C,$04,$30,$02,$0C,$0C,$FF,$14
+ $C98A DEFB $30,$50,$C9,$0E,$50,$C9,$00,$A0
+ $C992 DEFB $C9,$0F,$AA,$C9,$1D,$7F,$CA,$FF
+ $C99A DEFB $13,$25,$A5,$00,$A4,$C9,$03,$E5
+ $C9A2 DEFB $A9,$00,$04,$FF,$14,$FF,$9A,$C9
+ $C9AA DEFB $14,$0F,$9A,$C9,$0E,$AA,$C9,$00
+ $C9B2 DEFB $B8,$C9,$0F,$CD,$C9,$FF,$13,$DC
+ $C9BA DEFB $A6,$00,$C1,$C9,$0E,$B8,$C9,$13
+ $C9C2 DEFB $98,$A6,$00,$D2,$C9,$13,$C2,$A6
+ $C9CA DEFB $00,$D2,$C9,$04,$2D,$0E,$B8,$C9
+ $C9D2 DEFB $04,$24,$0E,$B8,$C9,$00,$DE,$C9
+ $C9DA DEFB $0F,$E9,$C9,$FF,$43,$AB,$A8,$00
+ $C9E2 DEFB $42,$13,$25,$FF,$0E,$DE,$C9,$54
+ $C9EA DEFB $3A,$5E,$CA,$0E,$E9,$C9,$00,$F7
+ $C9F2 DEFB $C9,$0F,$2B,$CA,$FF,$13,$D2,$A8
+ $C9FA DEFB $00,$10,$CA,$43,$F6,$A8,$00,$02
+ $CA02 DEFB $0D,$10,$FF,$14,$01,$21,$CA,$02
+ $CA0A DEFB $13,$10,$FF,$0E,$F7,$C9,$14,$01
+ $CA12 DEFB $26,$CA,$13,$26,$A9,$00,$F7,$C9
+ $CA1A DEFB $02,$13,$10,$FF,$0E,$F7,$C9,$04
+ $CA22 DEFB $08,$0E,$09,$CA,$04,$08,$0E,$14
+ $CA2A DEFB $CA,$02,$28,$10,$FF,$04,$24,$0E
+ $CA32 DEFB $F7,$C9,$00,$41,$CA,$0F,$5E,$CA
+ $CA3A DEFB $FF,$13,$BD,$A9,$00,$3B,$CA,$03
+ $CA42 DEFB $4E,$A9,$00,$04,$FF,$03,$4E,$A9
+ $CA4A DEFB $00,$04,$FF,$03,$4E,$A9,$00,$04
+ $CA52 DEFB $FF
  $CA53 DEFB $03,$4E,$A9,$00,$03,$71,$A9,$00
  $CA5B DEFB $0E,$41,$CA,$54,$0F,$6B,$CA,$54
  $CA63 DEFB $0F,$72,$CA,$44,$24,$0E,$5E,$CA
@@ -17314,18 +17586,71 @@ b$C7FC DEFB $74,$04,$EE,$B1,$29,$04,$B7,$B2
  $CA73 DEFB $14,$1E,$7A,$CA,$04,$24,$07,$04
  $CA7B DEFB $FF
  $CA7C DEFB $0E,$73,$CA,$03,$DF,$A4,$00,$07
- $CA84 DEFB $02,$00,$FB,$A5,$00,$00,$00,$02
- $CA8C DEFB $00,$5C,$AA,$00,$00,$00,$05,$00
- $CA94 DEFB $10,$AB,$00,$00,$00,$02,$00,$D9
- $CA9C DEFB $A4,$00,$00,$00
+; Barrel.
+ $CA84 DEFB $02
+ $CA85 DEFB $00
+ $CA86 DEFW $A5FB
+ $CA88 DEFB $00
+ $CA89 DEFW $0000
+; Spider Web.
+ $CA8B DEFB $02
+ $CA8C DEFB $00
+ $CA8D DEFW $AA5C
+ $CA8F DEFB $00
+ $CA90 DEFW $0000
+; Spider Web.
+ $CA92 DEFB $05
+ $CA93 DEFB $00
+ $CA94 DEFW $AB10
+ $CA96 DEFB $00
+ $CA97 DEFW $0000
+; Goblins Door.
+ $CA99 DEFB $02
+ $CA9A DEFB $00
+ $CA9B DEFW $A4D9
+ $CA9D DEFB $00
+ $CA9E DEFW $0000
+; Deep Bog.
  $CAA0 DEFB $02
- $CAA1 DEFB $00,$AA,$A7,$02,$AA,$A7,$04,$00
- $CAA9 DEFB $D5,$AA,$01,$B3,$AA,$00,$00,$E0
- $CAB1 DEFB $AA,$00,$00,$00,$05,$00,$0B,$AB
- $CAB9 DEFB $00,$00,$00,$04,$00,$3A,$AB,$03
- $CAC1 DEFB $1F,$AB,$05,$00,$74,$AA,$01,$91
- $CAC9 DEFB $AA,$FF
- $CACB DEFB $3E,$07,$BA,$C8,$A1,$C8,$05
+ $CAA1 DEFB $00
+ $CAA2 DEFW $A7AA
+ $CAA4 DEFB $02
+ $CAA5 DEFW $A7AA
+; Magic Door.
+ $CAA7 DEFB $04
+ $CAA8 DEFB $00
+ $CAA9 DEFW $AAD5
+ $CAAB DEFB $01
+ $CAAC DEFW $AAB3
+; Ring.
+ $CAAE DEFB $00
+ $CAAF DEFB $00
+ $CAB0 DEFW $AAE0
+ $CAB2 DEFB $00
+ $CAB3 DEFW $0000
+; ???
+ $CAB5 DEFB $05
+ $CAB6 DEFB $00
+ $CAB7 DEFW $AB0B
+ $CAB9 DEFB $00
+ $CABA DEFW $0000
+; Forest.
+ $CABC DEFB $04
+ $CABD DEFB $00
+ $CABE DEFW $AB3A
+ $CAC0 DEFB $03
+ $CAC1 DEFW $AB1F
+; Hole.
+ $CAC3 DEFB $05
+ $CAC4 DEFB $00
+ $CAC5 DEFW $AA74
+ $CAC7 DEFB $01
+ $CAC8 DEFW $AA91
+ $CACA DEFB $FF                             ; Termination character
+                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+
+; Data block at CACB
+b$CACB DEFB $3E,$07,$BA,$C8,$A1,$C8,$05
  $CAD2 DEFB $3F,$02,$EC,$C8,$E2,$C8,$06
  $CAD9 DEFB $40,$02,$1D,$C9,$13,$C9,$01
  $CAE0 DEFB $43,$00,$28,$C9,$24,$C9,$00
