@@ -25,7 +25,7 @@ Next: <a href="51122.html">C7B2</a>
 </td>
 </tr>
 </table>
-<div class="description">C7A4: Routine at C7A4</div>
+<div class="description">C7A4: Event: Beorns House</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -34,34 +34,51 @@ Next: <a href="51122.html">C7B2</a>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="c7a4"></span>
+<div class="comments">
+<div class="paragraph">
+At the start of the game, the Butler is invisible (!) and only becomes visible after entering Beorns House.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">EventBeornsHouse</td>
 <td class="address-2"><span id="c7a4"></span>C7A4</td>
 <td class="instruction">LD HL,$C437</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="49435.html#c437">attributes</a> of object $42 - "Butler".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7a7"></span>C7A7</td>
 <td class="instruction">BIT 3,(HL)</td>
-<td class="comment-1" rowspan="2">Return if "broken" bit is set.</td>
+<td class="comment-1" rowspan="2">Return if the "Butler" is "broken" (bit 3 is set).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7a9"></span>C7A9</td>
 <td class="instruction">RET NZ</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7aa"></span>C7AA</td>
 <td class="instruction">LD A,$42</td>
-<td class="comment-1" rowspan="2">Write $42 to <a href="51196.html#cae7">CAE7</a>.</td>
+<td class="comment-1" rowspan="2">Write $42 to <a href="51915.html#cae7">CAE7</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7ac"></span>C7AC</td>
 <td class="instruction">LD ($CAE7),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7af"></span>C7AF</td>
 <td class="instruction">SET 7,(HL)</td>
 <td class="comment-1" rowspan="1">Set "visible" bit for "Butler".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7b1"></span>C7B1</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

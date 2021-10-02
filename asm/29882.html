@@ -25,7 +25,7 @@ Next: <a href="29889.html">74C1</a>
 </td>
 </tr>
 </table>
-<div class="description">74BA: Routine at 74BA</div>
+<div class="description">74BA: Print Action</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -34,37 +34,69 @@ Next: <a href="29889.html">74C1</a>
 Used by the routine at <a href="28915.html">70F3</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Pointer to an action in the <a href="43859.html">actions table</a></td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Pointer is incremented twice</td>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">A word token</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
+<td class="asm-label">PrintAction</td>
 <td class="address-2"><span id="74ba"></span>74BA</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="6">Store the word token in <span class="register">DE</span> (we keep only bits 0-3 of the MSB).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="74bb"></span>74BB</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="74bc"></span>74BC</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="74bd"></span>74BD</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="74be"></span>74BE</td>
-<td class="instruction">AND $0F</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">AND %00001111</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="74c0"></span>74C0</td>
 <td class="instruction">LD D,A</td>
-<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+Continues on to <a href="29889.html">PrintToken</a> to print.
+</div>
+</div>
+</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -25,7 +25,7 @@ Next: <a href="51165.html">C7DD</a>
 </td>
 </tr>
 </table>
-<div class="description">C7C0: Routine at C7C0</div>
+<div class="description">C7C0: Event: Elvenkings Cellar</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -34,63 +34,74 @@ Next: <a href="51165.html">C7DD</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label">EventElvenkingsCellar</td>
 <td class="address-2"><span id="c7c0"></span>C7C0</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Write $03 to <a href="51245.html#cac4">CAC4</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7c2"></span>C7C2</td>
 <td class="instruction">LD ($CAC4),A</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7c5"></span>C7C5</td>
 <td class="instruction">LD HL,$C13A</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="49435.html#c13a">attributes</a> of object $3C - "Red Golden Dragon".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7c8"></span>C7C8</td>
 <td class="instruction">BIT 3,(HL)</td>
-<td class="comment-1" rowspan="2">Jump to <a href="51136.html#c7d1">C7D1</a> if "broken" bit is not set.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="51136.html#c7d1">EventElvenkingsCellar_Skip</a> if "Red Golden Dragon" is "broken" (bit 3 is set).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7ca"></span>C7CA</td>
-<td class="instruction">JR NZ,$C7D1</td>
+<td class="instruction">JR NZ,<a href="51136.html#c7d1">EventElvenkingsCellar_Skip</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7cc"></span>C7CC</td>
 <td class="instruction">LD A,$3C</td>
-<td class="comment-1" rowspan="2">Write $3C to <a href="51196.html#cb03">CB03</a>.</td>
+<td class="comment-1" rowspan="2">Write $3C to <a href="51915.html#cb03">CB03</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7ce"></span>C7CE</td>
 <td class="instruction">LD ($CB03),A</td>
 </tr>
 <tr>
+<td class="asm-label">EventElvenkingsCellar_Skip</td>
 <td class="address-2"><span id="c7d1"></span>C7D1</td>
 <td class="instruction">LD HL,$C4CA</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="49435.html#c4ca">attributes</a> of object $46 - "Bard".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7d4"></span>C7D4</td>
 <td class="instruction">BIT 3,(HL)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Return if the "Bard" is "broken" (bit 3 is set).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7d6"></span>C7D6</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7d7"></span>C7D7</td>
 <td class="instruction">LD A,$46</td>
-<td class="comment-1" rowspan="2">Write $46 to <a href="51196.html#cafc">CAFC</a>.</td>
+<td class="comment-1" rowspan="2">Write $46 to <a href="51915.html#cafc">CAFC</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7d9"></span>C7D9</td>
 <td class="instruction">LD ($CAFC),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c7dc"></span>C7DC</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

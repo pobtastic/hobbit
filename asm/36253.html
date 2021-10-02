@@ -17,7 +17,7 @@
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="36206.html">8D6E</a>
+Prev: <a href="36249.html">8D99</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#8d9d">Map</a></td>
 <td class="next">
@@ -40,13 +40,12 @@ Used by the routine at <a href="36781.html">Action_Run</a>.
 <td class="asm-label">Action_Dir</td>
 <td class="address-2"><span id="8d9d"></span>8D9D</td>
 <td class="instruction">CALL <a href="38381.html">LocationLit</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="36253.html#8dab">Action_Dir_0</a> if <a href="38381.html">LocationLit</a> reports that it is light.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8da0"></span>8DA0</td>
 <td class="instruction">JR NC,<a href="36253.html#8dab">Action_Dir_0</a></td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -57,7 +56,7 @@ Used by the routine at <a href="36781.html">Action_Run</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8da4"></span>8DA4</td>
-<td class="instruction">CALL <a href="40095.html">$9C9F</a></td>
+<td class="instruction">CALL <a href="40095.html">GetRandomNum</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -182,25 +181,24 @@ This entry point is used by the routine at <a href="41652.html">ActionUntie</a>.
 <td class="asm-label">Action_Dir_2</td>
 <td class="address-2"><span id="8dd9"></span>8DD9</td>
 <td class="instruction">CALL <a href="38381.html">LocationLit</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="40822.html">9F76</a> if <a href="38381.html">LocationLit</a> reports that it is light.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8ddc"></span>8DDC</td>
 <td class="instruction">JP NC,<a href="40822.html">$9F76</a></td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8ddf"></span>8DDF</td>
 <td class="instruction">CALL <a href="40260.html">$9D44</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="40260.html">9D44</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8de2"></span>8DE2</td>
 <td class="instruction">LD IX,$C11B</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="49435.html">Objects</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -242,7 +240,7 @@ This entry point is used by the routine at <a href="41652.html">ActionUntie</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8df7"></span>8DF7</td>
 <td class="instruction">JP <a href="37074.html">YouAreDead</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37074.html">YouAreDead</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Action_Dir_3</td>
@@ -277,7 +275,7 @@ This entry point is used by the routine at <a href="41652.html">ActionUntie</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e06"></span>8E06</td>
-<td class="instruction">CALL <a href="36253.html#8e85">Action_Dir_11</a></td>
+<td class="instruction">CALL <a href="36253.html#8e85">Action_Dir_8</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -301,7 +299,7 @@ This entry point is used by the routine at <a href="41652.html">ActionUntie</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e0d"></span>8E0D</td>
-<td class="instruction">JR Z,<a href="36253.html#8e6d">Action_Dir_8</a></td>
+<td class="instruction">JR Z,<a href="36253.html#8e6d">Action_Dir_5</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -313,7 +311,7 @@ This entry point is used by the routine at <a href="41652.html">ActionUntie</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e10"></span>8E10</td>
-<td class="instruction">JR Z,<a href="36253.html#8e72">Action_Dir_9</a></td>
+<td class="instruction">JR Z,<a href="36253.html#8e72">Action_Dir_6</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -330,248 +328,238 @@ This entry point is used by the routine at <a href="39900.html">9BDC</a>.
 <td class="asm-label">Action_Dir_4</td>
 <td class="address-2"><span id="8e12"></span>8E12</td>
 <td class="instruction">CALL <a href="40260.html">$9D44</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="40260.html">9D44</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e15"></span>8E15</td>
 <td class="instruction">LD (IY+$10),B</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Update the location.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e18"></span>8E18</td>
 <td class="instruction">LD A,($B6EA)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="46810.html#b6ea">CurrentCharacter</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e1b"></span>8E1B</td>
 <td class="instruction">CALL <a href="39900.html#9bdd">$9BDD</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="39900.html#9bdd">9BDD</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e1e"></span>8E1E</td>
 <td class="instruction">LD A,($B6EA)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="46810.html#b6ea">CurrentCharacter</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e21"></span>8E21</td>
 <td class="instruction">CP $00</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Return if the character is not <a href="49435.html#49435">$00</a> - "You".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e23"></span>8E23</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e24"></span>8E24</td>
 <td class="instruction">LD IX,$C78E</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Call <a href="40381.html">IndexIdTable</a> using the <a href="51086.html">events table</a>, looking for a match with <a href="36249.html#8d9b">ActionLocationID</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e28"></span>8E28</td>
 <td class="instruction">LD A,($8D9B)</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e2b"></span>8E2B</td>
 <td class="instruction">CALL <a href="40381.html">IndexIdTable</a></td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e2e"></span>8E2E</td>
-<td class="instruction">JR Z,<a href="36253.html#8e39">Action_Dir_5</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="36253.html#8e39">PercentageLocation</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36253.html#8e39">PercentageLocation</a> if no event was found.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e30"></span>8E30</td>
 <td class="instruction">LD L,(IX+$01)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Load the event from the <a href="51086.html">events table</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e33"></span>8E33</td>
 <td class="instruction">LD H,(IX+$02)</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e36"></span>8E36</td>
 <td class="instruction">CALL <a href="39788.html">TriggerAction</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="39788.html">TriggerAction</a> to execute it.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="8e39"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="51178.html">C7EA</a>.
+The game adds a one-time only value to the completion percentage once certain locations are reached (as long as it's not dark).
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_5</td>
+<td class="asm-label">PercentageLocation</td>
 <td class="address-2"><span id="8e39"></span>8E39</td>
 <td class="instruction">CALL <a href="38381.html">LocationLit</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Return if <a href="38381.html">LocationLit</a> reports that it is dark.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e3c"></span>8E3C</td>
 <td class="instruction">RET C</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e3d"></span>8E3D</td>
 <td class="instruction">LD A,($B6EA)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="46810.html#b6ea">CurrentCharacter</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e40"></span>8E40</td>
 <td class="instruction">AND A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set zero flag if the character is <a href="49435.html#49435">$00</a> - "You".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e41"></span>8E41</td>
 <td class="instruction">LD A,($8D9B)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="36249.html#8d9b">ActionLocationID</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e44"></span>8E44</td>
-<td class="instruction">JR NZ,<a href="36253.html#8e6a">Action_Dir_7</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="36253.html#8e6a">PercentageLocation_Skip</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36253.html#8e6a">PercentageLocation_Skip</a> to deal with any other object.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e46"></span>8E46</td>
 <td class="instruction">LD HL,($8D99)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="36249.html">ActionLocationData</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e49"></span>8E49</td>
 <td class="instruction">BIT 6,(HL)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">If bit 6 is already (percentage is already added) set jump to <a href="38443.html#96a8">YouSeeController</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e4b"></span>8E4B</td>
 <td class="instruction">JP NZ,<a href="38443.html#96a8">YouSeeController</a></td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e4e"></span>8E4E</td>
 <td class="instruction">SET 6,(HL)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set bit 6 of the location attributes, this sets that the percentage has already been added and hence will be skipped the next time this location is accessed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e50"></span>8E50</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e51"></span>8E51</td>
 <td class="instruction">LD IX,$8D6E</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Call <a href="40381.html">IndexIdTable</a> with <a href="36206.html">PercentageLocationTable</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e55"></span>8E55</td>
 <td class="instruction">CALL <a href="40381.html">IndexIdTable</a></td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e58"></span>8E58</td>
-<td class="instruction">JR Z,<a href="36253.html#8e69">Action_Dir_6</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="36253.html#8e69">PercentageLocation_Return</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36253.html#8e69">PercentageLocation_Return</a> if there was no match.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e5a"></span>8E5A</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e5b"></span>8E5B</td>
 <td class="instruction">LD E,(IX+$01)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2"><span class="register">DE</span>=the percentage value to add from the match of <a href="36206.html">PercentageLocationTable</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e5e"></span>8E5E</td>
 <td class="instruction">LD D,(IX+$02)</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e61"></span>8E61</td>
 <td class="instruction">LD HL,($B6F7)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Add the percentage value to <a href="46810.html#b6f7">PercentageComplete</a> and write it.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e64"></span>8E64</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e65"></span>8E65</td>
 <td class="instruction">LD ($B6F7),HL</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e68"></span>8E68</td>
 <td class="instruction">POP DE</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_6</td>
+<td class="asm-label">PercentageLocation_Return</td>
 <td class="address-2"><span id="8e69"></span>8E69</td>
 <td class="instruction">POP AF</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_7</td>
+<td class="asm-label">PercentageLocation_Skip</td>
 <td class="address-2"><span id="8e6a"></span>8E6A</td>
 <td class="instruction">JP <a href="38443.html#9630">YouSeePreposition</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38443.html#9630">YouSeePreposition</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_8</td>
+<td class="asm-label">Action_Dir_5</td>
 <td class="address-2"><span id="8e6d"></span>8E6D</td>
 <td class="instruction">LD HL,$AE23</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#ae23">"[0x04] is too small for you to enter"</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e70"></span>8E70</td>
-<td class="instruction">JR <a href="36253.html#8e79">Action_Dir_10</a></td>
+<td class="instruction">JR <a href="36253.html#8e79">Action_Dir_7</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_9</td>
+<td class="asm-label">Action_Dir_6</td>
 <td class="address-2"><span id="8e72"></span>8E72</td>
 <td class="instruction">LD IX,($8D99)</td>
 <td class="comment-1" rowspan="1"></td>
@@ -580,10 +568,10 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e76"></span>8E76</td>
 <td class="instruction">LD HL,$AE2E</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#ae2e">"[0x04] is too full for you to{5} enter[0x15]"</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_10</td>
+<td class="asm-label">Action_Dir_7</td>
 <td class="address-2"><span id="8e79"></span>8E79</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1"></td>
@@ -610,16 +598,16 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e81"></span>8E81</td>
 <td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e84"></span>8E84</td>
 <td class="instruction">RET</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_11</td>
+<td class="asm-label">Action_Dir_8</td>
 <td class="address-2"><span id="8e85"></span>8E85</td>
 <td class="instruction">AND A</td>
 <td class="comment-1" rowspan="1"></td>
@@ -627,7 +615,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e86"></span>8E86</td>
-<td class="instruction">JR Z,<a href="36253.html#8ea7">Action_Dir_13</a></td>
+<td class="instruction">JR Z,<a href="36253.html#8ea7">Action_Dir_10</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -651,7 +639,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e90"></span>8E90</td>
-<td class="instruction">JR Z,<a href="36253.html#8ece">Action_Dir_17</a></td>
+<td class="instruction">JR Z,<a href="36253.html#8ece">Action_Dir_14</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -669,7 +657,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e96"></span>8E96</td>
-<td class="instruction">JR NZ,<a href="36253.html#8e9e">Action_Dir_12</a></td>
+<td class="instruction">JR NZ,<a href="36253.html#8e9e">Action_Dir_9</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -681,11 +669,11 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e9c"></span>8E9C</td>
-<td class="instruction">JR NZ,<a href="36253.html#8ece">Action_Dir_17</a></td>
+<td class="instruction">JR NZ,<a href="36253.html#8ece">Action_Dir_14</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_12</td>
+<td class="asm-label">Action_Dir_9</td>
 <td class="address-2"><span id="8e9e"></span>8E9E</td>
 <td class="instruction">LD A,($8D9C)</td>
 <td class="comment-1" rowspan="1"></td>
@@ -705,11 +693,11 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8ea5"></span>8EA5</td>
-<td class="instruction">JR NC,<a href="36253.html#8eca">Action_Dir_16</a></td>
+<td class="instruction">JR NC,<a href="36253.html#8eca">Action_Dir_13</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_13</td>
+<td class="asm-label">Action_Dir_10</td>
 <td class="address-2"><span id="8ea7"></span>8EA7</td>
 <td class="instruction">LD A,($8D9B)</td>
 <td class="comment-1" rowspan="1"></td>
@@ -747,7 +735,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8eb7"></span>8EB7</td>
-<td class="instruction">JR Z,<a href="36253.html#8ec4">Action_Dir_14</a></td>
+<td class="instruction">JR Z,<a href="36253.html#8ec4">Action_Dir_11</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -783,11 +771,11 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8ec2"></span>8EC2</td>
-<td class="instruction">JR NC,<a href="36253.html#8ec6">Action_Dir_15</a></td>
+<td class="instruction">JR NC,<a href="36253.html#8ec6">Action_Dir_12</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_14</td>
+<td class="asm-label">Action_Dir_11</td>
 <td class="address-2"><span id="8ec4"></span>8EC4</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"></td>
@@ -799,7 +787,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_15</td>
+<td class="asm-label">Action_Dir_12</td>
 <td class="address-2"><span id="8ec6"></span>8EC6</td>
 <td class="instruction">LD A,$03</td>
 <td class="comment-1" rowspan="1"></td>
@@ -817,7 +805,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_16</td>
+<td class="asm-label">Action_Dir_13</td>
 <td class="address-2"><span id="8eca"></span>8ECA</td>
 <td class="instruction">LD A,$02</td>
 <td class="comment-1" rowspan="1"></td>
@@ -835,7 +823,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_17</td>
+<td class="asm-label">Action_Dir_14</td>
 <td class="address-2"><span id="8ece"></span>8ECE</td>
 <td class="instruction">LD A,$01</td>
 <td class="comment-1" rowspan="1"></td>
@@ -853,7 +841,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_18</td>
+<td class="asm-label">Action_Dir_15</td>
 <td class="address-2"><span id="8ed2"></span>8ED2</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="1"></td>
@@ -865,7 +853,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_19</td>
+<td class="asm-label">Action_Dir_16</td>
 <td class="address-2"><span id="8ed7"></span>8ED7</td>
 <td class="instruction">LD A,(IX+$01)</td>
 <td class="comment-1" rowspan="1"></td>
@@ -879,7 +867,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8edc"></span>8EDC</td>
-<td class="instruction">JR Z,<a href="36253.html#8ee9">Action_Dir_20</a></td>
+<td class="instruction">JR Z,<a href="36253.html#8ee9">Action_Dir_17</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -897,7 +885,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8ee5"></span>8EE5</td>
-<td class="instruction">JR NZ,<a href="36253.html#8ed7">Action_Dir_19</a></td>
+<td class="instruction">JR NZ,<a href="36253.html#8ed7">Action_Dir_16</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -907,7 +895,7 @@ This entry point is used by the routine at <a href="51178.html">C7EA</a>.
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_20</td>
+<td class="asm-label">Action_Dir_17</td>
 <td class="address-2"><span id="8ee9"></span>8EE9</td>
 <td class="instruction">POP IX</td>
 <td class="comment-1" rowspan="1"></td>
@@ -929,7 +917,7 @@ This entry point is used by the routine at <a href="42305.html">ActionClimbOut</
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_21</td>
+<td class="asm-label">Action_Dir_18</td>
 <td class="address-2"><span id="8eec"></span>8EEC</td>
 <td class="instruction">LD A,($B6E8)</td>
 <td class="comment-1" rowspan="1"></td>
@@ -961,7 +949,7 @@ This entry point is used by the routine at <a href="42305.html">ActionClimbOut</
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8efb"></span>8EFB</td>
-<td class="instruction">CALL <a href="36253.html#8ed2">Action_Dir_18</a></td>
+<td class="instruction">CALL <a href="36253.html#8ed2">Action_Dir_15</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -1039,7 +1027,7 @@ This entry point is used by the routine at <a href="42305.html">ActionClimbOut</
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f1d"></span>8F1D</td>
-<td class="instruction">JR Z,<a href="36253.html#8f35">Action_Dir_22</a></td>
+<td class="instruction">JR Z,<a href="36253.html#8f35">Action_Dir_19</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -1097,7 +1085,7 @@ This entry point is used by the routine at <a href="42305.html">ActionClimbOut</
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_22</td>
+<td class="asm-label">Action_Dir_19</td>
 <td class="address-2"><span id="8f35"></span>8F35</td>
 <td class="instruction">LD HL,$AE1F</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#ae1f">"it is dark"</a></td>
@@ -1119,7 +1107,7 @@ This entry point is used by the routine at <a href="42305.html">ActionClimbOut</
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_23</td>
+<td class="asm-label">Action_Dir_20</td>
 <td class="address-2"><span id="8f3b"></span>8F3B</td>
 <td class="instruction">CALL <a href="40741.html">$9F25</a></td>
 <td class="comment-1" rowspan="1"></td>
@@ -1135,7 +1123,7 @@ This entry point is used by the routines at <a href="36813.html">Action_Enter</a
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_24</td>
+<td class="asm-label">Action_Dir_21</td>
 <td class="address-2"><span id="8f3e"></span>8F3E</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-1" rowspan="1"></td>
@@ -1179,7 +1167,7 @@ This entry point is used by the routines at <a href="36813.html">Action_Enter</a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f50"></span>8F50</td>
-<td class="instruction">CALL <a href="36253.html#8e85">Action_Dir_11</a></td>
+<td class="instruction">CALL <a href="36253.html#8e85">Action_Dir_8</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -1251,7 +1239,7 @@ This entry point is used by the routines at <a href="36813.html">Action_Enter</a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f72"></span>8F72</td>
-<td class="instruction">JR Z,<a href="36253.html#8f92">Action_Dir_26</a></td>
+<td class="instruction">JR Z,<a href="36253.html#8f92">Action_Dir_23</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -1263,11 +1251,11 @@ This entry point is used by the routines at <a href="36813.html">Action_Enter</a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f76"></span>8F76</td>
-<td class="instruction">JR Z,<a href="36253.html#8f9a">Action_Dir_27</a></td>
+<td class="instruction">JR Z,<a href="36253.html#8f9a">Action_Dir_24</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_25</td>
+<td class="asm-label">Action_Dir_22</td>
 <td class="address-2"><span id="8f78"></span>8F78</td>
 <td class="instruction">LD IY,($B70A)</td>
 <td class="comment-1" rowspan="1"></td>
@@ -1315,7 +1303,7 @@ This entry point is used by the routines at <a href="36813.html">Action_Enter</a
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_26</td>
+<td class="asm-label">Action_Dir_23</td>
 <td class="address-2"><span id="8f92"></span>8F92</td>
 <td class="instruction">LD A,$15</td>
 <td class="comment-1" rowspan="1"></td>
@@ -1329,11 +1317,11 @@ This entry point is used by the routines at <a href="36813.html">Action_Enter</a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f98"></span>8F98</td>
-<td class="instruction">JR <a href="36253.html#8fa0">Action_Dir_28</a></td>
+<td class="instruction">JR <a href="36253.html#8fa0">Action_Dir_25</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_27</td>
+<td class="asm-label">Action_Dir_24</td>
 <td class="address-2"><span id="8f9a"></span>8F9A</td>
 <td class="instruction">LD A,$16</td>
 <td class="comment-1" rowspan="1"></td>
@@ -1345,7 +1333,7 @@ This entry point is used by the routines at <a href="36813.html">Action_Enter</a
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Dir_28</td>
+<td class="asm-label">Action_Dir_25</td>
 <td class="address-2"><span id="8fa0"></span>8FA0</td>
 <td class="instruction">LD ($B6E9),A</td>
 <td class="comment-1" rowspan="1"></td>
@@ -1365,14 +1353,14 @@ This entry point is used by the routines at <a href="36813.html">Action_Enter</a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8fab"></span>8FAB</td>
-<td class="instruction">JR <a href="36253.html#8f78">Action_Dir_25</a></td>
+<td class="instruction">JR <a href="36253.html#8f78">Action_Dir_22</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="36206.html">8D6E</a>
+Prev: <a href="36249.html">8D99</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#8d9d">Map</a></td>
 <td class="next">
