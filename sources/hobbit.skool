@@ -224,7 +224,7 @@ b$4000 DEFB $01,$07,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$03,$06,$00,$C0,
  $5AE0 DEFB $07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07 ; }
 
 @expand=#DEF(#MOVEMENT(address) #TABLE(default,centre,centre,centre) { =h Direction | =h Via | =h Destination } { #MAP(#PEEK($address))(?,$01:N,$02:S,$03:E,$04:W,$05:NE,$06:NW,$07:SE,$08:SW,$09:UP,$0A:DN) | #IF(#PEEK($address + 1) > $00)(#OBJECT(#PEEK($address + $01), 1, 1)($),---) | #LOCATION(#PEEK($address + $02), 1, 1)($) - "#LOCATIONNAME(#PEEK($address + $02))" } TABLE#)
-@expand=#DEF(#ACTION #MAP(#PEEK(#PC))(?,$00:None,$01:North,$02:South,$03:East,$04:West,$05:Northeast,$06:Northwest,$07:Southeast,$08:Southwest,$09:Up,$0A:Down,$0D:Drop,$0F:Attack,$13:Take,$17:Look,$1A:Inventory,$1C:Examine,$1D:Give To,$1F:Enter,$20:Go Into,$24:Run,$27:Follow,$2A:Throw At,$2D:Burn,$2E:Tie To,$30:Capture,$33:Untie,$35:Talk To,$37:Climb Out Of,$3A:Shoot,$3B:Carry))
+@expand=#DEF(#ACTION #MAP(#PEEK(#PC))(?,$00:None,$01:North,$02:South,$03:East,$04:West,$05:Northeast,$06:Northwest,$07:Southeast,$08:Southwest,$09:Up,$0A:Down,$0B:Strike with,$0C:Close,$0D:Drop,$0F:Attack,$10:Open,$11:Put in,$12:Put on,$13:Take,$14:Take out of,$15:Take from,$16:Take off,$17:Look,$1A:Inventory,$1C:Examine,$1D:Give To,$1F:Enter,$20:Go Into,$24:Run,$27:Follow,$2A:Throw At,$2D:Burn,$2E:Tie To,$30:Capture,$33:Untie,$35:Talk To,$37:Climb Out Of,$3A:Shoot,$3B:Carry))
 @replace=/#WORDINDEX/#R#(#EVAL(#PEEK(#PC + 1) * $100 + #PEEK(#PC) + $6000))
 ; Data block at 5B00
 b$5B00 DEFB $00,$00,$00,$00,$00,$00,$00,$00
@@ -17403,32 +17403,32 @@ b$C80E DEFB $16         ; Location #LOCATION(#PEEK(#PC), 1, 1)($).
  $C82C DEFB $FF         ; Termination character (#N(#PEEK(#PC), 2, 3, 1,
                         ; 1)($)).
 
-; Data block at C82D
+; Character Script: Goblin?
 b$C82D DEFB $00
  $C82E DEFW $C842
  $C830 DEFB $0F
  $C831 DEFW $C89E
- $C833 DEFB $FF                             ; Termination character
-                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C833 DEFB $FF         ; Termination character (#N(#PEEK(#PC), 2, 3, 1,
+                        ; 1)($)).
  $C834 DEFB $00
  $C835 DEFW $C871
  $C837 DEFB $0F
  $C838 DEFW $C89E
- $C83A DEFB $FF                             ; Termination character
-                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C83A DEFB $FF         ; Termination character (#N(#PEEK(#PC), 2, 3, 1,
+                        ; 1)($)).
  $C83B DEFB $00
  $C83C DEFW $C895
  $C83E DEFB $0F
  $C83F DEFW $C89E
- $C841 DEFB $FF                             ; Termination character
-                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C841 DEFB $FF         ; Termination character (#N(#PEEK(#PC), 2, 3, 1,
+                        ; 1)($)).
  $C842 DEFB $02
- $C843 DEFB $10
- $C844 DEFB $06                             ; #OBJECT(#PEEK(#PC), 1, 1)($)
- $C845 DEFB $FF                             ; Termination character
-                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C843 DEFB $10         ; #ACTION
+ $C844 DEFB $06         ; #OBJECT(#PEEK(#PC), 1, 1)($)
+ $C845 DEFB $FF         ; Termination character (#N(#PEEK(#PC), 2, 3, 1,
+                        ; 1)($)).
  $C846 DEFB $14
- $C847 DEFB $30
+ $C847 DEFB $30         ; #ACTION
  $C848 DEFW $C84D
  $C84A DEFB $0E
  $C84B DEFW $C846
@@ -17448,9 +17448,9 @@ b$C82D DEFB $00
  $C85D DEFW $C858
  $C85F DEFB $02
  $C860 DEFB $0C
- $C861 DEFB $06                             ; #OBJECT(#PEEK(#PC), 1, 1)($)
- $C862 DEFB $FF                             ; Termination character
-                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C861 DEFB $06         ; #OBJECT(#PEEK(#PC), 1, 1)($)
+ $C862 DEFB $FF         ; Termination character (#N(#PEEK(#PC), 2, 3, 1,
+                        ; 1)($)).
  $C863 DEFB $04
  $C864 DEFB $02
  $C865 DEFB $14
@@ -17499,8 +17499,9 @@ b$C82D DEFB $00
  $C89B DEFB $0E
  $C89C DEFW $C895
  $C89E DEFB $04,$30,$07
-; Gandalf.
- $C8A1 DEFB $00
+
+; Character Scripts: Gandalf
+b$C8A1 DEFB $00
  $C8A2 DEFW $C8C2
  $C8A4 DEFB $00
  $C8A5 DEFW $C8D0
@@ -17516,69 +17517,119 @@ b$C82D DEFB $00
  $C8B4 DEFW $CA73
  $C8B6 DEFB $0F
  $C8B7 DEFW $CA5E
- $C8B9 DEFB $FF                             ; Termination character
-                                            ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+ $C8B9 DEFB $FF      ; Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 ; Gandalfs initial actions.
  $C8BA DEFB $02
- $C8BB DEFB $1D                             ; #ACTION
- $C8BC DEFB $03                             ; #OBJECT(#PEEK(#PC), 1, 1)($)
- $C8BD DEFB $00                             ; #OBJECT(#PEEK(#PC), 1, 1)($)
+ $C8BB DEFB $1D      ; #ACTION
+ $C8BC DEFB $03      ; #OBJECT(#PEEK(#PC), 1, 1)($)
+ $C8BD DEFB $00      ; #OBJECT(#PEEK(#PC), 1, 1)($)
  $C8BE DEFB $02
- $C8BF DEFB $10                             ; #ACTION
- $C8C0 DEFB $05                             ; #OBJECT(#PEEK(#PC), 1, 1)($)
- $C8C1 DEFB $FF                             ; Termination character
+ $C8BF DEFB $10      ; #ACTION
+ $C8C0 DEFB $05      ; #OBJECT(#PEEK(#PC), 1, 1)($)
+ $C8C1 DEFB $FF      ; Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+; ...
+@label=ScriptGandalf_1
+ $C8C2 DEFB $04
+ $C8C3 DEFB $24      ; #ACTION
+ $C8C4 DEFB $14
+ $C8C5 DEFB $13      ; #ACTION
+ $C8C6 DEFW $C8D0
+ $C8C8 DEFB $03
+ $C8C9 DEFW $A4F5
+ $C8CB DEFB $00
+ $C8CC DEFB $04
+ $C8CD DEFB $0C      ; #ACTION
+ $C8CE DEFB $04
+ $C8CF DEFB $1D      ; #ACTION
+; ...
+@label=ScriptGandalf_2
+ $C8D0 DEFB $04
+ $C8D1 DEFB $24      ; #ACTION
+ $C8D2 DEFB $04
+ $C8D3 DEFB $0D      ; #ACTION
+; ...
+@label=ScriptGandalf_3
+ $C8D4 DEFB $04
+ $C8D5 DEFB $24      ; #ACTION
+ $C8D6 DEFB $03
+ $C8D7 DEFW $A4FE
+ $C8D9 DEFB $00
+; ...
+@label=ScriptGandalf_4
+ $C8DA DEFB $04
+ $C8DB DEFB $24      ; #ACTION
+ $C8DC DEFB $04
+ $C8DD DEFB $1D      ; #ACTION
+; ...
+@label=ScriptGandalf_5
+ $C8DE DEFB $04
+ $C8DF DEFB $10      ; #ACTION
+ $C8E0 DEFB $0F
+ $C8E1 DEFB $04
+
+; Character Scripts: Thorin?
+b$C8E2 DEFB $00
+ $C8E3 DEFW $C8EC
+ $C8E5 DEFB $1D
+ $C8E6 DEFW $CA7F
+ $C8E8 DEFB $0F
+ $C8E9 DEFW $CA5E
+ $C8EB DEFB $FF                             ; Termination character
                                             ; (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
- $C8C2 DEFB $04,$24,$14,$13,$D0,$C8,$03,$F5
- $C8CA DEFB $A4,$00,$04,$0C,$04,$1D,$04,$24
- $C8D2 DEFB $04,$0D,$04,$24,$03,$FE,$A4,$00
- $C8DA DEFB $04,$24,$04,$1D,$04,$10,$0F,$04
- $C8E2 DEFB $00,$EC,$C8,$1D,$7F,$CA,$0F,$5E
- $C8EA DEFB $CA,$FF,$12,$27,$00,$FF,$F5,$C8
- $C8F2 DEFB $0E,$EC,$C8,$12,$13,$02,$FF,$FF
- $C8FA DEFB $C8,$23,$1C,$A5,$00,$13,$40,$A6
- $C902 DEFB $00,$0C,$C9,$04,$FF,$04,$24,$0E
- $C90A DEFB $EC,$C8,$03,$57,$A6,$00,$0E,$EC
- $C912 DEFB $C8,$00,$1D,$C9,$0F,$1D,$C9,$1D
- $C91A DEFB $7F,$CA,$FF,$04,$30,$04,$24,$0E
- $C922 DEFB $1D,$C9,$00,$28,$C9,$FF,$14,$0F
- $C92A DEFB $2F,$C9,$0E,$28,$C9,$14,$27,$3A
- $C932 DEFB $C9,$03,$D1,$A5,$00,$0E,$28,$C9
- $C93A DEFB $14,$24,$41,$C9,$0E,$28,$C9,$04
- $C942 DEFB $FF,$0E,$28,$C9,$00,$50,$C9,$0F
- $C94A DEFB $60,$C9,$1D,$7F,$CA,$FF,$02,$26
- $C952 DEFB $08,$0F,$02,$10,$08,$FF,$02,$0C
- $C95A DEFB $08,$FF,$02,$25,$08,$0F,$14,$30
- $C962 DEFB $67,$C9,$0E,$60,$C9,$02,$10,$13
- $C96A DEFB $FF,$02,$21,$14,$FF,$04,$30,$02
- $C972 DEFB $0C,$13,$FF,$02,$10,$0C,$FF,$04
- $C97A DEFB $30,$02,$13,$13,$FF,$02,$2C,$13
- $C982 DEFB $0C,$04,$30,$02,$0C,$0C,$FF,$14
- $C98A DEFB $30,$50,$C9,$0E,$50,$C9,$00,$A0
- $C992 DEFB $C9,$0F,$AA,$C9,$1D,$7F,$CA,$FF
- $C99A DEFB $13,$25,$A5,$00,$A4,$C9,$03,$E5
- $C9A2 DEFB $A9,$00,$04,$FF,$14,$FF,$9A,$C9
- $C9AA DEFB $14,$0F,$9A,$C9,$0E,$AA,$C9,$00
- $C9B2 DEFB $B8,$C9,$0F,$CD,$C9,$FF,$13,$DC
- $C9BA DEFB $A6,$00,$C1,$C9,$0E,$B8,$C9,$13
- $C9C2 DEFB $98,$A6,$00,$D2,$C9,$13,$C2,$A6
- $C9CA DEFB $00,$D2,$C9,$04,$2D,$0E,$B8,$C9
- $C9D2 DEFB $04,$24,$0E,$B8,$C9,$00,$DE,$C9
- $C9DA DEFB $0F,$E9,$C9,$FF,$43,$AB,$A8,$00
- $C9E2 DEFB $42,$13,$25,$FF,$0E,$DE,$C9,$54
- $C9EA DEFB $3A,$5E,$CA,$0E,$E9,$C9,$00,$F7
- $C9F2 DEFB $C9,$0F,$2B,$CA,$FF,$13,$D2,$A8
- $C9FA DEFB $00,$10,$CA,$43,$F6,$A8,$00,$02
- $CA02 DEFB $0D,$10,$FF,$14,$01,$21,$CA,$02
- $CA0A DEFB $13,$10,$FF,$0E,$F7,$C9,$14,$01
- $CA12 DEFB $26,$CA,$13,$26,$A9,$00,$F7,$C9
- $CA1A DEFB $02,$13,$10,$FF,$0E,$F7,$C9,$04
- $CA22 DEFB $08,$0E,$09,$CA,$04,$08,$0E,$14
- $CA2A DEFB $CA,$02,$28,$10,$FF,$04,$24,$0E
- $CA32 DEFB $F7,$C9,$00,$41,$CA,$0F,$5E,$CA
- $CA3A DEFB $FF,$13,$BD,$A9,$00,$3B,$CA,$03
- $CA42 DEFB $4E,$A9,$00,$04,$FF,$03,$4E,$A9
- $CA4A DEFB $00,$04,$FF,$03,$4E,$A9,$00,$04
- $CA52 DEFB $FF
+@label=ScriptThorin_1
+ $C8EC DEFB $12
+ $C8ED DEFB $27                             ; #ACTION
+ $C8EE DEFB $00                             ; #OBJECT(#PEEK(#PC), 1, 1)($)
+ $C8EF DEFB $FF
+ $C8F0 DEFW $C8F5
+ $C8F2 DEFB $0E
+ $C8F3 DEFW $C8EC
+ $C8F5 DEFB $12,$13,$02,$FF,$FF,$C8,$23,$1C
+ $C8FD DEFB $A5,$00,$13,$40,$A6,$00,$0C,$C9
+ $C905 DEFB $04,$FF,$04,$24,$0E,$EC,$C8,$03
+ $C90D DEFB $57,$A6,$00,$0E,$EC,$C8
+
+; Character Scripts: To-do
+b$C913 DEFB $00,$1D,$C9,$0F,$1D,$C9,$1D,$7F
+ $C91B DEFB $CA,$FF,$04,$30,$04,$24,$0E,$1D
+ $C923 DEFB $C9,$00,$28,$C9,$FF,$14,$0F,$2F
+ $C92B DEFB $C9,$0E,$28,$C9,$14,$27,$3A,$C9
+ $C933 DEFB $03,$D1,$A5,$00,$0E,$28,$C9,$14
+ $C93B DEFB $24,$41,$C9,$0E,$28,$C9,$04,$FF
+ $C943 DEFB $0E,$28,$C9,$00,$50,$C9,$0F,$60
+ $C94B DEFB $C9,$1D,$7F,$CA,$FF,$02,$26,$08
+ $C953 DEFB $0F,$02,$10,$08,$FF,$02,$0C,$08
+ $C95B DEFB $FF,$02,$25,$08,$0F,$14,$30,$67
+ $C963 DEFB $C9,$0E,$60,$C9,$02,$10,$13,$FF
+ $C96B DEFB $02,$21,$14,$FF,$04,$30,$02,$0C
+ $C973 DEFB $13,$FF,$02,$10,$0C,$FF,$04,$30
+ $C97B DEFB $02,$13,$13,$FF,$02,$2C,$13,$0C
+ $C983 DEFB $04,$30,$02,$0C,$0C,$FF,$14,$30
+ $C98B DEFB $50,$C9,$0E,$50,$C9,$00,$A0,$C9
+ $C993 DEFB $0F,$AA,$C9,$1D,$7F,$CA,$FF,$13
+ $C99B DEFB $25,$A5,$00,$A4,$C9,$03,$E5,$A9
+ $C9A3 DEFB $00,$04,$FF,$14,$FF,$9A,$C9,$14
+ $C9AB DEFB $0F,$9A,$C9,$0E,$AA,$C9,$00,$B8
+ $C9B3 DEFB $C9,$0F,$CD,$C9,$FF,$13,$DC,$A6
+ $C9BB DEFB $00,$C1,$C9,$0E,$B8,$C9,$13,$98
+ $C9C3 DEFB $A6,$00,$D2,$C9,$13,$C2,$A6,$00
+ $C9CB DEFB $D2,$C9,$04,$2D,$0E,$B8,$C9,$04
+ $C9D3 DEFB $24,$0E,$B8,$C9,$00,$DE,$C9,$0F
+ $C9DB DEFB $E9,$C9,$FF,$43,$AB,$A8,$00,$42
+ $C9E3 DEFB $13,$25,$FF,$0E,$DE,$C9,$54,$3A
+ $C9EB DEFB $5E,$CA,$0E,$E9,$C9,$00,$F7,$C9
+ $C9F3 DEFB $0F,$2B,$CA,$FF,$13,$D2,$A8,$00
+ $C9FB DEFB $10,$CA,$43,$F6,$A8,$00,$02,$0D
+ $CA03 DEFB $10,$FF,$14,$01,$21,$CA,$02,$13
+ $CA0B DEFB $10,$FF,$0E,$F7,$C9,$14,$01,$26
+ $CA13 DEFB $CA,$13,$26,$A9,$00,$F7,$C9,$02
+ $CA1B DEFB $13,$10,$FF,$0E,$F7,$C9,$04,$08
+ $CA23 DEFB $0E,$09,$CA,$04,$08,$0E,$14,$CA
+ $CA2B DEFB $02,$28,$10,$FF,$04,$24,$0E,$F7
+ $CA33 DEFB $C9,$00,$41,$CA,$0F,$5E,$CA,$FF
+ $CA3B DEFB $13,$BD,$A9,$00,$3B,$CA,$03,$4E
+ $CA43 DEFB $A9,$00,$04,$FF,$03,$4E,$A9,$00
+ $CA4B DEFB $04,$FF,$03,$4E,$A9,$00,$04,$FF
  $CA53 DEFB $03,$4E,$A9,$00,$03,$71,$A9,$00
  $CA5B DEFB $0E,$41,$CA,$54,$0F,$6B,$CA,$54
  $CA63 DEFB $0F,$72,$CA,$44,$24,$0E,$5E,$CA

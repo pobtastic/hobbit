@@ -7,7 +7,7 @@
 ;   skool2html.py -H sources/hobbit.skool -T dark
 
 [Config]
-RefFiles=changelog.ref;facts.ref
+RefFiles=analytics.ref;bases.ref;changelog.ref;facts.ref
 HtmlWriterClass=:hobbit.HobbitHtmlWriter
 GameDir=hobbit
 

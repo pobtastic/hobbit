@@ -2,8 +2,9 @@ The Hobbit disassembly
 ======================
 
 A disassembly of the [Spectrum](https://en.wikipedia.org/wiki/ZX_Spectrum) game
-[The Hobbit](https://en.wikipedia.org/wiki/The_Hobbit_(1982_video_game)),
-created using [SkoolKit](https://skoolkit.ca).
+[The Hobbit](https://en.wikipedia.org/wiki/The_Hobbit_(1982_video_game)).
+
+Created using [SkoolKit](https://skoolkit.ca).
 
 Browse the latest release:
 

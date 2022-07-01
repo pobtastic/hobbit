@@ -1,3 +1,4 @@
+import art
 import sys
 import os
 
@@ -24,5 +25,9 @@ def run_skool2asm():
     skool2asm.main(sys.argv[1:] + [HOBBIT_SKOOL])
 
 def run_skool2html():
-    options = '-d {}/build/html'.format(HOBBIT_HOME)
-    skool2html.main(options.split() + sys.argv[1:] + [HOBBIT_SKOOL])
+    options = '-c Config/InitModule=sources:bases -d {}/build/html'.format(HOBBIT_HOME)
+    art.tprint("The Hobbit")
+    hex = '-H -c Config/GameDir=hobbit/hex'
+    dec = '-D -c Config/GameDir=hobbit/dec'
+    skool2html.main(options.split() + hex.split() + sys.argv[1:] + [HOBBIT_SKOOL])
+    skool2html.main(options.split() + dec.split() + sys.argv[1:] + [HOBBIT_SKOOL])

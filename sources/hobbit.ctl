@@ -7,7 +7,7 @@ B $5800,768,32 Attributes
 
 b $5B00
 @ $5B00 expand=#DEF(#MOVEMENT(address) #TABLE(default,centre,centre,centre) { =h Direction | =h Via | =h Destination } { #MAP(#PEEK($address))(?,$01:N,$02:S,$03:E,$04:W,$05:NE,$06:NW,$07:SE,$08:SW,$09:UP,$0A:DN) | #IF(#PEEK($address + 1) > $00)(#OBJECT(#PEEK($address + $01), 1, 1)($),---) | #LOCATION(#PEEK($address + $02), 1, 1)($) - "#LOCATIONNAME(#PEEK($address + $02))" } TABLE#)
-@ $5B00 expand=#DEF(#ACTION #MAP(#PEEK(#PC))(?,$00:None,$01:North,$02:South,$03:East,$04:West,$05:Northeast,$06:Northwest,$07:Southeast,$08:Southwest,$09:Up,$0A:Down,$0D:Drop,$0F:Attack,$13:Take,$17:Look,$1A:Inventory,$1C:Examine,$1D:Give To,$1F:Enter,$20:Go Into,$24:Run,$27:Follow,$2A:Throw At,$2D:Burn,$2E:Tie To,$30:Capture,$33:Untie,$35:Talk To,$37:Climb Out Of,$3A:Shoot,$3B:Carry))
+@ $5B00 expand=#DEF(#ACTION #MAP(#PEEK(#PC))(?,$00:None,$01:North,$02:South,$03:East,$04:West,$05:Northeast,$06:Northwest,$07:Southeast,$08:Southwest,$09:Up,$0A:Down,$0B:Strike with,$0C:Close,$0D:Drop,$0F:Attack,$10:Open,$11:Put in,$12:Put on,$13:Take,$14:Take out of,$15:Take from,$16:Take off,$17:Look,$1A:Inventory,$1C:Examine,$1D:Give To,$1F:Enter,$20:Go Into,$24:Run,$27:Follow,$2A:Throw At,$2D:Burn,$2E:Tie To,$30:Capture,$33:Untie,$35:Talk To,$37:Climb Out Of,$3A:Shoot,$3B:Carry))
 @ $5B00 replace=/#WORDINDEX/#R#(#EVAL(#PEEK(#PC + 1) * $100 + #PEEK(#PC) + $6000))
 
 b $5EFF Stack
@@ -7747,7 +7747,7 @@ W $C80F,$02 The direction for #R(#PEEK(#PC + 1) * $100 + #PEEK(#PC))(#LOCATIONNA
 L $C80E,$06,$05
   $C82C,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
 
-b $C82D
+b $C82D Character Script: Goblin?
   $C82D,$01
 W $C82E,$02
   $C830,$01
@@ -7764,11 +7764,11 @@ W $C83C,$02
 W $C83F,$02
   $C841,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
   $C842,$01
-  $C843,$01
+  $C843,$01 #ACTION
   $C844,$01 #OBJECT(#PEEK(#PC), 1, 1)($)
   $C845,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
   $C846,$01
-  $C847,$01
+  $C847,$01 #ACTION
 W $C848,$02
   $C84A,$01
 W $C84B,$02
@@ -7838,7 +7838,7 @@ W $C893,$02
   $C89B,$01
 W $C89C,$02
 
-N $C8A1 Gandalf.
+b $C8A1 Character Scripts: Gandalf
   $C8A1,$01
 W $C8A2,$02
   $C8A4,$01
@@ -7867,6 +7867,72 @@ N $C8BA Gandalfs initial actions.
   $C8BF,$01 #ACTION
   $C8C0,$01 #OBJECT(#PEEK(#PC), 1, 1)($)
   $C8C1,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+
+N $C8C2 ...
+@ $C8C2 label=ScriptGandalf_1
+  $C8C2,$01
+  $C8C3,$01 #ACTION
+  $C8C4,$01
+  $C8C5,$01 #ACTION
+W $C8C6,$02
+
+  $C8C8,$01
+W $C8C9,$02
+  $C8CB,$01
+
+  $C8CC,$01
+  $C8CD,$01 #ACTION
+  $C8CE,$01
+  $C8CF,$01 #ACTION
+
+@ $C8D0 label=ScriptGandalf_2
+N $C8D0 ...
+  $C8D0,$01
+  $C8D1,$01 #ACTION
+  $C8D2,$01
+  $C8D3,$01 #ACTION
+
+@ $C8D4 label=ScriptGandalf_3
+N $C8D4 ...
+  $C8D4,$01
+  $C8D5,$01 #ACTION
+  $C8D6,$01
+W $C8D7,$02
+  $C8D9,$01
+
+@ $C8DA label=ScriptGandalf_4
+N $C8DA ...
+  $C8DA,$01
+  $C8DB,$01 #ACTION
+  $C8DC,$01
+  $C8DD,$01 #ACTION
+
+@ $C8DE label=ScriptGandalf_5
+N $C8DE ...
+  $C8DE,$01
+  $C8DF,$01 #ACTION
+  $C8E0,$01
+  $C8E1,$01
+
+b $C8E2 Character Scripts: Thorin?
+  $C8E2,$01
+W $C8E3,$02
+  $C8E5,$01
+W $C8E6,$02
+  $C8E8,$01
+W $C8E9,$02
+  $C8EB,$01 Termination character (#N(#PEEK(#PC), 2, 3, 1, 1)($)).
+
+@ $C8EC label=ScriptThorin_1
+  $C8EC,$01
+  $C8ED,$01 #ACTION
+  $C8EE,$01 #OBJECT(#PEEK(#PC), 1, 1)($)
+  $C8EF,$01
+W $C8F0,$02
+  $C8F2,$01
+W $C8F3,$02
+
+b $C913 Character Scripts: To-do
 
   $CA53,$29
   $CA7C,$08
