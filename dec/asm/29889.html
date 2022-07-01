@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 29889</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29882.html">29882</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29889">Map</a></td>
+<td class="next">
+Next: <a href="30068.html">30068</a>
+</td>
+</tr>
+</table>
+<div class="description">29889: Print Token</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="28915.html">28915</a>, <a href="29405.html">PrintMsg</a>, <a href="29504.html">29504</a>, <a href="29741.html">29741</a>, <a href="35915.html">Action_Look</a>, <a href="40647.html">40647</a>, <a href="41160.html">41160</a>, <a href="41272.html">DisplayExits</a> and <a href="41958.html">ActionCapture</a>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">e.g. $56D1 token?</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken</td>
+<td class="address-2"><span id="29889"></span>29889</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">D</span></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29890"></span>29890</td>
+<td class="instruction">AND %00001111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29892"></span>29892</td>
+<td class="instruction">OR E</td>
+<td class="comment-1" rowspan="1">Combine with <span class="register">E</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29893"></span>29893</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Return the result is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29894"></span>29894</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="3">Store <span class="register">HL</span>, <span class="register">BC</span> and <span class="register">DE</span> on the stack for later.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29895"></span>29895</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29896"></span>29896</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29897"></span>29897</td>
+<td class="instruction">LD C,D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29898"></span>29898</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29899"></span>29899</td>
+<td class="instruction">AND 15</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29901"></span>29901</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29902"></span>29902</td>
+<td class="instruction">LD HL,24576</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>=$6000+<span class="register">DE</span></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29905"></span>29905</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29906"></span>29906</td>
+<td class="instruction">LD DE,29862</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="29862.html">output buffer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29909"></span>29909</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Store <span class="register">HL</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29910"></span>29910</td>
+<td class="instruction">LD B,0</td>
+<td class="comment-1" rowspan="1">Intialise <span class="register">B</span> to $00 to count the number of letters.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken_Loop</td>
+<td class="address-2"><span id="29912"></span>29912</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">Fetch the next character from <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29913"></span>29913</td>
+<td class="instruction">AND 31</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-4.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29915"></span>29915</td>
+<td class="instruction">JR Z,<a href="29889.html#29945">PrintToken_</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29889.html#29945">PrintToken_</a> if this is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29917"></span>29917</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">Increase <span class="register">B</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29918"></span>29918</td>
+<td class="instruction">ADD A,96</td>
+<td class="comment-1" rowspan="1">Add $60 to <span class="register">A</span> to convert to ASCII.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29920"></span>29920</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-1" rowspan="1">Store the result in the <a href="29862.html">output buffer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29921"></span>29921</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="1">Increase the <a href="29862.html">output buffer</a> pointer by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29922"></span>29922</td>
+<td class="instruction">BIT 7,(HL)</td>
+<td class="comment-1" rowspan="1">Check if this is the last character in the word.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29924"></span>29924</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increase the character pointer reference by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29925"></span>29925</td>
+<td class="instruction">JR Z,<a href="29889.html#29912">PrintToken_Loop</a></td>
+<td class="comment-1" rowspan="1">If this is not the last character in the word, loop back to <a href="29889.html#29912">PrintToken_Loop</a> to continue processing.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29927"></span>
+<div class="comments">
+<div class="paragraph">
+Check minimum length.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29927"></span>29927</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the number of characters.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29928"></span>29928</td>
+<td class="instruction">CP 2</td>
+<td class="comment-1" rowspan="2">If the number of characters is only $02 then jump back to <a href="29889.html#29912">PrintToken_Loop</a> to continue processing.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29930"></span>29930</td>
+<td class="instruction">JR Z,<a href="29889.html#29912">PrintToken_Loop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29932"></span>29932</td>
+<td class="instruction">CP 3</td>
+<td class="comment-1" rowspan="2">If it is not $03, then jump to <a href="29889.html#29945">PrintToken_</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29934"></span>29934</td>
+<td class="instruction">JR NZ,<a href="29889.html#29945">PrintToken_</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29936"></span>29936</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="6">Else, fetch the first character again and check if it is the last character in the word.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29937"></span>29937</td>
+<td class="instruction">DEC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29938"></span>29938</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29939"></span>29939</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29940"></span>29940</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29941"></span>29941</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29943"></span>29943</td>
+<td class="instruction">JR NZ,<a href="29889.html#29912">PrintToken_Loop</a></td>
+<td class="comment-1" rowspan="1">If it is not, loop back to <a href="29889.html#29912">PrintToken_Loop</a> to continue processing.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken_</td>
+<td class="address-2"><span id="29945"></span>29945</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> off the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29946"></span>29946</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29947"></span>29947</td>
+<td class="instruction">AND 240</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29949"></span>29949</td>
+<td class="instruction">CP 80</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29951"></span>29951</td>
+<td class="instruction">JR Z,<a href="29889.html#30000">PrintToken_____</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29953"></span>29953</td>
+<td class="instruction">CP 64</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29955"></span>29955</td>
+<td class="instruction">JR Z,<a href="29889.html#29970">PrintToken___</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29957"></span>29957</td>
+<td class="instruction">CP 16</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29959"></span>29959</td>
+<td class="instruction">LD A,(46824)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29962"></span>29962</td>
+<td class="instruction">JR Z,<a href="29889.html#29967">PrintToken__</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29964"></span>29964</td>
+<td class="instruction">LD A,(46826)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken__</td>
+<td class="address-2"><span id="29967"></span>29967</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29968"></span>29968</td>
+<td class="instruction">JR Z,<a href="29889.html#30000">PrintToken_____</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken___</td>
+<td class="address-2"><span id="29970"></span>29970</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29971"></span>29971</td>
+<td class="instruction">BIT 7,(HL)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29973"></span>29973</td>
+<td class="instruction">JR Z,<a href="29889.html#30000">PrintToken_____</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29975"></span>29975</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29976"></span>29976</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29977"></span>29977</td>
+<td class="instruction">AND 224</td>
+<td class="comment-1" rowspan="1">E0?</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29979"></span>29979</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29980"></span>29980</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29981"></span>29981</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29982"></span>29982</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29983"></span>29983</td>
+<td class="instruction">LD H,0</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29985"></span>29985</td>
+<td class="instruction">LD BC,46879</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29988"></span>29988</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29989"></span>29989</td>
+<td class="instruction">LD B,4</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken____</td>
+<td class="address-2"><span id="29991"></span>29991</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29992"></span>29992</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29993"></span>29993</td>
+<td class="instruction">JR Z,<a href="29889.html#30000">PrintToken_____</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29995"></span>29995</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29996"></span>29996</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29997"></span>29997</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29998"></span>29998</td>
+<td class="instruction">DJNZ <a href="29889.html#29991">PrintToken____</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken_____</td>
+<td class="address-2"><span id="30000"></span>30000</td>
+<td class="instruction">LD HL,29862</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30003"></span>30003</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30004"></span>30004</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30005"></span>30005</td>
+<td class="instruction">SBC HL,DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30007"></span>30007</td>
+<td class="instruction">LD B,L</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30008"></span>30008</td>
+<td class="instruction">LD A,(46849)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30011"></span>30011</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30012"></span>30012</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30013"></span>30013</td>
+<td class="instruction">JR NZ,<a href="29889.html#30019">PrintToken______</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30015"></span>30015</td>
+<td class="instruction">LD A,(34464)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30018"></span>30018</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken______</td>
+<td class="address-2"><span id="30019"></span>30019</td>
+<td class="instruction">LD A,32</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30021"></span>30021</td>
+<td class="instruction">CALL NZ,<a href="34166.html#34187">34187</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30024"></span>30024</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30025"></span>30025</td>
+<td class="instruction">LD A,(34227)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30028"></span>30028</td>
+<td class="instruction">JR NZ,<a href="29889.html#30033">PrintToken_______</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30030"></span>30030</td>
+<td class="instruction">LD A,(34459)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken_______</td>
+<td class="address-2"><span id="30033"></span>30033</td>
+<td class="instruction">LD HL,46852</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30036"></span>30036</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30037"></span>30037</td>
+<td class="instruction">JR NC,<a href="29889.html#30044">PrintToken________</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30039"></span>30039</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30040"></span>30040</td>
+<td class="instruction">CALL <a href="34166.html#34179">34179</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30043"></span>30043</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken________</td>
+<td class="address-2"><span id="30044"></span>30044</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30045"></span>30045</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30046"></span>30046</td>
+<td class="instruction">AND 240</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30048"></span>30048</td>
+<td class="instruction">CP 112</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30050"></span>30050</td>
+<td class="instruction">LD A,1</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30052"></span>30052</td>
+<td class="instruction">JR NZ,<a href="29889.html#30055">PrintToken_Print</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30054"></span>30054</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken_Print</td>
+<td class="address-2"><span id="30055"></span>30055</td>
+<td class="instruction">LD HL,29862</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="29862.html">output buffer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintToken_Print_Loop</td>
+<td class="address-2"><span id="30058"></span>30058</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">Fetch the next character from the output buffer.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30059"></span>30059</td>
+<td class="instruction">CALL <a href="34166.html#34187">34187</a></td>
+<td class="comment-1" rowspan="1">Call <a href="34166.html#34187">34187</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30062"></span>30062</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increase the output buffer pointer by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30063"></span>30063</td>
+<td class="instruction">DJNZ <a href="29889.html#30058">PrintToken_Print_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="29889.html#30058">PrintToken_Print_Loop</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30065"></span>30065</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">BC</span> and <span class="register">HL</span> off the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30066"></span>30066</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="30067"></span>30067</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29882.html">29882</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29889">Map</a></td>
+<td class="next">
+Next: <a href="30068.html">30068</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../hex/asm/74C1.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

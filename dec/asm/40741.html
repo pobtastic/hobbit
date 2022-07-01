@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 40741</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40712.html">40712</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40741">Map</a></td>
+<td class="next">
+Next: <a href="40778.html">40778</a>
+</td>
+</tr>
+</table>
+<div class="description">40741: Routine at 9F25</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="36253.html">Action_Dir</a>, <a href="41652.html">ActionUntie</a> and <a href="42305.html">ActionClimbOut</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40741"></span>40741</td>
+<td class="instruction">LD A,(46824)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40744"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="37850.html">Action_Examine</a> and <a href="42305.html">ActionClimbOut</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40744"></span>40744</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40745"></span>40745</td>
+<td class="instruction">LD A,1</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40747"></span>40747</td>
+<td class="instruction">JR 40752</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40749"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="36813.html">Action_Enter</a>, <a href="36822.html">Action_Follow</a> and <a href="42305.html">ActionClimbOut</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40749"></span>40749</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40750"></span>40750</td>
+<td class="instruction">LD A,2</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="40752"></span>40752</td>
+<td class="instruction">LD (40770),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40755"></span>40755</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40756"></span>40756</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40757"></span>40757</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40759"></span>40759</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40760"></span>40760</td>
+<td class="instruction">CALL <a href="40597.html">40597</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="40763"></span>40763</td>
+<td class="instruction">CALL <a href="39827.html">Step3ByteTable</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40766"></span>40766</td>
+<td class="instruction">JR Z,40774</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40768"></span>40768</td>
+<td class="instruction">LD A,(IX+2)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40771"></span>40771</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40772"></span>40772</td>
+<td class="instruction">JR NZ,40763</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="40774"></span>40774</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40776"></span>40776</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40777"></span>40777</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40712.html">40712</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40741">Map</a></td>
+<td class="next">
+Next: <a href="40778.html">40778</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../hex/asm/9F25.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 51178</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="51165.html">51165</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#51178">Map</a></td>
+<td class="next">
+Next: <a href="51196.html">51196</a>
+</td>
+</tr>
+</table>
+<div class="description">51178: Event: Forestriver</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51178"></span>
+<div class="comments">
+<div class="paragraph">
+Is Player Protected in "Barrel"
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">EventForestriver</td>
+<td class="address-2"><span id="51178"></span>51178</td>
+<td class="instruction">LD A,(49436)</td>
+<td class="comment-1" rowspan="3">If <a href="49435.html#49436">player mother object</a> is object $13 - "Barrel" then return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="51181"></span>51181</td>
+<td class="instruction">CP 19</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="51183"></span>51183</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51184"></span>
+<div class="comments">
+<div class="paragraph">
+Uh oh ... you dead.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="51184"></span>51184</td>
+<td class="instruction">CALL <a href="36253.html#36409">PercentageLocation</a></td>
+<td class="comment-1" rowspan="1">Call <a href="36253.html#36409">PercentageLocation</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="51187"></span>51187</td>
+<td class="instruction">LD HL,45677</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45677">"You are swept forcefully against the portcullis"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="51190"></span>51190</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="51193"></span>51193</td>
+<td class="instruction">JP <a href="37074.html">YouAreDead</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37074.html">YouAreDead</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="51165.html">51165</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#51178">Map</a></td>
+<td class="next">
+Next: <a href="51196.html">51196</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../hex/asm/C7EA.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 8451</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="83EF.html">83EF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#8451">Map</a></td>
+<td class="next">
+Next: <a href="84B3.html">84B3</a>
+</td>
+</tr>
+</table>
+<div class="description">8451: Load Game</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">LoadGame</td>
+<td class="address-2"><span id="8451"></span>8451</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">IX</span> and <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8453"></span>8453</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8454"></span>
+<div class="comments">
+<div class="paragraph">
+Load "flags".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8454"></span>8454</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">Set the load as a "data block".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8456"></span>8456</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="1">Set the carry flag.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8457"></span>8457</td>
+<td class="instruction">LD IX,$B6EB</td>
+<td class="comment-1" rowspan="1">Set the start address to; <a href="B6DA.html#b6eb">B6EB</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="845b"></span>845B</td>
+<td class="instruction">LD DE,$001D</td>
+<td class="comment-1" rowspan="1">Set the block length to; $001D bytes.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="845e"></span>845E</td>
+<td class="instruction">CALL <a href="8451.html#8498">LoadBlock</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8451.html#8498">LoadBlock</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8461"></span>
+<div class="comments">
+<div class="paragraph">
+Load "objects".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8461"></span>8461</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">Set the load as a "data block".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8463"></span>8463</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="1">Set the carry flag.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8464"></span>8464</td>
+<td class="instruction">LD IX,$C11B</td>
+<td class="comment-1" rowspan="1">Set the start address to; <a href="C11B.html">Objects</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8468"></span>8468</td>
+<td class="instruction">LD DE,$0615</td>
+<td class="comment-1" rowspan="1">Set the block length to; $0615 bytes.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="846b"></span>846B</td>
+<td class="instruction">CALL <a href="8451.html#8498">LoadBlock</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8451.html#8498">LoadBlock</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="846e"></span>
+<div class="comments">
+<div class="paragraph">
+Load...
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="846e"></span>846E</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">Set the load as a "data block".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8470"></span>8470</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="1">Set the carry flag.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8471"></span>8471</td>
+<td class="instruction">LD IX,$CA84</td>
+<td class="comment-1" rowspan="1">Set the start address to; <a href="C913.html#ca84">CA84</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8475"></span>8475</td>
+<td class="instruction">LD DE,$00BF</td>
+<td class="comment-1" rowspan="1">Set the block length to; $00BF bytes.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8478"></span>8478</td>
+<td class="instruction">CALL <a href="8451.html#8498">LoadBlock</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8451.html#8498">LoadBlock</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="847b"></span>
+<div class="comments">
+<div class="paragraph">
+Load "locations".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="847b"></span>847B</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">Set the load as a "data block".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="847d"></span>847D</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="1">Set the carry flag.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="847e"></span>847E</td>
+<td class="instruction">LD IX,$BA8A</td>
+<td class="comment-1" rowspan="1">Set the start address to; <a href="BA8A.html">Locations</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8482"></span>8482</td>
+<td class="instruction">LD DE,$05D9</td>
+<td class="comment-1" rowspan="1">Set the block length to; $05D9 bytes.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8485"></span>8485</td>
+<td class="instruction">CALL <a href="8451.html#8498">LoadBlock</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8451.html#8498">LoadBlock</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8488"></span>
+<div class="comments">
+<div class="paragraph">
+Success!
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8488"></span>8488</td>
+<td class="instruction">DI</td>
+<td class="comment-1" rowspan="1">Disable interrupts.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8489"></span>8489</td>
+<td class="instruction">LD HL,$B6EB</td>
+<td class="comment-1" rowspan="3">Call <a href="84B3.html">ThreeByteCopy</a> using <span class="register">HL</span>=<a href="B6DA.html#b6eb">B6EB</a> and <span class="register">DE</span>=$C9E2.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="848c"></span>848C</td>
+<td class="instruction">LD DE,$C9E2</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="848f"></span>848F</td>
+<td class="instruction">CALL <a href="84B3.html">ThreeByteCopy</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8492"></span>8492</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">IX</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8493"></span>8493</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8495"></span>8495</td>
+<td class="instruction">JP <a href="82B3.html">$82B3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="82B3.html">82B3</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8498"></span>
+<div class="comments">
+<div class="paragraph">
+Load Block
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">LoadBlock</td>
+<td class="address-2"><span id="8498"></span>8498</td>
+<td class="instruction">CALL $0556</td>
+<td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/0556.html">LD_BYTES</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="849b"></span>849B</td>
+<td class="instruction">RET C</td>
+<td class="comment-1" rowspan="1">Return if the carry flag is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="849c"></span>849C</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Write $01 to <a href="B6DA.html#b701">WaitCoutdown</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="849e"></span>849E</td>
+<td class="instruction">LD ($B701),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84a1"></span>84A1</td>
+<td class="instruction">LD HL,$B357</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="AD7D.html#b357">"tape error - hit any key to restart program[0x15]"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84a4"></span>84A4</td>
+<td class="instruction">CALL <a href="72DD.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="72DD.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">LoadBlock_Loop</td>
+<td class="address-2"><span id="84a7"></span>84A7</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Read from the keyboard port.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84a8"></span>84A8</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84aa"></span>84AA</td>
+<td class="instruction">AND %00011111</td>
+<td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84ac"></span>84AC</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="8451.html#84a7">LoadBlock_Loop</a> until any key has been pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84ae"></span>84AE</td>
+<td class="instruction">JR Z,<a href="8451.html#84a7">LoadBlock_Loop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84b0"></span>84B0</td>
+<td class="instruction">JP <a href="6C00.html#6c27">ReStart</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="6C00.html#6c27">ReStart</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="83EF.html">83EF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#8451">Map</a></td>
+<td class="next">
+Next: <a href="84B3.html">84B3</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../dec/asm/33873.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

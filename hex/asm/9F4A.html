@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 9F4A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9F25.html">9F25</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#9f4a">Map</a></td>
+<td class="next">
+Next: <a href="9F76.html">9F76</a>
+</td>
+</tr>
+</table>
+<div class="description">9F4A: Routine at 9F4A</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="8D9D.html">Action_Dir</a>, <a href="8FF5.html">Action_ThrowAt</a> and <a href="A248.html">ActionTie</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="9f4a"></span>9F4A</td>
+<td class="instruction">LD DE,($B708)</td>
+<td class="comment-1" rowspan="4">Switch the addresses stored in <a href="B6DA.html#b708">B708</a> and <a href="B6DA.html#b70a">B70A</a> using <span class="register">DE</span> and <span class="register">IY</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f4e"></span>9F4E</td>
+<td class="instruction">LD IY,($B70A)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f52"></span>9F52</td>
+<td class="instruction">LD ($B708),IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f56"></span>9F56</td>
+<td class="instruction">LD ($B70A),DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f5a"></span>9F5A</td>
+<td class="instruction">LD BC,($B6E8)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f5e"></span>9F5E</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f5f"></span>9F5F</td>
+<td class="instruction">LD ($B6E8),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f62"></span>9F62</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f63"></span>9F63</td>
+<td class="instruction">LD ($B6E9),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f66"></span>9F66</td>
+<td class="instruction">CALL <a href="9B6C.html">TriggerAction</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9B6C.html">TriggerAction</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f69"></span>9F69</td>
+<td class="instruction">LD ($B6E8),BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f6d"></span>9F6D</td>
+<td class="instruction">LD ($B708),DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f71"></span>9F71</td>
+<td class="instruction">LD ($B70A),IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9f75"></span>9F75</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9F25.html">9F25</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#9f4a">Map</a></td>
+<td class="next">
+Next: <a href="9F76.html">9F76</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../dec/asm/40778.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 41040</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40852.html">40852</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41040">Map</a></td>
+<td class="next">
+Next: <a href="41134.html">41134</a>
+</td>
+</tr>
+</table>
+<div class="description">41040: Routine at A050</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="37134.html">37134</a> and <a href="40852.html">40852</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41040"></span>41040</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="3">Stash <span class="register">IX</span>, <span class="register">BC</span> and <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41042"></span>41042</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41043"></span>41043</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41044"></span>41044</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41045"></span>41045</td>
+<td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41048"></span>41048</td>
+<td class="instruction">LD A,(IX+7)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41051"></span>41051</td>
+<td class="instruction">AND 40</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41053"></span>41053</td>
+<td class="instruction">JR Z,41111</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41055"></span>41055</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41056"></span>41056</td>
+<td class="instruction">CALL <a href="40343.html">ObjectCount</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41059"></span>41059</td>
+<td class="instruction">CP 0</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41061"></span>41061</td>
+<td class="instruction">JR Z,41111</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41063"></span>41063</td>
+<td class="instruction">BIT 6,(IX+7)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41067"></span>41067</td>
+<td class="instruction">JR Z,41076</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41069"></span>41069</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41070"></span>41070</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41071"></span>41071</td>
+<td class="instruction">LD HL,44537</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41074"></span>41074</td>
+<td class="instruction">JR 41102</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="41076"></span>41076</td>
+<td class="instruction">LD HL,923</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41079"></span>41079</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41080"></span>41080</td>
+<td class="instruction">JR Z,41085</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41082"></span>41082</td>
+<td class="instruction">LD HL,101</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="41085"></span>41085</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41086"></span>41086</td>
+<td class="instruction">LD L,(IX+8)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41089"></span>41089</td>
+<td class="instruction">LD A,(IX+9)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41092"></span>41092</td>
+<td class="instruction">AND 15</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41094"></span>41094</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41095"></span>41095</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41096"></span>41096</td>
+<td class="instruction">CALL 41117</td>
+<td class="comment-1" rowspan="1">Call <a href="41040.html#41117">41117</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41099"></span>41099</td>
+<td class="instruction">LD HL,45024</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45024">"[0x01] there[0x01][0x14]"</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="41102"></span>41102</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41105"></span>41105</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="41106"></span>41106</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="3">Restore <span class="register">DE</span>, <span class="register">BC</span> and <span class="register">IX</span> off the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41107"></span>41107</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41108"></span>41108</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41110"></span>41110</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41111"></span>41111</td>
+<td class="instruction">CALL <a href="34166.html#34179">34179</a></td>
+<td class="comment-1" rowspan="1">Call <a href="34166.html#34179">34179</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41114"></span>41114</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41115"></span>41115</td>
+<td class="instruction">JR 41106</td>
+<td class="comment-1" rowspan="1">Jump back to <a href="41040.html#41106">41106</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="41117"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="35915.html">Action_Look</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41117"></span>41117</td>
+<td class="instruction">LD HL,45002</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45002">45002</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41120"></span>41120</td>
+<td class="instruction">LD A,(IX+4)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41123"></span>41123</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41124"></span>41124</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41125"></span>41125</td>
+<td class="instruction">AND 60</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41127"></span>41127</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41128"></span>41128</td>
+<td class="instruction">LD D,0</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41130"></span>41130</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41131"></span>41131</td>
+<td class="instruction">JP <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40852.html">40852</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41040">Map</a></td>
+<td class="next">
+Next: <a href="41134.html">41134</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../hex/asm/A050.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

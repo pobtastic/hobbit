@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at A050</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9F94.html">9F94</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#a050">Map</a></td>
+<td class="next">
+Next: <a href="A0AE.html">A0AE</a>
+</td>
+</tr>
+</table>
+<div class="description">A050: Routine at A050</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="910E.html">910E</a> and <a href="9F94.html">9F94</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="a050"></span>A050</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="3">Stash <span class="register">IX</span>, <span class="register">BC</span> and <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="a052"></span>A052</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="a053"></span>A053</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="a054"></span>A054</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a055"></span>A055</td>
+<td class="instruction">CALL <a href="9BCA.html">LocateObject</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a058"></span>A058</td>
+<td class="instruction">LD A,(IX+$07)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a05b"></span>A05B</td>
+<td class="instruction">AND $28</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a05d"></span>A05D</td>
+<td class="instruction">JR Z,$A097</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a05f"></span>A05F</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a060"></span>A060</td>
+<td class="instruction">CALL <a href="9D97.html">ObjectCount</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a063"></span>A063</td>
+<td class="instruction">CP $00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a065"></span>A065</td>
+<td class="instruction">JR Z,$A097</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a067"></span>A067</td>
+<td class="instruction">BIT 6,(IX+$07)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a06b"></span>A06B</td>
+<td class="instruction">JR Z,$A074</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a06d"></span>A06D</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a06e"></span>A06E</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a06f"></span>A06F</td>
+<td class="instruction">LD HL,$ADF9</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a072"></span>A072</td>
+<td class="instruction">JR $A08E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="a074"></span>A074</td>
+<td class="instruction">LD HL,$039B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a077"></span>A077</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a078"></span>A078</td>
+<td class="instruction">JR Z,$A07D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a07a"></span>A07A</td>
+<td class="instruction">LD HL,$0065</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="a07d"></span>A07D</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a07e"></span>A07E</td>
+<td class="instruction">LD L,(IX+$08)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a081"></span>A081</td>
+<td class="instruction">LD A,(IX+$09)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a084"></span>A084</td>
+<td class="instruction">AND $0F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a086"></span>A086</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a087"></span>A087</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a088"></span>A088</td>
+<td class="instruction">CALL $A09D</td>
+<td class="comment-1" rowspan="1">Call <a href="A050.html#a09d">A09D</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="a08b"></span>A08B</td>
+<td class="instruction">LD HL,$AFE0</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="AD7D.html#afe0">"[0x01] there[0x01][0x14]"</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="a08e"></span>A08E</td>
+<td class="instruction">CALL <a href="72DD.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="72DD.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="a091"></span>A091</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="a092"></span>A092</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="3">Restore <span class="register">DE</span>, <span class="register">BC</span> and <span class="register">IX</span> off the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="a093"></span>A093</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="a094"></span>A094</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="a096"></span>A096</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="a097"></span>A097</td>
+<td class="instruction">CALL <a href="8576.html#8583">$8583</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8576.html#8583">8583</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="a09a"></span>A09A</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a09b"></span>A09B</td>
+<td class="instruction">JR $A092</td>
+<td class="comment-1" rowspan="1">Jump back to <a href="A050.html#a092">A092</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="a09d"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="8C4B.html">Action_Look</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="a09d"></span>A09D</td>
+<td class="instruction">LD HL,$AFCA</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="AD7D.html#afca">AFCA</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a0a0"></span>A0A0</td>
+<td class="instruction">LD A,(IX+$04)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a0a3"></span>A0A3</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a0a4"></span>A0A4</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a0a5"></span>A0A5</td>
+<td class="instruction">AND $3C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a0a7"></span>A0A7</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a0a8"></span>A0A8</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a0aa"></span>A0AA</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="a0ab"></span>A0AB</td>
+<td class="instruction">JP <a href="72DD.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="72DD.html">PrintMsg</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9F94.html">9F94</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#a050">Map</a></td>
+<td class="next">
+Next: <a href="A0AE.html">A0AE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../dec/asm/41040.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

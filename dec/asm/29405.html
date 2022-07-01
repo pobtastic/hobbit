@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 29405</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29395.html">29395</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29405">Map</a></td>
+<td class="next">
+Next: <a href="29504.html">29504</a>
+</td>
+</tr>
+</table>
+<div class="description">29405: Print Message</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="27648.html">Start</a>, <a href="29390.html">ICannotDoThat</a>, <a href="29395.html">29395</a>, <a href="30673.html">30673</a>, <a href="33696.html">DisplayLocHlpMsg</a>, <a href="33775.html">GameOver</a>, <a href="33873.html">LoadGame</a>, <a href="33996.html">SaveGame</a>, <a href="35915.html">Action_Look</a>, <a href="36006.html">Action_Putdown</a>, <a href="36147.html">Action_Pickup</a>, <a href="36253.html">Action_Dir</a>, <a href="36822.html">Action_Follow</a>, <a href="36916.html">Action_Talkto</a>, <a href="36982.html">Action_Shoot</a>, <a href="37074.html">YouAreDead</a>, <a href="37099.html">Action_Inventory</a>, <a href="37233.html">Action_Attack</a>, <a href="37790.html">Action_Give</a>, <a href="37850.html">Action_Examine</a>, <a href="38443.html">YouSeeEntry</a>, <a href="38579.html">38579</a>, <a href="39629.html">39629</a>, <a href="40260.html">40260</a>, <a href="40852.html">40852</a>, <a href="41040.html">41040</a>, <a href="41160.html">41160</a>, <a href="41272.html">DisplayExits</a>, <a href="41544.html">ActionTie</a>, <a href="41652.html">ActionUntie</a>, <a href="41730.html">ActionBurn</a>, <a href="41958.html">ActionCapture</a>, <a href="42305.html">ActionClimbOut</a> and <a href="51178.html">EventForestriver</a>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Text message address</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29405"></span>
+<div class="comments">
+<div class="paragraph">
+Store <span class="register">A</span>, <span class="register">DE</span> and <span class="register">IX</span> for later (see <a href="29504.html#29531">Return</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintMsg</td>
+<td class="address-2"><span id="29405"></span>29405</td>
+<td class="instruction">LD (28893),DE</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> at <a href="28658.html#28893">28893</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29409"></span>29409</td>
+<td class="instruction">LD (28896),IX</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">IX</span> at <a href="28658.html#28896">28896</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29413"></span>29413</td>
+<td class="instruction">LD (28892),A</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">A</span> at <a href="28658.html#28892">28892</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29416"></span>
+<div class="comments">
+<div class="paragraph">
+Important.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29416"></span>29416</td>
+<td class="instruction">LD A,(46842)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29419"></span>29419</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29420"></span>29420</td>
+<td class="instruction">JR NZ,<a href="29405.html#29425">PrintMsg_0</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29422"></span>29422</td>
+<td class="instruction">LD (46843),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29425"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="29664.html">29664</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintMsg_0</td>
+<td class="address-2"><span id="29425"></span>29425</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>=<span class="register">HL</span> (the text message address).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29426"></span>29426</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="asm-label">PrintMsg_Loop</td>
+<td class="address-2"><span id="29428"></span>29428</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="1">Fetch the next character of the text message.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29431"></span>29431</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Is this blah? Jump to <a href="29405.html#29464">PrintMsg_1</a> if not.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29433"></span>29433</td>
+<td class="instruction">JR Z,<a href="29405.html#29464">PrintMsg_1</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29435"></span>29435</td>
+<td class="instruction">AND 127</td>
+<td class="comment-1" rowspan="1">Reset bit 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29437"></span>29437</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29438"></span>29438</td>
+<td class="instruction">LD E,(IX+1)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29441"></span>29441</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Increase <span class="register">IX</span> by one to move onto the next character of the message.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29443"></span>29443</td>
+<td class="instruction">AND 240</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29445"></span>29445</td>
+<td class="instruction">CP 48</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29447"></span>29447</td>
+<td class="instruction">JR Z,<a href="29504.html#29512">29512</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29449"></span>29449</td>
+<td class="instruction">CP 32</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29451"></span>29451</td>
+<td class="instruction">JR Z,<a href="29504.html#29512">29512</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29453"></span>29453</td>
+<td class="instruction">CP 96</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29455"></span>29455</td>
+<td class="instruction">JR Z,<a href="29504.html#29512">29512</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29457"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="29843.html">GetCommonWord</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintMsg_Token</td>
+<td class="address-2"><span id="29457"></span>29457</td>
+<td class="instruction">CALL <a href="29889.html">PrintToken</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29889.html">PrintToken</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintMsg_Next</td>
+<td class="address-2"><span id="29460"></span>29460</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Increase <span class="register">IX</span> by one to move onto the next character of the message.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29462"></span>29462</td>
+<td class="instruction">JR <a href="29405.html#29428">PrintMsg_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="29405.html#29428">PrintMsg_Loop</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29464"></span>
+<div class="comments">
+<div class="paragraph">
+Check.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintMsg_1</td>
+<td class="address-2"><span id="29464"></span>29464</td>
+<td class="instruction">CP 32</td>
+<td class="comment-1" rowspan="2">If the character is less than $20 jump to <a href="29405.html#29478">PrintMsg_PrintTable</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29466"></span>29466</td>
+<td class="instruction">JR C,<a href="29405.html#29478">PrintMsg_PrintTable</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29468"></span>29468</td>
+<td class="instruction">CP 96</td>
+<td class="comment-1" rowspan="2">If the character is more than $60 jump to <a href="29843.html">GetCommonWord</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29470"></span>29470</td>
+<td class="instruction">JP NC,<a href="29843.html">GetCommonWord</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29473"></span>29473</td>
+<td class="instruction">CALL <a href="29379.html">29379</a></td>
+<td class="comment-1" rowspan="1">Else, call <a href="29379.html">29379</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29476"></span>29476</td>
+<td class="instruction">JR <a href="29405.html#29460">PrintMsg_Next</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="29405.html#29460">PrintMsg_Next</a> to move onto the next character.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29478"></span>
+<div class="comments">
+<div class="paragraph">
+X
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintMsg_PrintTable</td>
+<td class="address-2"><span id="29478"></span>29478</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack for later.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29479"></span>29479</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="2"><span class="register">E</span>=<span class="register">A</span> - <span class="register">DE</span> now holds the current character as the LSB.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29480"></span>29480</td>
+<td class="instruction">LD D,0</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29482"></span>29482</td>
+<td class="instruction">LD HL,29333</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="29329.html#29333">PrintTable</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29485"></span>29485</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>=(<span class="register">DE</span> * 2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29486"></span>29486</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29487"></span>29487</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-1" rowspan="3">Loads <span class="register">DE</span> with the address held in <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29488"></span>29488</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29489"></span>29489</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29490"></span>29490</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-1" rowspan="1">Exchange <span class="register">DE</span> and <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29491"></span>29491</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore the previous value of <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29492"></span>29492</td>
+<td class="instruction">CP 20</td>
+<td class="comment-1" rowspan="2">If the character is more than $14 jump to <a href="29405.html#29503">PrintMsg_Indirect_Jump</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29494"></span>29494</td>
+<td class="instruction">JR NC,<a href="29405.html#29503">PrintMsg_Indirect_Jump</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29496"></span>29496</td>
+<td class="instruction">CALL <a href="29405.html#29503">PrintMsg_Indirect_Jump</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html#29503">PrintMsg_Indirect_Jump</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29499"></span>29499</td>
+<td class="instruction">JR Z,<a href="29405.html#29460">PrintMsg_Next</a></td>
+<td class="comment-1" rowspan="1">If xxxx jump back to <a href="29405.html#29460">PrintMsg_Next</a> to move onto the next character.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29501"></span>29501</td>
+<td class="instruction">JR <a href="29405.html#29457">PrintMsg_Token</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29405.html#29457">PrintMsg_Token</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintMsg_Indirect_Jump</td>
+<td class="address-2"><span id="29503"></span>29503</td>
+<td class="instruction">JP (HL)</td>
+<td class="comment-1" rowspan="1">Indirect jump to the address held in <span class="register">HL</span>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29395.html">29395</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29405">Map</a></td>
+<td class="next">
+Next: <a href="29504.html">29504</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../hex/asm/72DD.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

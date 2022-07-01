@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 37099</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37074.html">37074</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37099">Map</a></td>
+<td class="next">
+Next: <a href="37134.html">37134</a>
+</td>
+</tr>
+</table>
+<div class="description">37099: Action Inventory</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Inventory</td>
+<td class="address-2"><span id="37099"></span>37099</td>
+<td class="instruction">CALL <a href="40260.html">40260</a></td>
+<td class="comment-1" rowspan="1">Call <a href="40260.html">40260</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37102"></span>37102</td>
+<td class="instruction">LD HL,44534</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#44534">"You are carrying[0x15]"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37105"></span>37105</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37108"></span>37108</td>
+<td class="instruction">LD A,(46826)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37111"></span>37111</td>
+<td class="instruction">CALL <a href="40343.html">ObjectCount</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37114"></span>37114</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37115"></span>37115</td>
+<td class="instruction">LD HL,45883</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45883">"{6} nothing"</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37118"></span>37118</td>
+<td class="instruction">JP Z,<a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Display this message using <a href="29405.html">PrintMsg</a> if zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37121"></span>37121</td>
+<td class="instruction">LD A,(46826)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="46810.html#46826">CurrentCharacter</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37124"></span>37124</td>
+<td class="instruction">LD IX,(46860)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="46810.html#46860">ptrCurObject</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37128"></span>37128</td>
+<td class="instruction">LD B,(IX+16)</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37131"></span>37131</td>
+<td class="instruction">JP <a href="40852.html#40879">40879</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="40852.html#40879">40879</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37074.html">37074</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37099">Map</a></td>
+<td class="next">
+Next: <a href="37134.html">37134</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../hex/asm/90EB.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

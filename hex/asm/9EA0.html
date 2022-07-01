@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 9EA0</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9E95.html">9E95</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#9ea0">Map</a></td>
+<td class="next">
+Next: <a href="9EC7.html">9EC7</a>
+</td>
+</tr>
+</table>
+<div class="description">9EA0: Routine at 9EA0</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="77D1.html">77D1</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="9ea0"></span>9EA0</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">IY</span> and <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9ea2"></span>9EA2</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9ea3"></span>9EA3</td>
+<td class="instruction">LD DE,$0002</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="9ea6"></span>9EA6</td>
+<td class="instruction">CALL <a href="9B93.html">Step3ByteTable</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9ea9"></span>9EA9</td>
+<td class="instruction">JR Z,$9EC3</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9eab"></span>9EAB</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9eae"></span>9EAE</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9eb0"></span>9EB0</td>
+<td class="instruction">CALL <a href="9BB1.html">LocateLocation</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9eb3"></span>9EB3</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9eb5"></span>9EB5</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9eb7"></span>9EB7</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9eb9"></span>9EB9</td>
+<td class="instruction">ADD IY,DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9ebb"></span>9EBB</td>
+<td class="instruction">CALL <a href="70F3.html#71f3">$71F3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9ebe"></span>9EBE</td>
+<td class="instruction">JR NZ,$9EA6</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9ec0"></span>9EC0</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="9ec3"></span>9EC3</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">IY</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9ec4"></span>9EC4</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9ec6"></span>9EC6</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9E95.html">9E95</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#9ea0">Map</a></td>
+<td class="next">
+Next: <a href="9EC7.html">9EC7</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../dec/asm/40608.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

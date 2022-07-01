@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 84B9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="84B3.html">84B3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#84b9">Map</a></td>
+<td class="next">
+Next: <a href="84CC.html">84CC</a>
+</td>
+</tr>
+</table>
+<div class="description">84B9: Debounce keyboard</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="83EF.html">GameOver</a> and <a href="84CC.html">SaveGame</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">DebounceAnyKey</td>
+<td class="address-2"><span id="84b9"></span>84B9</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Read from the keyboard port.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84ba"></span>84BA</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84bc"></span>84BC</td>
+<td class="instruction">AND %00011111</td>
+<td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84be"></span>84BE</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="84B9.html">DebounceAnyKey</a> if a key is being pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84c0"></span>84C0</td>
+<td class="instruction">JR NZ,<a href="84B9.html#84b9">DebounceAnyKey</a></td>
+</tr>
+<tr>
+<td class="asm-label">NormalAnyKey</td>
+<td class="address-2"><span id="84c2"></span>84C2</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Read from the keyboard port.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84c3"></span>84C3</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84c5"></span>84C5</td>
+<td class="instruction">AND %00011111</td>
+<td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84c7"></span>84C7</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="84B9.html#84c2">NormalAnyKey</a> until any key has been pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84c9"></span>84C9</td>
+<td class="instruction">JR Z,<a href="84B9.html#84c2">NormalAnyKey</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="84cb"></span>84CB</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="84B3.html">84B3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#84b9">Map</a></td>
+<td class="next">
+Next: <a href="84CC.html">84CC</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../dec/asm/33977.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

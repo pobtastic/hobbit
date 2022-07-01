@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 742D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="7425.html">7425</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#742d">Map</a></td>
+<td class="next">
+Next: <a href="7493.html">7493</a>
+</td>
+</tr>
+</table>
+<div class="description">742D: Routine at 742D</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="742d"></span>742D</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="742e"></span>742E</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="742f"></span>742F</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7430"></span>7430</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7431"></span>7431</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7432"></span>7432</td>
+<td class="instruction">JR <a href="7425.html#7428">$7428</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7434"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="7367.html">7367</a> and <a href="73C2.html">73C2</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7434"></span>7434</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7436"></span>7436</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7437"></span>7437</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7439"></span>7439</td>
+<td class="instruction">CALL <a href="9EC7.html#9ed6">$9ED6</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="743c"></span>743C</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="743e"></span>743E</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="743f"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="9EC7.html">9EC7</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="743f"></span>743F</td>
+<td class="instruction">BIT 7,D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7441"></span>7441</td>
+<td class="instruction">JR Z,$7455</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7443"></span>7443</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7444"></span>7444</td>
+<td class="instruction">LD HL,$07A8</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7447"></span>7447</td>
+<td class="instruction">CP L</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7448"></span>7448</td>
+<td class="instruction">JR NZ,$744F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="744a"></span>744A</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="744b"></span>744B</td>
+<td class="instruction">AND $0F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="744d"></span>744D</td>
+<td class="instruction">CP H</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="744e"></span>744E</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="744f"></span>744F</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7451"></span>7451</td>
+<td class="instruction">LD ($B704),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7454"></span>7454</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="7455"></span>7455</td>
+<td class="instruction">LD HL,$AD2D</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="AB53.html#ad2d">AD2D</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7458"></span>7458</td>
+<td class="instruction">LD A,($B701)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="745b"></span>745B</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="745c"></span>745C</td>
+<td class="instruction">LD A,($70DF)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="745f"></span>745F</td>
+<td class="instruction">OR E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7460"></span>7460</td>
+<td class="instruction">JR Z,$7465</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7462"></span>7462</td>
+<td class="instruction">LD HL,$AD35</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="AB53.html#ad35">AD35</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7465"></span>7465</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7466"></span>7466</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7467"></span>7467</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7468"></span>7468</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7469"></span>7469</td>
+<td class="instruction">AND %00011110</td>
+<td class="comment-1" rowspan="1">Keep only bits 1-4.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="746b"></span>746B</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="746c"></span>746C</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="2">Create an offset in <span class="register">DE</span> using <span class="register">A</span> as the LSB.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="746d"></span>746D</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="746f"></span>746F</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span> = <span class="register">HL</span> + offset.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7470"></span>7470</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-1" rowspan="3"><span class="register">DE</span>=contents of the calculated address.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7471"></span>7471</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7472"></span>7472</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7473"></span>7473</td>
+<td class="instruction">CALL <a href="74C1.html">PrintToken</a></td>
+<td class="comment-1" rowspan="1">Call <a href="74C1.html">PrintToken</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7476"></span>7476</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7477"></span>7477</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7478"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="7394.html">7394</a> and <a href="9EC7.html">9EC7</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7478"></span>7478</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7479"></span>7479</td>
+<td class="instruction">LD A,($B703)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="B6DA.html#b703">B703</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="747c"></span>747C</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="2">Call <a href="742D.html#743f">743F</a> if <span class="register">A</span> is non-zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="747d"></span>747D</td>
+<td class="instruction">CALL NZ,$743F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7480"></span>7480</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7481"></span>7481</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">D</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7482"></span>7482</td>
+<td class="instruction">AND %00001111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7484"></span>7484</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7485"></span>7485</td>
+<td class="instruction">JP <a href="74C1.html">PrintToken</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="74C1.html">PrintToken</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7488"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="73A3.html">73A3</a> and <a href="740C.html">740C</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7488"></span>7488</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="748a"></span>748A</td>
+<td class="instruction">JP NZ,<a href="73C2.html#73d6">$73D6</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="748d"></span>748D</td>
+<td class="instruction">LD DE,$0AE3</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=$0AE3.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7490"></span>7490</td>
+<td class="instruction">JP <a href="74C1.html">PrintToken</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="74C1.html">PrintToken</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="7425.html">7425</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#742d">Map</a></td>
+<td class="next">
+Next: <a href="7493.html">7493</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../../dec/asm/29741.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>
