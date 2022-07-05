@@ -66,27 +66,33 @@ Used by the routine at <a href="70F3.html">70F3</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">PrintAction</td>
 <td class="address-2"><span id="74ba"></span>74BA</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-1" rowspan="6">Store the word token in <span class="register">DE</span> (we keep only bits 0-3 of the MSB).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="74bb"></span>74BB</td>
 <td class="instruction">INC HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="74bc"></span>74BC</td>
 <td class="instruction">LD A,(HL)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="74bd"></span>74BD</td>
 <td class="instruction">INC HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="74be"></span>74BE</td>
 <td class="instruction">AND %00001111</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="74c0"></span>74C0</td>
 <td class="instruction">LD D,A</td>
 </tr>
@@ -94,7 +100,7 @@ Used by the routine at <a href="70F3.html">70F3</a>.
 <td class="routine-comment" colspan="5">
 <div class="comments">
 <div class="paragraph">
-Continues on to <a href="74C1.html">74C1</a> to print.
+Continues on to <a href="74C1.html">PrintToken</a> to print.
 </div>
 </div>
 </td>

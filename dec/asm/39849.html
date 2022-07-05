@@ -38,7 +38,7 @@ Next: <a href="39857.html">39857</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="39900.html">39900</a>, <a href="40168.html">40168</a>, <a href="40260.html">40260</a>, <a href="40343.html">40343</a>, <a href="40852.html">40852</a> and <a href="41272.html">41272</a>.
+Used by the routines at <a href="39900.html">39900</a>, <a href="40168.html">40168</a>, <a href="40260.html">40260</a>, <a href="40343.html">ObjectCount</a>, <a href="40852.html">40852</a> and <a href="41272.html">DisplayExits</a>.
 </div>
 </div>
 <table class="input">
@@ -66,31 +66,37 @@ Used by the routines at <a href="39900.html">39900</a>, <a href="40168.html">401
 </td>
 </tr>
 <tr>
+<td class="asm-label">Step3ByteTable_Next</td>
 <td class="address-2"><span id="39849"></span>39849</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-1" rowspan="1">Store <span class="register">BC</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="39850"></span>39850</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-1" rowspan="1">Store <span class="register">A</span> in register <span class="register">B</span> so it's not overwritten by the following CALL instruction.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="39851"></span>39851</td>
-<td class="instruction">CALL <a href="39827.html">39827</a></td>
-<td class="comment-1" rowspan="1">Call <a href="39827.html">39827</a>.</td>
+<td class="instruction">CALL <a href="39827.html">Step3ByteTable</a></td>
+<td class="comment-1" rowspan="1">Call <a href="39827.html">Step3ByteTable</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="39854"></span>39854</td>
 <td class="instruction">LD A,B</td>
 <td class="comment-1" rowspan="1">Restore the previous value of <span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="39855"></span>39855</td>
 <td class="instruction">POP BC</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">BC</span> off the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="39856"></span>39856</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

@@ -38,7 +38,7 @@ Next: <a href="70E8.html">70E8</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="6C00.html">6C00</a>, <a href="7574.html">7574</a> and <a href="77D1.html">77D1</a>.
+Used by the routines at <a href="6C00.html">Start</a>, <a href="7574.html">7574</a> and <a href="77D1.html">77D1</a>.
 </div>
 </div>
 <table class="input">
@@ -57,26 +57,31 @@ Used by the routines at <a href="6C00.html">6C00</a>, <a href="7574.html">7574</
 </td>
 </tr>
 <tr>
+<td class="asm-label">Blanker</td>
 <td class="address-2"><span id="70e2"></span>70E2</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=$00.</td>
 </tr>
 <tr>
+<td class="asm-label">Blanker_Loop</td>
 <td class="address-2"><span id="70e3"></span>70E3</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to <span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="70e4"></span>70E4</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="70e5"></span>70E5</td>
-<td class="instruction">DJNZ <a href="70E2.html#70e3">$70E3</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="70E2.html#70e3">70E3</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="70E2.html#70e3">Blanker_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="70E2.html#70e3">Blanker_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="70e7"></span>70E7</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

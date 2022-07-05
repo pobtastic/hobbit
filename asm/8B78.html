@@ -44,29 +44,35 @@ Used by the routine at <a href="8B81.html">8B81</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">Pause</td>
 <td class="address-2"><span id="8b78"></span>8B78</td>
 <td class="instruction">LD BC,$03E8</td>
 <td class="comment-1" rowspan="1">Set a counter in <span class="register">BC</span>=03E8.</td>
 </tr>
 <tr>
+<td class="asm-label">Pause_Loop</td>
 <td class="address-2"><span id="8b7b"></span>8B7B</td>
 <td class="instruction">DEC BC</td>
 <td class="comment-1" rowspan="1">Decrease the counter by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8b7c"></span>8B7C</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Loop back to <a href="8B78.html#8b7b">8B7B</a> until the counter is zero.</td>
+<td class="comment-1" rowspan="3">Loop back to <a href="8B78.html#8b7b">Pause_Loop</a> until the counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8b7d"></span>8B7D</td>
 <td class="instruction">OR C</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8b7e"></span>8B7E</td>
-<td class="instruction">JR NZ,<a href="8B78.html#8b7b">$8B7B</a></td>
+<td class="instruction">JR NZ,<a href="8B78.html#8b7b">Pause_Loop</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8b80"></span>8B80</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

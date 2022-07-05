@@ -41,21 +41,25 @@ Next: <a href="29543.html">29543</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-2"><span id="29504"></span>29504</td>
 <td class="instruction">LD D,96</td>
 <td class="comment-1" rowspan="1"><span class="register">D</span>=$60.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29506"></span>29506</td>
 <td class="instruction">JR <a href="29504.html#29515">29515</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="29504.html#29515">29515</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29508"></span>29508</td>
 <td class="instruction">LD D,48</td>
 <td class="comment-1" rowspan="1"><span class="register">D</span>=$30.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29510"></span>29510</td>
 <td class="instruction">JR <a href="29504.html#29515">29515</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="29504.html#29515">29515</a>.</td>
@@ -65,67 +69,79 @@ Next: <a href="29543.html">29543</a>
 <span id="29512"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="29405.html">29405</a>.
+This entry point is used by the routine at <a href="29405.html">PrintMsg</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-2"><span id="29512"></span>29512</td>
-<td class="instruction">CALL <a href="29889.html">29889</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29889.html">29889</a>.</td>
+<td class="instruction">CALL <a href="29889.html">PrintToken</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29889.html">PrintToken</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-2"><span id="29515"></span>29515</td>
 <td class="instruction">LD A,46</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=$2E.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29517"></span>29517</td>
 <td class="instruction">BIT 6,D</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29519"></span>29519</td>
 <td class="instruction">JR NZ,<a href="29504.html#29528">29528</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29521"></span>29521</td>
 <td class="instruction">BIT 4,D</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29523"></span>29523</td>
 <td class="instruction">CALL NZ,<a href="34166.html#34187">34187</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29526"></span>29526</td>
 <td class="instruction">BIT 4,D</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-2"><span id="29528"></span>29528</td>
 <td class="instruction">CALL NZ,<a href="34166.html#34179">34179</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">Return</td>
 <td class="address-1"><span id="29531"></span>29531</td>
 <td class="instruction">LD DE,(28893)</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from <a href="28658.html#28893">28893</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29535"></span>29535</td>
 <td class="instruction">LD IX,(28896)</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">IX</span> from <a href="28658.html#28896">28896</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29539"></span>29539</td>
 <td class="instruction">LD A,(28892)</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">A</span> from <a href="28658.html#28892">28892</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29542"></span>29542</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

@@ -51,15 +51,18 @@ Is Player Protected in "Barrel"
 </td>
 </tr>
 <tr>
+<td class="asm-label">EventForestriver</td>
 <td class="address-2"><span id="51178"></span>51178</td>
 <td class="instruction">LD A,(49436)</td>
 <td class="comment-1" rowspan="3">If <a href="49435.html#49436">player mother object</a> is object $13 - "Barrel" then return.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="51181"></span>51181</td>
 <td class="instruction">CP 19</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="51183"></span>51183</td>
 <td class="instruction">RET Z</td>
 </tr>
@@ -74,24 +77,28 @@ Uh oh ... you dead.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="51184"></span>51184</td>
-<td class="instruction">CALL <a href="36253.html#36409">36409</a></td>
-<td class="comment-1" rowspan="1">Call <a href="36253.html#36409">36409</a>.</td>
+<td class="instruction">CALL <a href="36253.html#36409">PercentageLocation</a></td>
+<td class="comment-1" rowspan="1">Call <a href="36253.html#36409">PercentageLocation</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="51187"></span>51187</td>
 <td class="instruction">LD HL,45677</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45677">"You are swept forcefully against the portcullis"</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="51190"></span>51190</td>
-<td class="instruction">CALL <a href="29405.html">29405</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29405.html">29405</a>.</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="51193"></span>51193</td>
-<td class="instruction">JP <a href="37074.html">37074</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37074.html">37074</a>.</td>
+<td class="instruction">JP <a href="37074.html">YouAreDead</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37074.html">YouAreDead</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

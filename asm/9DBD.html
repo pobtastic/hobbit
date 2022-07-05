@@ -38,7 +38,7 @@ Next: <a href="9DD9.html">9DD9</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="6C00.html">6C00</a>, <a href="7F78.html">7F78</a>, <a href="83A0.html">83A0</a>, <a href="8D9D.html">8D9D</a>, <a href="93DA.html">93DA</a>, <a href="9A85.html">9A85</a>, <a href="9B81.html">9B81</a>, <a href="9BCA.html">9BCA</a> and <a href="A541.html">A541</a>.
+Used by the routines at <a href="6C00.html">Start</a>, <a href="7F78.html">Drawing</a>, <a href="83A0.html">DisplayLocHlpMsg</a>, <a href="8D9D.html">Action_Dir</a>, <a href="93DA.html">Action_Examine</a>, <a href="9A85.html">9A85</a>, <a href="9B81.html">9B81</a>, <a href="9BCA.html">LocateObject</a> and <a href="A541.html">ActionClimbOut</a>.
 </div>
 </div>
 <table class="input">
@@ -76,30 +76,36 @@ Searches through what is essentially key value data to find a key match.
 </td>
 </tr>
 <tr>
+<td class="asm-label">IndexIdTable</td>
 <td class="address-2"><span id="9dbd"></span>9DBD</td>
 <td class="instruction">EXX</td>
 <td class="comment-1" rowspan="1">Exchange registers.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dbe"></span>9DBE</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="2"><span class="register">HL</span>=<span class="register">IX</span> (using the stack to do so).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dc0"></span>9DC0</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dc1"></span>9DC1</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=key ID</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dc2"></span>9DC2</td>
 <td class="instruction">LD E,$03</td>
 <td class="comment-1" rowspan="2"><span class="register">DE</span>=$0003 as each record is 3 bytes of data.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dc4"></span>9DC4</td>
 <td class="instruction">LD D,$00</td>
 </tr>
@@ -114,36 +120,43 @@ Begin searching the table.
 </td>
 </tr>
 <tr>
+<td class="asm-label">IndexIdTable_Loop</td>
 <td class="address-2"><span id="9dc6"></span>9DC6</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1">Grab the next ID.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dc7"></span>9DC7</td>
 <td class="instruction">CP B</td>
-<td class="comment-1" rowspan="2">If the key ID is the one we want, jump to <a href="9DBD.html#9dd2">9DD2</a>.</td>
+<td class="comment-1" rowspan="2">If the key ID is the one we want, jump to <a href="9DBD.html#9dd2">IndexIdTable_Found</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dc8"></span>9DC8</td>
-<td class="instruction">JR Z,<a href="9DBD.html#9dd2">$9DD2</a></td>
+<td class="instruction">JR Z,<a href="9DBD.html#9dd2">IndexIdTable_Found</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dca"></span>9DCA</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-1" rowspan="2">If we've reached the termination character (key ID not found), jump to <a href="9DBD.html#9dd2">9DD2</a>.</td>
+<td class="comment-1" rowspan="2">If we've reached the termination character (key ID not found), jump to <a href="9DBD.html#9dd2">IndexIdTable_Found</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dcc"></span>9DCC</td>
-<td class="instruction">JR Z,<a href="9DBD.html#9dd2">$9DD2</a></td>
+<td class="instruction">JR Z,<a href="9DBD.html#9dd2">IndexIdTable_Found</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dce"></span>9DCE</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-1" rowspan="2">Add <span class="register">DE</span> to <span class="register">HL</span> to check the next row, and jump back to <a href="9DBD.html#9dc6">9DC6</a> to continue checking.</td>
+<td class="comment-1" rowspan="2">Add <span class="register">DE</span> to <span class="register">HL</span> to check the next row, and jump back to <a href="9DBD.html#9dc6">IndexIdTable_Loop</a> to continue checking.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dcf"></span>9DCF</td>
-<td class="instruction">JP <a href="9DBD.html#9dc6">$9DC6</a></td>
+<td class="instruction">JP <a href="9DBD.html#9dc6">IndexIdTable_Loop</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -156,25 +169,30 @@ Handle the output.
 </td>
 </tr>
 <tr>
+<td class="asm-label">IndexIdTable_Found</td>
 <td class="address-2"><span id="9dd2"></span>9DD2</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="2"><span class="register">IX</span>=<span class="register">HL</span> (using the stack to do so).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dd3"></span>9DD3</td>
 <td class="instruction">POP IX</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dd5"></span>9DD5</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-1" rowspan="1">Set flags (checking if the key ID was not found).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dd7"></span>9DD7</td>
 <td class="instruction">EXX</td>
 <td class="comment-1" rowspan="1">Exchange registers.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9dd8"></span>9DD8</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

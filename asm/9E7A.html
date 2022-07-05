@@ -38,7 +38,7 @@ Next: <a href="9E95.html">9E95</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="95ED.html">95ED</a> and <a href="9E34.html">9E34</a>.
+Used by the routines at <a href="95ED.html">LocationLit</a> and <a href="9E34.html">9E34</a>.
 </div>
 </div>
 <table class="input">
@@ -47,7 +47,7 @@ Used by the routines at <a href="95ED.html">95ED</a> and <a href="9E34.html">9E3
 </tr>
 <tr>
 <td class="register">IX</td>
-<td class="register-desc">Object Data Address e.g. <a href="C11B.html">C11B</a></td>
+<td class="register-desc">Object Data Address e.g. <a href="C11B.html">Objects</a></td>
 </tr>
 </table>
 <table class="output">
@@ -66,63 +66,76 @@ Used by the routines at <a href="95ED.html">95ED</a> and <a href="9E34.html">9E3
 </td>
 </tr>
 <tr>
+<td class="asm-label">ContainerLit</td>
 <td class="address-2"><span id="9e7a"></span>9E7A</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label">ContainerLit_Fetch</td>
 <td class="address-2"><span id="9e7c"></span>9E7C</td>
 <td class="instruction">LD A,(IX+$01)</td>
-<td class="comment-1" rowspan="3">If the object is not inside of anything then jump to <a href="9E7A.html#9e92">9E92</a>.</td>
+<td class="comment-1" rowspan="3">If the object is not inside of anything then jump to <a href="9E7A.html#9e92">ContainerLit_Return</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9e7f"></span>9E7F</td>
 <td class="instruction">CP $FF</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9e81"></span>9E81</td>
-<td class="instruction">JR Z,<a href="9E7A.html#9e92">$9E92</a></td>
+<td class="instruction">JR Z,<a href="9E7A.html#9e92">ContainerLit_Return</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9e83"></span>9E83</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-1" rowspan="1">Switch to the shadow register for <span class="register">AF</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9e84"></span>9E84</td>
 <td class="instruction">LD A,(IX+$01)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=The mother object ID.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9e87"></span>9E87</td>
-<td class="instruction">CALL <a href="9BCA.html">$9BCA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="9BCA.html">9BCA</a>.</td>
+<td class="instruction">CALL <a href="9BCA.html">LocateObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9BCA.html">LocateObject</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9e8a"></span>9E8A</td>
 <td class="instruction">LD A,(IX+$07)</td>
 <td class="comment-1" rowspan="1">Fetch the objects attributes.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9e8d"></span>9E8D</td>
 <td class="instruction">AND %00101000</td>
-<td class="comment-1" rowspan="2">If the 'Give Light' and 'Full' attributes are set then jump to <a href="9E7A.html#9e7c">9E7C</a> to rerun the check on this object.</td>
+<td class="comment-1" rowspan="2">If the 'Give Light' and 'Full' attributes are set then jump to <a href="9E7A.html#9e7c">ContainerLit_Fetch</a> to rerun the check on this object.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9e8f"></span>9E8F</td>
-<td class="instruction">JR NZ,<a href="9E7A.html#9e7c">%1001111001111100</a></td>
+<td class="instruction">JR NZ,<a href="9E7A.html#9e7c">ContainerLit_Fetch</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9e91"></span>9E91</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-1" rowspan="1">Switch back to the "normal" <span class="register">AF</span> register.</td>
 </tr>
 <tr>
+<td class="asm-label">ContainerLit_Return</td>
 <td class="address-2"><span id="9e92"></span>9E92</td>
 <td class="instruction">POP IX</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">IX</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9e94"></span>9E94</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

@@ -38,7 +38,7 @@ Next: <a href="9BDC.html">9BDC</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="70F3.html">70F3</a>, <a href="8C4B.html">8C4B</a>, <a href="8D33.html">8D33</a>, <a href="8D9D.html">8D9D</a>, <a href="9171.html">9171</a>, <a href="93DA.html">93DA</a>, <a href="96B3.html">96B3</a>, <a href="9ACD.html">9ACD</a>, <a href="9B16.html">9B16</a>, <a href="9C78.html">9C78</a>, <a href="9D44.html">9D44</a>, <a href="9E7A.html">9E7A</a>, <a href="9F82.html">9F82</a>, <a href="A050.html">A050</a>, <a href="A0C8.html">A0C8</a>, <a href="A138.html">A138</a> and <a href="A541.html">A541</a>.
+Used by the routines at <a href="70F3.html">70F3</a>, <a href="8C4B.html">Action_Look</a>, <a href="8D33.html">Action_Pickup</a>, <a href="8D9D.html">Action_Dir</a>, <a href="9171.html">Action_Attack</a>, <a href="93DA.html">Action_Examine</a>, <a href="96B3.html">96B3</a>, <a href="9ACD.html">9ACD</a>, <a href="9B16.html">9B16</a>, <a href="9C78.html">9C78</a>, <a href="9D44.html">9D44</a>, <a href="9E7A.html">ContainerLit</a>, <a href="9F82.html">ObjectFirstLocation</a>, <a href="A050.html">A050</a>, <a href="A0C8.html">A0C8</a>, <a href="A138.html">DisplayExits</a> and <a href="A541.html">ActionClimbOut</a>.
 </div>
 </div>
 <table class="input">
@@ -56,7 +56,7 @@ Used by the routines at <a href="70F3.html">70F3</a>, <a href="8C4B.html">8C4B</
 </tr>
 <tr>
 <td class="register">IX</td>
-<td class="register-desc">The object data address from <a href="C11B.html">C11B</a></td>
+<td class="register-desc">The object data address from <a href="C11B.html">Objects</a></td>
 </tr>
 </table>
 </td>
@@ -72,39 +72,47 @@ Locates an object from a given object ID.
 </td>
 </tr>
 <tr>
+<td class="asm-label">LocateObject</td>
 <td class="address-2"><span id="9bca"></span>9BCA</td>
 <td class="instruction">LD IX,$C063</td>
 <td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="C063.html">the start address of the object table</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bce"></span>9BCE</td>
-<td class="instruction">CALL <a href="9DBD.html">$9DBD</a></td>
-<td class="comment-1" rowspan="1">Call <a href="9DBD.html">9DBD</a> to locate the object.</td>
+<td class="instruction">CALL <a href="9DBD.html">IndexIdTable</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9DBD.html">IndexIdTable</a> to locate the object.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bd1"></span>9BD1</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bd2"></span>9BD2</td>
 <td class="instruction">LD L,(IX+$01)</td>
 <td class="comment-1" rowspan="2"><span class="register">HL</span>=the corresponding object address from the object table.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bd5"></span>9BD5</td>
 <td class="instruction">LD H,(IX+$02)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bd8"></span>9BD8</td>
 <td class="instruction">EX (SP),HL</td>
 <td class="comment-1" rowspan="2"><span class="register">IX</span>=<span class="register">HL</span> and restore the old value of <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bd9"></span>9BD9</td>
 <td class="instruction">POP IX</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bdb"></span>9BDB</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

@@ -38,7 +38,7 @@ Next: <a href="29862.html">29862</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="29405.html">29405</a>.
+Used by the routine at <a href="29405.html">PrintMsg</a>.
 </div>
 </div>
 <table class="input">
@@ -62,61 +62,73 @@ Used by the routine at <a href="29405.html">29405</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">GetCommonWord</td>
 <td class="address-2"><span id="29843"></span>29843</td>
 <td class="instruction">SUB 96</td>
 <td class="comment-1" rowspan="1">Subtract $60 from the letter byte - anything higher than $60 signifies the letter is a "common word".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29845"></span>29845</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-1" rowspan="2">Create offset for the word look-up.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29846"></span>29846</td>
 <td class="instruction">LD D,0</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29848"></span>29848</td>
 <td class="instruction">LD HL,44349</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44349.html">44349</a></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44349.html">CommonWords</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29851"></span>29851</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-1" rowspan="2">Add to base address at <a href="44349.html">44349</a> so that pointer is at the referenced word.</td>
+<td class="comment-1" rowspan="2">Add to base address at <a href="44349.html">CommonWords</a> so that pointer is at the referenced word.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29852"></span>29852</td>
 <td class="instruction">ADD HL,DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29853"></span>29853</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">E</span>=LSB of word address.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29854"></span>29854</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="2"><span class="register">A</span>=MSB of word address.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29855"></span>29855</td>
 <td class="instruction">LD A,(HL)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29856"></span>29856</td>
 <td class="instruction">ADD A,80</td>
 <td class="comment-1" rowspan="1">Add $50 to <span class="register">A</span> and store the result in <span class="register">D</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29858"></span>29858</td>
 <td class="instruction">LD D,A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="29859"></span>29859</td>
-<td class="instruction">JP <a href="29405.html#29457">29457</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="29405.html#29457">29457</a>.</td>
+<td class="instruction">JP <a href="29405.html#29457">PrintMsg_Token</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29405.html#29457">PrintMsg_Token</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -38,24 +38,27 @@ Next: <a href="8D6E.html">8D6E</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="A248.html">A248</a>.
+Used by the routine at <a href="A248.html">ActionTie</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Action_Pickup</td>
 <td class="address-2"><span id="8d33"></span>8D33</td>
 <td class="instruction">CALL <a href="9C78.html">$9C78</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d36"></span>8D36</td>
 <td class="instruction">LD HL,$AE11</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="AD7D.html#ae11">"You are already carrying[0x07][0x15]"</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d39"></span>8D39</td>
-<td class="instruction">JP C,<a href="72DD.html">$72DD</a></td>
+<td class="instruction">JP C,<a href="72DD.html">PrintMsg</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -63,102 +66,121 @@ Used by the routine at <a href="A248.html">A248</a>.
 <span id="8d3c"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="8CA6.html">8CA6</a>.
+This entry point is used by the routine at <a href="8CA6.html">Action_Putdown</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Action_Pickup_0</td>
 <td class="address-2"><span id="8d3c"></span>8D3C</td>
-<td class="instruction">CALL <a href="8CA6.html#8cf1">$8CF1</a></td>
+<td class="instruction">CALL <a href="8CA6.html#8cf1">Action_Putdown_1</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d3f"></span>8D3F</td>
 <td class="instruction">LD A,($B6EA)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">Action_Pickup_1</td>
 <td class="address-2"><span id="8d42"></span>8D42</td>
-<td class="instruction">CALL <a href="9BCA.html">$9BCA</a></td>
+<td class="instruction">CALL <a href="9BCA.html">LocateObject</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d45"></span>8D45</td>
 <td class="instruction">LD A,($B6E8)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d48"></span>8D48</td>
 <td class="instruction">CP (IX+$01)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d4b"></span>8D4B</td>
 <td class="instruction">JP Z,<a href="9F76.html">$9F76</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d4e"></span>8D4E</td>
 <td class="instruction">LD A,(IX+$01)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d51"></span>8D51</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d53"></span>8D53</td>
-<td class="instruction">JR NZ,<a href="8D33.html#8d42">$8D42</a></td>
+<td class="instruction">JR NZ,<a href="8D33.html#8d42">Action_Pickup_1</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d55"></span>8D55</td>
 <td class="instruction">LD IX,($B708)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d59"></span>8D59</td>
 <td class="instruction">CALL <a href="9D44.html">$9D44</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d5c"></span>8D5C</td>
 <td class="instruction">LD A,(IX+$01)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d5f"></span>8D5F</td>
 <td class="instruction">CP $12</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d61"></span>8D61</td>
 <td class="instruction">LD A,($B6EA)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d64"></span>8D64</td>
-<td class="instruction">JR Z,<a href="8D33.html#8d6a">$8D6A</a></td>
+<td class="instruction">JR Z,<a href="8D33.html#8d6a">Action_Pickup_2</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d66"></span>8D66</td>
 <td class="instruction">LD (IX+$01),A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d69"></span>8D69</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">Action_Pickup_2</td>
 <td class="address-2"><span id="8d6a"></span>8D6A</td>
 <td class="instruction">LD ($C367),A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8d6d"></span>8D6D</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1"></td>

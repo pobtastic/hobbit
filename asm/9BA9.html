@@ -38,7 +38,7 @@ Next: <a href="9BB1.html">9BB1</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="9BDC.html">9BDC</a>, <a href="9CE8.html">9CE8</a>, <a href="9D44.html">9D44</a>, <a href="9D97.html">9D97</a>, <a href="9F94.html">9F94</a> and <a href="A138.html">A138</a>.
+Used by the routines at <a href="9BDC.html">9BDC</a>, <a href="9CE8.html">9CE8</a>, <a href="9D44.html">9D44</a>, <a href="9D97.html">ObjectCount</a>, <a href="9F94.html">9F94</a> and <a href="A138.html">DisplayExits</a>.
 </div>
 </div>
 <table class="input">
@@ -66,31 +66,37 @@ Used by the routines at <a href="9BDC.html">9BDC</a>, <a href="9CE8.html">9CE8</
 </td>
 </tr>
 <tr>
+<td class="asm-label">Step3ByteTable_Next</td>
 <td class="address-2"><span id="9ba9"></span>9BA9</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-1" rowspan="1">Store <span class="register">BC</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9baa"></span>9BAA</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-1" rowspan="1">Store <span class="register">A</span> in register <span class="register">B</span> so it's not overwritten by the following CALL instruction.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bab"></span>9BAB</td>
-<td class="instruction">CALL <a href="9B93.html">$9B93</a></td>
-<td class="comment-1" rowspan="1">Call <a href="9B93.html">9B93</a>.</td>
+<td class="instruction">CALL <a href="9B93.html">Step3ByteTable</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9B93.html">Step3ByteTable</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bae"></span>9BAE</td>
 <td class="instruction">LD A,B</td>
 <td class="comment-1" rowspan="1">Restore the previous value of <span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9baf"></span>9BAF</td>
 <td class="instruction">POP BC</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">BC</span> off the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bb0"></span>9BB0</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

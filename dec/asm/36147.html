@@ -38,24 +38,27 @@ Next: <a href="36206.html">36206</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="41544.html">41544</a>.
+Used by the routine at <a href="41544.html">ActionTie</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Action_Pickup</td>
 <td class="address-2"><span id="36147"></span>36147</td>
 <td class="instruction">CALL <a href="40056.html">40056</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36150"></span>36150</td>
 <td class="instruction">LD HL,44561</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#44561">"You are already carrying[0x07][0x15]"</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36153"></span>36153</td>
-<td class="instruction">JP C,<a href="29405.html">29405</a></td>
+<td class="instruction">JP C,<a href="29405.html">PrintMsg</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -63,102 +66,121 @@ Used by the routine at <a href="41544.html">41544</a>.
 <span id="36156"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="36006.html">36006</a>.
+This entry point is used by the routine at <a href="36006.html">Action_Putdown</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Action_Pickup_0</td>
 <td class="address-2"><span id="36156"></span>36156</td>
-<td class="instruction">CALL <a href="36006.html#36081">36081</a></td>
+<td class="instruction">CALL <a href="36006.html#36081">Action_Putdown_1</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36159"></span>36159</td>
 <td class="instruction">LD A,(46826)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">Action_Pickup_1</td>
 <td class="address-2"><span id="36162"></span>36162</td>
-<td class="instruction">CALL <a href="39882.html">39882</a></td>
+<td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36165"></span>36165</td>
 <td class="instruction">LD A,(46824)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36168"></span>36168</td>
 <td class="instruction">CP (IX+1)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36171"></span>36171</td>
 <td class="instruction">JP Z,<a href="40822.html">40822</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36174"></span>36174</td>
 <td class="instruction">LD A,(IX+1)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36177"></span>36177</td>
 <td class="instruction">CP 255</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36179"></span>36179</td>
-<td class="instruction">JR NZ,<a href="36147.html#36162">36162</a></td>
+<td class="instruction">JR NZ,<a href="36147.html#36162">Action_Pickup_1</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36181"></span>36181</td>
 <td class="instruction">LD IX,(46856)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36185"></span>36185</td>
 <td class="instruction">CALL <a href="40260.html">40260</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36188"></span>36188</td>
 <td class="instruction">LD A,(IX+1)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36191"></span>36191</td>
 <td class="instruction">CP 18</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36193"></span>36193</td>
 <td class="instruction">LD A,(46826)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36196"></span>36196</td>
-<td class="instruction">JR Z,<a href="36147.html#36202">36202</a></td>
+<td class="instruction">JR Z,<a href="36147.html#36202">Action_Pickup_2</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36198"></span>36198</td>
 <td class="instruction">LD (IX+1),A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36201"></span>36201</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">Action_Pickup_2</td>
 <td class="address-2"><span id="36202"></span>36202</td>
 <td class="instruction">LD (50023),A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36205"></span>36205</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1"></td>

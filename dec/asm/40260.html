@@ -38,7 +38,7 @@ Next: <a href="40343.html">40343</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="35915.html">35915</a>, <a href="36006.html">36006</a>, <a href="36147.html">36147</a>, <a href="36253.html">36253</a>, <a href="36916.html">36916</a>, <a href="36982.html">36982</a>, <a href="37099.html">37099</a>, <a href="37134.html">37134</a>, <a href="37233.html">37233</a>, <a href="37790.html">37790</a>, <a href="37850.html">37850</a>, <a href="41544.html">41544</a>, <a href="41652.html">41652</a>, <a href="41730.html">41730</a>, <a href="41958.html">41958</a> and <a href="42305.html">42305</a>.
+Used by the routines at <a href="35915.html">Action_Look</a>, <a href="36006.html">Action_Putdown</a>, <a href="36147.html">Action_Pickup</a>, <a href="36253.html">Action_Dir</a>, <a href="36916.html">Action_Talkto</a>, <a href="36982.html">Action_Shoot</a>, <a href="37099.html">Action_Inventory</a>, <a href="37134.html">37134</a>, <a href="37233.html">Action_Attack</a>, <a href="37790.html">Action_Give</a>, <a href="37850.html">Action_Examine</a>, <a href="41544.html">ActionTie</a>, <a href="41652.html">ActionUntie</a>, <a href="41730.html">ActionBurn</a>, <a href="41958.html">ActionCapture</a> and <a href="42305.html">ActionClimbOut</a>.
 </div>
 </div>
 </td>
@@ -81,7 +81,7 @@ Used by the routines at <a href="35915.html">35915</a>, <a href="36006.html">360
 <span id="40272"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="37233.html">37233</a> and <a href="37850.html">37850</a>.
+This entry point is used by the routines at <a href="37233.html">Action_Attack</a> and <a href="37850.html">Action_Examine</a>.
 </div>
 </div>
 </td>
@@ -89,14 +89,14 @@ This entry point is used by the routines at <a href="37233.html">37233</a> and <
 <tr>
 <td class="address-2"><span id="40272"></span>40272</td>
 <td class="instruction">LD A,(46824)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="46810.html#46824">46824</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="46810.html#46824">CurrentObject</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="40275"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="38579.html">38579</a> and <a href="42305.html">42305</a>.
+This entry point is used by the routines at <a href="38579.html">38579</a> and <a href="42305.html">ActionClimbOut</a>.
 </div>
 </div>
 </td>
@@ -116,8 +116,8 @@ This entry point is used by the routines at <a href="38579.html">38579</a> and <
 </tr>
 <tr>
 <td class="address-1"><span id="40280"></span>40280</td>
-<td class="instruction">CALL <a href="39882.html">39882</a></td>
-<td class="comment-1" rowspan="1">Call <a href="39882.html">39882</a>.</td>
+<td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="39882.html">LocateObject</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40283"></span>40283</td>
@@ -131,8 +131,8 @@ This entry point is used by the routines at <a href="38579.html">38579</a> and <
 </tr>
 <tr>
 <td class="address-2"><span id="40290"></span>40290</td>
-<td class="instruction">CALL <a href="39849.html">39849</a></td>
-<td class="comment-1" rowspan="1">Call <a href="39849.html">39849</a>.</td>
+<td class="instruction">CALL <a href="39849.html">Step3ByteTable_Next</a></td>
+<td class="comment-1" rowspan="1">Call <a href="39849.html">Step3ByteTable_Next</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40293"></span>40293</td>
@@ -190,8 +190,8 @@ This entry point is used by the routines at <a href="38579.html">38579</a> and <
 </tr>
 <tr>
 <td class="address-1"><span id="40325"></span>40325</td>
-<td class="instruction">CALL <a href="29405.html">29405</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29405.html">29405</a>.</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="40328"></span>40328</td>

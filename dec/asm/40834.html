@@ -38,7 +38,7 @@ Next: <a href="40852.html">40852</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="38579.html">38579</a>, <a href="39629.html">39629</a> and <a href="39682.html">39682</a>.
+Used by the routines at <a href="38579.html">38579</a>, <a href="39629.html">39629</a> and <a href="39682.html">Action_None</a>.
 </div>
 </div>
 <table class="input">
@@ -62,44 +62,53 @@ Used by the routines at <a href="38579.html">38579</a>, <a href="39629.html">396
 </td>
 </tr>
 <tr>
+<td class="asm-label">ObjectFirstLocation</td>
 <td class="address-2"><span id="40834"></span>40834</td>
 <td class="instruction">CP 255</td>
 <td class="comment-1" rowspan="2">Return if this is the terminator character ($FF).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40836"></span>40836</td>
 <td class="instruction">RET Z</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40837"></span>40837</td>
-<td class="instruction">CALL <a href="39882.html">39882</a></td>
-<td class="comment-1" rowspan="1">Call <a href="39882.html">39882</a> to set <span class="register">IX</span> to the object data address.</td>
+<td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="39882.html">LocateObject</a> to set <span class="register">IX</span> to the object data address.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40840"></span>40840</td>
 <td class="instruction">LD A,1</td>
 <td class="comment-1" rowspan="2">Does the object appear in the game once?</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40842"></span>40842</td>
 <td class="instruction">CP (IX+0)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40845"></span>40845</td>
 <td class="instruction">LD A,255</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=$FF (termination character).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40847"></span>40847</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-1" rowspan="1">Return if not.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40848"></span>40848</td>
 <td class="instruction">LD A,(IX+16)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=the first location the object appears in.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40851"></span>40851</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

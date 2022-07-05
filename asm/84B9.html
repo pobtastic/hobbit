@@ -38,58 +38,69 @@ Next: <a href="84CC.html">84CC</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="83EF.html">83EF</a> and <a href="84CC.html">84CC</a>.
+Used by the routines at <a href="83EF.html">GameOver</a> and <a href="84CC.html">SaveGame</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">DebounceAnyKey</td>
 <td class="address-2"><span id="84b9"></span>84B9</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="2">Read from the keyboard port.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="84ba"></span>84BA</td>
 <td class="instruction">IN A,($FE)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="84bc"></span>84BC</td>
 <td class="instruction">AND %00011111</td>
 <td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="84be"></span>84BE</td>
 <td class="instruction">CP $1F</td>
-<td class="comment-1" rowspan="2">Loop back to <a href="84B9.html">84B9</a> if a key is being pressed.</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="84B9.html">DebounceAnyKey</a> if a key is being pressed.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="84c0"></span>84C0</td>
-<td class="instruction">JR NZ,<a href="84B9.html#84b9">$84B9</a></td>
+<td class="instruction">JR NZ,<a href="84B9.html#84b9">DebounceAnyKey</a></td>
 </tr>
 <tr>
+<td class="asm-label">NormalAnyKey</td>
 <td class="address-2"><span id="84c2"></span>84C2</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="2">Read from the keyboard port.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="84c3"></span>84C3</td>
 <td class="instruction">IN A,($FE)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="84c5"></span>84C5</td>
 <td class="instruction">AND %00011111</td>
 <td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="84c7"></span>84C7</td>
 <td class="instruction">CP $1F</td>
-<td class="comment-1" rowspan="2">Loop back to <a href="84B9.html#84c2">84C2</a> until any key has been pressed.</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="84B9.html#84c2">NormalAnyKey</a> until any key has been pressed.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="84c9"></span>84C9</td>
-<td class="instruction">JR Z,<a href="84B9.html#84c2">$84C2</a></td>
+<td class="instruction">JR Z,<a href="84B9.html#84c2">NormalAnyKey</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="84cb"></span>84CB</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

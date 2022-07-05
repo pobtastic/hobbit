@@ -38,7 +38,7 @@ Next: <a href="9BA9.html">9BA9</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="9BA9.html">9BA9</a>, <a href="9C41.html">9C41</a>, <a href="9DD9.html">9DD9</a>, <a href="9EA0.html">9EA0</a>, <a href="9F08.html">9F08</a> and <a href="9F25.html">9F25</a>.
+Used by the routines at <a href="9BA9.html">Step3ByteTable_Next</a>, <a href="9C41.html">9C41</a>, <a href="9DD9.html">9DD9</a>, <a href="9EA0.html">9EA0</a>, <a href="9F08.html">9F08</a> and <a href="9F25.html">9F25</a>.
 </div>
 </div>
 <table class="input">
@@ -66,52 +66,63 @@ Used by the routines at <a href="9BA9.html">9BA9</a>, <a href="9C41.html">9C41</
 </td>
 </tr>
 <tr>
+<td class="asm-label">Step3ByteTable</td>
 <td class="address-2"><span id="9b93"></span>9B93</td>
 <td class="instruction">EXX</td>
 <td class="comment-1" rowspan="1">Exchange registers.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9b94"></span>9B94</td>
 <td class="instruction">LD DE,$0003</td>
 <td class="comment-1" rowspan="2">Move onto the next record <span class="register">IX</span>=<span class="register">IX</span>+$0003.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9b97"></span>9B97</td>
 <td class="instruction">ADD IX,DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9b99"></span>9B99</td>
 <td class="instruction">LD D,(IX+$02)</td>
 <td class="comment-1" rowspan="4"><span class="register">IY</span>=load the record.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9b9c"></span>9B9C</td>
 <td class="instruction">LD E,(IX+$01)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9b9f"></span>9B9F</td>
 <td class="instruction">PUSH DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ba0"></span>9BA0</td>
 <td class="instruction">POP IY</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ba2"></span>9BA2</td>
 <td class="instruction">LD A,(IX+$00)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=the record ID.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ba5"></span>9BA5</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-1" rowspan="1">Set flag if this is the termination character ($FF).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ba7"></span>9BA7</td>
 <td class="instruction">EXX</td>
 <td class="comment-1" rowspan="1">Exchange registers.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ba8"></span>9BA8</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

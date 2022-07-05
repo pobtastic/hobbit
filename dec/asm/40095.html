@@ -38,7 +38,7 @@ Next: <a href="40168.html">40168</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="36253.html">36253</a>, <a href="36781.html">36781</a>, <a href="36916.html">36916</a>, <a href="36982.html">36982</a>, <a href="38579.html">38579</a>, <a href="41730.html">41730</a>, <a href="41958.html">41958</a> and <a href="42305.html">42305</a>.
+Used by the routines at <a href="36253.html">Action_Dir</a>, <a href="36781.html">Action_Run</a>, <a href="36916.html">Action_Talkto</a>, <a href="36982.html">Action_Shoot</a>, <a href="38579.html">38579</a>, <a href="41730.html">ActionBurn</a>, <a href="41958.html">ActionCapture</a> and <a href="42305.html">ActionClimbOut</a>.
 </div>
 </div>
 <table class="input">
@@ -62,25 +62,30 @@ Used by the routines at <a href="36253.html">36253</a>, <a href="36781.html">367
 </td>
 </tr>
 <tr>
+<td class="asm-label">GetRandomNum</td>
 <td class="address-2"><span id="40095"></span>40095</td>
-<td class="instruction">CALL <a href="40095.html#40104">40104</a></td>
-<td class="comment-1" rowspan="1">Call <a href="40095.html#40104">40104</a>.</td>
+<td class="instruction">CALL <a href="40095.html#40104">CalcRandom</a></td>
+<td class="comment-1" rowspan="1">Call <a href="40095.html#40104">CalcRandom</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40098"></span>40098</td>
 <td class="instruction">BIT 7,A</td>
 <td class="comment-1" rowspan="2">Return if bit 7 is set.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40100"></span>40100</td>
 <td class="instruction">RET Z</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40101"></span>40101</td>
 <td class="instruction">NEG</td>
 <td class="comment-1" rowspan="1">Negate the accumulator.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40103"></span>40103</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -90,158 +95,189 @@ Used by the routines at <a href="36253.html">36253</a>, <a href="36781.html">367
 <span id="40104"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="37233.html">37233</a>.
+This entry point is used by the routine at <a href="37233.html">Action_Attack</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">CalcRandom</td>
 <td class="address-2"><span id="40104"></span>40104</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">IX</span> and <span class="register">BC</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40106"></span>40106</td>
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40107"></span>40107</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40108"></span>40108</td>
 <td class="instruction">SLA A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">A</span> * 2.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40110"></span>40110</td>
-<td class="instruction">JR NC,<a href="40095.html#40114">40114</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="40095.html#40114">40114</a> if there's no carry over.</td>
+<td class="instruction">JR NC,<a href="40095.html#40114">GetRandomNum_0</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="40095.html#40114">GetRandomNum_0</a> if there's no carry over.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40112"></span>40112</td>
 <td class="instruction">LD A,255</td>
 <td class="comment-1" rowspan="1">Else, set <span class="register">A</span>=255.</td>
 </tr>
 <tr>
+<td class="asm-label">GetRandomNum_0</td>
 <td class="address-2"><span id="40114"></span>40114</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label">GetRandomNum_1</td>
 <td class="address-2"><span id="40115"></span>40115</td>
 <td class="instruction">LD IX,46866</td>
-<td class="comment-1" rowspan="2">Increase the LSB of the <a href="46810.html#46866">46866</a> by one.</td>
+<td class="comment-1" rowspan="2">Increase the LSB of the <a href="46810.html#46866">RandomCounter</a> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40119"></span>40119</td>
 <td class="instruction">INC (IX+1)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40122"></span>40122</td>
-<td class="instruction">JR NZ,<a href="40095.html#40127">40127</a></td>
-<td class="comment-1" rowspan="1">If the LSB has not "rolled over" to $00, skip updating the MSB on the following line. Jump to <a href="40095.html#40114">40114</a>.</td>
+<td class="instruction">JR NZ,<a href="40095.html#40127">GetRandomNum_2</a></td>
+<td class="comment-1" rowspan="1">If the LSB has not "rolled over" to $00, skip updating the MSB on the following line. Jump to <a href="40095.html#40114">GetRandomNum_0</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40124"></span>40124</td>
 <td class="instruction">INC (IX+0)</td>
-<td class="comment-1" rowspan="1">Increase the MSB of the <a href="46810.html#46866">46866</a> by one.</td>
+<td class="comment-1" rowspan="1">Increase the MSB of the <a href="46810.html#46866">RandomCounter</a> by one.</td>
 </tr>
 <tr>
+<td class="asm-label">GetRandomNum_2</td>
 <td class="address-2"><span id="40127"></span>40127</td>
 <td class="instruction">LD IX,(46866)</td>
-<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="46810.html#46866">46866</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="46810.html#46866">RandomCounter</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40131"></span>40131</td>
 <td class="instruction">LD A,(46862)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="46810.html#46862">46862</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="46810.html#46862">RandomSeed</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40134"></span>40134</td>
 <td class="instruction">ADC A,(IX+0)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40137"></span>40137</td>
 <td class="instruction">ADD IX,DE</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40139"></span>40139</td>
 <td class="instruction">XOR (IX+1)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40142"></span>40142</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40143"></span>40143</td>
 <td class="instruction">LD HL,46862</td>
-<td class="comment-1" rowspan="2">Compare <a href="46810.html#46862">46862</a> against <span class="register">A</span>.</td>
+<td class="comment-1" rowspan="2">Compare <a href="46810.html#46862">RandomSeed</a> against <span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40146"></span>40146</td>
 <td class="instruction">CP (HL)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40147"></span>40147</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40148"></span>40148</td>
-<td class="instruction">JR Z,<a href="40095.html#40115">40115</a></td>
-<td class="comment-1" rowspan="1">If the result of the comparison was zero, jump back to <a href="40095.html#40115">40115</a> to try again.</td>
+<td class="instruction">JR Z,<a href="40095.html#40115">GetRandomNum_1</a></td>
+<td class="comment-1" rowspan="1">If the result of the comparison was zero, jump back to <a href="40095.html#40115">GetRandomNum_1</a> to try again.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40150"></span>40150</td>
 <td class="instruction">LD (46862),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to <a href="46810.html#46862">46862</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to <a href="46810.html#46862">RandomSeed</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">GetRandomNum_3</td>
 <td class="address-2"><span id="40153"></span>40153</td>
 <td class="instruction">CP B</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40154"></span>40154</td>
-<td class="instruction">JR C,<a href="40095.html#40163">40163</a></td>
+<td class="instruction">JR C,<a href="40095.html#40163">GetRandomNum_4</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40156"></span>40156</td>
-<td class="instruction">JR Z,<a href="40095.html#40163">40163</a></td>
+<td class="instruction">JR Z,<a href="40095.html#40163">GetRandomNum_4</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40158"></span>40158</td>
 <td class="instruction">SRL A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40160"></span>40160</td>
-<td class="instruction">JP <a href="40095.html#40153">40153</a></td>
+<td class="instruction">JP <a href="40095.html#40153">GetRandomNum_3</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">GetRandomNum_4</td>
 <td class="address-2"><span id="40163"></span>40163</td>
 <td class="instruction">SUB C</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40164"></span>40164</td>
 <td class="instruction">POP BC</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">BC</span> and <span class="register">IX</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40165"></span>40165</td>
 <td class="instruction">POP IX</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="40167"></span>40167</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

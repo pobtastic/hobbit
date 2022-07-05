@@ -38,7 +38,7 @@ Next: <a href="9BCA.html">9BCA</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="70F3.html">70F3</a>, <a href="8D9D.html">8D9D</a>, <a href="962B.html">962B</a>, <a href="9C41.html">9C41</a>, <a href="9D37.html">9D37</a>, <a href="9EA0.html">9EA0</a>, <a href="A0AE.html">A0AE</a> and <a href="A541.html">A541</a>.
+Used by the routines at <a href="70F3.html">70F3</a>, <a href="8D9D.html">Action_Dir</a>, <a href="962B.html">YouSeeEntry</a>, <a href="9C41.html">9C41</a>, <a href="9D37.html">GetObjectLocationInIX</a>, <a href="9EA0.html">9EA0</a>, <a href="A0AE.html">A0AE</a> and <a href="A541.html">ActionClimbOut</a>.
 </div>
 </div>
 <table class="input">
@@ -62,20 +62,24 @@ Used by the routines at <a href="70F3.html">70F3</a>, <a href="8D9D.html">8D9D</
 </td>
 </tr>
 <tr>
+<td class="asm-label">LocateLocation</td>
 <td class="address-2"><span id="9bb1"></span>9BB1</td>
 <td class="instruction">CP $50</td>
-<td class="comment-1" rowspan="2">If the location ID is less than $50 jump to <a href="9BB1.html#9bb7">9BB7</a> to process it.</td>
+<td class="comment-1" rowspan="2">If the location ID is less than $50 jump to <a href="9BB1.html#9bb7">LocateLocation_Action</a> to process it.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bb3"></span>9BB3</td>
-<td class="instruction">JR C,<a href="9BB1.html#9bb7">$9BB7</a></td>
+<td class="instruction">JR C,<a href="9BB1.html#9bb7">LocateLocation_Action</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bb5"></span>9BB5</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1">Reset <span class="register">A</span> to $00.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bb6"></span>9BB6</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -91,26 +95,31 @@ Work out the location now <span class="register">A</span> is validated as a legi
 </td>
 </tr>
 <tr>
+<td class="asm-label">LocateLocation_Action</td>
 <td class="address-2"><span id="9bb7"></span>9BB7</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bb8"></span>9BB8</td>
 <td class="instruction">LD DE,$B9E0</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="B9E0.html">B9E0</a></td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="B9E0.html">LocationTable</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bbb"></span>9BBB</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bbc"></span>9BBC</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-1" rowspan="2">Store offset in the <span class="register">HL</span> register pair.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bbd"></span>9BBD</td>
 <td class="instruction">LD H,$00</td>
 </tr>
@@ -150,46 +159,56 @@ Calculate Location address, some examples would be; <table class="default">
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bbf"></span>9BBF</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-1" rowspan="2"><span class="register">HL</span>=(<span class="register">HL</span>*2)+<span class="register">DE</span></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bc0"></span>9BC0</td>
 <td class="instruction">ADD HL,DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bc1"></span>9BC1</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-1" rowspan="3"><span class="register">DE</span>=the location from the pointer in <span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bc2"></span>9BC2</td>
 <td class="instruction">INC HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bc3"></span>9BC3</td>
 <td class="instruction">LD D,(HL)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bc4"></span>9BC4</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-1" rowspan="2"><span class="register">IX</span>=<span class="register">DE</span> using the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bc5"></span>9BC5</td>
 <td class="instruction">POP IX</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bc7"></span>9BC7</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">HL</span> and <span class="register">DE</span> off the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bc8"></span>9BC8</td>
 <td class="instruction">POP DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9bc9"></span>9BC9</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

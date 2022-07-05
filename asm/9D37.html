@@ -38,7 +38,7 @@ Next: <a href="9D44.html">9D44</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="95ED.html">95ED</a> and <a href="9E95.html">9E95</a>.
+Used by the routines at <a href="95ED.html">LocationLit</a> and <a href="9E95.html">9E95</a>.
 </div>
 </div>
 <table class="output">
@@ -53,30 +53,36 @@ Used by the routines at <a href="95ED.html">95ED</a> and <a href="9E95.html">9E9
 </td>
 </tr>
 <tr>
+<td class="asm-label">GetObjectLocationInIX</td>
 <td class="address-2"><span id="9d37"></span>9D37</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9d38"></span>9D38</td>
 <td class="instruction">LD IX,($B70C)</td>
-<td class="comment-1" rowspan="2">Fetch the location ID for the object held by <a href="B6DA.html#b70c">B70C</a>.</td>
+<td class="comment-1" rowspan="2">Fetch the location ID for the object held by <a href="B6DA.html#b70c">ptrCurObject</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9d3c"></span>9D3C</td>
 <td class="instruction">LD A,(IX+$10)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9d3f"></span>9D3F</td>
-<td class="instruction">CALL <a href="9BB1.html">$9BB1</a></td>
-<td class="comment-1" rowspan="1">Call <a href="9BB1.html">9BB1</a>.</td>
+<td class="instruction">CALL <a href="9BB1.html">LocateLocation</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9BB1.html">LocateLocation</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9d42"></span>9D42</td>
 <td class="instruction">POP AF</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">AF</span> off the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9d43"></span>9D43</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

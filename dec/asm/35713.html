@@ -41,16 +41,19 @@ Next: <a href="35915.html">35915</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-2"><span id="35713"></span>35713</td>
 <td class="instruction">DEFB 1,0,0,13,2,0,0,2</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35721"></span>35721</td>
 <td class="instruction">DEFW 0</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35723"></span>35723</td>
 <td class="instruction">DEFB 0,0,0,0,0,0,0,0</td>
 <td class="comment-1" rowspan="1"></td>
@@ -66,124 +69,149 @@ This entry point is used by the routine at <a href="28915.html">28915</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">GetKey</td>
 <td class="address-2"><span id="35731"></span>35731</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="3">Stash <span class="register">HL</span>, <span class="register">IX</span> and <span class="register">BC</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35732"></span>35732</td>
 <td class="instruction">PUSH IX</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35734"></span>35734</td>
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35735"></span>35735</td>
-<td class="instruction">CALL <a href="35704.html">35704</a></td>
-<td class="comment-1" rowspan="1">Call <a href="35704.html">35704</a>.</td>
+<td class="instruction">CALL <a href="35704.html">Pause</a></td>
+<td class="comment-1" rowspan="1">Call <a href="35704.html">Pause</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35738"></span>35738</td>
 <td class="instruction">LD (35721),BC</td>
 <td class="comment-1" rowspan="1">Write $0000 to <a href="35713.html#35721">35721</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35742"></span>35742</td>
 <td class="instruction">LD HL,35723</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=$8B8B.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35745"></span>35745</td>
 <td class="instruction">LD IX,35713</td>
 <td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="35713.html">35713</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35749"></span>35749</td>
 <td class="instruction">LD BC,65278</td>
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=$FEFE.</td>
 </tr>
 <tr>
+<td class="asm-label">GetKey_Loop</td>
 <td class="address-2"><span id="35752"></span>35752</td>
 <td class="instruction">IN A,(C)</td>
 <td class="comment-1" rowspan="1">Read from the keyboard port.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35754"></span>35754</td>
 <td class="instruction">AND %00011111</td>
 <td class="comment-1" rowspan="1">Keep only bits 0-4.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35756"></span>35756</td>
 <td class="instruction">OR (IX+0)</td>
 <td class="comment-1" rowspan="1">OR against what <span class="register">IX</span> is pointing to.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35759"></span>35759</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35760"></span>35760</td>
 <td class="instruction">CPL</td>
 <td class="comment-1" rowspan="1">Invert the bits (1's complement on <span class="register">A</span>).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35761"></span>35761</td>
 <td class="instruction">AND (HL)</td>
 <td class="comment-1" rowspan="1">Keep bits based on what <span class="register">HL</span> is pointing to.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35762"></span>35762</td>
 <td class="instruction">CPL</td>
 <td class="comment-1" rowspan="1">Invert the bits back (1's complement on <span class="register">A</span>).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35763"></span>35763</td>
-<td class="instruction">JR Z,<a href="35713.html#35772">35772</a></td>
-<td class="comment-1" rowspan="1">If it is zero, jump to <a href="35713.html#35772">35772</a>.</td>
+<td class="instruction">JR Z,<a href="35713.html#35772">GetKey_</a></td>
+<td class="comment-1" rowspan="1">If it is zero, jump to <a href="35713.html#35772">GetKey_</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35765"></span>35765</td>
 <td class="instruction">LD (35721),BC</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">BC</span> at <a href="35713.html#35721">35721</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35769"></span>35769</td>
 <td class="instruction">LD (35721),A</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">A</span> at <a href="35713.html#35721">35721</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">GetKey_</td>
 <td class="address-2"><span id="35772"></span>35772</td>
 <td class="instruction">POP AF</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35773"></span>35773</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">A</span> at <span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35774"></span>35774</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increase <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35775"></span>35775</td>
 <td class="instruction">INC IX</td>
 <td class="comment-1" rowspan="1">Increase <span class="register">IX</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35777"></span>35777</td>
 <td class="instruction">RLC B</td>
 <td class="comment-1" rowspan="1">Rotate <span class="register">B</span> left.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35779"></span>35779</td>
-<td class="instruction">JR C,<a href="35713.html#35752">35752</a></td>
-<td class="comment-1" rowspan="1">If there is carry then this is not a match, jump back to <a href="35713.html#35752">35752</a> to try again.</td>
+<td class="instruction">JR C,<a href="35713.html#35752">GetKey_Loop</a></td>
+<td class="comment-1" rowspan="1">If there is carry then this is not a match, jump back to <a href="35713.html#35752">GetKey_Loop</a> to try again.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35781"></span>35781</td>
 <td class="instruction">LD BC,(35721)</td>
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=<a href="35713.html#35721">35721</a>.</td>
@@ -199,73 +227,88 @@ If no key match was found, end...
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35785"></span>35785</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">If <span class="register">BC</span> is $0000, jump to <a href="35713.html#35830">35830</a>.</td>
+<td class="comment-1" rowspan="3">If <span class="register">BC</span> is $0000, jump to <a href="35713.html#35830">GetKey_Return</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35786"></span>35786</td>
 <td class="instruction">OR C</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35787"></span>35787</td>
-<td class="instruction">JR Z,<a href="35713.html#35830">35830</a></td>
+<td class="instruction">JR Z,<a href="35713.html#35830">GetKey_Return</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35789"></span>35789</td>
 <td class="instruction">LD A,251</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=$FB.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-2"><span id="35791"></span>35791</td>
 <td class="instruction">ADD A,5</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">A</span> + 5.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35793"></span>35793</td>
 <td class="instruction">RRC B</td>
 <td class="comment-1" rowspan="1">Rotate <span class="register">B</span> right once.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35795"></span>35795</td>
 <td class="instruction">JR C,<a href="35713.html#35791">35791</a></td>
 <td class="comment-1" rowspan="1">If there is any carry, jump to <a href="35713.html#35791">35791</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35797"></span>35797</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one, ready for the following loop to begin in the same place.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-2"><span id="35798"></span>35798</td>
 <td class="instruction">INC A</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35799"></span>35799</td>
 <td class="instruction">RRC C</td>
 <td class="comment-1" rowspan="1">Rotate <span class="register">C</span> right once.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35801"></span>35801</td>
 <td class="instruction">JR C,<a href="35713.html#35798">35798</a></td>
 <td class="comment-1" rowspan="1">If there is any carry, jump to <a href="35713.html#35798">35798</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35803"></span>35803</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-1" rowspan="2">Create an offset in <span class="register">BC</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35804"></span>35804</td>
 <td class="instruction">LD B,0</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35806"></span>35806</td>
 <td class="instruction">LD HL,35835</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="35713.html#35835">35835</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="35713.html#35835">KeyboardMap1</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35809"></span>35809</td>
 <td class="instruction">LD A,254</td>
 <td class="comment-1" rowspan="2">Read from the keyboard port. <table class="default">
@@ -291,20 +334,24 @@ If no key match was found, end...
 </table></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35811"></span>35811</td>
 <td class="instruction">IN A,(254)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35813"></span>35813</td>
 <td class="instruction">AND %00000001</td>
 <td class="comment-1" rowspan="1">Keep only bit 0 (SHIFT).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35815"></span>35815</td>
-<td class="instruction">JR Z,<a href="35713.html#35825">35825</a></td>
-<td class="comment-1" rowspan="1">If it is zero, jump to <a href="35713.html#35825">35825</a>.</td>
+<td class="instruction">JR Z,<a href="35713.html#35825">GetKey_UseMap2</a></td>
+<td class="comment-1" rowspan="1">If it is zero, jump to <a href="35713.html#35825">GetKey_UseMap2</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35817"></span>35817</td>
 <td class="instruction">LD A,127</td>
 <td class="comment-1" rowspan="2">Read from the keyboard port. <table class="default">
@@ -330,128 +377,154 @@ If no key match was found, end...
 </table></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35819"></span>35819</td>
 <td class="instruction">IN A,(254)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35821"></span>35821</td>
 <td class="instruction">AND %00000010</td>
 <td class="comment-1" rowspan="1">Keep only bit 1 (FULL-STOP).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35823"></span>35823</td>
-<td class="instruction">JR NZ,<a href="35713.html#35828">35828</a></td>
-<td class="comment-1" rowspan="1">If it is not zero, jump to <a href="35713.html#35828">35828</a>.</td>
+<td class="instruction">JR NZ,<a href="35713.html#35828">GetKey_GetByte</a></td>
+<td class="comment-1" rowspan="1">If it is not zero, jump to <a href="35713.html#35828">GetKey_GetByte</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">GetKey_UseMap2</td>
 <td class="address-2"><span id="35825"></span>35825</td>
 <td class="instruction">LD HL,35875</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="35713.html#35875">35875</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="35713.html#35875">KeyboardMap2</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">GetKey_GetByte</td>
 <td class="address-2"><span id="35828"></span>35828</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<span class="register">HL</span> + keyboard map offset.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35829"></span>35829</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">HL</span> (fetched byte from keyboard map).</td>
 </tr>
 <tr>
+<td class="asm-label">GetKey_Return</td>
 <td class="address-2"><span id="35830"></span>35830</td>
 <td class="instruction">POP BC</td>
 <td class="comment-1" rowspan="3">Restore <span class="register">BC</span>, <span class="register">IX</span> and <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35831"></span>35831</td>
 <td class="instruction">POP IX</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35833"></span>35833</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35834"></span>35834</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
+<td class="asm-label">KeyboardMap1</td>
 <td class="address-1"><span id="35835"></span>35835</td>
 <td class="instruction">DEFB 0,90,88,67,86</td>
 <td class="comment-1" rowspan="1">--, &#90;, &#88;, &#67;, &#86;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35840"></span>35840</td>
 <td class="instruction">DEFB 65,83,68,70,71</td>
 <td class="comment-1" rowspan="1">&#65;, &#83;, &#68;, &#70;, &#71;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35845"></span>35845</td>
 <td class="instruction">DEFB 81,87,69,82,84</td>
 <td class="comment-1" rowspan="1">&#81;, &#87;, &#69;, &#82;, &#84;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35850"></span>35850</td>
 <td class="instruction">DEFB 0,0,0,0,8</td>
 <td class="comment-1" rowspan="1">--, --, --, --, &#8;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35855"></span>35855</td>
 <td class="instruction">DEFB 8,0,9,91,10</td>
 <td class="comment-1" rowspan="1">&#8;, --, &#9;, &#91;, &#10;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35860"></span>35860</td>
 <td class="instruction">DEFB 80,79,73,85,89</td>
 <td class="comment-1" rowspan="1">&#80;, &#79;, &#73;, &#85;, &#89;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35865"></span>35865</td>
 <td class="instruction">DEFB 13,76,75,74,72</td>
 <td class="comment-1" rowspan="1">&#13;, &#76;, &#75;, &#74;, &#72;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35870"></span>35870</td>
 <td class="instruction">DEFB 32,0,77,78,66</td>
 <td class="comment-1" rowspan="1">&#32;, --, &#77;, &#78;, &#66;</td>
 </tr>
 <tr>
+<td class="asm-label">KeyboardMap2</td>
 <td class="address-1"><span id="35875"></span>35875</td>
 <td class="instruction">DEFB 0,90,88,67,86</td>
 <td class="comment-1" rowspan="1">--, &#90;, &#88;, &#67;, &#86;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35880"></span>35880</td>
 <td class="instruction">DEFB 65,83,68,70,71</td>
 <td class="comment-1" rowspan="1">&#65;, &#83;, &#68;, &#70;, &#71;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35885"></span>35885</td>
 <td class="instruction">DEFB 81,87,69,82,84</td>
 <td class="comment-1" rowspan="1">&#81;, &#87;, &#69;, &#82;, &#84;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35890"></span>35890</td>
 <td class="instruction">DEFB 0,64,0,0,8</td>
 <td class="comment-1" rowspan="1">--, &#64;, --, --, &#8;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35895"></span>35895</td>
 <td class="instruction">DEFB 24,0,9,91,10</td>
 <td class="comment-1" rowspan="1">&#24;, --, &#9;, &#91;, &#10;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35900"></span>35900</td>
 <td class="instruction">DEFB 34,79,73,85,89</td>
 <td class="comment-1" rowspan="1">&#34;, &#79;, &#73;, &#85;, &#89;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35905"></span>35905</td>
 <td class="instruction">DEFB 13,76,75,74,72</td>
 <td class="comment-1" rowspan="1">&#13;, &#76;, &#75;, &#74;, &#72;</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="35910"></span>35910</td>
 <td class="instruction">DEFB 2,0,46,44,66</td>
 <td class="comment-1" rowspan="1">&#2;, --, &#46;, &#44;, &#66;</td>

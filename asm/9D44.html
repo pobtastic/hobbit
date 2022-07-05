@@ -38,7 +38,7 @@ Next: <a href="9D97.html">9D97</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="8C4B.html">8C4B</a>, <a href="8CA6.html">8CA6</a>, <a href="8D33.html">8D33</a>, <a href="8D9D.html">8D9D</a>, <a href="9034.html">9034</a>, <a href="9076.html">9076</a>, <a href="90EB.html">90EB</a>, <a href="910E.html">910E</a>, <a href="9171.html">9171</a>, <a href="939E.html">939E</a>, <a href="93DA.html">93DA</a>, <a href="A248.html">A248</a>, <a href="A2B4.html">A2B4</a>, <a href="A302.html">A302</a>, <a href="A3E6.html">A3E6</a> and <a href="A541.html">A541</a>.
+Used by the routines at <a href="8C4B.html">Action_Look</a>, <a href="8CA6.html">Action_Putdown</a>, <a href="8D33.html">Action_Pickup</a>, <a href="8D9D.html">Action_Dir</a>, <a href="9034.html">Action_Talkto</a>, <a href="9076.html">Action_Shoot</a>, <a href="90EB.html">Action_Inventory</a>, <a href="910E.html">910E</a>, <a href="9171.html">Action_Attack</a>, <a href="939E.html">Action_Give</a>, <a href="93DA.html">Action_Examine</a>, <a href="A248.html">ActionTie</a>, <a href="A2B4.html">ActionUntie</a>, <a href="A302.html">ActionBurn</a>, <a href="A3E6.html">ActionCapture</a> and <a href="A541.html">ActionClimbOut</a>.
 </div>
 </div>
 </td>
@@ -81,7 +81,7 @@ Used by the routines at <a href="8C4B.html">8C4B</a>, <a href="8CA6.html">8CA6</
 <span id="9d50"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="9171.html">9171</a> and <a href="93DA.html">93DA</a>.
+This entry point is used by the routines at <a href="9171.html">Action_Attack</a> and <a href="93DA.html">Action_Examine</a>.
 </div>
 </div>
 </td>
@@ -89,14 +89,14 @@ This entry point is used by the routines at <a href="9171.html">9171</a> and <a 
 <tr>
 <td class="address-2"><span id="9d50"></span>9D50</td>
 <td class="instruction">LD A,($B6E8)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="B6DA.html#b6e8">B6E8</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<a href="B6DA.html#b6e8">CurrentObject</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="9d53"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="96B3.html">96B3</a> and <a href="A541.html">A541</a>.
+This entry point is used by the routines at <a href="96B3.html">96B3</a> and <a href="A541.html">ActionClimbOut</a>.
 </div>
 </div>
 </td>
@@ -116,8 +116,8 @@ This entry point is used by the routines at <a href="96B3.html">96B3</a> and <a 
 </tr>
 <tr>
 <td class="address-1"><span id="9d58"></span>9D58</td>
-<td class="instruction">CALL <a href="9BCA.html">$9BCA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="9BCA.html">9BCA</a>.</td>
+<td class="instruction">CALL <a href="9BCA.html">LocateObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9BCA.html">LocateObject</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="9d5b"></span>9D5B</td>
@@ -131,8 +131,8 @@ This entry point is used by the routines at <a href="96B3.html">96B3</a> and <a 
 </tr>
 <tr>
 <td class="address-2"><span id="9d62"></span>9D62</td>
-<td class="instruction">CALL <a href="9BA9.html">$9BA9</a></td>
-<td class="comment-1" rowspan="1">Call <a href="9BA9.html">9BA9</a>.</td>
+<td class="instruction">CALL <a href="9BA9.html">Step3ByteTable_Next</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9BA9.html">Step3ByteTable_Next</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="9d65"></span>9D65</td>
@@ -190,8 +190,8 @@ This entry point is used by the routines at <a href="96B3.html">96B3</a> and <a 
 </tr>
 <tr>
 <td class="address-1"><span id="9d85"></span>9D85</td>
-<td class="instruction">CALL <a href="72DD.html">$72DD</a></td>
-<td class="comment-1" rowspan="1">Call <a href="72DD.html">72DD</a>.</td>
+<td class="instruction">CALL <a href="72DD.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="72DD.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="9d88"></span>9D88</td>

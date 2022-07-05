@@ -41,50 +41,60 @@ Next: <a href="34166.html">34166</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label">SaveGame</td>
 <td class="address-2"><span id="33996"></span>33996</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">IX</span> and <span class="register">DE</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="33998"></span>33998</td>
 <td class="instruction">PUSH DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="33999"></span>33999</td>
 <td class="instruction">LD DE,46827</td>
-<td class="comment-1" rowspan="3">Call <a href="33971.html">33971</a> with <span class="register">DE</span>=<a href="46810.html#46827">46827</a> and <span class="register">HL</span>=$C9E2.</td>
+<td class="comment-1" rowspan="3">Call <a href="33971.html">ThreeByteCopy</a> with <span class="register">DE</span>=<a href="46810.html#46827">46827</a> and <span class="register">HL</span>=$C9E2.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34002"></span>34002</td>
 <td class="instruction">LD HL,51682</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34005"></span>34005</td>
-<td class="instruction">CALL <a href="33971.html">33971</a></td>
+<td class="instruction">CALL <a href="33971.html">ThreeByteCopy</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34008"></span>34008</td>
 <td class="instruction">LD A,1</td>
-<td class="comment-1" rowspan="2">Write $01 to <a href="46810.html#46849">46849</a>.</td>
+<td class="comment-1" rowspan="2">Write $01 to <a href="46810.html#46849">WaitCoutdown</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34010"></span>34010</td>
 <td class="instruction">LD (46849),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34013"></span>34013</td>
 <td class="instruction">LD HL,45890</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45890">"start tape then press any key"</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34016"></span>34016</td>
-<td class="instruction">CALL <a href="29405.html">29405</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29405.html">29405</a>.</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34019"></span>34019</td>
-<td class="instruction">CALL <a href="33977.html">33977</a></td>
-<td class="comment-1" rowspan="1">Call <a href="33977.html">33977</a>.</td>
+<td class="instruction">CALL <a href="33977.html">DebounceAnyKey</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33977.html">DebounceAnyKey</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -97,21 +107,25 @@ Save "flags".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34022"></span>34022</td>
 <td class="instruction">LD A,255</td>
 <td class="comment-1" rowspan="1">Set the save as a "data block".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34024"></span>34024</td>
 <td class="instruction">LD IX,46827</td>
 <td class="comment-1" rowspan="1">Set the start address to; <a href="46810.html#46827">46827</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34028"></span>34028</td>
 <td class="instruction">LD DE,29</td>
 <td class="comment-1" rowspan="1">Set the block length to; $001D bytes.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34031"></span>34031</td>
 <td class="instruction">CALL 1218</td>
 <td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.</td>
@@ -127,21 +141,25 @@ Save "objects".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34034"></span>34034</td>
 <td class="instruction">LD A,255</td>
 <td class="comment-1" rowspan="1">Set the save as a "data block".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34036"></span>34036</td>
 <td class="instruction">LD IX,49435</td>
-<td class="comment-1" rowspan="1">Set the start address to; <a href="49435.html">49435</a>.</td>
+<td class="comment-1" rowspan="1">Set the start address to; <a href="49435.html">Objects</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34040"></span>34040</td>
 <td class="instruction">LD DE,1557</td>
 <td class="comment-1" rowspan="1">Set the block length to; $0615 bytes.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34043"></span>34043</td>
 <td class="instruction">CALL 1218</td>
 <td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.</td>
@@ -157,21 +175,25 @@ Save ...
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34046"></span>34046</td>
 <td class="instruction">LD A,255</td>
 <td class="comment-1" rowspan="1">Set the save as a "data block".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34048"></span>34048</td>
 <td class="instruction">LD IX,51844</td>
 <td class="comment-1" rowspan="1">Set the start address to; $CA84.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34052"></span>34052</td>
 <td class="instruction">LD DE,191</td>
 <td class="comment-1" rowspan="1">Set the block length to; $00BF bytes.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34055"></span>34055</td>
 <td class="instruction">CALL 1218</td>
 <td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.</td>
@@ -187,21 +209,25 @@ Save "locations".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34058"></span>34058</td>
 <td class="instruction">LD A,255</td>
 <td class="comment-1" rowspan="1">Set the save as a "data block".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34060"></span>34060</td>
 <td class="instruction">LD IX,47754</td>
-<td class="comment-1" rowspan="1">Set the start address to; <a href="47754.html">47754</a>.</td>
+<td class="comment-1" rowspan="1">Set the start address to; <a href="47754.html">Locations</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34064"></span>34064</td>
 <td class="instruction">LD DE,1497</td>
 <td class="comment-1" rowspan="1">Set the block length to; $05D9 bytes.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34067"></span>34067</td>
 <td class="instruction">CALL 1218</td>
 <td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.</td>
@@ -217,19 +243,22 @@ Begin verification.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34070"></span>34070</td>
 <td class="instruction">LD HL,45988</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45988">"rewind and prepare tape for verification -- then hit any key"</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34073"></span>34073</td>
-<td class="instruction">CALL <a href="29405.html">29405</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29405.html">29405</a>.</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34076"></span>34076</td>
-<td class="instruction">CALL <a href="33977.html">33977</a></td>
-<td class="comment-1" rowspan="1">Call <a href="33977.html">33977</a>.</td>
+<td class="instruction">CALL <a href="33977.html">DebounceAnyKey</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33977.html">DebounceAnyKey</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -242,29 +271,34 @@ Verify "flags".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34079"></span>34079</td>
 <td class="instruction">LD A,255</td>
 <td class="comment-1" rowspan="1">Set the load as a "data block".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34081"></span>34081</td>
 <td class="instruction">AND A</td>
 <td class="comment-1" rowspan="1">Reset the carry flag.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34082"></span>34082</td>
 <td class="instruction">LD IX,46827</td>
 <td class="comment-1" rowspan="1">Set the start address to; <a href="46810.html#46827">46827</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34086"></span>34086</td>
 <td class="instruction">LD DE,29</td>
 <td class="comment-1" rowspan="1">Set the block length to; $001D bytes.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34089"></span>34089</td>
-<td class="instruction">CALL <a href="33996.html#34138">34138</a></td>
-<td class="comment-1" rowspan="1">Call <a href="33996.html#34138">34138</a>.</td>
+<td class="instruction">CALL <a href="33996.html#34138">VerifyBlock</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33996.html#34138">VerifyBlock</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -277,29 +311,34 @@ Verify "objects".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34092"></span>34092</td>
 <td class="instruction">LD A,255</td>
 <td class="comment-1" rowspan="1">Set the load as a "data block".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34094"></span>34094</td>
 <td class="instruction">AND A</td>
 <td class="comment-1" rowspan="1">Reset the carry flag.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34095"></span>34095</td>
 <td class="instruction">LD IX,49435</td>
-<td class="comment-1" rowspan="1">Set the start address to; <a href="49435.html">49435</a>.</td>
+<td class="comment-1" rowspan="1">Set the start address to; <a href="49435.html">Objects</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34099"></span>34099</td>
 <td class="instruction">LD DE,1557</td>
 <td class="comment-1" rowspan="1">Set the block length to; $0615 bytes.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34102"></span>34102</td>
-<td class="instruction">CALL <a href="33996.html#34138">34138</a></td>
-<td class="comment-1" rowspan="1">Call <a href="33996.html#34138">34138</a>.</td>
+<td class="instruction">CALL <a href="33996.html#34138">VerifyBlock</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33996.html#34138">VerifyBlock</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -312,29 +351,34 @@ Verify ...
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34105"></span>34105</td>
 <td class="instruction">LD A,255</td>
 <td class="comment-1" rowspan="1">Set the load as a "data block".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34107"></span>34107</td>
 <td class="instruction">AND A</td>
 <td class="comment-1" rowspan="1">Reset the carry flag.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34108"></span>34108</td>
 <td class="instruction">LD IX,51844</td>
 <td class="comment-1" rowspan="1">Set the start address to; $CA84.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34112"></span>34112</td>
 <td class="instruction">LD DE,191</td>
 <td class="comment-1" rowspan="1">Set the block length to; $00BF bytes.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34115"></span>34115</td>
-<td class="instruction">CALL <a href="33996.html#34138">34138</a></td>
-<td class="comment-1" rowspan="1">Call <a href="33996.html#34138">34138</a>.</td>
+<td class="instruction">CALL <a href="33996.html#34138">VerifyBlock</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33996.html#34138">VerifyBlock</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -347,29 +391,34 @@ Verify "locations".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34118"></span>34118</td>
 <td class="instruction">LD A,255</td>
 <td class="comment-1" rowspan="1">Set the load as a "data block".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34120"></span>34120</td>
 <td class="instruction">AND A</td>
 <td class="comment-1" rowspan="1">Reset the carry flag.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34121"></span>34121</td>
 <td class="instruction">LD IX,47754</td>
-<td class="comment-1" rowspan="1">Set the start address to; <a href="47754.html">47754</a>.</td>
+<td class="comment-1" rowspan="1">Set the start address to; <a href="47754.html">Locations</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34125"></span>34125</td>
 <td class="instruction">LD DE,1497</td>
 <td class="comment-1" rowspan="1">Set the block length to; $05D9 bytes.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34128"></span>34128</td>
-<td class="instruction">CALL <a href="33996.html#34138">34138</a></td>
-<td class="comment-1" rowspan="1">Call <a href="33996.html#34138">34138</a>.</td>
+<td class="instruction">CALL <a href="33996.html#34138">VerifyBlock</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33996.html#34138">VerifyBlock</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -382,20 +431,24 @@ Success!
 </td>
 </tr>
 <tr>
+<td class="asm-label">SaveGame_Done</td>
 <td class="address-2"><span id="34131"></span>34131</td>
 <td class="instruction">DI</td>
 <td class="comment-1" rowspan="1">Disable interrupts.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34132"></span>34132</td>
 <td class="instruction">POP DE</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">IX</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34133"></span>34133</td>
 <td class="instruction">POP IX</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34135"></span>34135</td>
 <td class="instruction">JP <a href="33459.html">33459</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="33459.html">33459</a>.</td>
@@ -411,76 +464,89 @@ Verify block.
 </td>
 </tr>
 <tr>
+<td class="asm-label">VerifyBlock</td>
 <td class="address-2"><span id="34138"></span>34138</td>
 <td class="instruction">CALL 1366</td>
 <td class="comment-1" rowspan="1">Call <a href="https://skoolkid.github.io/rom/asm/0556.html">LD_BYTES</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34141"></span>34141</td>
 <td class="instruction">RET C</td>
 <td class="comment-1" rowspan="1">Return if the carry flag is set.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34142"></span>34142</td>
 <td class="instruction">LD A,1</td>
-<td class="comment-1" rowspan="2">Write $01 to <a href="46810.html#46849">46849</a>.</td>
+<td class="comment-1" rowspan="2">Write $01 to <a href="46810.html#46849">WaitCoutdown</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34144"></span>34144</td>
 <td class="instruction">LD (46849),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34147"></span>34147</td>
 <td class="instruction">LD HL,45953</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45953">"tape error - hit any key to continue[0x15]"</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34150"></span>34150</td>
-<td class="instruction">CALL <a href="29405.html">29405</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29405.html">29405</a>.</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="34153"></span>
 <div class="comments">
 <div class="paragraph">
-This is almost a carbon copy of <a href="33775.html#33857">33857</a>.
+This is almost a carbon copy of <a href="33775.html#33857">WaitForKey</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">VerifyBlock_WaitForKey</td>
 <td class="address-2"><span id="34153"></span>34153</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="2">Read from the keyboard port.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34154"></span>34154</td>
 <td class="instruction">IN A,(254)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34156"></span>34156</td>
 <td class="instruction">AND %00011111</td>
 <td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34158"></span>34158</td>
 <td class="instruction">CP 31</td>
-<td class="comment-1" rowspan="2">Loop back to <a href="33996.html#34153">34153</a> until any key has been pressed.</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="33996.html#34153">VerifyBlock_WaitForKey</a> until any key has been pressed.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34160"></span>34160</td>
-<td class="instruction">JR Z,<a href="33996.html#34153">34153</a></td>
+<td class="instruction">JR Z,<a href="33996.html#34153">VerifyBlock_WaitForKey</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34162"></span>34162</td>
 <td class="instruction">POP DE</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="34163"></span>34163</td>
-<td class="instruction">JP <a href="33996.html#34131">34131</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="33996.html#34131">34131</a>.</td>
+<td class="instruction">JP <a href="33996.html#34131">SaveGame_Done</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="33996.html#34131">SaveGame_Done</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

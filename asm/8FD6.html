@@ -41,59 +41,70 @@ Next: <a href="8FF5.html">8FF5</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Action_Follow</td>
 <td class="address-2"><span id="8fd6"></span>8FD6</td>
 <td class="instruction">LD IX,($B70C)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8fda"></span>8FDA</td>
 <td class="instruction">LD B,(IX+$10)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8fdd"></span>8FDD</td>
 <td class="instruction">LD IX,($B708)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8fe1"></span>8FE1</td>
 <td class="instruction">LD A,(IX+$10)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8fe4"></span>8FE4</td>
 <td class="instruction">CP B</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8fe5"></span>8FE5</td>
-<td class="instruction">JR Z,<a href="8FD6.html#8fef">$8FEF</a></td>
+<td class="instruction">JR Z,<a href="8FD6.html#8fef">Action_Follow_0</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8fe7"></span>8FE7</td>
 <td class="instruction">CALL <a href="9F25.html#9f2d">$9F2D</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8fea"></span>8FEA</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8fec"></span>8FEC</td>
-<td class="instruction">JP NZ,<a href="8D9D.html#8f3e">$8F3E</a></td>
+<td class="instruction">JP NZ,<a href="8D9D.html#8f3e">Action_Dir_21</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">Action_Follow_0</td>
 <td class="address-2"><span id="8fef"></span>8FEF</td>
 <td class="instruction">LD HL,$AFE9</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="AD7D.html#afe9">"i cannot follow[0x07] from here[0x15]"</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8ff2"></span>8FF2</td>
-<td class="instruction">JP <a href="72DD.html">$72DD</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="72DD.html">72DD</a>.</td>
+<td class="instruction">JP <a href="72DD.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="72DD.html">PrintMsg</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

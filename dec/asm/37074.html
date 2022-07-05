@@ -38,73 +38,84 @@ Next: <a href="37099.html">37099</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="36253.html">36253</a>, <a href="37850.html">37850</a>, <a href="38579.html">38579</a>, <a href="42305.html">42305</a> and <a href="51178.html">51178</a>.
+Used by the routines at <a href="36253.html">Action_Dir</a>, <a href="37850.html">Action_Examine</a>, <a href="38579.html">38579</a>, <a href="42305.html">ActionClimbOut</a> and <a href="51178.html">EventForestriver</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">YouAreDead</td>
 <td class="address-2"><span id="37074"></span>37074</td>
 <td class="instruction">SUB A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37075"></span>37075</td>
 <td class="instruction">LD (46826),A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37078"></span>37078</td>
 <td class="instruction">LD HL,45041</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45041">"You are dead"</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37081"></span>37081</td>
-<td class="instruction">CALL <a href="29405.html">29405</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29405.html">29405</a>.</td>
+<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37084"></span>37084</td>
-<td class="instruction">CALL <a href="33775.html#33781">33781</a></td>
-<td class="comment-1" rowspan="1">Call <a href="33775.html#33781">33781</a>.</td>
+<td class="instruction">CALL <a href="33775.html#33781">GameOver_Start</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33775.html#33781">GameOver_Start</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="37087"></span>
 <div class="comments">
 <div class="paragraph">
-This is almost a carbon copy of <a href="33775.html#33857">33857</a> only differing in that it ends with a jump to <a href="27648.html#27687">27687</a> and doesn't set a border colour.
+This is almost a carbon copy of <a href="33775.html#33857">WaitForKey</a> only differing in that it ends with a jump to <a href="27648.html#27687">ReStart</a> and doesn't set a border colour.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">YouAreDead_WaitForKey</td>
 <td class="address-2"><span id="37087"></span>37087</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="2">Read from the keyboard port.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37088"></span>37088</td>
 <td class="instruction">IN A,(254)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37090"></span>37090</td>
 <td class="instruction">AND %00011111</td>
 <td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37092"></span>37092</td>
 <td class="instruction">CP 31</td>
-<td class="comment-1" rowspan="2">Loop back to <a href="37074.html#37087">37087</a> until any key has been pressed.</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="37074.html#37087">YouAreDead_WaitForKey</a> until any key has been pressed.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37094"></span>37094</td>
-<td class="instruction">JR Z,<a href="37074.html#37087">37087</a></td>
+<td class="instruction">JR Z,<a href="37074.html#37087">YouAreDead_WaitForKey</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37096"></span>37096</td>
-<td class="instruction">JP <a href="27648.html#27687">27687</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="27648.html#27687">27687</a>.</td>
+<td class="instruction">JP <a href="27648.html#27687">ReStart</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="27648.html#27687">ReStart</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -38,81 +38,98 @@ Next: <a href="28658.html">28658</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="27648.html">27648</a>.
+Used by the routine at <a href="27648.html">Start</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">ClearScreen</td>
 <td class="address-2"><span id="28627"></span>28627</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="3">Push <span class="register">HL</span>, <span class="register">DE</span> and <span class="register">BC</span> onto the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28628"></span>28628</td>
 <td class="instruction">PUSH DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28629"></span>28629</td>
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28630"></span>28630</td>
 <td class="instruction">LD A,7</td>
 <td class="comment-1" rowspan="2">Set the border colour to white.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28632"></span>28632</td>
 <td class="instruction">OUT (254),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28634"></span>28634</td>
 <td class="instruction">LD HL,16384</td>
 <td class="comment-1" rowspan="5">Write $00 to $1800 memory locations (clearing the screen buffer).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28637"></span>28637</td>
 <td class="instruction">LD DE,16385</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28640"></span>28640</td>
 <td class="instruction">LD BC,6144</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28643"></span>28643</td>
 <td class="instruction">LD (HL),0</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28645"></span>28645</td>
 <td class="instruction">LDIR</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28647"></span>28647</td>
 <td class="instruction">LD BC,768</td>
 <td class="comment-1" rowspan="3">Write $38 to the following $300 memory locations (the attribute buffer).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28650"></span>28650</td>
 <td class="instruction">LD (HL),56</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28652"></span>28652</td>
 <td class="instruction">LDIR</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28654"></span>28654</td>
 <td class="instruction">POP BC</td>
 <td class="comment-1" rowspan="3">Pop <span class="register">HL</span>, <span class="register">DE</span> and <span class="register">BC</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28655"></span>28655</td>
 <td class="instruction">POP DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28656"></span>28656</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="28657"></span>28657</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

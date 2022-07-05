@@ -44,19 +44,23 @@ Used by the routine at <a href="869B.html">869B</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">ScrollLine</td>
 <td class="address-2"><span id="876b"></span>876B</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-1" rowspan="4">Push <span class="register">AF</span>, <span class="register">BC</span>, <span class="register">HL</span> and <span class="register">DE</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="876c"></span>876C</td>
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="876d"></span>876D</td>
 <td class="instruction">PUSH HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="876e"></span>876E</td>
 <td class="instruction">PUSH DE</td>
 </tr>
@@ -71,143 +75,173 @@ Set up the initial values.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="876f"></span>876F</td>
 <td class="instruction">LD HL,$4020</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=$4020 (source).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8772"></span>8772</td>
 <td class="instruction">LD DE,$4000</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=$4000 (target).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8775"></span>8775</td>
 <td class="instruction">LD A,$11</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=$11 (number of lines to shift).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8777"></span>8777</td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=$00.</td>
 </tr>
 <tr>
+<td class="asm-label">ScrollLine_Loop</td>
 <td class="address-2"><span id="8779"></span>8779</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">DE</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="877a"></span>877A</td>
 <td class="instruction">PUSH DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="877b"></span>877B</td>
 <td class="instruction">LD C,$08</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=$08 (byte counter).</td>
 </tr>
 <tr>
+<td class="asm-label">ScrollLine_Line</td>
 <td class="address-2"><span id="877d"></span>877D</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="3">Stash <span class="register">HL</span>, <span class="register">DE</span> and <span class="register">BC</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="877e"></span>877E</td>
 <td class="instruction">PUSH DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="877f"></span>877F</td>
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8780"></span>8780</td>
 <td class="instruction">LD C,$20</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=$20 (column counter - i.e. one row).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8782"></span>8782</td>
 <td class="instruction">LDIR</td>
 <td class="comment-1" rowspan="1">Copy the row up one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8784"></span>8784</td>
 <td class="instruction">POP BC</td>
 <td class="comment-1" rowspan="3">Restore <span class="register">BC</span>, <span class="register">DE</span> and <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8785"></span>8785</td>
 <td class="instruction">POP DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8786"></span>8786</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8787"></span>8787</td>
 <td class="instruction">INC H</td>
 <td class="comment-1" rowspan="2">Increment the MSB of <span class="register">HL</span> and <span class="register">DE</span> by one to point to the next line down.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8788"></span>8788</td>
 <td class="instruction">INC D</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8789"></span>8789</td>
 <td class="instruction">DEC C</td>
 <td class="comment-1" rowspan="1">Decrease our byte counter in <span class="register">C</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="878a"></span>878A</td>
-<td class="instruction">JR NZ,<a href="876B.html#877d">$877D</a></td>
-<td class="comment-1" rowspan="1">Jump back to <a href="876B.html#877d">877D</a> unless the whole line is moved (i.e. <span class="register">C</span> is now zero).</td>
+<td class="instruction">JR NZ,<a href="876B.html#877d">ScrollLine_Line</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="876B.html#877d">ScrollLine_Line</a> unless the whole line is moved (i.e. <span class="register">C</span> is now zero).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="878c"></span>878C</td>
 <td class="instruction">POP DE</td>
-<td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">HL</span> from the stack. They are now at their values prior to the line move <a href="876B.html#8779">8779</a>.</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">HL</span> from the stack. They are now at their values prior to the line move <a href="876B.html#8779">ScrollLine_Loop</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="878d"></span>878D</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="878e"></span>878E</td>
 <td class="instruction">LD C,$20</td>
 <td class="comment-1" rowspan="5"><span class="register">DE</span>=<span class="register">DE</span> + $20 and <span class="register">HL</span>=<span class="register">HL</span> + $20.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8790"></span>8790</td>
 <td class="instruction">ADD HL,BC</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8791"></span>8791</td>
 <td class="instruction">EX DE,HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8792"></span>8792</td>
 <td class="instruction">ADD HL,BC</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8793"></span>8793</td>
 <td class="instruction">EX DE,HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8794"></span>8794</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8795"></span>8795</td>
 <td class="instruction">LD A,D</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">D</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8796"></span>8796</td>
 <td class="instruction">AND %00000111</td>
 <td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8798"></span>8798</td>
-<td class="instruction">JR Z,<a href="876B.html#879e">$879E</a></td>
-<td class="comment-1" rowspan="1">Skip to <a href="876B.html#879e">879E</a> if zero.</td>
+<td class="instruction">JR Z,<a href="876B.html#879e">ScrollLine_SkipDE</a></td>
+<td class="comment-1" rowspan="1">Skip to <a href="876B.html#879e">ScrollLine_SkipDE</a> if zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -220,32 +254,38 @@ Handle changing the target between each screen buffer area.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="879a"></span>879A</td>
 <td class="instruction">LD A,D</td>
 <td class="comment-1" rowspan="3"><span class="register">D</span>=<span class="register">D</span> + $07.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="879b"></span>879B</td>
 <td class="instruction">ADD A,$07</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="879d"></span>879D</td>
 <td class="instruction">LD D,A</td>
 </tr>
 <tr>
+<td class="asm-label">ScrollLine_SkipDE</td>
 <td class="address-2"><span id="879e"></span>879E</td>
 <td class="instruction">LD A,H</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">H</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="879f"></span>879F</td>
 <td class="instruction">AND %00000111</td>
 <td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87a1"></span>87A1</td>
-<td class="instruction">JR Z,<a href="876B.html#87a7">$87A7</a></td>
-<td class="comment-1" rowspan="1">Skip to <a href="876B.html#87a7">87A7</a> if zero.</td>
+<td class="instruction">JR Z,<a href="876B.html#87a7">ScrollLine_SkipHL</a></td>
+<td class="comment-1" rowspan="1">Skip to <a href="876B.html#87a7">ScrollLine_SkipHL</a> if zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -258,32 +298,38 @@ Handle changing the source between each screen buffer area.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87a3"></span>87A3</td>
 <td class="instruction">LD A,H</td>
 <td class="comment-1" rowspan="3"><span class="register">H</span>=<span class="register">H</span> + $07.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87a4"></span>87A4</td>
 <td class="instruction">ADD A,$07</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87a6"></span>87A6</td>
 <td class="instruction">LD H,A</td>
 </tr>
 <tr>
+<td class="asm-label">ScrollLine_SkipHL</td>
 <td class="address-2"><span id="87a7"></span>87A7</td>
 <td class="instruction">POP AF</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">AF</span> containing the line counter from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87a8"></span>87A8</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87a9"></span>87A9</td>
-<td class="instruction">JR NZ,<a href="876B.html#8779">$8779</a></td>
-<td class="comment-1" rowspan="1">Loop back to <a href="876B.html#8779">8779</a> until the line counter is zero.</td>
+<td class="instruction">JR NZ,<a href="876B.html#8779">ScrollLine_Loop</a></td>
+<td class="comment-1" rowspan="1">Loop back to <a href="876B.html#8779">ScrollLine_Loop</a> until the line counter is zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -296,19 +342,23 @@ Handle the attributes.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87ab"></span>87AB</td>
 <td class="instruction">LD HL,$5820</td>
 <td class="comment-1" rowspan="4">Move the attributes up one character block.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87ae"></span>87AE</td>
 <td class="instruction">LD DE,$5800</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87b1"></span>87B1</td>
 <td class="instruction">LD BC,$0220</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87b4"></span>87B4</td>
 <td class="instruction">LDIR</td>
 </tr>
@@ -323,34 +373,40 @@ This creates the indent.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87b6"></span>87B6</td>
 <td class="instruction">LD B,$2A</td>
 <td class="comment-1" rowspan="1">Set a counter for $2A spaces.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87b8"></span>87B8</td>
 <td class="instruction">LD HL,$5020</td>
 <td class="comment-1" rowspan="1">Set the target screen location to $5020.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87bb"></span>87BB</td>
 <td class="instruction">LD C,$01</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=$01 (bit offset).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87bd"></span>87BD</td>
 <td class="instruction">LD A,$20</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=ASCII "SPACE".</td>
 </tr>
 <tr>
+<td class="asm-label">ScrollLine_Spacing</td>
 <td class="address-2"><span id="87bf"></span>87BF</td>
-<td class="instruction">CALL <a href="87C9.html">$87C9</a></td>
-<td class="comment-1" rowspan="1">Call <a href="87C9.html">87C9</a>.</td>
+<td class="instruction">CALL <a href="87C9.html">PrintPropChar</a></td>
+<td class="comment-1" rowspan="1">Call <a href="87C9.html">PrintPropChar</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87c2"></span>87C2</td>
-<td class="instruction">DJNZ <a href="876B.html#87bf">$87BF</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="876B.html#87bf">87BF</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="876B.html#87bf">ScrollLine_Spacing</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="876B.html#87bf">ScrollLine_Spacing</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -363,23 +419,28 @@ Housekeeping and return.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87c4"></span>87C4</td>
 <td class="instruction">POP DE</td>
 <td class="comment-1" rowspan="4">Restore <span class="register">DE</span>, <span class="register">HL</span>, <span class="register">BC</span> and <span class="register">AF</span> off the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87c5"></span>87C5</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87c6"></span>87C6</td>
 <td class="instruction">POP BC</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87c7"></span>87C7</td>
 <td class="instruction">POP AF</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="87c8"></span>87C8</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
