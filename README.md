@@ -9,7 +9,7 @@ Created using [SkoolKit](https://skoolkit.ca).
 Browse the latest release:
 
 * [The Hobbit disassembly](https://pobtastic.github.io/hobbit/) (hexadecimal; mirror [here](http://skoolkit.arcadegeek.co.uk/hobbit/))
-* [The Hobbit disassembly](https://pobtastic.github.io/hobbit/dec/) (hexadecimal; mirror [here](http://skoolkit.arcadegeek.co.uk/hobbit/dec/))
+* [The Hobbit disassembly](https://pobtastic.github.io/hobbit/dec/) (decimal; mirror [here](http://skoolkit.arcadegeek.co.uk/hobbit/dec/))
 
 To build the current development version, first either install SkoolKit, or
 make a clone of the [SkoolKit repository](https://github.com/skoolkid/skoolkit)
