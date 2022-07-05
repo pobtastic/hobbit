@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 9D97</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9D44.html">9D44</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#9d97">Map</a></td>
+<td class="next">
+Next: <a href="9DBD.html">9DBD</a>
+</td>
+</tr>
+</table>
+<div class="description">9D97: Routine at 9D97</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="90EB.html">90EB</a>, <a href="910E.html">910E</a>, <a href="93DA.html">93DA</a>, <a href="A050.html">A050</a> and <a href="A248.html">A248</a>.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">The number of objects</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="9d97"></span>9D97</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="3">Stash <span class="register">IX</span>, <span class="register">IY</span> and <span class="register">BC</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9d99"></span>9D99</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9d9b"></span>9D9B</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9d9c"></span>9D9C</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-1" rowspan="1">Initialise the count of the number of objects.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9d9e"></span>9D9E</td>
+<td class="instruction">LD IX,$C060</td>
+<td class="comment-1" rowspan="1">Set <span class="register">IX</span> to $C060 which is 3 bytes less than the start of the <a href="C063.html">object table</a> due to the following line adding $0003 and moving us on to the first record.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="9da2"></span>9DA2</td>
+<td class="instruction">CALL <a href="9BA9.html">$9BA9</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9BA9.html">9BA9</a> to fetch the next record in <span class="register">IY</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9da5"></span>9DA5</td>
+<td class="instruction">JR Z,<a href="9D97.html#9db6">$9DB6</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9D97.html#9db6">9DB6</a> if we've reached the end of the table data.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9da7"></span>9DA7</td>
+<td class="instruction">CP (IY+$01)</td>
+<td class="comment-1" rowspan="2">Don't count this record if it's a "Mother Object", if it is then loop back to <a href="9D97.html#9da2">9DA2</a> to continue.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9daa"></span>9DAA</td>
+<td class="instruction">JR NZ,<a href="9D97.html#9da2">$9DA2</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9dac"></span>9DAC</td>
+<td class="instruction">BIT 7,(IY+$07)</td>
+<td class="comment-1" rowspan="2">Don't count this record if it's not "visible", if not then loop back to <a href="9D97.html#9da2">9DA2</a> to continue.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9db0"></span>9DB0</td>
+<td class="instruction">JR Z,<a href="9D97.html#9da2">$9DA2</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9db2"></span>9DB2</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">Increase <span class="register">B</span>, the object counter, by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9db3"></span>9DB3</td>
+<td class="instruction">JP <a href="9D97.html#9da2">$9DA2</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9D97.html#9da2">9DA2</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="9db6"></span>9DB6</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1">Store the object count in <span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9db7"></span>9DB7</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="3">Restore <span class="register">BC</span>, <span class="register">IY</span> and <span class="register">IX</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9db8"></span>9DB8</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9dba"></span>9DBA</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9dbc"></span>9DBC</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9D44.html">9D44</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#9d97">Map</a></td>
+<td class="next">
+Next: <a href="9DBD.html">9DBD</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../dec/asm/40343.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

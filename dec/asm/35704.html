@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
-<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
 <script>
@@ -45,35 +44,29 @@ Used by the routine at <a href="35713.html">35713</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label">Pause</td>
 <td class="address-2"><span id="35704"></span>35704</td>
 <td class="instruction">LD BC,1000</td>
 <td class="comment-1" rowspan="1">Set a counter in <span class="register">BC</span>=1000.</td>
 </tr>
 <tr>
-<td class="asm-label">Pause_Loop</td>
 <td class="address-2"><span id="35707"></span>35707</td>
 <td class="instruction">DEC BC</td>
 <td class="comment-1" rowspan="1">Decrease the counter by one.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="35708"></span>35708</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Loop back to <a href="35704.html#35707">Pause_Loop</a> until the counter is zero.</td>
+<td class="comment-1" rowspan="3">Loop back to <a href="35704.html#35707">35707</a> until the counter is zero.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="35709"></span>35709</td>
 <td class="instruction">OR C</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="35710"></span>35710</td>
-<td class="instruction">JR NZ,<a href="35704.html#35707">Pause_Loop</a></td>
+<td class="instruction">JR NZ,<a href="35704.html#35707">35707</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="35712"></span>35712</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -94,7 +87,7 @@ Next: <a href="35713.html">35713</a>
 <div class="release"></div>
 <div class="copyright">&copy; 1982 Melbourne House</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
-<div><a href="../../hex/asm/8B78.html">Switch to hexadecimal</a>.</div>
+<div><a href="../../asm/8B78.html">Switch to hexadecimal</a>.</div>
 </footer>
 </body>
 </html>

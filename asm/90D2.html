@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 90D2</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9076.html">9076</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#90d2">Map</a></td>
+<td class="next">
+Next: <a href="90EB.html">90EB</a>
+</td>
+</tr>
+</table>
+<div class="description">90D2: "You are dead" controller.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="8D9D.html">8D9D</a>, <a href="93DA.html">93DA</a>, <a href="96B3.html">96B3</a>, <a href="A541.html">A541</a> and <a href="C7EA.html">C7EA</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="90d2"></span>90D2</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="90d3"></span>90D3</td>
+<td class="instruction">LD ($B6EA),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="90d6"></span>90D6</td>
+<td class="instruction">LD HL,$AFF1</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="AD7D.html#aff1">"You are dead"</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90d9"></span>90D9</td>
+<td class="instruction">CALL <a href="72DD.html">$72DD</a></td>
+<td class="comment-1" rowspan="1">Call <a href="72DD.html">72DD</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90dc"></span>90DC</td>
+<td class="instruction">CALL <a href="83EF.html#83f5">$83F5</a></td>
+<td class="comment-1" rowspan="1">Call <a href="83EF.html#83f5">83F5</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="90df"></span>
+<div class="comments">
+<div class="paragraph">
+This is almost a carbon copy of <a href="83EF.html#8441">8441</a> only differing in that it ends with a jump to <a href="6C00.html#6c27">6C27</a> and doesn't set a border colour.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="90df"></span>90DF</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Read from the keyboard port.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90e0"></span>90E0</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90e2"></span>90E2</td>
+<td class="instruction">AND %00011111</td>
+<td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90e4"></span>90E4</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="90D2.html#90df">90DF</a> until any key has been pressed.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90e6"></span>90E6</td>
+<td class="instruction">JR Z,<a href="90D2.html#90df">$90DF</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="90e8"></span>90E8</td>
+<td class="instruction">JP <a href="6C00.html#6c27">$6C27</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="6C00.html#6c27">6C27</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9076.html">9076</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#90d2">Map</a></td>
+<td class="next">
+Next: <a href="90EB.html">90EB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../dec/asm/37074.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

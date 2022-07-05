@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
-<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
 <script>
@@ -39,7 +38,7 @@ Next: <a href="40597.html">40597</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="38381.html">LocationLit</a> and <a href="40500.html">40500</a>.
+Used by the routines at <a href="38381.html">38381</a> and <a href="40500.html">40500</a>.
 </div>
 </div>
 <table class="input">
@@ -48,7 +47,7 @@ Used by the routines at <a href="38381.html">LocationLit</a> and <a href="40500.
 </tr>
 <tr>
 <td class="register">IX</td>
-<td class="register-desc">Object Data Address e.g. <a href="49435.html">Objects</a></td>
+<td class="register-desc">Object Data Address e.g. <a href="49435.html">49435</a></td>
 </tr>
 </table>
 <table class="output">
@@ -67,76 +66,63 @@ Used by the routines at <a href="38381.html">LocationLit</a> and <a href="40500.
 </td>
 </tr>
 <tr>
-<td class="asm-label">ContainerLit</td>
 <td class="address-2"><span id="40570"></span>40570</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
 </tr>
 <tr>
-<td class="asm-label">ContainerLit_Fetch</td>
 <td class="address-2"><span id="40572"></span>40572</td>
 <td class="instruction">LD A,(IX+1)</td>
-<td class="comment-1" rowspan="3">If the object is not inside of anything then jump to <a href="40570.html#40594">ContainerLit_Return</a>.</td>
+<td class="comment-1" rowspan="3">If the object is not inside of anything then jump to <a href="40570.html#40594">40594</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="40575"></span>40575</td>
 <td class="instruction">CP 255</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="40577"></span>40577</td>
-<td class="instruction">JR Z,<a href="40570.html#40594">ContainerLit_Return</a></td>
+<td class="instruction">JR Z,<a href="40570.html#40594">40594</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="40579"></span>40579</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-1" rowspan="1">Switch to the shadow register for <span class="register">AF</span>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="40580"></span>40580</td>
 <td class="instruction">LD A,(IX+1)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=The mother object ID.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="40583"></span>40583</td>
-<td class="instruction">CALL <a href="39882.html">LocateObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="39882.html">LocateObject</a>.</td>
+<td class="instruction">CALL <a href="39882.html">39882</a></td>
+<td class="comment-1" rowspan="1">Call <a href="39882.html">39882</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="40586"></span>40586</td>
 <td class="instruction">LD A,(IX+7)</td>
 <td class="comment-1" rowspan="1">Fetch the objects attributes.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="40589"></span>40589</td>
 <td class="instruction">AND %00101000</td>
-<td class="comment-1" rowspan="2">If the 'Give Light' and 'Full' attributes are set then jump to <a href="40570.html#40572">ContainerLit_Fetch</a> to rerun the check on this object.</td>
+<td class="comment-1" rowspan="2">If the 'Give Light' and 'Full' attributes are set then jump to <a href="40570.html#40572">40572</a> to rerun the check on this object.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="40591"></span>40591</td>
-<td class="instruction">JR NZ,<a href="40570.html#40572">ContainerLit_Fetch</a></td>
+<td class="instruction">JR NZ,<a href="40570.html#40572">%1001111001111100</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="40593"></span>40593</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-1" rowspan="1">Switch back to the "normal" <span class="register">AF</span> register.</td>
 </tr>
 <tr>
-<td class="asm-label">ContainerLit_Return</td>
 <td class="address-2"><span id="40594"></span>40594</td>
 <td class="instruction">POP IX</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">IX</span> from the stack.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="40596"></span>40596</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -157,7 +143,7 @@ Next: <a href="40597.html">40597</a>
 <div class="release"></div>
 <div class="copyright">&copy; 1982 Melbourne House</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
-<div><a href="../../hex/asm/9E7A.html">Switch to hexadecimal</a>.</div>
+<div><a href="../../asm/9E7A.html">Switch to hexadecimal</a>.</div>
 </footer>
 </body>
 </html>

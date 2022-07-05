@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 83A0</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="82B3.html">82B3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#83a0">Map</a></td>
+<td class="next">
+Next: <a href="83CD.html">83CD</a>
+</td>
+</tr>
+</table>
+<div class="description">83A0: Display Locate Help Message</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="83a0"></span>83A0</td>
+<td class="instruction">LD A,($B6EA)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="83a3"></span>83A3</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="83a4"></span>83A4</td>
+<td class="instruction">JP NZ,<a href="7574.html#75b4">$75B4</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="83a7"></span>83A7</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Store <span class="register">HL</span> and <span class="register">IX</span> on the stack for later.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83a8"></span>83A8</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="83aa"></span>
+<div class="comments">
+<div class="paragraph">
+Default message response should there be no match for the current location.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83aa"></span>83AA</td>
+<td class="instruction">LD HL,$B467</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="AD7D.html#b467">"you're doing fine[0x15]"</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="83ad"></span>
+<div class="comments">
+<div class="paragraph">
+Use the current location ID to look-up if there is a specific help message.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83ad"></span>83AD</td>
+<td class="instruction">LD A,($C12B)</td>
+<td class="comment-1" rowspan="3">Using the <a href="C11B.html#c12b">current location number</a>, see if there is a help message available for display. This is achieved by passing <a href="83CD.html">83CD</a> to the <a href="9DBD.html">Index ID Table</a> routine.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83b0"></span>83B0</td>
+<td class="instruction">LD IX,$83CD</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83b4"></span>83B4</td>
+<td class="instruction">CALL <a href="9DBD.html">$9DBD</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="83b7"></span>83B7</td>
+<td class="instruction">JR Z,<a href="83A0.html#83bf">$83BF</a></td>
+<td class="comment-1" rowspan="1">If there is no message, jump directly to <a href="83A0.html#83bf">83BF</a> to display the default message.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="83b9"></span>
+<div class="comments">
+<div class="paragraph">
+Point to the specific help for the current location.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83b9"></span>83B9</td>
+<td class="instruction">LD L,(IX+$01)</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>=The address of the help message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83bc"></span>83BC</td>
+<td class="instruction">LD H,(IX+$02)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="83bf"></span>
+<div class="comments">
+<div class="paragraph">
+Print the message.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="83bf"></span>83BF</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Write $01 to <a href="B6DA.html#b701">B701</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83c1"></span>83C1</td>
+<td class="instruction">LD ($B701),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83c4"></span>83C4</td>
+<td class="instruction">CALL <a href="72DD.html">$72DD</a></td>
+<td class="comment-1" rowspan="1">Call <a href="72DD.html">72DD</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83c7"></span>83C7</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">IX</span> and <span class="register">HL</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83c9"></span>83C9</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="83ca"></span>83CA</td>
+<td class="instruction">JP <a href="82B3.html">$82B3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="82B3.html">82B3</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="82B3.html">82B3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#83a0">Map</a></td>
+<td class="next">
+Next: <a href="83CD.html">83CD</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../dec/asm/33696.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

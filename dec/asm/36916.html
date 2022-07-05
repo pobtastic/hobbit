@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
-<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
 <script>
@@ -42,157 +41,131 @@ Next: <a href="36982.html">36982</a>
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_Talkto</td>
 <td class="address-2"><span id="36916"></span>36916</td>
 <td class="instruction">CALL <a href="40260.html">40260</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36919"></span>36919</td>
 <td class="instruction">LD A,(46824)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36922"></span>36922</td>
 <td class="instruction">CALL <a href="39557.html">39557</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36925"></span>36925</td>
 <td class="instruction">CP 255</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36927"></span>36927</td>
 <td class="instruction">LD A,0</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36929"></span>36929</td>
-<td class="instruction">JR Z,<a href="36916.html#36952">Action_Talkto_0</a></td>
+<td class="instruction">JR Z,<a href="36916.html#36952">36952</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36931"></span>36931</td>
 <td class="instruction">LD A,(46841)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36934"></span>36934</td>
 <td class="instruction">CP 0</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36936"></span>36936</td>
-<td class="instruction">JR NZ,<a href="36916.html#36952">Action_Talkto_0</a></td>
+<td class="instruction">JR NZ,<a href="36916.html#36952">36952</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36938"></span>36938</td>
 <td class="instruction">LD A,(IY+6)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36941"></span>36941</td>
 <td class="instruction">CP 0</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36943"></span>36943</td>
-<td class="instruction">JR Z,<a href="36916.html#36952">Action_Talkto_0</a></td>
+<td class="instruction">JR Z,<a href="36916.html#36952">36952</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36945"></span>36945</td>
-<td class="instruction">CALL <a href="40095.html">GetRandomNum</a></td>
+<td class="instruction">CALL <a href="40095.html">40095</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36948"></span>36948</td>
 <td class="instruction">CP 0</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36950"></span>36950</td>
-<td class="instruction">JR Z,<a href="36916.html#36956">Action_Talkto_1</a></td>
+<td class="instruction">JR Z,<a href="36916.html#36956">36956</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Talkto_0</td>
 <td class="address-2"><span id="36952"></span>36952</td>
 <td class="instruction">CALL <a href="30673.html#32442">32442</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36955"></span>36955</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Action_Talkto_1</td>
 <td class="address-2"><span id="36956"></span>36956</td>
 <td class="instruction">LD HL,45539</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#45539">"[0x07] says " No "[0x14]"</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36959"></span>36959</td>
-<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+<td class="instruction">CALL <a href="29405.html">29405</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">29405</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36962"></span>36962</td>
 <td class="instruction">SUB A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36963"></span>36963</td>
-<td class="instruction">JR <a href="36916.html#36952">Action_Talkto_0</a></td>
+<td class="instruction">JR <a href="36916.html#36952">36952</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36965"></span>36965</td>
 <td class="instruction">CALL <a href="40260.html">40260</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36968"></span>36968</td>
 <td class="instruction">LD IX,(46856)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36972"></span>36972</td>
 <td class="instruction">BIT 5,(IX+7)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36976"></span>36976</td>
 <td class="instruction">JP Z,<a href="37134.html#37143">37143</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="36979"></span>36979</td>
 <td class="instruction">JP <a href="37134.html#37189">37189</a></td>
 <td class="comment-1" rowspan="1"></td>
@@ -213,7 +186,7 @@ Next: <a href="36982.html">36982</a>
 <div class="release"></div>
 <div class="copyright">&copy; 1982 Melbourne House</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
-<div><a href="../../hex/asm/9034.html">Switch to hexadecimal</a>.</div>
+<div><a href="../../asm/9034.html">Switch to hexadecimal</a>.</div>
 </footer>
 </body>
 </html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 72DD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="72D3.html">72D3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#72dd">Map</a></td>
+<td class="next">
+Next: <a href="7340.html">7340</a>
+</td>
+</tr>
+</table>
+<div class="description">72DD: Print Message</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="6C00.html">6C00</a>, <a href="72CE.html">72CE</a>, <a href="72D3.html">72D3</a>, <a href="77D1.html">77D1</a>, <a href="83A0.html">83A0</a>, <a href="83EF.html">83EF</a>, <a href="8451.html">8451</a>, <a href="84CC.html">84CC</a>, <a href="8C4B.html">8C4B</a>, <a href="8CA6.html">8CA6</a>, <a href="8D33.html">8D33</a>, <a href="8D9D.html">8D9D</a>, <a href="8FD6.html">8FD6</a>, <a href="9034.html">9034</a>, <a href="9076.html">9076</a>, <a href="90D2.html">90D2</a>, <a href="90EB.html">90EB</a>, <a href="9171.html">9171</a>, <a href="939E.html">939E</a>, <a href="93DA.html">93DA</a>, <a href="962B.html">962B</a>, <a href="96B3.html">96B3</a>, <a href="9ACD.html">9ACD</a>, <a href="9D44.html">9D44</a>, <a href="9F94.html">9F94</a>, <a href="A050.html">A050</a>, <a href="A0C8.html">A0C8</a>, <a href="A138.html">A138</a>, <a href="A248.html">A248</a>, <a href="A2B4.html">A2B4</a>, <a href="A302.html">A302</a>, <a href="A3E6.html">A3E6</a>, <a href="A541.html">A541</a> and <a href="C7EA.html">C7EA</a>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Text message address</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="72dd"></span>
+<div class="comments">
+<div class="paragraph">
+Store <span class="register">A</span>, <span class="register">DE</span> and <span class="register">IX</span> for later (see <a href="7340.html#735b">735B</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="72dd"></span>72DD</td>
+<td class="instruction">LD ($70DD),DE</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> at <a href="6FF2.html#70dd">70DD</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="72e1"></span>72E1</td>
+<td class="instruction">LD ($70E0),IX</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">IX</span> at <a href="6FF2.html#70e0">70E0</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="72e5"></span>72E5</td>
+<td class="instruction">LD ($70DC),A</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">A</span> at <a href="6FF2.html#70dc">70DC</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="72e8"></span>
+<div class="comments">
+<div class="paragraph">
+Important.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="72e8"></span>72E8</td>
+<td class="instruction">LD A,($B6FA)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="72eb"></span>72EB</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="72ec"></span>72EC</td>
+<td class="instruction">JR NZ,<a href="72DD.html#72f1">$72F1</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="72ee"></span>72EE</td>
+<td class="instruction">LD ($B6FB),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="72f1"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="73E0.html">73E0</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="72f1"></span>72F1</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>=<span class="register">HL</span> (the text message address).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="72f2"></span>72F2</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-2"><span id="72f4"></span>72F4</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Fetch the next character of the text message.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="72f7"></span>72F7</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Is this blah? Jump to <a href="72DD.html#7318">7318</a> if not.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="72f9"></span>72F9</td>
+<td class="instruction">JR Z,<a href="72DD.html#7318">$7318</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="72fb"></span>72FB</td>
+<td class="instruction">AND $7F</td>
+<td class="comment-1" rowspan="1">Reset bit 7.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="72fd"></span>72FD</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="72fe"></span>72FE</td>
+<td class="instruction">LD E,(IX+$01)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7301"></span>7301</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Increase <span class="register">IX</span> by one to move onto the next character of the message.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7303"></span>7303</td>
+<td class="instruction">AND $F0</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7305"></span>7305</td>
+<td class="instruction">CP $30</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7307"></span>7307</td>
+<td class="instruction">JR Z,<a href="7340.html#7348">$7348</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7309"></span>7309</td>
+<td class="instruction">CP $20</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="730b"></span>730B</td>
+<td class="instruction">JR Z,<a href="7340.html#7348">$7348</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="730d"></span>730D</td>
+<td class="instruction">CP $60</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="730f"></span>730F</td>
+<td class="instruction">JR Z,<a href="7340.html#7348">$7348</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7311"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="7493.html">7493</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7311"></span>7311</td>
+<td class="instruction">CALL <a href="74C1.html">$74C1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="74C1.html">74C1</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7314"></span>7314</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Increase <span class="register">IX</span> by one to move onto the next character of the message.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7316"></span>7316</td>
+<td class="instruction">JR <a href="72DD.html#72f4">$72F4</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="72DD.html#72f4">72F4</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7318"></span>
+<div class="comments">
+<div class="paragraph">
+Check.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7318"></span>7318</td>
+<td class="instruction">CP $20</td>
+<td class="comment-1" rowspan="2">If the character is less than $20 jump to <a href="72DD.html#7326">7326</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="731a"></span>731A</td>
+<td class="instruction">JR C,<a href="72DD.html#7326">$7326</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="731c"></span>731C</td>
+<td class="instruction">CP $60</td>
+<td class="comment-1" rowspan="2">If the character is more than $60 jump to <a href="7493.html">7493</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="731e"></span>731E</td>
+<td class="instruction">JP NC,<a href="7493.html">$7493</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7321"></span>7321</td>
+<td class="instruction">CALL <a href="72C3.html">$72C3</a></td>
+<td class="comment-1" rowspan="1">Else, call <a href="72C3.html">72C3</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7324"></span>7324</td>
+<td class="instruction">JR <a href="72DD.html#7314">$7314</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="72DD.html#7314">7314</a> to move onto the next character.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7326"></span>
+<div class="comments">
+<div class="paragraph">
+X
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7326"></span>7326</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack for later.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7327"></span>7327</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="2"><span class="register">E</span>=<span class="register">A</span> - <span class="register">DE</span> now holds the current character as the LSB.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7328"></span>7328</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="732a"></span>732A</td>
+<td class="instruction">LD HL,$7295</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="7291.html#7295">7295</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="732d"></span>732D</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>=(<span class="register">DE</span> * 2)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="732e"></span>732E</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="732f"></span>732F</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-1" rowspan="3">Loads <span class="register">DE</span> with the address held in <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7330"></span>7330</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7331"></span>7331</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7332"></span>7332</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-1" rowspan="1">Exchange <span class="register">DE</span> and <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7333"></span>7333</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore the previous value of <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7334"></span>7334</td>
+<td class="instruction">CP $14</td>
+<td class="comment-1" rowspan="2">If the character is more than $14 jump to <a href="72DD.html#733f">733F</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7336"></span>7336</td>
+<td class="instruction">JR NC,<a href="72DD.html#733f">$733F</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7338"></span>7338</td>
+<td class="instruction">CALL <a href="72DD.html#733f">$733F</a></td>
+<td class="comment-1" rowspan="1">Call <a href="72DD.html#733f">733F</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="733b"></span>733B</td>
+<td class="instruction">JR Z,<a href="72DD.html#7314">$7314</a></td>
+<td class="comment-1" rowspan="1">If xxxx jump back to <a href="72DD.html#7314">7314</a> to move onto the next character.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="733d"></span>733D</td>
+<td class="instruction">JR <a href="72DD.html#7311">$7311</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="72DD.html#7311">7311</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="733f"></span>733F</td>
+<td class="instruction">JP (HL)</td>
+<td class="comment-1" rowspan="1">Indirect jump to the address held in <span class="register">HL</span>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="72D3.html">72D3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#72dd">Map</a></td>
+<td class="next">
+Next: <a href="7340.html">7340</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../dec/asm/29405.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
-<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
 <script>
@@ -39,7 +38,7 @@ Next: <a href="39882.html">39882</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="28915.html">28915</a>, <a href="36253.html">Action_Dir</a>, <a href="38443.html">YouSeeEntry</a>, <a href="40001.html">40001</a>, <a href="40247.html">GetObjectLocationInIX</a>, <a href="40608.html">40608</a>, <a href="41134.html">41134</a> and <a href="42305.html">ActionClimbOut</a>.
+Used by the routines at <a href="28915.html">28915</a>, <a href="36253.html">36253</a>, <a href="38443.html">38443</a>, <a href="40001.html">40001</a>, <a href="40247.html">40247</a>, <a href="40608.html">40608</a>, <a href="41134.html">41134</a> and <a href="42305.html">42305</a>.
 </div>
 </div>
 <table class="input">
@@ -63,24 +62,20 @@ Used by the routines at <a href="28915.html">28915</a>, <a href="36253.html">Act
 </td>
 </tr>
 <tr>
-<td class="asm-label">LocateLocation</td>
 <td class="address-2"><span id="39857"></span>39857</td>
 <td class="instruction">CP 80</td>
-<td class="comment-1" rowspan="2">If the location ID is less than $50 jump to <a href="39857.html#39863">LocateLocation_Action</a> to process it.</td>
+<td class="comment-1" rowspan="2">If the location ID is less than $50 jump to <a href="39857.html#39863">39863</a> to process it.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39859"></span>39859</td>
-<td class="instruction">JR C,<a href="39857.html#39863">LocateLocation_Action</a></td>
+<td class="instruction">JR C,<a href="39857.html#39863">39863</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39861"></span>39861</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1">Reset <span class="register">A</span> to $00.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39862"></span>39862</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -96,31 +91,26 @@ Work out the location now <span class="register">A</span> is validated as a legi
 </td>
 </tr>
 <tr>
-<td class="asm-label">LocateLocation_Action</td>
 <td class="address-2"><span id="39863"></span>39863</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39864"></span>39864</td>
 <td class="instruction">LD DE,47584</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="47584.html">LocationTable</a></td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="47584.html">47584</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39867"></span>39867</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39868"></span>39868</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-1" rowspan="2">Store offset in the <span class="register">HL</span> register pair.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39869"></span>39869</td>
 <td class="instruction">LD H,0</td>
 </tr>
@@ -160,56 +150,46 @@ Calculate Location address, some examples would be; <table class="default">
 </td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39871"></span>39871</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-1" rowspan="2"><span class="register">HL</span>=(<span class="register">HL</span>*2)+<span class="register">DE</span></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39872"></span>39872</td>
 <td class="instruction">ADD HL,DE</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39873"></span>39873</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-1" rowspan="3"><span class="register">DE</span>=the location from the pointer in <span class="register">HL</span>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39874"></span>39874</td>
 <td class="instruction">INC HL</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39875"></span>39875</td>
 <td class="instruction">LD D,(HL)</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39876"></span>39876</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-1" rowspan="2"><span class="register">IX</span>=<span class="register">DE</span> using the stack.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39877"></span>39877</td>
 <td class="instruction">POP IX</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39879"></span>39879</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">HL</span> and <span class="register">DE</span> off the stack.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39880"></span>39880</td>
 <td class="instruction">POP DE</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="39881"></span>39881</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -230,7 +210,7 @@ Next: <a href="39882.html">39882</a>
 <div class="release"></div>
 <div class="copyright">&copy; 1982 Melbourne House</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
-<div><a href="../../hex/asm/9BB1.html">Switch to hexadecimal</a>.</div>
+<div><a href="../../asm/9BB1.html">Switch to hexadecimal</a>.</div>
 </footer>
 </body>
 </html>

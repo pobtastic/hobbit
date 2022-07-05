@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
-<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
 <script>
@@ -42,31 +41,26 @@ Next: <a href="33741.html">33741</a>
 </td>
 </tr>
 <tr>
-<td class="asm-label">DisplayLocHlpMsg</td>
 <td class="address-2"><span id="33696"></span>33696</td>
 <td class="instruction">LD A,(46826)</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33699"></span>33699</td>
 <td class="instruction">AND A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33700"></span>33700</td>
 <td class="instruction">JP NZ,<a href="30068.html#30132">30132</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33703"></span>33703</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="2">Store <span class="register">HL</span> and <span class="register">IX</span> on the stack for later.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33704"></span>33704</td>
 <td class="instruction">PUSH IX</td>
 </tr>
@@ -81,7 +75,6 @@ Default message response should there be no match for the current location.
 </td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33706"></span>33706</td>
 <td class="instruction">LD HL,46183</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#46183">"you're doing fine[0x15]"</a></td>
@@ -97,26 +90,22 @@ Use the current location ID to look-up if there is a specific help message.
 </td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33709"></span>33709</td>
 <td class="instruction">LD A,(49451)</td>
-<td class="comment-1" rowspan="3">Using the <a href="49435.html#49451">current location number</a>, see if there is a help message available for display. This is achieved by passing <a href="33741.html">LocHlpMsg</a> to the <a href="40381.html">Index ID Table</a> routine.</td>
+<td class="comment-1" rowspan="3">Using the <a href="49435.html#49451">current location number</a>, see if there is a help message available for display. This is achieved by passing <a href="33741.html">33741</a> to the <a href="40381.html">Index ID Table</a> routine.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33712"></span>33712</td>
 <td class="instruction">LD IX,33741</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33716"></span>33716</td>
-<td class="instruction">CALL <a href="40381.html">IndexIdTable</a></td>
+<td class="instruction">CALL <a href="40381.html">40381</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33719"></span>33719</td>
-<td class="instruction">JR Z,<a href="33696.html#33727">DisplayLocHlpMsg_Print</a></td>
-<td class="comment-1" rowspan="1">If there is no message, jump directly to <a href="33696.html#33727">DisplayLocHlpMsg_Print</a> to display the default message.</td>
+<td class="instruction">JR Z,<a href="33696.html#33727">33727</a></td>
+<td class="comment-1" rowspan="1">If there is no message, jump directly to <a href="33696.html#33727">33727</a> to display the default message.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -129,13 +118,11 @@ Point to the specific help for the current location.
 </td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33721"></span>33721</td>
 <td class="instruction">LD L,(IX+1)</td>
 <td class="comment-1" rowspan="2"><span class="register">HL</span>=The address of the help message</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33724"></span>33724</td>
 <td class="instruction">LD H,(IX+2)</td>
 </tr>
@@ -150,35 +137,29 @@ Print the message.
 </td>
 </tr>
 <tr>
-<td class="asm-label">DisplayLocHlpMsg_Print</td>
 <td class="address-2"><span id="33727"></span>33727</td>
 <td class="instruction">LD A,1</td>
-<td class="comment-1" rowspan="2">Write $01 to <a href="46810.html#46849">WaitCoutdown</a>.</td>
+<td class="comment-1" rowspan="2">Write $01 to <a href="46810.html#46849">46849</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33729"></span>33729</td>
 <td class="instruction">LD (46849),A</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33732"></span>33732</td>
-<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+<td class="instruction">CALL <a href="29405.html">29405</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">29405</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33735"></span>33735</td>
 <td class="instruction">POP IX</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">IX</span> and <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33737"></span>33737</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33738"></span>33738</td>
 <td class="instruction">JP <a href="33459.html">33459</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="33459.html">33459</a>.</td>
@@ -199,7 +180,7 @@ Next: <a href="33741.html">33741</a>
 <div class="release"></div>
 <div class="copyright">&copy; 1982 Melbourne House</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
-<div><a href="../../hex/asm/83A0.html">Switch to hexadecimal</a>.</div>
+<div><a href="../../asm/83A0.html">Switch to hexadecimal</a>.</div>
 </footer>
 </body>
 </html>

@@ -1,0 +1,2245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit: Routine at 7F78</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="7F77.html">7F77</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#7f78">Map</a></td>
+<td class="next">
+Next: <a href="8251.html">8251</a>
+</td>
+</tr>
+</table>
+<div class="description">7F78: Drawing Routine</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="962B.html">962B</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7f78"></span>7F78</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Store <span class="register">AF</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f79"></span>7F79</td>
+<td class="instruction">LD A,($B707)</td>
+<td class="comment-1" rowspan="3">If <a href="B6DA.html#b707">B707</a> is not $00 then jump to <a href="7F78.html#7f86">7F86</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f7c"></span>7F7C</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f7d"></span>7F7D</td>
+<td class="instruction">JR NZ,<a href="7F78.html#7f86">$7F86</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f7f"></span>7F7F</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="2">Write $FF to <a href="7F77.html">7F77</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f81"></span>7F81</td>
+<td class="instruction">LD ($7F77),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f84"></span>7F84</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f85"></span>7F85</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7f86"></span>
+<div class="comments">
+<div class="paragraph">
+Drawing Check
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7f86"></span>7F86</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Retrieve the location ID from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f87"></span>7F87</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Ensure that it's still on the stack for later.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f88"></span>7F88</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="4">Store <span class="register">HL</span>, <span class="register">BC</span>, <span class="register">DE</span> and <span class="register">IX</span> on the stack for later.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f89"></span>7F89</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f8a"></span>7F8A</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f8b"></span>7F8B</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f8d"></span>7F8D</td>
+<td class="instruction">LD IX,$CC00</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="CC00.html">CC00</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f91"></span>7F91</td>
+<td class="instruction">CALL <a href="9DBD.html">$9DBD</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9DBD.html">9DBD</a> - the Z flag is set if no data is found (<span class="register">A</span>=$FF).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f94"></span>7F94</td>
+<td class="instruction">LD ($7F77),A</td>
+<td class="comment-1" rowspan="1">Store the location ID at <a href="7F77.html">7F77</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f97"></span>7F97</td>
+<td class="instruction">LD L,(IX+$01)</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>=Location graphics data address.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f9a"></span>7F9A</td>
+<td class="instruction">LD H,(IX+$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7f9d"></span>7F9D</td>
+<td class="instruction">CALL NZ,<a href="7F78.html#7fa7">$7FA7</a></td>
+<td class="comment-1" rowspan="1">If there is graphics data for this location then call <a href="7F78.html#7fa7">7FA7</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fa0"></span>7FA0</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="5">Restore <span class="register">IX</span>, <span class="register">DE</span>, <span class="register">BC</span>, <span class="register">HL</span> and <span class="register">AF</span> off the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fa2"></span>7FA2</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fa3"></span>7FA3</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fa4"></span>7FA4</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fa5"></span>7FA5</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fa6"></span>7FA6</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7fa7"></span>
+<div class="comments">
+<div class="paragraph">
+Drawing routines.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7fa7"></span>7FA7</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">Store <span class="register">IY</span> and <span class="register">HL</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fa9"></span>7FA9</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7faa"></span>7FAA</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2"><span class="register">IY</span>=pointer to graphics data addresses.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fab"></span>7FAB</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fad"></span>7FAD</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="2">Store <span class="register">DE</span> and <span class="register">BC</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fae"></span>7FAE</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7faf"></span>7FAF</td>
+<td class="instruction">CALL <a href="7F78.html#820b">$820B</a></td>
+<td class="comment-1" rowspan="1">Call <a href="7F78.html#820b">820B</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fb2"></span>7FB2</td>
+<td class="instruction">LD D,$7F</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=$7F.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fb4"></span>7FB4</td>
+<td class="instruction">LD E,$3F</td>
+<td class="comment-1" rowspan="1"><span class="register">E</span>=$3F.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fb6"></span>7FB6</td>
+<td class="instruction">LD B,$01</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=$01.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fb8"></span>7FB8</td>
+<td class="instruction">LD C,$01</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=$01.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fba"></span>7FBA</td>
+<td class="instruction">LD L,$01</td>
+<td class="comment-1" rowspan="1"><span class="register">L</span>=$01.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7fbc"></span>7FBC</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="1">Fetch the next drawing instruction.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fbf"></span>7FBF</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="2">If the value is zero, jump to <a href="7F78.html#8069">8069</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fc0"></span>7FC0</td>
+<td class="instruction">JP Z,<a href="7F78.html#8069">$8069</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fc3"></span>7FC3</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1">Increment the graphics data pointer by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fc5"></span>7FC5</td>
+<td class="instruction">CP $08</td>
+<td class="comment-1" rowspan="2">If the graphics data value which was fetched is not $08 (move to X/Y) jump to <a href="7F78.html#7fd5">7FD5</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fc7"></span>7FC7</td>
+<td class="instruction">JR NZ,<a href="7F78.html#7fd5">$7FD5</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7fc9"></span>
+<div class="comments">
+<div class="paragraph">
+Moves the "pen" held in <span class="register">DE</span> to a screen location.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fc9"></span>7FC9</td>
+<td class="instruction">LD D,(IY+$00)</td>
+<td class="comment-1" rowspan="4">Populate <span class="register">DE</span> with two values from the graphics data and increment the pointer by two.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fcc"></span>7FCC</td>
+<td class="instruction">INC IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fce"></span>7FCE</td>
+<td class="instruction">LD E,(IY+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fd1"></span>7FD1</td>
+<td class="instruction">INC IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fd3"></span>7FD3</td>
+<td class="instruction">JR <a href="7F78.html#7fbc">$7FBC</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="7F78.html#7fbc">7FBC</a> to fetch the next drawing instruction.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7fd5"></span>7FD5</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">If bit 7 is set, jump to <a href="7F78.html#7ffa">7FFA</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fd7"></span>7FD7</td>
+<td class="instruction">JR Z,<a href="7F78.html#7ffa">$7FFA</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fd9"></span>7FD9</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">Temporarily store <span class="register">A</span> in <span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fda"></span>7FDA</td>
+<td class="instruction">AND %00000111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fdc"></span>7FDC</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">Store this in <span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fdd"></span>7FDD</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1">Restore the old value of <span class="register">A</span> (from <span class="register">B</span>).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fde"></span>7FDE</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1">Rotate <span class="register">A</span> right one bit.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fdf"></span>7FDF</td>
+<td class="instruction">AND %00111100</td>
+<td class="comment-1" rowspan="1">Keep only bits 2-5.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fe1"></span>7FE1</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">Store this in <span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fe2"></span>7FE2</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="1">Fetch the next drawing instruction.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fe5"></span>7FE5</td>
+<td class="instruction">AND %00111111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-5.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fe7"></span>7FE7</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-1" rowspan="1">Store this in <span class="register">L</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fe8"></span>7FE8</td>
+<td class="instruction">INC L</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">L</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fe9"></span>7FE9</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="1">Fetch the previous drawing instruction again in <span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fec"></span>7FEC</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1">Increment the graphics data pointer by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fee"></span>7FEE</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="2">Rotate <span class="register">A</span> left two bits.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7fef"></span>7FEF</td>
+<td class="instruction">RLCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7ff0"></span>7FF0</td>
+<td class="instruction">AND %00000011</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-1.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7ff2"></span>7FF2</td>
+<td class="instruction">OR B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7ff3"></span>7FF3</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7ff4"></span>7FF4</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7ff5"></span>7FF5</td>
+<td class="instruction">CALL <a href="7F78.html#8151">$8151</a></td>
+<td class="comment-1" rowspan="1">Call <a href="7F78.html#8151">8151</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="7ff8"></span>7FF8</td>
+<td class="instruction">JR <a href="7F78.html#7fbc">$7FBC</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="7F78.html#7fbc">7FBC</a> to fetch the next drawing instruction.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="7ffa"></span>7FFA</td>
+<td class="instruction">BIT 6,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7ffc"></span>7FFC</td>
+<td class="instruction">JR Z,<a href="7F78.html#8012">$8012</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="7ffe"></span>7FFE</td>
+<td class="instruction">AND %00000111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8000"></span>8000</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8001"></span>8001</td>
+<td class="instruction">LD D,(IY+$00)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8004"></span>8004</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8006"></span>8006</td>
+<td class="instruction">LD E,(IY+$00)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8009"></span>8009</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="800b"></span>800B</td>
+<td class="instruction">CALL <a href="7F78.html#8071">$8071</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="800e"></span>800E</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="800f"></span>800F</td>
+<td class="instruction">JP <a href="7F78.html#7fbc">$7FBC</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="7F78.html#7fbc">7FBC</a> to fetch the next drawing instruction.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8012"></span>8012</td>
+<td class="instruction">BIT 5,A</td>
+<td class="comment-1" rowspan="2">If bit 5 is set then jump back to <a href="7F78.html#7fbc">7FBC</a> to fetch the next drawing instruction.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8014"></span>8014</td>
+<td class="instruction">JP Z,<a href="7F78.html#7fbc">$7FBC</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8017"></span>8017</td>
+<td class="instruction">AND %00000111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8019"></span>8019</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="801a"></span>801A</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="801b"></span>801B</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="801c"></span>801C</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="801d"></span>801D</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="801e"></span>801E</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="801f"></span>801F</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8020"></span>8020</td>
+<td class="instruction">LD H,(IY+$00)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8023"></span>8023</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8025"></span>8025</td>
+<td class="instruction">LD L,(IY+$00)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8028"></span>8028</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="802a"></span>802A</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="802d"></span>802D</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="802f"></span>802F</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8031"></span>8031</td>
+<td class="instruction">JR Z,<a href="7F78.html#8063">$8063</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8033"></span>8033</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8034"></span>8034</td>
+<td class="instruction">AND %00000011</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-1.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8036"></span>8036</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8037"></span>8037</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8038"></span>8038</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8039"></span>8039</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="803a"></span>803A</td>
+<td class="instruction">AND %00111111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-5.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="803c"></span>803C</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="803d"></span>803D</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="803e"></span>803E</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="803f"></span>803F</td>
+<td class="instruction">AND %00000111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8041"></span>8041</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8042"></span>8042</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8043"></span>8043</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8044"></span>8044</td>
+<td class="instruction">CP C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8045"></span>8045</td>
+<td class="instruction">JR NZ,<a href="7F78.html#8049">$8049</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8047"></span>8047</td>
+<td class="instruction">XOR $38</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="8049"></span>8049</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="804a"></span>804A</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="804b"></span>804B</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="804c"></span>804C</td>
+<td class="instruction">OR C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="804d"></span>804D</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="804e"></span>804E</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="804f"></span>804F</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8050"></span>8050</td>
+<td class="instruction">CALL Z,<a href="7F78.html#80f5">$80F5</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8053"></span>8053</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8054"></span>8054</td>
+<td class="instruction">CALL Z,<a href="7F78.html#8121">$8121</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8057"></span>8057</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8058"></span>8058</td>
+<td class="instruction">CALL Z,<a href="7F78.html#8106">$8106</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="805b"></span>805B</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="805c"></span>805C</td>
+<td class="instruction">CALL Z,<a href="7F78.html#8117">$8117</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="805f"></span>805F</td>
+<td class="instruction">DJNZ <a href="7F78.html#803e">$803E</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8061"></span>8061</td>
+<td class="instruction">JR <a href="7F78.html#802a">$802A</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="8063"></span>8063</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8064"></span>8064</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8065"></span>8065</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8066"></span>8066</td>
+<td class="instruction">JP <a href="7F78.html#7fbc">$7FBC</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="7F78.html#7fbc">7FBC</a> to fetch the next drawing instruction.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8069"></span>8069</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="4">Restore <span class="register">BC</span>, <span class="register">DE</span>, <span class="register">HL</span> and <span class="register">IY</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="806a"></span>806A</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="806b"></span>806B</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="806c"></span>806C</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="806e"></span>806E</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="806f"></span>806F</td>
+<td class="instruction">DEFB $00,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="8071"></span>8071</td>
+<td class="instruction">LD ($824E),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8074"></span>8074</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8075"></span>8075</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8076"></span>8076</td>
+<td class="instruction">LD HL,$0080</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8079"></span>8079</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="807a"></span>807A</td>
+<td class="instruction">CALL <a href="7F78.html#80ee">$80EE</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="807d"></span>807D</td>
+<td class="instruction">JR NZ,<a href="7F78.html#8086">$8086</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="807f"></span>807F</td>
+<td class="instruction">CALL <a href="7F78.html#8148">$8148</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8082"></span>8082</td>
+<td class="instruction">JR NZ,<a href="7F78.html#807a">$807A</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8084"></span>8084</td>
+<td class="instruction">JR <a href="7F78.html#808c">$808C</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="8086"></span>8086</td>
+<td class="instruction">CALL <a href="7F78.html#81b5">$81B5</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8089"></span>8089</td>
+<td class="instruction">CALL <a href="7F78.html#8141">$8141</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="808c"></span>808C</td>
+<td class="instruction">LD HL,$0000</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="808f"></span>808F</td>
+<td class="instruction">LD ($806F),HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="8092"></span>8092</td>
+<td class="instruction">CALL <a href="7F78.html#812b">$812B</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8095"></span>8095</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8097"></span>8097</td>
+<td class="instruction">JR Z,<a href="7F78.html#80ae">$80AE</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8099"></span>8099</td>
+<td class="instruction">CALL <a href="7F78.html#80ee">$80EE</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="809c"></span>809C</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="809e"></span>809E</td>
+<td class="instruction">JR NZ,<a href="7F78.html#80a9">$80A9</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80a0"></span>80A0</td>
+<td class="instruction">LD A,($806F)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80a3"></span>80A3</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80a4"></span>80A4</td>
+<td class="instruction">JR NZ,<a href="7F78.html#80a9">$80A9</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80a6"></span>80A6</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80a7"></span>80A7</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="80a9"></span>80A9</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80aa"></span>80AA</td>
+<td class="instruction">CALL <a href="7F78.html#813a">$813A</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80ad"></span>80AD</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="80ae"></span>80AE</td>
+<td class="instruction">LD ($806F),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80b1"></span>80B1</td>
+<td class="instruction">CALL <a href="7F78.html#813a">$813A</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80b4"></span>80B4</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80b6"></span>80B6</td>
+<td class="instruction">JR Z,<a href="7F78.html#80cd">$80CD</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80b8"></span>80B8</td>
+<td class="instruction">CALL <a href="7F78.html#80ee">$80EE</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80bb"></span>80BB</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80bd"></span>80BD</td>
+<td class="instruction">JR NZ,<a href="7F78.html#80c8">$80C8</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80bf"></span>80BF</td>
+<td class="instruction">LD A,($8070)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80c2"></span>80C2</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80c3"></span>80C3</td>
+<td class="instruction">JR NZ,<a href="7F78.html#80c8">$80C8</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80c5"></span>80C5</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80c6"></span>80C6</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="80c8"></span>80C8</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80c9"></span>80C9</td>
+<td class="instruction">CALL <a href="7F78.html#812b">$812B</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80cc"></span>80CC</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="80cd"></span>80CD</td>
+<td class="instruction">LD ($8070),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80d0"></span>80D0</td>
+<td class="instruction">CALL <a href="7F78.html#81b5">$81B5</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80d3"></span>80D3</td>
+<td class="instruction">CALL <a href="7F78.html#8141">$8141</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80d6"></span>80D6</td>
+<td class="instruction">JR Z,<a href="7F78.html#80e0">$80E0</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80d8"></span>80D8</td>
+<td class="instruction">CALL <a href="7F78.html#80ee">$80EE</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80db"></span>80DB</td>
+<td class="instruction">JR Z,<a href="7F78.html#8092">$8092</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80dd"></span>80DD</td>
+<td class="instruction">CALL <a href="7F78.html#81b5">$81B5</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="80e0"></span>80E0</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80e1"></span>80E1</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80e2"></span>80E2</td>
+<td class="instruction">CP $80</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80e4"></span>80E4</td>
+<td class="instruction">JR NZ,<a href="7F78.html#807a">$807A</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80e6"></span>80E6</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80e8"></span>80E8</td>
+<td class="instruction">LD ($824E),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80eb"></span>80EB</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">HL</span> and <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="80ec"></span>80EC</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="80ed"></span>80ED</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="80ee"></span>80EE</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="80ef"></span>80EF</td>
+<td class="instruction">CALL <a href="7F78.html#81de">$81DE</a></td>
+<td class="comment-1" rowspan="1">Call <a href="7F78.html#81de">81DE</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="80f2"></span>80F2</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80f3"></span>80F3</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="80f4"></span>80F4</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="80f5"></span>80F5</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">AF</span> and <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="80f6"></span>80F6</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="80f7"></span>80F7</td>
+<td class="instruction">LD DE,$0020</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80fa"></span>80FA</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80fb"></span>80FB</td>
+<td class="instruction">SBC HL,DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80fd"></span>80FD</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="80fe"></span>80FE</td>
+<td class="instruction">CP $57</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8100"></span>8100</td>
+<td class="instruction">JR NZ,<a href="7F78.html#8103">$8103</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8102"></span>8102</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="8103"></span>8103</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">AF</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8104"></span>8104</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8105"></span>8105</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8106"></span>8106</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">AF</span> and <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8107"></span>8107</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8108"></span>8108</td>
+<td class="instruction">LD DE,$0020</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>=<span class="register">HL</span>+$0020.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="810b"></span>810B</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="810c"></span>810C</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="810d"></span>810D</td>
+<td class="instruction">CP $5A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="810f"></span>810F</td>
+<td class="instruction">JR NZ,$8113</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8111"></span>8111</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8112"></span>8112</td>
+<td class="instruction">SBC HL,DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8114"></span>8114</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">AF</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8115"></span>8115</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8116"></span>8116</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8117"></span>8117</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8118"></span>8118</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8119"></span>8119</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="811a"></span>811A</td>
+<td class="instruction">CP $57</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="811c"></span>811C</td>
+<td class="instruction">JR NZ,<a href="7F78.html#811f">$811F</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="811e"></span>811E</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="811f"></span>811F</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8120"></span>8120</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8121"></span>8121</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8122"></span>8122</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8123"></span>8123</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8124"></span>8124</td>
+<td class="instruction">CP $5A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8126"></span>8126</td>
+<td class="instruction">JR NZ,<a href="7F78.html#8129">$8129</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8128"></span>8128</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="8129"></span>8129</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="812a"></span>812A</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="812b"></span>812B</td>
+<td class="instruction">INC E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="812c"></span>812C</td>
+<td class="instruction">BIT 7,E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="812e"></span>812E</td>
+<td class="instruction">JR Z,<a href="7F78.html#8135">$8135</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8130"></span>8130</td>
+<td class="instruction">DEC E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8131"></span>8131</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8132"></span>8132</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8133"></span>8133</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8134"></span>8134</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8135"></span>8135</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="3">Set bit 0 of <span class="register">A</span> (using <span class="register">H</span>).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8136"></span>8136</td>
+<td class="instruction">OR $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8138"></span>8138</td>
+<td class="instruction">LD A,H</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8139"></span>8139</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="813a"></span>813A</td>
+<td class="instruction">DEC E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="813b"></span>813B</td>
+<td class="instruction">BIT 7,E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="813d"></span>813D</td>
+<td class="instruction">JR Z,<a href="7F78.html#8135">$8135</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="813f"></span>813F</td>
+<td class="instruction">INC E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8140"></span>8140</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8141"></span>8141</td>
+<td class="instruction">INC D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8142"></span>8142</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8143"></span>8143</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8144"></span>8144</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8145"></span>8145</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8146"></span>8146</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8147"></span>8147</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8148"></span>8148</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8149"></span>8149</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="814a"></span>814A</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="814b"></span>814B</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="814d"></span>814D</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="814e"></span>814E</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="814f"></span>814F</td>
+<td class="instruction">INC D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8150"></span>8150</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8151"></span>8151</td>
+<td class="instruction">BIT 0,C</td>
+<td class="comment-1" rowspan="2">If bit 0 of <span class="register">C</span> is not set then jump to <a href="7F78.html#8185">8185</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8153"></span>8153</td>
+<td class="instruction">JR NZ,<a href="7F78.html#8185">$8185</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8155"></span>8155</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">BC</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8156"></span>8156</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8157"></span>8157</td>
+<td class="instruction">CALL <a href="7F78.html#81b5">$81B5</a></td>
+<td class="comment-1" rowspan="1">Call <a href="7F78.html#81b5">81B5</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="815a"></span>815A</td>
+<td class="instruction">BIT 2,C</td>
+<td class="comment-1" rowspan="2">If bit 2 of <span class="register">C</span> is set then jump to <a href="7F78.html#8165">8165</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="815c"></span>815C</td>
+<td class="instruction">JR Z,<a href="7F78.html#8165">$8165</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="815e"></span>815E</td>
+<td class="instruction">CALL <a href="7F78.html#8148">$8148</a></td>
+<td class="comment-1" rowspan="1">Call <a href="7F78.html#8148">8148</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8161"></span>8161</td>
+<td class="instruction">JR Z,<a href="7F78.html#8182">$8182</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8163"></span>8163</td>
+<td class="instruction">JR <a href="7F78.html#816a">$816A</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="7F78.html#816a">816A</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8165"></span>8165</td>
+<td class="instruction">CALL <a href="7F78.html#8141">$8141</a></td>
+<td class="comment-1" rowspan="1">Call <a href="7F78.html#8141">8141</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8168"></span>8168</td>
+<td class="instruction">JR Z,<a href="7F78.html#8182">$8182</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="816a"></span>816A</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">B</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="816b"></span>816B</td>
+<td class="instruction">JR NZ,<a href="7F78.html#817f">$817F</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="7F78.html#817f">817F</a> if it is not zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="816d"></span>816D</td>
+<td class="instruction">BIT 1,C</td>
+<td class="comment-1" rowspan="2">If bit 1 of <span class="register">C</span> is set then jump to <a href="7F78.html#8178">8178</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="816f"></span>816F</td>
+<td class="instruction">JR Z,<a href="7F78.html#8178">$8178</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8171"></span>8171</td>
+<td class="instruction">CALL <a href="7F78.html#813a">$813A</a></td>
+<td class="comment-1" rowspan="1">Call <a href="7F78.html#813a">813A</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8174"></span>8174</td>
+<td class="instruction">JR Z,<a href="7F78.html#8182">$8182</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8176"></span>8176</td>
+<td class="instruction">JR <a href="7F78.html#817d">$817D</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="8178"></span>8178</td>
+<td class="instruction">CALL <a href="7F78.html#812b">$812B</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="817b"></span>817B</td>
+<td class="instruction">JR Z,<a href="7F78.html#8182">$8182</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="817d"></span>817D</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="817e"></span>817E</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="817f"></span>817F</td>
+<td class="instruction">DEC L</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8180"></span>8180</td>
+<td class="instruction">JR NZ,<a href="7F78.html#8157">$8157</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="8182"></span>8182</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">BC</span> and <span class="register">HL</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8183"></span>8183</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8184"></span>8184</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8185"></span>8185</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">BC</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8186"></span>8186</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8187"></span>8187</td>
+<td class="instruction">CALL <a href="7F78.html#81b5">$81B5</a></td>
+<td class="comment-1" rowspan="1">Call <a href="7F78.html#81b5">81B5</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="818a"></span>818A</td>
+<td class="instruction">BIT 1,C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="818c"></span>818C</td>
+<td class="instruction">JR Z,<a href="7F78.html#8195">$8195</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="818e"></span>818E</td>
+<td class="instruction">CALL <a href="7F78.html#813a">$813A</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8191"></span>8191</td>
+<td class="instruction">JR Z,<a href="7F78.html#81b2">$81B2</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8193"></span>8193</td>
+<td class="instruction">JR <a href="7F78.html#819a">$819A</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="8195"></span>8195</td>
+<td class="instruction">CALL <a href="7F78.html#812b">$812B</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8198"></span>8198</td>
+<td class="instruction">JR Z,<a href="7F78.html#81b2">$81B2</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="819a"></span>819A</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="819b"></span>819B</td>
+<td class="instruction">JR NZ,<a href="7F78.html#81af">$81AF</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="819d"></span>819D</td>
+<td class="instruction">BIT 2,C</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="819f"></span>819F</td>
+<td class="instruction">JR Z,<a href="7F78.html#81a8">$81A8</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81a1"></span>81A1</td>
+<td class="instruction">CALL <a href="7F78.html#8148">$8148</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81a4"></span>81A4</td>
+<td class="instruction">JR Z,<a href="7F78.html#81b2">$81B2</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81a6"></span>81A6</td>
+<td class="instruction">JR <a href="7F78.html#81ad">$81AD</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="81a8"></span>81A8</td>
+<td class="instruction">CALL <a href="7F78.html#8141">$8141</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81ab"></span>81AB</td>
+<td class="instruction">JR Z,<a href="7F78.html#81b2">$81B2</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="81ad"></span>81AD</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81ae"></span>81AE</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="81af"></span>81AF</td>
+<td class="instruction">DEC L</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81b0"></span>81B0</td>
+<td class="instruction">JR NZ,<a href="7F78.html#8187">$8187</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="81b2"></span>81B2</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">BC</span> and <span class="register">HL</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="81b3"></span>81B3</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="81b4"></span>81B4</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="81b5"></span>81B5</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81b6"></span>81B6</td>
+<td class="instruction">CALL <a href="7F78.html#81de">$81DE</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81b9"></span>81B9</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81ba"></span>81BA</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81bb"></span>81BB</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81bc"></span>81BC</td>
+<td class="instruction">AND %00011000</td>
+<td class="comment-1" rowspan="1">Keep only bits 3-4.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="81be"></span>81BE</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81bf"></span>81BF</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81c0"></span>81C0</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81c1"></span>81C1</td>
+<td class="instruction">ADD A,$58</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81c3"></span>81C3</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81c4"></span>81C4</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81c5"></span>81C5</td>
+<td class="instruction">AND %00111000</td>
+<td class="comment-1" rowspan="1">Keep only bits 3-5.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="81c7"></span>81C7</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81c8"></span>81C8</td>
+<td class="instruction">LD A,($824E)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81cb"></span>81CB</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81cc"></span>81CC</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81cd"></span>81CD</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81ce"></span>81CE</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81cf"></span>81CF</td>
+<td class="instruction">JR NZ,<a href="7F78.html#81d3">$81D3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81d1"></span>81D1</td>
+<td class="instruction">XOR $38</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="81d3"></span>81D3</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81d4"></span>81D4</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81d5"></span>81D5</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81d6"></span>81D6</td>
+<td class="instruction">OR (HL)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81d7"></span>81D7</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81d8"></span>81D8</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81d9"></span>81D9</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81da"></span>81DA</td>
+<td class="instruction">OR (HL)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81db"></span>81DB</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81dc"></span>81DC</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81dd"></span>81DD</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="81de"></span>81DE</td>
+<td class="instruction">LD A,$7F</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81e0"></span>81E0</td>
+<td class="instruction">SUB E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81e1"></span>81E1</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81e2"></span>81E2</td>
+<td class="instruction">AND %00000111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="81e4"></span>81E4</td>
+<td class="instruction">OR $40</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81e6"></span>81E6</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81e7"></span>81E7</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81e8"></span>81E8</td>
+<td class="instruction">AND %11000000</td>
+<td class="comment-1" rowspan="1">Keep only bits 6-7.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="81ea"></span>81EA</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81eb"></span>81EB</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81ec"></span>81EC</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81ed"></span>81ED</td>
+<td class="instruction">OR H</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81ee"></span>81EE</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81ef"></span>81EF</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81f0"></span>81F0</td>
+<td class="instruction">AND %00111000</td>
+<td class="comment-1" rowspan="1">Keep only bits 3-5.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="81f2"></span>81F2</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81f3"></span>81F3</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81f4"></span>81F4</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81f5"></span>81F5</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81f6"></span>81F6</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81f7"></span>81F7</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81f8"></span>81F8</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81f9"></span>81F9</td>
+<td class="instruction">AND %00011111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-4.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="81fb"></span>81FB</td>
+<td class="instruction">OR L</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81fc"></span>81FC</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81fd"></span>81FD</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="81fe"></span>81FE</td>
+<td class="instruction">AND %00000111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8200"></span>8200</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">BC</span> on the stack temporarily.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8201"></span>8201</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">Copy <span class="register">A</span> to <span class="register">B</span> used as a counter for the rotate command.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8202"></span>8202</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="8203"></span>8203</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=00000001.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8205"></span>8205</td>
+<td class="instruction">RRC A</td>
+<td class="comment-1" rowspan="1">Rotate <span class="register">A</span> right once.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8207"></span>8207</td>
+<td class="instruction">DJNZ <a href="7F78.html#8205">$8205</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="7F78.html#8205">8205</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8209"></span>8209</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="820a"></span>820A</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="820b"></span>820B</td>
+<td class="instruction">CALL <a href="95ED.html">$95ED</a></td>
+<td class="comment-1" rowspan="1">Call <a href="95ED.html">95ED</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="820e"></span>820E</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="2">Store the first byte of the graphic data in the shadow <span class="register">AF</span> register.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="820f"></span>820F</td>
+<td class="instruction">LD A,(IY+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8212"></span>8212</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1">Increment the graphic data pointer to the next byte.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8214"></span>8214</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">Switch back to the "normal" <span class="register">AF</span> register to check the result of the call to <a href="95ED.html">95ED</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8215"></span>8215</td>
+<td class="instruction">JR NC,<a href="7F78.html#821a">$821A</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="7F78.html#821a">821A</a> if <a href="95ED.html">95ED</a> did not set the carry flag (so, it is LIGHT).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8217"></span>8217</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="2">Overwrite the graphic data in the shadow <span class="register">AF</span> register to $00 (black).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8218"></span>8218</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8219"></span>8219</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">Switch back to the "normal" <span class="register">AF</span> register simply to accomodate the jump from <a href="7F78.html#8215">8215</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="821a"></span>821A</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">Switch to the shadow <span class="register">AF</span> register containing the first byte of the graphic data (or $00 if it's dark).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="821b"></span>821B</td>
+<td class="instruction">OUT ($FE),A</td>
+<td class="comment-1" rowspan="1">Set the border colour to the value in <span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="821d"></span>821D</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="3">Store <span class="register">HL</span>, <span class="register">DE</span> and <span class="register">BC</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="821e"></span>821E</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="821f"></span>821F</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8220"></span>8220</td>
+<td class="instruction">LD HL,$4000</td>
+<td class="comment-1" rowspan="5">Write $00 to $4000-$4FFF (the screen buffer).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8223"></span>8223</td>
+<td class="instruction">LD DE,$4001</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8226"></span>8226</td>
+<td class="instruction">LD BC,$0FFF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8229"></span>8229</td>
+<td class="instruction">LD (HL),$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="822b"></span>822B</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="address-1"><span id="822d"></span>822D</td>
+<td class="instruction">LD HL,$5800</td>
+<td class="comment-1" rowspan="3">Set up copying to the attribute buffer (start=$5800, length=$01FF).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8230"></span>8230</td>
+<td class="instruction">LD DE,$5801</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8233"></span>8233</td>
+<td class="instruction">LD BC,$01FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8236"></span>8236</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=The next byte (second) of the graphic data.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8239"></span>8239</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1">Increment the graphic data pointer to the next byte.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="823b"></span>823B</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">Switch back to the "normal" <span class="register">AF</span> register which contains the LIGHT/ DARK carry flag.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="823c"></span>823C</td>
+<td class="instruction">JR NC,<a href="7F78.html#8241">$8241</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="7F78.html#8241">8241</a> if <a href="95ED.html">95ED</a> did not set the carry flag (so, it is LIGHT).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="823e"></span>823E</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="2">Overwrite the graphic data in the shadow <span class="register">AF</span> register to $00 (black).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="823f"></span>823F</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8240"></span>8240</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">Switch back to the "normal" <span class="register">AF</span> register simply to accomodate the jump from <a href="7F78.html#823c">823C</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="8241"></span>8241</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">Switch to the shadow <span class="register">AF</span> register containing the second byte of the graphic data (or $00 if it's dark).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8242"></span>8242</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="2">Write this to the attribute buffer using the target/ length specified previously.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8243"></span>8243</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8245"></span>8245</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="3">Restore <span class="register">BC</span>, <span class="register">DE</span> and <span class="register">HL</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8246"></span>8246</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8247"></span>8247</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8248"></span>8248</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">Switch back to the "normal" <span class="register">AF</span> register which contains the LIGHT/ DARK carry flag.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="8249"></span>8249</td>
+<td class="instruction">RET NC</td>
+<td class="comment-1" rowspan="1">Return if it is LIGHT.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="824a"></span>824A</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="2">Else, restore <span class="register">HL</span> from the stack and jump to <a href="7F78.html#8069">8069</a> to finish.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="824b"></span>824B</td>
+<td class="instruction">JP <a href="7F78.html#8069">$8069</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="824e"></span>824E</td>
+<td class="instruction">DEFB $38,$00,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="7F77.html">7F77</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#7f78">Map</a></td>
+<td class="next">
+Next: <a href="8251.html">8251</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1982 Melbourne House</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
+<div><a href="../dec/asm/32632.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

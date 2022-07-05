@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
-<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
 <script>
@@ -52,41 +51,34 @@ At the start of the game, the Butler is invisible (!) and only becomes visible a
 </td>
 </tr>
 <tr>
-<td class="asm-label">EventBeornsHouse</td>
 <td class="address-2"><span id="51108"></span>51108</td>
 <td class="instruction">LD HL,50231</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="49435.html#50231">attributes</a> of object $42 - "Butler".</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51111"></span>51111</td>
 <td class="instruction">BIT 3,(HL)</td>
 <td class="comment-1" rowspan="2">Return if the "Butler" is "broken" (bit 3 is set).</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51113"></span>51113</td>
 <td class="instruction">RET NZ</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51114"></span>51114</td>
 <td class="instruction">LD A,66</td>
 <td class="comment-1" rowspan="2">Write $42 to <a href="51915.html#51943">51943</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51116"></span>51116</td>
 <td class="instruction">LD (51943),A</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51119"></span>51119</td>
 <td class="instruction">SET 7,(HL)</td>
 <td class="comment-1" rowspan="1">Set "visible" bit for "Butler".</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51121"></span>51121</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -107,7 +99,7 @@ Next: <a href="51122.html">51122</a>
 <div class="release"></div>
 <div class="copyright">&copy; 1982 Melbourne House</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
-<div><a href="../../hex/asm/C7A4.html">Switch to hexadecimal</a>.</div>
+<div><a href="../../asm/C7A4.html">Switch to hexadecimal</a>.</div>
 </footer>
 </body>
 </html>

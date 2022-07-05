@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
-<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
 <script>
@@ -42,13 +41,11 @@ Next: <a href="33873.html">33873</a>
 </td>
 </tr>
 <tr>
-<td class="asm-label">GameOver</td>
 <td class="address-2"><span id="33775"></span>33775</td>
-<td class="instruction">CALL <a href="33775.html#33781">GameOver_Start</a></td>
-<td class="comment-1" rowspan="1">Call <a href="33775.html#33781">GameOver_Start</a>.</td>
+<td class="instruction">CALL <a href="33775.html#33781">33781</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33775.html#33781">33781</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33778"></span>33778</td>
 <td class="instruction">JP <a href="33459.html">33459</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="33459.html">33459</a>.</td>
@@ -64,146 +61,121 @@ Actions "game over".
 </td>
 </tr>
 <tr>
-<td class="asm-label">GameOver_Start</td>
 <td class="address-2"><span id="33781"></span>33781</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">DE</span> on the stack.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33782"></span>33782</td>
 <td class="instruction">PUSH DE</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33783"></span>33783</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="2">Write $00 to <a href="46810.html#46849">WaitCoutdown</a>.</td>
+<td class="comment-1" rowspan="2">Write $00 to <a href="46810.html#46849">46849</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33784"></span>33784</td>
 <td class="instruction">LD (46849),A</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33787"></span>33787</td>
 <td class="instruction">LD HL,46164</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#46164">"you have mastered [0x16]"</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33790"></span>33790</td>
-<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+<td class="instruction">CALL <a href="29405.html">29405</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">29405</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33793"></span>33793</td>
 <td class="instruction">LD HL,(46839)</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="46810.html#46839">PercentageComplete</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="46810.html#46839">46839</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33796"></span>33796</td>
 <td class="instruction">LD DE,100</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=$0064 (i.e. "100" in decimal).</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33799"></span>33799</td>
-<td class="instruction">CALL <a href="33775.html#33838">PercentageAscii</a></td>
-<td class="comment-1" rowspan="1">Call <a href="33775.html#33838">PercentageAscii</a>.</td>
+<td class="instruction">CALL <a href="33775.html#33838">33838</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33775.html#33838">33838</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33802"></span>33802</td>
 <td class="instruction">CALL NZ,<a href="34166.html#34187">34187</a></td>
 <td class="comment-1" rowspan="1">If the result is non-zero, call <a href="34166.html#34187">34187</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33805"></span>33805</td>
 <td class="instruction">LD DE,10</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=$000A (i.e. "10" in decimal).</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33808"></span>33808</td>
-<td class="instruction">CALL <a href="33775.html#33838">PercentageAscii</a></td>
-<td class="comment-1" rowspan="1">Call <a href="33775.html#33838">PercentageAscii</a>.</td>
+<td class="instruction">CALL <a href="33775.html#33838">33838</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33775.html#33838">33838</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33811"></span>33811</td>
 <td class="instruction">CALL <a href="34166.html#34187">34187</a></td>
 <td class="comment-1" rowspan="1">Call <a href="34166.html#34187">34187</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33814"></span>33814</td>
 <td class="instruction">LD A,46</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=$2E (i.e. a period in ASCII, as the produced percentage is a float).</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33816"></span>33816</td>
 <td class="instruction">CALL <a href="34166.html#34187">34187</a></td>
 <td class="comment-1" rowspan="1">Call <a href="34166.html#34187">34187</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33819"></span>33819</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-1" rowspan="2"><span class="register">A</span>=the percentage digit, plus $30 to convert to ASCII.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33820"></span>33820</td>
 <td class="instruction">ADD A,48</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33822"></span>33822</td>
 <td class="instruction">CALL <a href="34166.html#34187">34187</a></td>
 <td class="comment-1" rowspan="1">Call <a href="34166.html#34187">34187</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33825"></span>33825</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="2">Write $00 to <a href="46810.html#46852">46852</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33826"></span>33826</td>
 <td class="instruction">LD (46852),A</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33829"></span>33829</td>
 <td class="instruction">LD HL,46178</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="44413.html#46178">"% of this adventure"</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33832"></span>33832</td>
-<td class="instruction">CALL <a href="29405.html">PrintMsg</a></td>
-<td class="comment-1" rowspan="1">Call <a href="29405.html">PrintMsg</a>.</td>
+<td class="instruction">CALL <a href="29405.html">29405</a></td>
+<td class="comment-1" rowspan="1">Call <a href="29405.html">29405</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33835"></span>33835</td>
 <td class="instruction">POP DE</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33836"></span>33836</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33837"></span>33837</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -219,49 +191,41 @@ Converts e.g. "0075" into "7.5" in ASCII for display purposes.
 </td>
 </tr>
 <tr>
-<td class="asm-label">PercentageAscii</td>
 <td class="address-2"><span id="33838"></span>33838</td>
 <td class="instruction">LD A,47</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=$2F (ASCII "0" less one, due to the following line being the loop and so, incrementing to $30 - which is ASCII "0").</td>
 </tr>
 <tr>
-<td class="asm-label">PercentageAscii_Loop</td>
 <td class="address-2"><span id="33840"></span>33840</td>
 <td class="instruction">INC A</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33841"></span>33841</td>
 <td class="instruction">AND A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33842"></span>33842</td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-1" rowspan="1">Subtract <span class="register">DE</span> (either 100 or 10) from <span class="register">HL</span>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33844"></span>33844</td>
-<td class="instruction">JR NC,<a href="33775.html#33840">PercentageAscii_Loop</a></td>
-<td class="comment-1" rowspan="1">Jump back to <a href="33775.html#33840">PercentageAscii_Loop</a> if there's no carry.</td>
+<td class="instruction">JR NC,<a href="33775.html#33840">33840</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="33775.html#33840">33840</a> if there's no carry.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33846"></span>33846</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<span class="register">HL</span> + <span class="register">DE</span>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33847"></span>33847</td>
 <td class="instruction">CP 48</td>
 <td class="comment-1" rowspan="1">Compare against $30 (ASCII "0") to set flags for the return.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33849"></span>33849</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -277,63 +241,52 @@ I don't believe this is ever used?
 </td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33850"></span>33850</td>
 <td class="instruction">LD A,4</td>
 <td class="comment-1" rowspan="2">Set the border to $04 (green).</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33852"></span>33852</td>
 <td class="instruction">OUT (254),A</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33854"></span>33854</td>
-<td class="instruction">CALL <a href="33977.html">DebounceAnyKey</a></td>
-<td class="comment-1" rowspan="1">Call <a href="33977.html">DebounceAnyKey</a>.</td>
+<td class="instruction">CALL <a href="33977.html">33977</a></td>
+<td class="comment-1" rowspan="1">Call <a href="33977.html">33977</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">WaitForKey</td>
 <td class="address-2"><span id="33857"></span>33857</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="2">Read from the keyboard port.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33858"></span>33858</td>
 <td class="instruction">IN A,(254)</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33860"></span>33860</td>
 <td class="instruction">AND %00011111</td>
 <td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33862"></span>33862</td>
 <td class="instruction">CP 31</td>
-<td class="comment-1" rowspan="2">Loop back to <a href="33775.html#33857">WaitForKey</a> until any key has been pressed.</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="33775.html#33857">33857</a> until any key has been pressed.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33864"></span>33864</td>
-<td class="instruction">JR NZ,<a href="33775.html#33857">WaitForKey</a></td>
+<td class="instruction">JR NZ,<a href="33775.html#33857">33857</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33866"></span>33866</td>
 <td class="instruction">LD A,7</td>
 <td class="comment-1" rowspan="2">Set the border to $07 (white).</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33868"></span>33868</td>
 <td class="instruction">OUT (254),A</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33870"></span>33870</td>
 <td class="instruction">JP <a href="33459.html">33459</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="33459.html">33459</a>.</td>
@@ -354,7 +307,7 @@ Next: <a href="33873.html">33873</a>
 <div class="release"></div>
 <div class="copyright">&copy; 1982 Melbourne House</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
-<div><a href="../../hex/asm/83EF.html">Switch to hexadecimal</a>.</div>
+<div><a href="../../asm/83EF.html">Switch to hexadecimal</a>.</div>
 </footer>
 </body>
 </html>

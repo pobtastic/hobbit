@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
-<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
 <script>
@@ -39,69 +38,58 @@ Next: <a href="33996.html">33996</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="33775.html">GameOver</a> and <a href="33996.html">SaveGame</a>.
+Used by the routines at <a href="33775.html">33775</a> and <a href="33996.html">33996</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">DebounceAnyKey</td>
 <td class="address-2"><span id="33977"></span>33977</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="2">Read from the keyboard port.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33978"></span>33978</td>
 <td class="instruction">IN A,(254)</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33980"></span>33980</td>
 <td class="instruction">AND %00011111</td>
 <td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33982"></span>33982</td>
 <td class="instruction">CP 31</td>
-<td class="comment-1" rowspan="2">Loop back to <a href="33977.html">DebounceAnyKey</a> if a key is being pressed.</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="33977.html">33977</a> if a key is being pressed.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33984"></span>33984</td>
-<td class="instruction">JR NZ,<a href="33977.html#33977">DebounceAnyKey</a></td>
+<td class="instruction">JR NZ,<a href="33977.html#33977">33977</a></td>
 </tr>
 <tr>
-<td class="asm-label">NormalAnyKey</td>
 <td class="address-2"><span id="33986"></span>33986</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="2">Read from the keyboard port.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33987"></span>33987</td>
 <td class="instruction">IN A,(254)</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33989"></span>33989</td>
 <td class="instruction">AND %00011111</td>
 <td class="comment-1" rowspan="1">A pressed key from any line will set its respective bit; bit 0 (outer key) to bit 4 (inner key). Hence keep only bits 0-4 for the check.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33991"></span>33991</td>
 <td class="instruction">CP 31</td>
-<td class="comment-1" rowspan="2">Loop back to <a href="33977.html#33986">NormalAnyKey</a> until any key has been pressed.</td>
+<td class="comment-1" rowspan="2">Loop back to <a href="33977.html#33986">33986</a> until any key has been pressed.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33993"></span>33993</td>
-<td class="instruction">JR Z,<a href="33977.html#33986">NormalAnyKey</a></td>
+<td class="instruction">JR Z,<a href="33977.html#33986">33986</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="33995"></span>33995</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -122,7 +110,7 @@ Next: <a href="33996.html">33996</a>
 <div class="release"></div>
 <div class="copyright">&copy; 1982 Melbourne House</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
-<div><a href="../../hex/asm/84B9.html">Switch to hexadecimal</a>.</div>
+<div><a href="../../asm/84B9.html">Switch to hexadecimal</a>.</div>
 </footer>
 </body>
 </html>

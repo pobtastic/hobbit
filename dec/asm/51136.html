@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
-<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
 <script>
@@ -42,74 +41,61 @@ Next: <a href="51165.html">51165</a>
 </td>
 </tr>
 <tr>
-<td class="asm-label">EventElvenkingsCellar</td>
 <td class="address-2"><span id="51136"></span>51136</td>
 <td class="instruction">LD A,3</td>
 <td class="comment-1" rowspan="2">Write $03 to <a href="51475.html#51908">51908</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51138"></span>51138</td>
 <td class="instruction">LD (51908),A</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51141"></span>51141</td>
 <td class="instruction">LD HL,49466</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="49435.html#49466">attributes</a> of object $3C - "Red Golden Dragon".</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51144"></span>51144</td>
 <td class="instruction">BIT 3,(HL)</td>
-<td class="comment-1" rowspan="2">Jump to <a href="51136.html#51153">EventElvenkingsCellar_Skip</a> if "Red Golden Dragon" is "broken" (bit 3 is set).</td>
+<td class="comment-1" rowspan="2">Jump to <a href="51136.html#51153">51153</a> if "Red Golden Dragon" is "broken" (bit 3 is set).</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51146"></span>51146</td>
-<td class="instruction">JR NZ,<a href="51136.html#51153">EventElvenkingsCellar_Skip</a></td>
+<td class="instruction">JR NZ,<a href="51136.html#51153">51153</a></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51148"></span>51148</td>
 <td class="instruction">LD A,60</td>
 <td class="comment-1" rowspan="2">Write $3C to <a href="51915.html#51971">51971</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51150"></span>51150</td>
 <td class="instruction">LD (51971),A</td>
 </tr>
 <tr>
-<td class="asm-label">EventElvenkingsCellar_Skip</td>
 <td class="address-2"><span id="51153"></span>51153</td>
 <td class="instruction">LD HL,50378</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="49435.html#50378">attributes</a> of object $46 - "Bard".</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51156"></span>51156</td>
 <td class="instruction">BIT 3,(HL)</td>
 <td class="comment-1" rowspan="2">Return if the "Bard" is "broken" (bit 3 is set).</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51158"></span>51158</td>
 <td class="instruction">RET NZ</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51159"></span>51159</td>
 <td class="instruction">LD A,70</td>
 <td class="comment-1" rowspan="2">Write $46 to <a href="51915.html#51964">51964</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51161"></span>51161</td>
 <td class="instruction">LD (51964),A</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
 <td class="address-1"><span id="51164"></span>51164</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -130,7 +116,7 @@ Next: <a href="51165.html">51165</a>
 <div class="release"></div>
 <div class="copyright">&copy; 1982 Melbourne House</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.6.</div>
-<div><a href="../../hex/asm/C7C0.html">Switch to hexadecimal</a>.</div>
+<div><a href="../../asm/C7C0.html">Switch to hexadecimal</a>.</div>
 </footer>
 </body>
 </html>
