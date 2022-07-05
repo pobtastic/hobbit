@@ -16,3 +16,10 @@ make a clone of the [SkoolKit repository](https://github.com/skoolkid/skoolkit)
 and point the environment variable SKOOLKIT_HOME at it. Then:
 
     $ utils/mkhtml.py
+
+Disclaimer
+----------
+
+You will need to own the original game in order to disassemble the game code.
+
+1982 [Melbourne House](https://en.wikipedia.org/wiki/Krome_Studios_Melbourne)
