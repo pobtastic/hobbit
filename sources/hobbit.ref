@@ -17,7 +17,6 @@ Logo=#SCR2,6,0,19,9,$4000,$5800(/images/logo)
 Copyright=&copy; 1982 Melbourne House
 LinkInternalOperands=1
 AddressAnchor={address#IF({base}==16)(:04x)}
-StyleSheet=skoolkit.css;skoolkit-dark.css
 
 [Index:DataTables:Data tables and buffers]
 GameStatusBuffer
