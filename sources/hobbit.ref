@@ -14,7 +14,7 @@ GameDir=hobbit
 [Game]
 Game=The Hobbit
 Logo=#SCR2,6,0,19,9,$4000,$5800(/images/logo)
-Copyright=&copy; 1982 Melbourne House
+Copyright=&copy; 1982 Melbourne House &copy; 2023 ArcadeGeek LTD.
 LinkInternalOperands=1
 AddressAnchor={address#IF({base}==16)(:04x)}
 

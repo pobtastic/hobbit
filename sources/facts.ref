@@ -1,4 +1,4 @@
-; Copyright 2021 Paul Maddern (paul@arcadegeek.co.uk)
+; Copyright 2023 Paul Maddern (paul@arcadegeek.co.uk)
 
 [Fact:medium:Medium article by Aaron A. Reed]
 <a href="https://if50.substack.com/p/1982-the-hobbit">1982: The Hobbit</a>
@@ -8,6 +8,9 @@
 
 [Fact:antiquarian:The Digital Antiquarian]
 <a href="https://www.filfre.net/2012/11/the-hobbit/">The Digital Antiquarian</a>
+
+[Fact:anglia-ruskin-university:Anglia Ruskin University paper - Chapter on The Hobbit]
+<a href="https://arro.anglia.ac.uk/id/eprint/707061/1/Cline_2019.pdf">An Archaeology Of The ZX Spectrum</a>
 
 [Fact:register:The Register]
 <a href="https://www.theregister.com/2012/11/18/hobbit_author_veronika_megler_reminisces/">Author of '80s classic The Hobbit didn't know game was a hit</a>
@@ -20,3 +23,6 @@
   <li><a href="http://tolkiengateway.net/wiki/Philip_Mitchell">Philip Mitchell</a></li>
   <li><a href="http://tolkiengateway.net/wiki/Veronika_Megler">Veronika Megler</a></li>
 </ul>
+
+[Fact:trizbort:Trizbort]
+<a href="https://trizbort.io/hobbit-sample-map.html">Map of The Hobbit using Trizbort</a>
