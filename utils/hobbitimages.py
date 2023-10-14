@@ -31,8 +31,7 @@ from skoolkit.graphics import Udg, Frame
 class Hobbit:
     def __init__(self, snapshot):
         self.address = 0x0000
-        self.ink = 0x00
-        self.paper = 0x00
+        self.attr = 0x00
         self.snapshot = snapshot
         self._snapshots = []
 
@@ -65,30 +64,29 @@ class Hobbit:
         """The first byte relates to the
         paper and ink colours.
         """
-        self.ink = (self.snapshot[self.address] >> 3) & 7
-        self.paper = self.snapshot[self.address] & 7
+        self.attr = self.snapshot[self.address]
         self.address += 0x01
 
-    def areaFill(self, x, y, c):
+    def area_fill(self, x, y, c):
         print([x, y, c])
 
-    def drawLine(self, x, y, c, d, n, m):
+    def draw_line(self, x, y, c, d, n, m):
         print([x, y, c, d, n, m])
 
-    def drawPixel(self, x, y, c):
+    def draw_pixel(self, x, y, c):
         print([x, y, c])
 
-    def paintBackground(self, a, c, d, n):
+    def paint_background(self, a, c, d, n):
         print([a, c, d, n])
 
     def draw(self):
+        self.set_colours()
         x = y = c = 0
         play_area_udgs = []
-        addr = 0x4000
         for row in range(0x05):
             play_area_udgs.append([])
             for col in range(0x20):
-                play_area_udgs[-1].append(Udg(self.paper, self.snapshot[addr+(row*col):addr+(row*col)+0x20]))
+                play_area_udgs[-1].append(Udg(self.attr, [0x00] * 0x08))
         while True:
             action = self.snapshot[self.address]
             # Move to X/ Y co-ordinates.
@@ -97,17 +95,17 @@ class Hobbit:
                 x = self.snapshot[self.address]
                 self.address += 0x01
                 y = 0x7F - self.snapshot[self.address]
-                self.drawPixel(x, y, c)
+                self.draw_pixel(x, y, c)
             # Draw line segment.
             elif action > 0x7F:
-                self.drawLine(
+                self.draw_line(
                     x, y, c,
                     (action & 0x07),
                     (self.snapshot[self.address] & 0x3F),
                     (((action & 0x78) >> 0x01) + ((self.snapshot[self.address] & 0xC0) >> 0x06)))
             # Fill area.
             elif action > 0x3F:
-                self.areaFill(x, y, c)
+                self.area_fill(x, y, c)
                 self.address += 0x02
             # Paint background:
             elif action > 0x1F:
@@ -118,7 +116,7 @@ class Hobbit:
                     d = self.snapshot[self.address]
                     if d == 0xFF:
                         break
-                    a = self.paintBackground(a, action & 0x07, d & 0x03, (d & 0xFC) >> 2)
+                    a = self.paint_background(a, action & 0x07, d & 0x03, (d & 0xFC) >> 2)
                     self.address += 0x01
             # Exit.
             elif action == 0x00:
@@ -154,7 +152,6 @@ def run(location, imgfname, options):
     game = Hobbit(snapshot)
 
     game.set_location_address(location)
-    game.set_colours()
     udg_array = game.draw()
 
     if options.geometry:

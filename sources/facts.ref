@@ -26,3 +26,6 @@
 
 [Fact:trizbort:Trizbort]
 <a href="https://trizbort.io/hobbit-sample-map.html">Map of The Hobbit using Trizbort</a>
+
+[Fact:masters:The Hobbit, Polish version]
+Paweł Aleksander Fedoryński created a version of the game in C/ LISP for his <a href="https://www.jfedor.org/pfedor/hobbit.html">Masters thesis</a>.
